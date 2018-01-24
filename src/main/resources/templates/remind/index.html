@@ -1,0 +1,76 @@
+<extend name="Public/base" />
+
+
+
+<block name="main">
+  <!--主体开始-->
+  <div class="content">
+        <ul class="breadcrumb">
+            <li class="active">系统消息</li>
+        </ul>
+
+        <div class="container-fluid">
+<div class="block-tab">
+<table class="table-mins">
+  <tr>
+    <th width="10"></th>
+    <th>标题</th>
+    <th width="150">发布时间</th>
+  </tr>
+   <foreach name="list" item="vo" >
+  <tr>
+    <td>{$nowpage*$pagesize+$key+1}</td>
+    <td class="alink"><a href="javascript:doAudit('__APP__/{$vo.url}','{$vo.id}')">{$vo.title}</a></td>
+    <td>{$vo.add_date}</td>
+  </tr>
+  </foreach>
+</table>
+</div>
+<div class="block-foot">
+    <div class="pagination">
+      <!--   <a href="#">首页</a>
+        <a href="#">上一页</a>
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">下一页</a>
+        <a href="#">末页</a> -->
+        {$page}
+    </div>
+</div>
+
+                    
+        </div>
+    </div>
+ 
+</div>  
+
+</block>
+
+
+<block name="script">
+
+  <script type="text/javascript">
+    
+    function doAudit(url,remind_id){
+       //iframe层
+          layer.open({
+                  type: 2,
+                  // title: 'layer mobile页',
+                  shadeClose: true,
+                  // shade: 0.8,
+                  area: ['1000px', '700px'],
+                  content: url+"&remind="+remind_id, //iframe的url
+                   cancel: function(index, layero){ 
+                       layer.close(index);
+                       location.reload();
+                       // document.getElementById('form1').submit();
+                       return false; 
+                    }   
+                }); 
+    }
+
+  </script>
+
+</block>

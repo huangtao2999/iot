@@ -1,0 +1,170 @@
+<extend name="Public/base" />
+
+ <block name="js">
+     <!-- <script src="__PUBLIC__/vendor/validate/jquery.js"></script> -->
+        <script src="__PUBLIC__/vendor/validate/jquery.validate.min.js"></script>
+        <script src="__PUBLIC__/vendor/validate/validate.expand.js"></script>
+        <script src="__PUBLIC__/vendor/validate/localization/messages_zh.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/vendor/My97DatePicker/WdatePicker.js"></script>
+        <script src="__PUBLIC__/vendor/layer/layer.js"></script>
+    </block>
+
+<block name="main">
+  <!--主体开始-->
+  <div class="content">
+        
+        <ul class="breadcrumb">
+            <li><a href="__URL__/lockerMain.html">储物柜管理</a> <span class="divider">/</span></li>
+            <li class="active">录入</li>
+        </ul>
+
+        <div class="container-fluid">
+<br/>
+       
+<form id="form1" action="{$mo==null?'__URL__/insert':'__URL__/update'}" method="post">
+    <input type="hidden" name="locker_id" value="{$mo.locker_id}" />
+    <table class="youAdd">
+           
+            <tr>
+                <td class="TDleft"><label>储物柜类型：</label></td>
+                <td colspan="3">
+                    <select name="locker_type">
+                                            -->
+                          <?php $arr = C('locker_type'); ?>
+                        <foreach name="arr" item="vo" key="k">
+                            <option value="{$vo}"  <eq name="mo.locker_type" value="$vo">selected</eq> >{$vo}</option>
+                        </foreach>                   
+                    </select>
+                    </td>
+           </tr>
+            <tr>
+            <td class="TDleft"><label>储物柜编号：<font color="red">*</font></label></td>
+                <td width="300" colspan="3"><input type="text" value="{$mo.locker_no}" class="input-large" name="locker_no" required="true"
+                    <notempty name="mo">readOnly</notempty> 
+                ></td>
+              
+            </tr>
+            <tr>
+                <td class="TDleft"><label>使用状态：<font color="red">*</font></label></td>
+                <td colspan="3">
+                  <select name="use_status">
+                      
+                            <option value="使用中"  <eq name="mo.use_status" value="使用中">selected</eq> >使用中</option>
+                            <option value="空闲"  <eq name="mo.use_status" value="空闲">selected</eq> >空闲</option>
+                                         
+                    </select>
+                </td>
+              
+           </tr>
+            <tr>
+                <td class="TDleft"><label>储物柜状态：<font color="red">*</font></label></td>
+                <td colspan="3">
+                  <select name="status">
+                      
+                            <option value="正常"  <eq name="mo.status" value="正常">selected</eq> >正常</option>
+                            <option value="停用"  <eq name="mo.status" value="停用">selected</eq> >停用</option>
+                                         
+                    </select>
+                </td>
+              
+           </tr>
+
+            <tr>
+           <td colspan="4">入所-电源控制设置</td>
+           </tr>
+           <tr>
+                <td class="TDleft"><label>ip</label></td>
+                <td>
+                        <input type="text" name="locker_ip" value="{$mo.locker_ip}">
+                 </td>
+                <td class="TDleft"><label>端口：</label></td>
+                <td>
+                    <input type="text" name="locker_port" value="{$mo.locker_port}">
+                </td>
+           </tr>
+             <tr>
+                <td class="TDleft"><label>路数</label></td>
+                <td>
+                        <input type="text" name="locker_index" value="{$mo.locker_index}">
+                 </td>
+                <td class="TDleft"><label>状态：</label></td>
+                <td>
+                    <select name="locker_status">
+                        <option value="0" <eq name="mo.locker_status" value="0">selected</eq> >关</option>
+                        <option value="1" <eq name="mo.locker_status" value="1">selected</eq> >开</option>
+                    </select>
+                </td>
+           </tr>
+
+        <tr>
+            <td colspan="4">出所-电源控制设置</td>
+        </tr>
+        <tr>
+            <td class="TDleft"><label>ip</label></td>
+            <td>
+                <input type="text" name="out_locker_ip" value="{$mo.out_locker_ip}">
+            </td>
+            <td class="TDleft"><label>端口：</label></td>
+            <td>
+                <input type="text" name="out_locker_port" value="{$mo.out_locker_port}">
+            </td>
+        </tr>
+        <tr>
+            <td class="TDleft"><label>路数</label></td>
+            <td>
+                <input type="text" name="out_locker_index" value="{$mo.out_locker_index}">
+            </td>
+            <td class="TDleft"><label>状态：</label></td>
+            <td>
+                <select name="out_locker_status">
+                    <option value="0" <eq name="mo.out_locker_status" value="0">selected</eq> >关</option>
+                    <option value="1" <eq name="mo.out_locker_status" value="1">selected</eq> >开</option>
+                </select>
+            </td>
+        </tr>
+           
+           
+    </table>
+
+     <div class="btn-youAdd">
+        <button class="btn btn-primary"> 确定</button>&nbsp;&nbsp;
+         <a class="btn" href="javascript:myback()"> 返回</a>
+        <!-- <button class="btn">关闭</button> -->
+    </div>
+  
+  </form>
+            </div>
+        </div>
+  
+      </block>
+
+<block name="script">
+   
+   <script>
+     
+       $().ready(function() {
+       $("#form1").validate({
+        // 添加自定义验证规则
+         // rules: {
+         //    phone: {    //验证手机号
+         //        required:true,
+         //        isMobile: true
+         //       },
+         //  },
+          submitHandler:function(form){
+            // alert("提交事件!");   
+            form.submit();
+          }    
+
+       });
+
+     });
+         //返回
+       function myback(){
+           
+            window.history.back(-1);
+        }
+
+   </script>
+
+ </block>

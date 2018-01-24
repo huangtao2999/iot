@@ -1,0 +1,124 @@
+<extend name="Public/base" />
+
+
+ <block name="js">
+     <!-- <script src="__PUBLIC__/vendor/validate/jquery.js"></script> -->
+        <script src="__PUBLIC__/vendor/validate/jquery.validate.min.js"></script>
+        <script src="__PUBLIC__/vendor/validate/validate.expand.js"></script>
+        <script src="__PUBLIC__/vendor/validate/localization/messages_zh.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/vendor/My97DatePicker/WdatePicker.js"></script>
+        <script src="__PUBLIC__/vendor/layer/layer.js"></script>
+    </block>
+
+<block name="main">
+  <!--主体开始-->
+  <div class="content">
+        <ul class="breadcrumb">
+            <li class="active">日志管理</li>
+        </ul>
+
+        <div class="container-fluid">
+                    
+<div class="btn-toolbar">
+	<span class="pull-right">
+    <form action="__SELF__" method="get" name="myform">
+        日志类型：
+        <select name="type" onchange="document.myform.submit()">
+            <option value="" >-全部-</option>
+            <option value="登录"  <eq name="type" value="登录">selected</eq>  >登录</option>
+            <option value="退出" <eq name="type" value="退出">selected</eq>  >退出</option>
+            <option value="新增" <eq name="type" value="新增">selected</eq>  >新增</option>
+            <option value="修改" <eq name="type" value="修改">selected</eq>  >修改</option>
+            <option value="删除" <eq name="type" value="删除">selected</eq>  >删除</option>
+            <option value="其他" <eq name="type" value="其他">selected</eq> >其他</option>
+        </select>
+        操作时间
+        <input type="text" name="start_date" value="{$start_date}" placeholder="开始时间"  class="Wdate"  onclick="WdatePicker()" >{$_POST['type']}
+        至
+        <input type="text" name="end_date" value="{$end_date}" placeholder="结束时间" class="Wdate"  onclick="WdatePicker()" >
+        <button class="btn btn-warning" ><img src="__PUBLIC__/images/icon/query.png"/> 查询</button>&nbsp;&nbsp;
+
+      <!-- <button class="btn btn-danger" onclick="doAC('__URL__/delete','确定删除吗？')"><img src="__PUBLIC__/images/icon/cross.png"/> 删除</button> -->
+      <!-- <a href="javascript:doAC('__URL__/delete','确定删除吗？')" class="btn btn-danger"><img src="__PUBLIC__/images/icon/cross.png"/> 删除</a> -->
+  </form>
+  </span>
+  <!--   <a href="__URL__/roleUI.html" class="btn btnLB btn-success"><img src="__PUBLIC__/images/icon/plus.png"/> 新建角色</a>
+    <a href="javascript:doAC('__URL__/delete','确定删除吗？')" class="btn btn-danger">删除角色</a> -->
+    <!-- <a href="javascript:doAC('__URL__/resetpwd','确定重置密码吗？')" class="btn btnCB">密码重置</a>
+    <a href="javascript:doAC('__URL__/lockuser','确定锁定用户吗？')" class="btn btnCB">锁定用户</a>
+    <a href="javascript:doAC('__URL__/actionuser','确定激活用户吗？')" class="btn btnRB">激活用户</a> -->
+</div>
+<div class="block-tab">
+<table class="table-mins">
+  <tr>
+    <th width="10"></th>
+   <!--  <th width="10">
+    <input type="checkbox" onclick="checkAll(this)" />
+    </th> -->
+    <th>类型</th>
+    <th>日志内容</th>
+    <th>IP地址</th>
+    <th>操作人</th>
+    <th>操作时间</th>
+  </tr>
+  <!-- <tr>
+    <td class="text-center">1</td>
+    <td><input type="checkbox" name="checkbox" id="checkbox"></td>
+    <td>004922</td>
+    <td>下陆区分局团城山派出所</td>
+    <td>邓胜</td>
+    <td>420202198701101900</td>
+    <td>办案民警，物证室管理员，单位领导</td>
+    <td>激活</td>
+  </tr> -->
+
+     <foreach name="list" item="vo" >  
+                 <tr id="{$vo.id }" <eq name="key%2" value="1">class="row-color"</eq> >
+                     <td>{$nowpage*$pagesize+$key+1}</td>
+                     <!-- <td><input type="checkbox" name="chk" id="chk"></td>                      -->
+                     <td>{$vo.type}</td>
+                     <td>{$vo.content}</td>
+                     <td>{$vo.ip}</td>
+                     <td>{$vo.add_user}</td>
+                     <td>{$vo.add_date}</td>
+                    <!--  <td>
+                       <a href="__URL__/roleUI?id={$vo.id}">编辑</a>
+                     </td>   -->                                
+                  </tr>
+              </foreach>
+</table>
+
+
+    
+</div>
+<div class="block-foot">
+    <div class="pagination">
+        <!-- <a href="#">首页</a>
+        <a href="#">上一页</a>
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">下一页</a>
+        <a href="#">末页</a> -->
+        {$page}
+    </div>
+</div>
+
+                    
+        </div>
+    </div>
+ 
+</div>  
+
+</block>
+
+
+<block name="script">
+  <script>
+     
+  
+
+  </script>
+
+  </block>

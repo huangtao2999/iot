@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>头部</title>
+    <div th:include="inc/common"></div>
+</head>
+
+<body id="div_top">
+<div class="gs_logo"><a href="__APP__/Admin/Index/Main" target="mainFrame"
+                        title="公安机关执法办案管控平台">
+    <img th:src="@{../../images/frame/logo.png}"/>
+    <p>
+        <span class="r_word">公安机关执法办案管控平台</span>
+        <!--<span class="word_2">Gong An Ji Guan Zhi Fa Ban An Guan Kong Ping Tai</span>-->
+    </p><i></i></a>
+</div>
+<div class="top_right">
+    <ul class="top_user">
+        <li class="name1">用户名：<span th:text="${user.username}"></span></li>
+        <li class="name2">角色：<span>测试角色</span></li>
+        <li class="name3"><a href="../Login/quit.html" target="_parent"
+                             title="退出"><i
+                class="fa icon-tuichu"></i><span>退出</span></a></li>
+    </ul>
+    <ul class="top_icon">
+        <li><a href="__APP__/Admin/Index/Main" class="top_a" target="mainFrame"
+               onClick="tupian('1');" id="xiaotu1"><i
+                class="fa icon-daibanrenwu"></i>返回首页</a></li>
+        <li><a href="__MODULE__/Remind/index.html" class="top_a"
+               target="mainFrame" onClick="tupian('2');" id="xiaotu2"><i
+                class="fa icon-daibanrenwu"></i>待办任务<span id="badge"
+                                                          class="badge">0</span></a>
+        </li>
+        <in name="Think.session.user.username" value="admin,grid">
+            <li><a href="__APP__/Admin/BaseData/index.html" class="top_a"
+                   target="mainFrame" onClick="tupian('8');" id="xiaotu8"><i
+                    class="fa icon-xitongrizhi"></i>基础数据</a></li>
+            <li><a href="__MODULE__/Logs/index.html" class="top_a"
+                   target="mainFrame" onClick="tupian('3');" id="xiaotu3"><i
+                    class="fa icon-xitongrizhi"></i>系统日志</a></li>
+            <li><a href="__APP__/Admin/Org/index.html" class="top_a"
+                   target="mainFrame" onClick="tupian('4');" id="xiaotu4"><i
+                    class="fa icon-yonghuguanl"></i>组织管理</a></li>
+            <li><a href="__APP__/Admin/User/user.html" class="top_a"
+                   target="mainFrame" onClick="tupian('5');" id="xiaotu5"><i
+                    class="fa icon-yonghuguanl"></i>用户管理</a></li>
+            <li><a href="__MODULE__/Role/roleMain.html" class="top_a"
+                   target="mainFrame" onClick="tupian('6');" id="xiaotu6"><i
+                    class="fa icon-jueseguanli"></i>角色管理</a></li>
+        </in>
+        <li><a href="__APP__/Admin/User/userPassword.html" class="top_a"
+               target="mainFrame" onClick="tupian('7');" id="xiaotu7"><i
+                class="fa icon-mima"></i>修改密码</a></li>
+    </ul>
+</div>
+</body>
+<script>
+    function tupian(idt) {
+        var nametu = "xiaotu" + idt;
+        var tp = document.getElementById(nametu);
+        tp.className = "current";	//当前值
+
+        for (var i = 1; i < 9; i++) {
+            var nametu2 = "xiaotu" + i;
+            if (i != idt * 1) {
+                var tp2 = document.getElementById('xiaotu' + i);
+                if (tp2 != undefined) {
+                    tp2.className = "";
+                }	//正常值
+            }
+        }
+    }
+</script>
+</html>

@@ -1,0 +1,7 @@
+/*  
+通过body前缀，是为了确保你皮肤的优先级
+你可以通过调试工具重置更多样式 
+*/
+body .layer-ext-yourskin .layui-layer-title{height: 30px;background: red;}
+body .layui-ext-yourskin .layui-layer-btn{}
+body .layui-ext-yourskin .layui-layer-btn a{}

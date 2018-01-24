@@ -1,0 +1,106 @@
+<extend name="Public/base" />
+
+ <block name="js">
+     <!-- <script src="__PUBLIC__/vendor/validate/jquery.js"></script> -->
+        <script src="__PUBLIC__/vendor/validate/jquery.validate.min.js"></script>
+        <script src="__PUBLIC__/vendor/validate/validate.expand.js"></script>
+        <script src="__PUBLIC__/vendor/validate/localization/messages_zh.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/vendor/My97DatePicker/WdatePicker.js"></script>
+        <script src="__PUBLIC__/vendor/layer/layer.js"></script>
+    </block>
+
+<block name="main">
+  <!--主体开始-->
+  <div class="content">
+        
+        <ul class="breadcrumb">
+            <li><a href="__URL__/index.html">组织管理</a> <span class="divider">/</span></li>
+            <li class="active">{$mo==null?'添加':'修改'}</li>
+        </ul>
+
+        <div class="container-fluid">
+<br/>
+       
+<form id="form1" action="{$mo==null?'__URL__/insert':'__URL__/update'}" method="post">
+    <input type="hidden" name="id" value="{$mo.id}" />
+    <table class="youAdd">
+           
+           <!--  <tr>
+                <td class="TDleft"><label>储物柜类型：</label></td>
+                <td colspan="3">
+                    <select name="locker_type">
+                                           
+                          <?php $arr = C('locker_type'); ?>
+                        <foreach name="arr" item="vo" key="k">
+                            <option value="{$vo}"  <eq name="mo.locker_type" value="$vo">selected</eq> >{$vo}</option>
+                        </foreach>                   
+                    </select>
+                    </td >
+           </tr> -->
+            <tr>
+            <td class="TDleft"><label>组织名称<font color="red">*</font></label></td>
+                <td width="300" colspan="3"><input type="text" value="{$mo.org_name}" class="input-large" name="org_name" required="true"
+                    
+                ></td>
+              
+            </tr>
+            <tr>
+                <td class="TDleft"><label>添加人</font></label></td>
+                <td colspan="3">
+                 <input type="text" name="user_name" <eq name="mo.user_name" value=""> value="{$Think.session.user.username}" <else/> value="{$mo.user_name}"</eq> disabled>
+                </td>
+              
+           </tr>
+            <tr>
+                <td class="TDleft"><label>时间</font></label></td>
+                <td colspan="3">
+                 <input type="text" name="add_time" <eq name="mo.add_time" value=""> value="{$data.time|default=time()|date='Y-m-d H:i:s',###}" <else/> value="{$mo.add_time}"</eq> disabled>
+                </td>
+              
+           </tr>
+           
+           
+    </table>
+
+     <div class="btn-youAdd">
+        <button class="btn btn-primary"><img src="__PUBLIC__/images/icon/clipboard.png" class="clipboard"/> 确定</button>&nbsp;&nbsp;
+         <a class="btn" href="javascript:myback()"> 返回</a>
+        <!-- <button class="btn">关闭</button> -->
+    </div>
+  
+  </form>
+            </div>
+        </div>
+  
+      </block>
+
+<block name="script">
+   
+   <script>
+     
+       $().ready(function() {
+       $("#form1").validate({
+        // 添加自定义验证规则
+         // rules: {
+         //    phone: {    //验证手机号
+         //        required:true,
+         //        isMobile: true
+         //       },
+         //  },
+          submitHandler:function(form){
+            // alert("提交事件!");   
+            form.submit();
+          }    
+
+       });
+
+     });
+         //返回
+       function myback(){
+           
+            window.history.back(-1);
+        }
+
+   </script>
+
+ </block>

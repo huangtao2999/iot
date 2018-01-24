@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 数据库驱动包路径 -->
+    <classPathEntry
+            location="D:/repo/mysql/mysql-connector-java/5.1.44/mysql-connector-java-5.1.44.jar"/>
+
+    <!-- 生成配置，Id修改为应用名 -->
+    <context id="lassen" targetRuntime="MyBatis3">
+        <property name="suppressAllComments" value="true"/>
+        <property name="useActualColumnNames" value="false"/>
+        <!-- 配置数据库连接 -->
+        <plugin type="com.dsw.iot.util.DswGeneratePlugin"/>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/guankong?characterEncoding=UTF-8"
+                        userId="root" password="root"/>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成文件位置 -->
+        <!-- Do位置 -->
+        <javaModelGenerator targetPackage="com.dsw.iot.model"
+                            targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- Mapper.xml位置  -->
+        <sqlMapGenerator targetPackage="com.dsw.iot.dal"
+                         targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- Mapper.java位置 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.dsw.iot.dal"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--<table tableName="TP_BAQRY_USER" domainObjectName="TpBaqryUserDo">-->
+        <!--<columnOverride column="id" property="id"-->
+        <!--javaType="Long" jdbcType="INTEGER">-->
+        <!--</columnOverride>-->
+        <!--<columnOverride column="in_time" property="inTime"-->
+        <!--javaType="java.util.Date" jdbcType="VARCHAR">-->
+        <!--</columnOverride>-->
+        <!--</table>-->
+
+        <!--<table tableName="TP_USER" domainObjectName="TpUserDo">-->
+        <!--<columnOverride column="id" property="id"-->
+        <!--javaType="Long" jdbcType="INTEGER">-->
+        <!--</columnOverride>-->
+        <!--</table>-->
+
+        <!--<table tableName="TP_MENU" domainObjectName="TpMenuDo">-->
+        <!--<columnOverride column="id" property="id"-->
+        <!--javaType="Long" jdbcType="INTEGER">-->
+        <!--</columnOverride>-->
+        <!--</table>-->
+
+        <!--<table tableName="TP_ROLE" domainObjectName="TpRoleDo">-->
+        <!--<columnOverride column="id" property="id"-->
+        <!--javaType="Long" jdbcType="INTEGER">-->
+        <!--</columnOverride>-->
+        <!--</table>-->
+
+        <!--<table tableName="TP_ROLE_MENU" domainObjectName="TpRoleMenuDo">-->
+        <!--<columnOverride column="id" property="id"-->
+        <!--javaType="Long" jdbcType="INTEGER">-->
+        <!--</columnOverride>-->
+        <!--<columnOverride column="create_time" property="createTime"-->
+        <!--javaType="java.util.Date" jdbcType="TIMESTAMP">-->
+        <!--</columnOverride>-->
+        <!--<columnOverride column="update_time" property="updateTime"-->
+        <!--javaType="java.util.Date" jdbcType="TIMESTAMP">-->
+        <!--</columnOverride>-->
+        <!--</table>-->
+        <!--<table tableName="TP_USER_ROLE" domainObjectName="TpUserRoleDo">-->
+        <!--<columnOverride column="id" property="id"-->
+        <!--javaType="Long" jdbcType="INTEGER">-->
+        <!--</columnOverride>-->
+        <!--<columnOverride column="create_time" property="createTime"-->
+        <!--javaType="java.util.Date" jdbcType="TIMESTAMP">-->
+        <!--</columnOverride>-->
+        <!--<columnOverride column="update_time" property="updateTime"-->
+        <!--javaType="java.util.Date" jdbcType="TIMESTAMP">-->
+        <!--</columnOverride>-->
+        <!--</table>-->
+
+        <table tableName="TP_LOCKER" domainObjectName="TpLockerDo">
+            <columnOverride column="id" property="id"
+                            javaType="Long" jdbcType="INTEGER">
+            </columnOverride>
+        </table>
+
+    </context>
+</generatorConfiguration>

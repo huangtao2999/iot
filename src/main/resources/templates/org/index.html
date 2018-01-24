@@ -1,0 +1,110 @@
+<extend name="Public/base" />
+
+<script>
+	function searchSub(){
+          $('#form1').submit();
+      }
+</script>
+
+<block name="main">
+  <!--主体开始-->
+  <div class="content">
+        <ul class="breadcrumb">
+            <li class="active">组织管理</li>
+        </ul>
+
+        <div class="container-fluid">
+                    
+<div class="btn-toolbar">
+    <span class="pull-left">
+    	<a href="javascript:doAC('__URL__/delete','确定删除吗？')" class="btn btn-danger">删除</a>
+    </span>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; 
+    <span class="pull-right">
+    	<form action="__SELF__" method="post" name="form1" style="display: inline;">
+			<input type="text" name="org_name" /><button class="btn btn-warning" onclick="searchSub()"><img src="__PUBLIC__/images/icon/query.png"/> 查询</button>
+		</form>
+    </span>
+    <a href="__URL__/add.html"  class="btn btn-success"><img src="__PUBLIC__/images/icon/plus.png"/> 新增</a>       
+</div>
+
+<div class="block-tab">
+
+<table class="table-mins">
+  <tr>
+    <th width="10"></th>
+    <th width="10"> <input type="checkbox" onclick="checkAll(this)" /></th>
+    <th>组织名称</th>
+    <th>添加人</th>
+    <th>添加时间</th>
+    <th >操作</th>
+    <!-- <th>历史记录</th> -->
+  </tr>
+ <!--  <tr>
+    <td class="text-center">1</td>
+    <td><input type="checkbox" name="checkbox" id="checkbox"></td>
+    <td>询/讯问室1</td>
+    <td>询问室</td>
+    <td>空闲</td>
+    <td>2017-07-16 11:43:37</td>
+    <td>夏杰</td>
+    <td>2017-07-16 19:43:37</td>
+    <td class="TDabtn">
+      <a href="#" class="btn btnLB btn-success">房间电源</a><a href="#" class="btn btnCB">智能通风</a><a href="#" class="btn btnRB">换气扇</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="text-center">1</td>
+    <td><input type="checkbox" name="checkbox" id="checkbox"></td>
+    <td>询/讯问室1</td>
+    <td>询问室</td>
+    <td>空闲</td>
+    <td>2017-07-16 11:43:37</td>
+    <td>夏杰</td>
+    <td>2017-07-16 19:43:37</td>
+    <td class="TDabtn">
+      <a href="#" class="btn btnLB btn-success">房间电源</a><a href="#" class="btn btnCB">智能通风</a><a href="#" class="btn btnRB">换气扇</a>
+         btn-success为开，不要为关
+    </td>
+  </tr> -->
+
+    <foreach name="list" item="vo" >  
+                 <tr id="{$vo.id }" <eq name="key%2" value="1">class="row-color"</eq> >
+                     <td>{$nowpage*$pagesize+$key+1}</td>
+                     <td><input type="checkbox" name="chk" id="chk"></td>                     
+                     <td>{$vo.org_name}</td>
+                     <td>{$vo.user_name}</td>
+                      <td>{$vo.add_time}</td>
+
+                
+                     <td>
+                         <a href="__URL__/add?id={$vo.id}">编辑</a>
+                     </td>   
+                                       
+                  </tr>
+    </foreach>
+
+</table>
+
+
+    
+</div>
+<div class="block-foot">
+    <div class="pagination">
+        <!-- <a href="#">首页</a>
+        <a href="#">上一页</a>
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">下一页</a>
+        <a href="#">末页</a> -->
+        {$page}
+    </div>
+</div>
+
+        </div>
+    </div>
+ 
+  </block>
+
+

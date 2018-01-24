@@ -1,0 +1,171 @@
+<extend name="Public/base" />
+
+
+
+
+<block name="main">
+  <!--主体开始-->
+  <div class="content">
+        <ul class="breadcrumb">
+            <li class="active">用户管理</li>
+        </ul>
+
+        <div class="container-fluid">
+                    
+<div class="btn-toolbar">
+	<span class="pull-right">
+  <form action="__SELF__" method="post">
+        <input type="text" name="key" value="{$key}" placeholder="请输入姓名或手机号">
+        <button class="btn btn-warning" onclick="show()"><img src="__PUBLIC__/images/icon/query.png"/> 查询</button>&nbsp;&nbsp;
+
+    	<!-- <button class="btn btn-danger" onclick="doAC('__URL__/delete','确定删除吗？')"><img src="__PUBLIC__/images/icon/cross.png"/> 删除</button> -->
+     <eq name="Think.session.user.username" value="admin"> <a href="javascript:doAC('__URL__/delete','确定删除吗？')" class="btn btn-danger"><img src="__PUBLIC__/images/icon/cross.png"/> 删除</a>
+     </eq>
+  </form>
+    </span>
+    <a href="__URL__/userUI.html" class="btn btnLB btn-success"><img src="__PUBLIC__/images/icon/plus.png"/> 用户录入</a>
+    <!-- <a href="userEdit.html" class="btn btnCB">用户编辑</a> -->
+    <a href="javascript:doAC('__URL__/resetpwd','确定重置密码吗？')" class="btn btnCB">密码重置</a><a href="javascript:doAC('__URL__/lockuser','确定锁定用户吗？')" class="btn btnCB">锁定用户</a><a href="javascript:doAC('__URL__/actionuser','确定激活用户吗？')" class="btn btnRB">激活用户</a>
+</div>
+<div class="block-tab">
+<table class="table-mins">
+  <tr>
+    <th width="10"></th>
+    <th width="10">
+    <!-- <input type="checkbox" name="checkbox" id="checkbox"> -->
+    <input type="checkbox" onclick="checkAll(this)" />
+    </th>
+    <th>用户名</th>
+    <th>组织机构</th>
+    <th>真实姓名</th>
+    <th>手机号码</th>
+    <th>身份证号</th>
+    <th>角色</th>
+    <th>状态</th>
+    <th>操作</th>
+  </tr>
+  <!-- <tr>
+    <td class="text-center">1</td>
+    <td><input type="checkbox" name="checkbox" id="checkbox"></td>
+    <td>004922</td>
+    <td>下陆区分局团城山派出所</td>
+    <td>邓胜</td>
+    <td>420202198701101900</td>
+    <td>办案民警，物证室管理员，单位领导</td>
+    <td>激活</td>
+  </tr> -->
+
+     <foreach name="userList" item="vo" >  
+                 <tr id="{$vo.id }" <eq name="key%2" value="1">class="row-color"</eq> >
+                     <td>{$nowpage*$pagesize+$key+1}</td>
+                     <td> 
+                          <neq name="vo.username" value="admin">  <input type="checkbox" name="chk" id="chk">  </neq>
+                     </td>                     
+                     <td>{$vo.username}</td>
+                     <td>{$vo.org}</td>
+                     <td>{$vo.realname}</td>  
+                     <td>{$vo.phone}</td>
+                     <td>{$vo.idcard}</td>  
+                     <td>
+                         <foreach name="Think.session.roleList" item="role" key="k">                     
+                          <?php if(in_array($role['id'], explode(',',$vo['role_ids']))): ?>{$role['rolename']},<?php endif; ?>                  
+                        </foreach>
+                     </td> 
+                     <td>{$vo.status}</td>   
+                     <td>
+                       <a href="__URL__/userUI?id={$vo.id}">编辑</a>
+                     </td>                                  
+                  </tr>
+              </foreach>
+</table>
+
+
+    
+</div>
+<div class="block-foot">
+    <div class="pagination">
+        <!-- <a href="#">首页</a>
+        <a href="#">上一页</a>
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">下一页</a>
+        <a href="#">末页</a> -->
+        {$page}
+    </div>
+</div>
+
+                    
+        </div>
+    </div>
+ 
+</div>  
+
+<!--浮动层查询框-->
+<!-- <div id="pop" style="display:none;">
+       <div class="myModal_bg"></div> 
+       <div class="modal modal-min">
+       		<a class="close" href="javascript:hide()">X</a>
+          <div class="modal-body">
+          		<h4 style="font-size:16px; margin-top:8px">用户管理查询</h4>
+                <p class="op-success">
+                    <table class="barQuery">
+                            <tr>
+                                <td class="TDleft"><label>用户名：</label></td>
+                                <td><input type="text" value="" class="input-large"></td>
+                            </tr>
+                            <tr>
+                                <td class="TDleft"><label>真实姓名：</label></td>
+                                <td><input type="text" value="" class="input-large"></td>
+                            </tr>
+                            <tr>
+                                <td class="TDleft"><label>身份证号：</label></td>
+                                <td><input type="text" value="" class="input-large"></td>
+                            </tr>
+                            <tr>
+                                <td class="TDleft"><label>组织机构：</label></td>
+                                <td><input type="text" value="" class="input-large"></td>
+                           </tr>
+                    </table>                
+                </p>
+                <div class="order-button">
+                     <a href="print.html" class="btn btn-primary">查询</a>&nbsp;&nbsp;
+    				 <a href="javascript:hide()" class="btn">关闭</a>
+                 </div>
+                
+          </div>
+        </div>
+    </div>
+ -->
+</block>
+
+
+<block name="script">
+  <script>
+     
+   //删除
+    // function doDelete() {
+    //   var ids = getId('delete');
+    //   if (ids == false) {
+    //     return;
+    //   }
+    //   if (confirm("确定删除吗？")) {
+    //     location.href = '__URL__/delete?ids=' + ids;
+    //   }
+    // }
+
+    //通用操作
+    // function doAC(url,msg){
+    //    var ids = getId('delete');
+    //   if (ids == false) {
+    //     return;
+    //   }
+    //   if (confirm(msg)) {
+    //     location.href = url+'?ids=' + ids;
+    //   }
+    // }
+
+  </script>
+
+  </block>

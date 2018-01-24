@@ -1,0 +1,257 @@
+<extend name="Public/base" />
+
+
+<block name="main">
+  <!--主体开始-->
+  <div class="content">
+        <ul class="breadcrumb">
+            <li><a href="news.html">系统消息</a> <span class="divider">/</span></li>
+            <li class="active">详细</li>
+        </ul>
+
+
+        <div class="container-fluid">
+<div class="well" style="text-align:center;">
+    <table class="youAdd">
+			<tr>
+                <td class="THtitle" colspan="4">人员基本信息</td>
+            </tr>
+            <tr>
+                <td class="TDleft"><span class="text-star">*</span><label>证件号码：</label></td>
+                <td><input type="text" value="" class="input-medium">
+                    <a href="#">&amp; 选择</a>
+                    <input type="button" value="认证对比"/></td>
+                <td class="TDleft"><label>证件类型：</label></td>
+                <td><select>
+                		<option>居民身份证</option>
+                		<option>二代身份证</option>
+                    </select></td>
+            </tr>
+            <tr>
+                <td class="TDleft"><span class="text-star">*</span><label>姓名：</label></td>
+                <td><input type="text" value="" class="input-medium">
+                    <label><input name="xm" type="checkbox" value="">自报</label>&nbsp;
+                    <label><input name="xm" type="checkbox" value="">身份不明</label></td>
+                <td class="TDleft"><label>别名：</label></td>
+                <td><input type="text" value="" class="input-medium"></td>
+           </tr>
+            <tr>
+                <td class="TDleft"><span class="text-star">*</span><label>性别：</label></td>
+                <td><select>
+                		<option>女</option>
+                		<option>未知</option>
+                		<option>男</option>
+                    </select></td>
+                <td class="TDleft"><label>曾用名：</label></td>
+                <td><input type="text" value="" class="input-medium"></td>
+           </tr>
+            <tr>
+                <td class="TDleft"><span class="text-star">*</span><label>出生日期：</label></td>
+                <td><input type="text" value="" class="input-medium"></td>
+                <td class="TDleft"><label>绰号：</label></td>
+                <td><input type="text" value="" class="input-medium"></td>
+           </tr>
+            <tr>
+                <td class="TDleft"><span class="text-star">*</span><label>联系电话：</label></td>
+                <td><input type="text" value="" class="input-medium"></td>
+                <td class="TDleft"><label>国籍：</label></td>
+                <td><select>
+                		<option>中国</option>
+                		<option>美国</option>
+                		<option>法国</option>
+                    </select></td>
+           </tr>
+            <tr>
+                <td class="TDleft"><span class="text-star">*</span><label>户籍地：</label></td>
+                <td><input type="text" value="" class="input-medium"></td>
+                <td class="TDleft"><label>民族：</label></td>
+                <td><select>
+                		<option>汉族</option>
+                		<option>维吾尔族</option>
+                		<option>土家族</option>
+                    </select></td>
+           </tr>
+            <tr>
+                <td class="TDleft"><span class="text-star">*</span><label>现住地：</label></td>
+                <td><input type="text" value="" class="input-medium"></td>
+                <td class="TDleft"><label>政治面貌：</label></td>
+                <td><select>
+                		<option>群众</option>
+                		<option>团员</option>
+                		<option>党员</option>
+                    </select></td>
+           </tr>
+            <tr>
+                <td class="TDleft"><span class="text-star">*</span><label>工作单位：</label></td>
+                <td><input type="text" value="" class="input-medium"></td>
+                <td class="TDleft"><span class="text-star">*</span><label>文化程度：</label></td>
+                <td><select>
+                		<option>小学</option>
+                		<option>初中</option>
+                		<option>高中</option>
+                		<option>中专</option>
+                		<option>大专</option>
+                		<option>本科</option>
+                		<option>硕士</option>
+                		<option>博士</option>
+                    </select></td>
+           </tr>
+			<tr>
+                <td class="THtitle" colspan="4">人员入所信息</td>
+            </tr>
+            <tr>
+                <td class="TDleft"><span class="text-star">*</span><label>入所时间：</label></td>
+                <td><input type="text" value="" class="input-medium"></td>
+                <td class="TDleft"><span class="text-star">*</span><label>到案方式：</label></td>
+                <td><select>
+                		<option></option>
+                    </select></td>
+            </tr>
+            <tr>
+                <td class="TDleft"><span class="text-star">*</span><label>办案区：</label></td>
+                <td><input type="text" value="" class="input-medium"></td>
+                <td class="TDleft"><span class="text-star">*</span><label>入所原因：</label></td>
+                <td><select>
+                		<option></option>
+                    </select></td>
+           </tr>
+            <tr>
+                <td class="TDleft"><span class="text-star">*</span><label>特殊群体：</label></td>
+                <td><input type="text" value="" class="input-medium"></td>
+                <td class="TDleft"><span class="text-star">*</span><label>人员类型：</label></td>
+                <td><select>
+                		<option>违法嫌疑人</option>
+                        <option>报案人</option>
+                        <option>受害人</option>
+                        <option>证人</option>
+                        <option>保证人</option>
+                        <option>辩护人</option>
+                    </select></td>
+           </tr>
+            <tr>
+                <td class="TDleft"><span class="text-star">*</span><label>主办民警：</label></td>
+                <td><input type="text" value="" class="input-medium">
+                <a href="#">&amp; 选择</a></td>
+                <td class="TDleft"><span class="text-star">*</span><label>带入地点（抓获地）：</label></td>
+                <td><input type="text" value="" class="input-medium"></td>
+           </tr>
+            <tr>
+                <td class="TDleft"><span class="text-star">*</span><label>储物柜规格：</label></td>
+                <td><input type="text" value="" class="input-medium"></td>
+                <td class="TDleft"><span class="text-star">*</span><label>储物柜编号：</label></td>
+                <td><select>
+                		<option>无</option>
+                		<option>小</option>
+                		<option>中</option>
+                		<option>大</option>
+                		<option>超大</option>
+                    </select></td>
+           </tr>
+            <tr>
+                <td class="TDleft"><label>手环编号：</label></td>
+                <td><input type="text" value="" class="input-medium"><input type="button" value="获取出所人员信息"/></td>
+                <td class="TDleft"><span class="text-star">*</span><label>是否同案预警：</label></td>
+                <td>
+                <label><input name="" type="radio" value="">是</label>&nbsp;
+                <label><input name="" type="radio" value="" checked>否</label></td>
+           </tr>
+            <tr>
+				<td class="TDleft"><label>警情编号：</label></td>
+                <td><input type="text" value="" class="input-medium"></td>
+                <td class="TDleft"><label>文书编号：</label></td>
+                <td><input type="text" value="" class="input-medium"></td>
+           </tr>
+            <tr>
+                <td class="TDleft"><label>自述有无疾病、<br/>伤情及受伤原因：</label></td>
+                <td colspan="3"><textarea name="" cols="" rows="4" class="input-maxi"></textarea></td>
+           </tr>
+            <tr>
+                <td class="TDleft"><label>检查发现体表特殊特<br/>征、伤情及处理情况：</label></td>
+                <td colspan="3"><textarea name="" cols="" rows="4" class="input-maxi"></textarea></td>
+           </tr>
+            <tr>
+                <td class="TDleft"><label>伤势情况材料上传：</label></td>
+                <td colspan="3"><input name="" type="file"></td>
+           </tr>
+            <tr>
+                <td class="TDleft"><label>物品照片：</label></td>
+                <td colspan="3"><input name="" type="file"></td>
+           </tr>
+            <tr>
+                <td class="TDleft"><label>等候室</label></td>
+                <td colspan="3"><input type="text" value="无" class="input-medium" disabled></td>
+           </tr>
+            <tr>
+                <td class="THtitle" colspan="4">其他信息</td>
+            </tr>
+                <td class="TDleft">是否采集信息：</td>
+                <td>
+                <label><input name="" type="radio" value="">是</label>&nbsp;
+                <label><input name="" type="radio" value="">否</label></td>
+                <td class="TDleft">采集项目：</td>
+                <td><label><input name="cj" type="checkbox" value="">指纹</label>&nbsp;
+                    <label><input name="cj" type="checkbox" value="">血液</label>&nbsp;
+                    <label><input name="cj" type="checkbox" value="">尿液</label>&nbsp;
+                    <label><input name="cj" type="checkbox" value="">其他</label>
+                 </td>
+           </tr>
+            <tr>
+                <td class="TDleft">是否核查比对：</td>
+                <td colspan="3">
+                <label><input name="" type="radio" value="">是</label>&nbsp;
+                <label><input name="" type="radio" value="">否</label></td>
+           </tr>
+    </table>
+    
+</div>
+     <div class="btn-youAdd">
+        <button class="btn btn-primary">审核通过</button>&nbsp;&nbsp;
+        <button class="btn btn-danger">审核不通过</button>&nbsp;&nbsp;
+        <!-- <button class="btn">返回</button> -->
+        <a href="javascript:history.back();" class="btn">返回</a>
+    </div>
+
+                    
+        </div>
+    </div>
+ 
+</div>  
+
+<!--浮动层查询框-->
+<div id="pop" style="display:none;">
+       <div class="myModal_bg"></div> 
+       <div class="modal modal-min">
+       		<a class="close" href="javascript:hide()">X</a>
+          <div class="modal-body">
+          		<h4 style="font-size:16px; margin-top:8px">用户管理查询</h4>
+                <p class="op-success">
+                    <table class="barQuery">
+                            <tr>
+                                <td class="TDleft"><label>用户名：</label></td>
+                                <td><input type="text" value="" class="input-large"></td>
+                            </tr>
+                            <tr>
+                                <td class="TDleft"><label>真实姓名：</label></td>
+                                <td><input type="text" value="" class="input-large"></td>
+                            </tr>
+                            <tr>
+                                <td class="TDleft"><label>身份证号：</label></td>
+                                <td><input type="text" value="" class="input-large"></td>
+                            </tr>
+                            <tr>
+                                <td class="TDleft"><label>组织机构：</label></td>
+                                <td><input type="text" value="" class="input-large"></td>
+                           </tr>
+                    </table>                
+                </p>
+                <div class="order-button">
+                     <a href="print.html" class="btn btn-primary">查询</a>&nbsp;&nbsp;
+    				 <a href="javascript:hide()" class="btn">关闭</a>
+                 </div>
+                
+          </div>
+        </div>
+    </div>
+
+</block>
+

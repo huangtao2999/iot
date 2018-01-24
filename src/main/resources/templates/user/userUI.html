@@ -1,0 +1,159 @@
+  <extend name="Public/base" />
+    
+     <block name="commonjs">
+     </block>
+
+     <block name="js">
+        <script src="__PUBLIC__/vendor/validate/jquery.js"></script>
+        <script src="__PUBLIC__/vendor/validate/jquery.validate.min.js"></script>
+        <script src="__PUBLIC__/vendor/validate/validate.expand.js"></script>
+        <script src="__PUBLIC__/vendor/validate/localization/messages_zh.js"></script>
+        <script src="__PUBLIC__/vendor/layer/layer.js"></script>
+    </block>
+  <!--主体开始-->
+
+
+  <block name="main">
+
+  <div class="content">
+        
+        <ul class="breadcrumb">
+            <li><a href="user.html">用户管理</a> <span class="divider">/</span></li>
+            <li class="active">{$mo==null?'用户录入':'用户编辑'}</li>
+        </ul>
+
+        <div class="container-fluid">
+<br/>
+<form action="{$mo==null?'__URL__/insert':'__URL__/update'}" method="post" id="form1" >
+    <input type="hidden" name="id" value="{$mo.id}" />
+
+    <table class="youAdd">
+            <tr>
+                <td class="TDleft"><label>用户名：</label><font color="red">*</font></td>
+                <td width="300"><input type="text" value="{$mo.username}" class="input-large" name="username" required   <notempty name="mo">readOnly</notempty>  >
+                </td>
+                <td class="TDleft"><label>真实姓名：</label></td>
+                <td width="300"><input type="text" value="{$mo.realname}" class="input-large" name="realname">
+                </td>
+            </tr>
+            <tr>
+                <td class="TDleft"><label>身份证号：<font color="red">*</font></label></td>
+                <td><input type="number" value="{$mo.idcard}" class="input-large" name="idcard" required="true" minlength="18">
+                </td>
+                <td class="TDleft"><label>组织机构：</label></td>
+                <td><select name="org">
+                      <option>---请选择---
+                     <foreach name="org_list" item="vo" key="k">
+                       <option for="chk_{$k}" value="{$vo.org_name}" <eq name="mo.org" value="$vo.org_name">selected</eq>  >{$vo.org_name}</option>
+                    </foreach>
+                     <!--    <option value="下陆区分局团城山派出所" <eq name="mo.org" value="下陆区分局团城山派出所">selected</eq>  >下陆区分局团城山派出所</option>
+                        <option value="箭楼下社区" <eq name="mo.org" value="箭楼下社区">selected</eq>  >箭楼下社区</option>
+                        <option value="皇姑岭社区" <eq name="mo.org" value="皇姑岭社区">selected</eq>  >皇姑岭社区</option>
+                        <option value="柯尔山社区" <eq name="mo.org" value="柯尔山社区">selected</eq>  >柯尔山社区</option>
+                        <option value="袁家畈社区" <eq name="mo.org" value="袁家畈社区">selected</eq> >袁家畈社区</option>
+                        <option value="陈伯臻社区" <eq name="mo.org" value="陈伯臻社区">selected</eq> >陈伯臻社区</option>
+                        <option value="青龙山社区" <eq name="mo.org" value="青龙山社区">selected</eq> >青龙山社区</option> -->
+                    </select>
+            </tr>
+           <!--  <tr>
+                <td class="TDleft"><label>密码：</label></td>
+                <td><input type="password" value="" class="input-large" min="6" max="18" name="password">
+                <span class="muted">密码至少6个字符，最多18个字符</span></td>
+           </tr>
+            <tr>
+                <td class="TDleft"><label>重复密码：</label></td>
+                <td><input type="password" value="" class="input-large" min="6" max="18" name="againpassword">
+                <span class="muted">重复密码</span></td>
+           </tr> -->
+            <tr>
+                <td class="TDleft"><label>角色：</label></td>
+                <td colspan="3">
+               <!--  <input type="text" value="" class="input-large">
+                <a href="#">选择</a> -->
+                <!-- <select name="role_id">
+                        <option value="">-请选择-</option>
+                    <foreach name="Think.session.roleList" item="vo" key="k">
+                       <option value="{$vo.id}" <eq name="mo.role_id" value="$vo.id">selected</eq> >{$vo.rolename}</option>
+                    </foreach>
+                </select> -->
+
+                    <foreach name="Think.session.roleList" item="vo" key="k">
+                       <input type="checkbox" name="role_ids[]" value="{$vo.id}" id="chk_{$k}"
+                          <?php if(in_array($vo['id'], explode(',',$mo['role_ids']))): ?>checked<?php endif; ?>
+                        /> <label for="chk_{$k}">{$vo.rolename}</label> &nbsp;&nbsp;
+                    </foreach>
+                 
+
+                </td>
+            </tr>
+            <tr>
+                <td class="TDleft"><label>手机号码：<font color="red">*</font></label></td>
+                <td><input type="text" value="{$mo.phone}" class="input-large" name="phone">
+                </td>
+                <td class="TDleft"><label>办公电话：<font color="red">*</font></label></td>
+                <td><input type="text" value="{$mo.tel}" class="input-large" name="tel" required="true" minlength="11" >
+                </td>
+            </tr>
+            <tr>
+                <td class="TDleft"><label>常用邮箱：</label></td>
+                <td><input type="text" value="{$mo.email}" class="input-large" name="email">
+                </td>
+                <td class="TDleft"><label>状态：</label></td>
+                <td>
+                    <select name="status">
+                        <option value="激活">激活</option>
+                        <option value="锁定" <eq name="mo.status" value="锁定">selected</eq> >锁定</option>
+                    </select>
+                </td>
+            </tr>
+			<tr>
+                <td class="TDleft" colSpan="4"><p class="text-center"> <span class="muted">温馨提示：初始密码均为1</span></p></td>
+            </tr>
+    </table>
+<!--<br/>
+    <p class="text-center"> <span class="muted">温馨提示：初始密码均为1</span></p>
+    
+<br/>-->
+     <div class="btn-youAdd">
+        <button class="btn btn-primary">保存</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="btn" href="javascript:myback()"> 返回</a>
+    </div>
+  
+  </form>
+            </div>
+        </div>
+  
+</div>     
+ 
+ <block name="script">
+   
+   <script>
+     
+       $().ready(function() {
+       $("#form1").validate({
+        // 添加自定义验证规则
+         rules: {
+            phone: {    //验证手机号
+                required:true,
+                isMobile: true
+               },
+          },
+          submitHandler:function(form){
+            // alert("提交事件!");   
+            form.submit();
+          }    
+
+       });
+
+     });
+         //返回
+       function myback(){
+           
+            window.history.back(-1);
+        }
+
+   </script>
+
+ </block>
+
+</block>
