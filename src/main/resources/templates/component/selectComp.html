@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<!--下拉框组件用规范
+<div th:include="component/selectComp(id='表单元素ID',name='表单元素名称',label='表单标签名称',dictType='字典类型',defaultValue='默认值')"></div>
+-->
+<head>
+    <meta charset="utf-8"/>
+    <span th:include="inc/common2"></span>
+</head>
+<span th:fragment=" selectComp(id,name,label,dictType,defaultValue)">
+    <span class="layui-form" action="#" style="display: inline">
+        <span th:text="${label}"></span>
+        <span class="layui-input-inline">
+            <select th:id="${id}" th:name="${name}" class="layui-input tool-select" lay-search>
+                <option value="">请选择</option>
+            </select>
+        </span>
+    </span>
+</span>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(function () {
+        var id = [[${id}]];
+        var dictType = [[${dictType}]];
+        var defaultValue = [[${defaultValue}]];
+        var res = new PublicAjax('/Dictionary/getDicts.json', {'type': dictType});
+        if (res.success) {
+            $.each(res.content, function (index, obj) {
+                if (obj.code == defaultValue) {
+                    $('#' + id).append('<option selected="selected" value=' + obj.code + '>' + obj.name + '</option>');
+                } else {
+                    $('#' + id).append('<option value=' + obj.code + '>' + obj.name + '</option>');
+                }
+            });
+        }
+    });
+    /*]]>*/
+</script>
+
+</html>
+
+

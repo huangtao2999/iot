@@ -129,6 +129,7 @@ public class DswGeneratePlugin extends PluginAdapter {
     public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(XmlElement element,
                                                                      IntrospectedTable introspectedTable) {
 
+        XmlElement orderbyElement = (XmlElement) element.getElements().remove(element.getElements().size() - 1);
         XmlElement isdeletedElement = new XmlElement("if");
         isdeletedElement.addAttribute(new Attribute("test", "oredCriteria.size != 0"));
         isdeletedElement.addElement(new TextElement(SQLMAP_COMMON_POTFIX));
@@ -138,6 +139,8 @@ public class DswGeneratePlugin extends PluginAdapter {
         isdeletedElement.addElement(new TextElement("where is_deleted = 'n'"));
         element.addElement(isdeletedElement);
 
+        element.addElement(orderbyElement);
+        
         XmlElement limitPageElement = new XmlElement("if");
         limitPageElement.addAttribute(new Attribute("test", "page != null"));
         limitPageElement.addElement(new TextElement("limit ${page.offset},${page.pageSize}"));

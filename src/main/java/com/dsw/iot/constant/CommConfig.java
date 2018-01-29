@@ -1,5 +1,9 @@
 package com.dsw.iot.constant;
 
+import sun.applet.Main;
+
+import lombok.Data;
+
 public class CommConfig {
     //系统目录分隔符
     public static final String SEPARATOR = System.getProperty("file.separator");

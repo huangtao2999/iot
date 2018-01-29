@@ -14,4 +14,6 @@ import lombok.Data;
 public class LockerResquest extends BaseDto {
 
     private String lockerNo;
+
+    private String type;
 }

@@ -156,7 +156,7 @@
         var res = PublicAjax('../loginRpc/login.json',
                              {'userName': userName, 'passWord': passWord});
         if (res.success == true) {
-            window.location.href = "../Index/index.html";
+            window.location.href = "../index/index.html";
         } else {
             alert(res.errorMsg);
             return;

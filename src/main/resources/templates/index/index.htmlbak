@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>公安机关执法办案管控平台</title>
+    <div th:include="inc/common"></div>
+</head>
+<frameset rows="92,*" cols="*" frameborder="no" border="0" framespacing="0">
+    <frame src="top.html" name="topFrame" frameborder="no" scrolling="no"
+           noresize="noresize" id="topFrame"/>
+    <frameset name="myFrame" cols="141,*" frameborder="no" border="0"
+              framespacing="0">
+        <frame src="left.html" name="leftFrame" frameborder="no"
+               scrolling="auto" noresize="noresize" id="leftFrame"/>
+        <frame src="main.html" name="mainFrame" frameborder="no"
+               id="mainFrame"/>
+    </frameset>
+</frameset>
+<noframes>
+    <body>
+    </body>
+</noframes>
+</html>

@@ -3,89 +3,111 @@
 <head>
     <meta charset="utf-8"/>
     <title>储物柜管理</title>
-    <div th:include="inc/common"></div>
+    <div th:include="inc/common2"></div>
 </head>
 <!--主体开始-->
-<div class="content">
-    <ul class="breadcrumb">
-        <li class="active">储物柜管理</li>
-    </ul>
-    <div class="container-fluid">
-        <div class="layui-form btn-toolbar">
-            储物柜编号：<input type="text" id="lockerNo" class="input-medium"
-                         name="lockerNo">&nbsp;
-            <button class="layui-btn layui-btn-warm" id="chax"
-                    data-type="reload"><img
-                    th:src="@{../../images/icon/query.png}"/> 查询
-            </button>
-        </div>
-        <div class="btn-toolbar">
-                <span class="pull-left">
-                     <a class="btn btn-success" id="add"><imgn
-                             th:src="@{../../images/icon/plus.png}"/> 新增</a> &nbsp;&nbsp;
-                </span>
-            <span class="pull-left">
-                    <a class="btn btn-danger">删除</a>
-                </span>
-        </div>
-        <table class="table-mins" id="demo" lay-filter="test"></table>
+<div>
+
+    <div class="btn-toolbar">
+        <span class="pull-left">
+            <a class="layui-btn layui-btn-primary layui-btn-xs layui-icon"
+               lay-event="lay-eventdetail">&#xe654;查看</a>
+            <a class="layui-btn layui-btn-xs layui-icon" lay-event="edit">&#xe654;编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs  layui-icon" lay-event="del">&#xe654;删除</a>
+        </span>
+        编号：<input type="text" value="" class="input-medium" id="lockerNo">&nbsp;&nbsp;&nbsp;&nbsp;
+        单位：<input type="text" value="" class="input-medium" name="work_units">
+        <span style="height: 20px;"
+              th:include="component/selectComp(id='type',name='type',label='类型',dictType='type',defaultValue='大')"></span>
+        <a class="layui-btn layui-btn-danger layui-btn-xs  layui-icon" id="chax" lay-event="del">&#xe615;查询</a>
+        <span th:include="component/uploadComp(id='ufile',name='ufile',label='上传附件1')"></span>
     </div>
+
+    <!--<div class="layui-form-item" style="margin-bottom:-25px;" pane>-->
+    <!--<div class="layui-input-inline" style="margin-bottom: 1px;">-->
+    <!--<a class="layui-btn layui-btn-primary layui-btn-xs layui-icon"-->
+    <!--lay-event="detail">&#xe654;查看</a>-->
+    <!--<a class="layui-btn layui-btn-xs layui-icon" lay-event="edit">&#xe654;编辑</a>-->
+    <!--<a class="layui-btn layui-btn-danger layui-btn-xs  layui-icon"-->
+    <!--lay-event="del">&#xe654;删除</a>-->
+    <!--</div>-->
+    <!--<div class="layui-inline">-->
+    <!--<div th:include="component/selectComp(id='type',name='type',label='类型',dictType='type',defaultValue='大')"></div>-->
+    <!--</div>-->
+    <!--<div class="layui-inline">-->
+    <!--<label class="layui-form-label">编号</label>-->
+    <!--<div class="layui-input-inline">-->
+    <!--<input type="text" id="lockerNo"-->
+    <!--class="layui-input"-->
+    <!--name="lockerNo">-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<button class="layui-btn tool-select layui-icon" id="chax">-->
+    <!--&#xe615;-->
+    <!--</button>-->
+    <!--<button type="reset"-->
+    <!--class="layui-btn tool-select layui-btn-primary">重置-->
+    <!--</button>-->
+    <!--</div>-->
+    <!--</form>-->
+    <table id="demo" lay-filter="test"></table>
+</div>
+<div>
 </div>
 
 <script>
-    layui.use('table', function () {
+    layui.use(['table', 'layer'], function () {
+        var layer = layui.layer;
         var table = layui.table;
         //table内容渲染
         table.render({
-                         elem: '#demo',
-                         url: '/Locker/queryPage.json',
-                         cols:
-                             [[
-                                 {type: 'checkbox'},
-                                 {type: 'numbers'},
-                                 {
-                                     field: 'type',
-                                     width: 100,
-                                     align: 'center',
-                                     title: '类型'
-                                 },
-                                 {
-                                     field: 'lockerNo',
-                                     width: 150,
-                                     align: 'center',
-                                     title: '编号',
-                                     sort: true
-                                 },
-                                 {
-                                     field: 'useStatus',
-                                     width: 100,
-                                     align: 'center',
-                                     title: '使用状态'
-                                 },
-                                 {
-                                     field: 'status',
-                                     width: 100,
-                                     align: 'center',
-                                     title: '状态'
-                                 },
-                                 {
-                                     field: 'lock_status',
-                                     width: 300,
-                                     title: '电源状态',
-                                     align: 'center',
-                                     toolbar: '#barDemo'
-                                 },
-                                 {
-                                     fixed: 'right',
-                                     width: 320,
-                                     align: 'center',
-                                     toolbar: '#optioins'
-                                 }
-                             ]],
-                         limits: [5, 10, 20],
-                         page:
-                             true
-                     });
+            elem: '#demo',
+            url: '/Locker/queryPage.json',
+            cols:
+                [[
+                    {type: 'checkbox'},
+                    {type: 'numbers'},
+                    {
+                        field: 'type',
+                        width: '10%',
+                        align: 'center',
+                        title: '类型'
+                    },
+                    {
+                        field: 'lockerNo',
+                        width: '10%',
+                        align: 'center',
+                        title: '编号',
+                        sort: true
+                    },
+                    {
+                        field: 'useStatus',
+                        width: '10%',
+                        align: 'center',
+                        title: '使用状态'
+                    },
+                    {
+                        field: 'status',
+                        width: '10%',
+                        align: 'center',
+                        title: '状态'
+                    },
+                    {
+                        field: 'lock_status',
+                        title: '电源状态',
+                        align: 'center',
+                        toolbar: '#barDemo'
+                    },
+                    {
+                        fixed: 'right',
+                        align: 'center',
+                        toolbar: '#optioins'
+                    }
+                ]],
+            limits: [5, 10, 20],
+            page:
+                true
+        });
         //操作列方法绑定
         table.on('tool(test)', function (obj) {
             var data = obj.data;
@@ -100,9 +122,11 @@
                     curr: 1 //重新从第 1 页开始
                 }
                 , where: {
-                    lockerNo: $('#lockerNo').val()
+                    lockerNo: $('#lockerNo').val(),
+                    type: $('#type').val()
                 }
             });
+            return false;
         });
 
     });
@@ -110,12 +134,12 @@
         var layer = layui.layer;
         $('#add').on('click', function () {
             layer.open({
-                           type: 2,
-                           title: '弹出窗口Demo',
-                           shadeClose: true,
-                           area: ['1000px', '560px'],
-                           content: 'http://www.baidu.com'
-                       });
+                type: 2,
+                title: '弹出窗口Demo',
+                shadeClose: true,
+                area: ['1000px', '560px'],
+                content: 'http://www.baidu.com'
+            });
         });
     });
 </script>
@@ -137,7 +161,8 @@
     <a class="layui-btn layui-btn-primary layui-btn-xs"
        lay-event="detail">查看</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs"
+       lay-event="del">删除</a>
 </script>
 </html>
 
