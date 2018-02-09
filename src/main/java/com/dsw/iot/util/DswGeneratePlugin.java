@@ -37,8 +37,8 @@ public class DswGeneratePlugin extends PluginAdapter {
     private static final String JAVAFILE_POTFIX = "Ext";
     private static String XMLFILE_POSTFIX = "Ext";
     private static String ANNOTATION_RESOURCE = "javax.annotation.Resource";
-    private static String FULLY_QUALIFIED_PAGE = "com.dsw.iot.util.Page";
-    private static String SQLMAP_COMMON_POTFIX = "and is_deleted = 'n'";
+    private static String FULLY_QUALIFIED_PAGE = "com.dsw.iot.util.PageDto";
+    private static String SQLMAP_COMMON_POTFIX = "and is_deleted = 'N'";
 
 
     @Override
@@ -113,7 +113,7 @@ public class DswGeneratePlugin extends PluginAdapter {
 
     @Override
     public boolean modelExampleClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        addPage(topLevelClass, introspectedTable, "page");
+        addPageDto(topLevelClass, introspectedTable, "pageDto");
         return super.modelExampleClassGenerated(topLevelClass, introspectedTable);
     }
 
@@ -136,14 +136,14 @@ public class DswGeneratePlugin extends PluginAdapter {
         element.addElement(isdeletedElement);
         isdeletedElement = new XmlElement("if");
         isdeletedElement.addAttribute(new Attribute("test", "oredCriteria.size == 0"));
-        isdeletedElement.addElement(new TextElement("where is_deleted = 'n'"));
+        isdeletedElement.addElement(new TextElement("where is_deleted = 'N'"));
         element.addElement(isdeletedElement);
 
         element.addElement(orderbyElement);
-        
+
         XmlElement limitPageElement = new XmlElement("if");
-        limitPageElement.addAttribute(new Attribute("test", "page != null"));
-        limitPageElement.addElement(new TextElement("limit ${page.offset},${page.pageSize}"));
+        limitPageElement.addAttribute(new Attribute("test", "pageDto != null"));
+        limitPageElement.addElement(new TextElement("limit ${pageDto.offset},${pageDto.pageSize}"));
         element.addElement(limitPageElement);
         return super.sqlMapSelectByExampleWithoutBLOBsElementGenerated(element, introspectedTable);
     }
@@ -156,7 +156,7 @@ public class DswGeneratePlugin extends PluginAdapter {
         element.addElement(isNotNullElement);
         isNotNullElement = new XmlElement("if");
         isNotNullElement.addAttribute(new Attribute("test", "oredCriteria.size == 0"));
-        isNotNullElement.addElement(new TextElement("where is_deleted = 'n'"));
+        isNotNullElement.addElement(new TextElement("where is_deleted = 'N'"));
         element.addElement(isNotNullElement);
         return super.sqlMapCountByExampleElementGenerated(element, introspectedTable);
     }
@@ -185,6 +185,31 @@ public class DswGeneratePlugin extends PluginAdapter {
         return super.sqlMapUpdateByPrimaryKeyWithoutBLOBsElementGenerated(element, introspectedTable);
     }
 
+    @Override
+    public boolean sqlMapInsertElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
+        selectKey(element, introspectedTable);
+        return super.sqlMapInsertElementGenerated(element, introspectedTable);
+    }
+
+    @Override
+    public boolean sqlMapInsertSelectiveElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
+        selectKey(element, introspectedTable);
+        return super.sqlMapInsertSelectiveElementGenerated(element, introspectedTable);
+    }
+
+    /**
+     * 获取插入主键
+     *
+     * @param element
+     * @param introspectedTable
+     */
+    private void selectKey(XmlElement element, IntrospectedTable introspectedTable) {
+        XmlElement selectKey = new XmlElement("selectKey");
+        selectKey.addAttribute(new Attribute("keyProperty", "id"));
+        selectKey.addAttribute(new Attribute("resultType", "long"));
+        selectKey.addElement(new TextElement("select LAST_INSERT_ID()"));
+        element.getElements().add(0, selectKey);
+    }
 
     private void updateDocumentNameSpace(IntrospectedTable introspectedTable, XmlElement parentElement) {
         Attribute namespaceAttribute = null;
@@ -201,7 +226,7 @@ public class DswGeneratePlugin extends PluginAdapter {
     /**
      * 在XXExample对象里添加Page对象属性
      */
-    private void addPage(TopLevelClass topLevelClass, IntrospectedTable introspectedTable, String name) {
+    private void addPageDto(TopLevelClass topLevelClass, IntrospectedTable introspectedTable, String name) {
         topLevelClass.addImportedType(new FullyQualifiedJavaType(FULLY_QUALIFIED_PAGE));
         CommentGenerator commentGenerator = context.getCommentGenerator();
         Field field = new Field();

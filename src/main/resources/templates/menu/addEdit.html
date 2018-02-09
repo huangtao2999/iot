@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>菜单管理</title>
+	<div th:include="inc/common"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{../../vendor/ztree/css/metroStyle/metroStyle.css}"/>
+    <script th:src="@{../../vendor/ztree/js/jquery.ztree.all.js}"></script>
+</head>
+<body>
+<!--主体开始-->
+<form action="" class="layui-form">
+	<table class="youAdd" id="mainForm">
+		<tbody>
+			<tr>
+				<td class="TDleft">菜单名</td>
+				<td colspan=3>
+					<div class="layui-input-inline">
+				         <input type="text" id="text" name="text" autocomplete="off" class="layui-input"
+				         th:value="${item.text}" lay-verify="required">
+         			</div>
+         		</td>
+			</tr>
+			<tr>
+				<td class="TDleft">菜单路径</td>
+				<td colspan=3>
+					<div class="layui-input-inline">
+				         <input type="text" id="action" name="action" autocomplete="off" class="layui-input"
+				         th:value="${item.action}" lay-verify="required">
+         			</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="TDleft">图标</td>
+				<td colspan=3>
+					<div class="layui-input-inline">
+						<button type="button" class="layui-btn layui-btn-normal" id="imgAttach" name="imgAttach" >
+							<i class="layui-icon">&#xe67c;</i>上传图片
+						</button>
+						<div class="layui-upload-list" id="imgPreview">
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="TDleft">排序号</td>
+				<td colspan=3>
+					<div class="layui-input-inline">
+				         <input type="text" id="sort" name="sort" autocomplete="off" class="layui-input"
+				         th:value="${item.sort}" onKeyUp="value=value.replace(/\D/g,'')" >
+         			</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="TDleft">是否有效</td>
+				<td colspan=3>
+					<div class="layui-input-inline">
+				         <span th:include="component/selectCombo(id='isValid',name='isValid',dictType='YES_NO',defaultValue=${item.isValid},verify='')"/>
+         			</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="btn-youAdd">
+			<button id="submitAdd" class="layui-btn" lay-submit="" lay-filter="submit">提交</button>
+	</div>
+	<input type="hidden" id="id" name="id" th:value="${item.id}">
+	<input type="hidden" id="pid" name="pid" th:value="${item.pid}">
+</form>
+</body>
+<script th:inline="javascript">
+
+$(document).ready(function(){
+	var itemId = [[${item.id}]];
+	//默认是选择否
+	if(itemId == undefined || itemId == null){
+		$("#isValid").val(1);
+		layui.form.render();
+	}
+});
+
+layui.use(['table','layer','form'], function () {
+	var table = layui.table
+	,form = layui.form;
+
+	//监听提交
+	form.on('submit(submit)', function(data){
+		//ajax提交
+		var res = PublicAjax('/Menu/saveMenu.json',data.field);
+		if(res.success){
+			layer.msg('保存成功');
+			var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+			parent.refreshWholeTree( $("#pid").val() );//调用父窗口刷新整个
+			parent.layer.close(index);//关闭弹窗
+		}else{
+			layer.msg('保存失败');
+		}
+	});
+	//verify规则
+	form.verify({
+		numberCanBlank: function(value, item){
+			if(value == ""){
+			}else{
+				if(!new RegExp("^[0-9]*$").test(value)){
+				    return '排序号请输入数字';
+				}
+			}
+		}
+	})
+});
+</script>
+</html>

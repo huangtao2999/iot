@@ -3,62 +3,74 @@
 <head>
     <meta charset="utf-8"/>
     <title>储物柜管理</title>
-    <div th:include="inc/common2"></div>
+    <div th:include="inc/common"></div>
 </head>
 <!--主体开始-->
-<div>
+<div class="layui-fluid">
+    <div class="layui-row layui-bg-gray" style="height: 20px;">
+        <span>储物柜管理</span>
+    </div>
+    <div class="layui-row" style="height: 10px;"></div>
+    <!--查询条件-->
+    <div class="layui-row">
+        <form class="layui-form" action="">
+            <div class="layui-co1-md1">
+                <div class="layui-form-item">
 
-    <div class="btn-toolbar">
-        <span class="pull-left">
-            <a class="layui-btn layui-btn-primary layui-btn-xs layui-icon"
-               lay-event="lay-eventdetail">&#xe654;查看</a>
-            <a class="layui-btn layui-btn-xs layui-icon" lay-event="edit">&#xe654;编辑</a>
-            <a class="layui-btn layui-btn-danger layui-btn-xs  layui-icon" lay-event="del">&#xe654;删除</a>
-        </span>
-        编号：<input type="text" value="" class="input-medium" id="lockerNo">&nbsp;&nbsp;&nbsp;&nbsp;
-        单位：<input type="text" value="" class="input-medium" name="work_units">
-        <span style="height: 20px;"
-              th:include="component/selectComp(id='type',name='type',label='类型',dictType='type',defaultValue='大')"></span>
-        <a class="layui-btn layui-btn-danger layui-btn-xs  layui-icon" id="chax" lay-event="del">&#xe615;查询</a>
-        <span th:include="component/uploadComp(id='ufile',name='ufile',label='上传附件1')"></span>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">尺寸</label>
+                        <div class="layui-input-block" style="width: 100px;">
+                            <span th:include="component/selectCombo(id='type',name='type',dictType='SIZE')"></span>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">使用状态</label>
+                        <div class="layui-input-block" style="width: 100px;">
+                            <span th:include="component/selectCombo(id='useStatus',name='useStatus',dictType='USE_STATUS')"></span>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">编号</label>
+                        <div class="layui-input-inline" style="width: 100px;">
+                            <input type="text" name="lockerNo" id="lockerNo" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <button class="layui-btn layui-btn-warm" id="submit" lay-submit="" lay-filter="submit"><i
+                                class="layui-icon">&#xe615;</i>查询
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--功能列操作按钮-->
+    <div class="layui-row layui-form">
+        <a class="layui-btn layui-btn-primary layui-btn-xs"
+           lay-event="detail" id="add"><i class="layui-icon">&#xe654;</i>新增</a>
+        <a id="editBtn" class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</a>
+        <a id="deleteBtn" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+                class="layui-icon">&#xe640;</i>删除</a>
+    </div>
+    <!--表单列表-->
+    <div class="layui-row">
+        <table class="table-mins" id="demo" lay-filter="test"></table>
     </div>
 
-    <!--<div class="layui-form-item" style="margin-bottom:-25px;" pane>-->
-    <!--<div class="layui-input-inline" style="margin-bottom: 1px;">-->
-    <!--<a class="layui-btn layui-btn-primary layui-btn-xs layui-icon"-->
-    <!--lay-event="detail">&#xe654;查看</a>-->
-    <!--<a class="layui-btn layui-btn-xs layui-icon" lay-event="edit">&#xe654;编辑</a>-->
-    <!--<a class="layui-btn layui-btn-danger layui-btn-xs  layui-icon"-->
-    <!--lay-event="del">&#xe654;删除</a>-->
-    <!--</div>-->
-    <!--<div class="layui-inline">-->
-    <!--<div th:include="component/selectComp(id='type',name='type',label='类型',dictType='type',defaultValue='大')"></div>-->
-    <!--</div>-->
-    <!--<div class="layui-inline">-->
-    <!--<label class="layui-form-label">编号</label>-->
-    <!--<div class="layui-input-inline">-->
-    <!--<input type="text" id="lockerNo"-->
-    <!--class="layui-input"-->
-    <!--name="lockerNo">-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<button class="layui-btn tool-select layui-icon" id="chax">-->
-    <!--&#xe615;-->
-    <!--</button>-->
-    <!--<button type="reset"-->
-    <!--class="layui-btn tool-select layui-btn-primary">重置-->
-    <!--</button>-->
-    <!--</div>-->
-    <!--</form>-->
-    <table id="demo" lay-filter="test"></table>
-</div>
-<div>
 </div>
 
 <script>
-    layui.use(['table', 'layer'], function () {
+    var lockerStatusDic = findDicItems('LOCKER_STATUS');
+    var useStatusDic = findDicItems('USE_STATUS');
+    var sizeDic = findDicItems('SIZE');
+    layui.use(['layer', 'table', 'form'], function () {
         var layer = layui.layer;
         var table = layui.table;
+        var form = layui.form;
         //table内容渲染
         table.render({
             elem: '#demo',
@@ -69,37 +81,66 @@
                     {type: 'numbers'},
                     {
                         field: 'type',
-                        width: '10%',
+                        width: 100,
                         align: 'center',
-                        title: '类型'
+                        title: '类型',
+                        sort: true,
+                        templet: function (d) {
+                            var statusName = "未知字典";
+                            $.each(sizeDic, function (i, obj) {
+                                if (obj.code == d.type) {
+                                    statusName = obj.name;
+                                }
+                            });
+                            return statusName;
+                        }
                     },
                     {
                         field: 'lockerNo',
-                        width: '10%',
+                        width: 150,
                         align: 'center',
-                        title: '编号',
-                        sort: true
-                    },
-                    {
-                        field: 'useStatus',
-                        width: '10%',
-                        align: 'center',
-                        title: '使用状态'
+                        title: '编号'
                     },
                     {
                         field: 'status',
-                        width: '10%',
+                        width: 100,
                         align: 'center',
-                        title: '状态'
+                        title: '状态',
+                        templet: function (d) {
+                            var statusName = "未知字典";
+                            $.each(lockerStatusDic, function (i, obj) {
+                                if (obj.code == d.status) {
+                                    statusName = obj.name;
+                                }
+                            });
+                            return statusName;
+                        }
+                    },
+                    {
+                        field: 'useStatus',
+                        width: 100,
+                        align: 'center',
+                        title: '使用状态',
+                        templet: function (d) {
+                            var statusName = "未知字典";
+                            $.each(useStatusDic, function (i, obj) {
+                                if (obj.code == d.useStatus) {
+                                    statusName = obj.name;
+                                }
+                            });
+                            return statusName;
+                        }
                     },
                     {
                         field: 'lock_status',
+                        width: 300,
                         title: '电源状态',
                         align: 'center',
                         toolbar: '#barDemo'
                     },
                     {
                         fixed: 'right',
+                        title: '操作',
                         align: 'center',
                         toolbar: '#optioins'
                     }
@@ -112,36 +153,91 @@
         table.on('tool(test)', function (obj) {
             var data = obj.data;
             var event = obj.event;
-            alert(data.lockerStatus);
-            alert(event);
+//             alert(data.lockerStatus);
+//             alert(event);
+            if (event == "detail") {
+                layer.open({
+                    type: 2,
+                    title: '查看',
+                    maxmin: true,
+                    area: ['800px', '560px'],
+                    content: '/Locker/detail.html?id=' + data.id
+                });
+            } else if (event == "edit") {
+                layer.open({
+                    type: 2,
+                    title: '编辑',
+                    maxmin: true,
+                    area: ['800px', '560px'],
+                    content: '/Locker/edit.html?id=' + data.id
+                });
+            } else if (event == "del") {
+                var res = PublicAjax('/Locker/deleteLocker.json', {"ids": data.id});
+                layui.table.reload("demo");
+            }
         });
 
-        $('#chax').on('click', function () {
+        form.on('submit(submit)', function (data) {
             table.reload('demo', {
                 page: {
                     curr: 1 //重新从第 1 页开始
                 }
-                , where: {
-                    lockerNo: $('#lockerNo').val(),
-                    type: $('#type').val()
-                }
+                , where: data.field
             });
             return false;
         });
 
-    });
+        $("#editBtn").click(function () {//编辑
+            var checkStatus = table.checkStatus('demo')
+                , data = checkStatus.data;
+            if (data.length == 1) {
+                layer.open({
+                    type: 2,
+                    title: '编辑',
+                    maxmin: true,
+                    area: ['800px', '560px'],
+                    content: '/Locker/edit.html?id=' + data[0].id
+                });
+            } else {
+                layer.msg("请选中一条数据！");
+            }
+        });
+
+        $("#deleteBtn").click(function () {//删除
+            var checkStatus = table.checkStatus('demo')
+                , data = checkStatus.data;
+            var ids = "";
+            if (data.length == 0) {
+                layer.msg("请先选中数据！");
+                return;
+            }
+            for (var i = 0; i < data.length; i++) {
+                ids += data[i].id + ",";
+            }
+            layer.confirm("你确定要删除？", function (index) {
+                layer.close(index);
+                var i = openWaitWindow();
+                var res = PublicAjax('/Locker/deleteLocker.json', {"ids": ids});
+                closeWaitWindow(i);
+                layui.table.reload("demo");
+            })
+        })
+    })
+    ;
     layui.use('layer', function () {
         var layer = layui.layer;
         $('#add').on('click', function () {
             layer.open({
                 type: 2,
-                title: '弹出窗口Demo',
-                shadeClose: true,
-                area: ['1000px', '560px'],
-                content: 'http://www.baidu.com'
+                title: '新增',
+                maxmin: true,
+                area: ['800px', '560px'],
+                content: '/Locker/add.html'
             });
         });
     });
+
+
 </script>
 
 <script type="text/html" id="barDemo">
@@ -161,8 +257,7 @@
     <a class="layui-btn layui-btn-primary layui-btn-xs"
        lay-event="detail">查看</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs"
-       lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 </html>
 

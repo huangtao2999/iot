@@ -1,6 +1,11 @@
 package com.dsw.iot.util;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import org.apache.log4j.Logger;
 
@@ -82,6 +87,19 @@ public class FileUtils {
         }
     }
 
+	/**
+	 * 删除指定文件
+	 * 
+	 * @param filePath
+	 */
+	public static void deleteSpecificFile(String filePath) {
+		File file = new File(filePath);
+		if (!file.exists()) {
+			return;
+		}
+		file.delete();
+	}
+
     /**
      * 删除指定文件夹下所有文件
      *
@@ -154,5 +172,16 @@ public class FileUtils {
             e.printStackTrace();
         }
         return buffer;
+    }
+
+    public static void uploadFile(byte[] file, String filePath, String fileName) throws Exception {
+        File targetFile = new File(filePath);
+        if (!targetFile.exists()) {
+            targetFile.mkdirs();
+        }
+        FileOutputStream out = new FileOutputStream(filePath + fileName);
+        out.write(file);
+        out.flush();
+        out.close();
     }
 }

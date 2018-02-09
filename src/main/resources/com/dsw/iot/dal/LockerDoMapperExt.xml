@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dsw.iot.dal.LockerDoMapperExt" >
+	<select id="selectLockerNo" parameterType="java.lang.String" resultType="java.lang.String">
+		select MAX(RIGHT(locker_no,4))as locker_no from locker where LEFT(locker_no,1)=#{type} and RIGHT(locker_no,4) REGEXP '^[0-9]+$' 
+	</select>
+</mapper>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<button th:fragment="uploadImgComp(id,name,fileType)" type="button" class="layui-btn layui-btn-normal" th:id="${id}"
+        th:name="${name}">
+    <i class="layui-icon">&#xe67c;</i>上传文件
+</button>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(function () {
+
+    });
+    /*]]>*/
+    var elemId = '#' + [[${id}]];
+    var uploadFileType=[[${uploadNum}]];//文件上传类型 例如 'jpg|png|gif|bmp|jpeg'
+    layui.use(['upload', 'layer'], function () {
+        var upload = layui.upload;
+        var layer = layui.layer;//文件上传 类型控制处
+        var uploadInst = upload.render({
+            elem: elemId,//绑定元素
+            exts:uploadFileType,
+            url: '/FileUpload/upload.json', //上传接口
+            multiple: true,
+            done: function (res) {
+                //上传完毕回调
+                if (res.success) {
+                    var path = res.content.path;
+                    var file = '<a style="color:blue;" href="/FileUpload/showImg.json?path='+res.content.path+'" download="'+res.content.fileName+'">'+res.content.fileName+'</a>'
+                    $(elemId).after(file);
+                    //input hidden name =useIcon;
+                    //input hidden name =useIcon;
+                } else {
+                    layer.msg(res.content);
+                }
+            }, error: function () {
+                //请求异常回调
+            }
+        });
+    });
+</script>
+<script>
+</script>
+</html>
+
+

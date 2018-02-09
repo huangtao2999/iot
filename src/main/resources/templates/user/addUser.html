@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>用户编辑</title>
+    <div th:include="inc/common"></div>
+</head>
+<body>
+<!--主体开始-->
+<ul class="breadcrumb">
+    <li class="active">用户管理>新增用户</li>
+</ul>
+<div class="container-fluid">
+    <form class="layui-form" action="">
+        <table class="youAdd">
+            <tbody>
+            <tr>
+                <td class="TDleft">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">登录账号<font color="red">*</font></label>
+                    </div>
+                </td>
+                <td>
+                    <div class="layui-input-inline">
+                        <input type="text" id="account" name="account" autocomplete="off" class="layui-input"
+                               lay-verify="required" onblur="checkAccount();"/>
+                    </div>
+                </td>
+                <td class="TDleft">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">真实姓名<font color="red">*</font></label>
+                    </div>
+                </td>
+                <td>
+                    <div class="layui-input-inline">
+                        <input type="text" name="realName" autocomplete="off" class="layui-input"
+                               lay-verify="required">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="TDleft">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">身份证号<font color="red">*</font></label>
+                    </div>
+                </td>
+                <td>
+                    <div class="layui-input-inline">
+                        <input type="text" name="idcard" autocomplete="off" class="layui-input"
+                               lay-verify="required|identity">
+                    </div>
+                </td>
+                <td class="TDleft">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">组织机构<font color="red">*</font></label>
+                    </div>
+                </td>
+                <td>
+                    <div class="layui-input-inline">
+                        <select name="org" lay-verify="required">
+                            <option value=""></option>
+                            <option>下陆区分局团城山派出所</option>
+                            <option>箭楼下社区</option>
+                            <option>皇姑岭社区</option>
+                            <option>柯尔山社区</option>
+                            <option>袁家畈社区</option>
+                            <option>陈伯臻社区</option>
+                            <option>青龙山社区</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="TDleft">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">手机号码</label>
+                    </div>
+                </td>
+                <td>
+                    <div class="layui-input-inline">
+                        <input type="text" name="phone" autocomplete="off" class="layui-input"
+                               lay-verify="phone">
+                    </div>
+                </td>
+                <td class="TDleft">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">办公电话</label>
+                    </div>
+                </td>
+                <td>
+                    <div class="layui-input-inline">
+                        <input type="text" name="tel" autocomplete="off" class="layui-input">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="TDleft">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">常用邮箱</label>
+                    </div>
+                </td>
+                <td>
+                    <div class="layui-input-inline">
+                        <input type="text" name="email" autocomplete="off" class="layui-input"
+                               lay-verify="email">
+                    </div>
+                </td>
+                <td class="TDleft">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">状态<font color="red">*</font></label>
+                    </div>
+                </td>
+                <td>
+                    <div class="layui-input-inline">
+                        <select name="status" lay-verify="required">
+                            <option value=""></option>
+                            <option value="0">禁用</option>
+                            <option value="1" selected>激活</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="TDleft">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">头像</label>
+                    </div>
+                </td>
+                <td>
+                    <div class="layui-input-inline">
+                        <span th:include="component/uploadImgComp(id='userIcon',name='userIcon')"></span>
+                        <!--<button type="button" class="layui-btn layui-btn-normal" id="headImg" name="headImg">-->
+                        <!--<i class="layui-icon">&#xe67c;</i>上传图片-->
+                        <!--</button>-->
+                        <div class="layui-upload-list">
+                            <p id="demoText"></p>
+                        </div>
+                    </div>
+                </td>
+                <td class="TDleft">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">部门</label>
+                    </div>
+                </td>
+                <td>
+                    <div class="layui-input-inline">
+                        <input type="text" name="dept" autocomplete="off" class="layui-input">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="TDleft">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">角色</label>
+                    </div>
+                </td>
+                <td colspan="3">
+                    <div class="layui-input-inline" th:each="role:${roleList}">
+                        <input type='checkbox' name="role" th:value="${role.id}" th:text="${role.roleName}">
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="btn-youAdd">
+            <button class="layui-btn" lay-submit="" lay-filter="submit">提交</button>
+            <a class="layui-btn layui-btn-primary" href="javascript:window.location.href='/UserHtml/index.html'">返回</a>
+        </div>
+        <input type="hidden" name="id">
+        <input type="hidden" name="roleIds">
+    </form>
+</div>
+</body>
+<script type="text/javascript">
+    //检查登录账号是否有重复
+    function checkAccount() {
+        var isOk = false;
+        var val = $("#account").val();
+        if (val != "") {
+            var data = PublicAjax('/User/checkAccount.json', {"account": val});
+            if (data.success) {
+                isOk = true;
+            } else {
+                layer.msg(data.content);
+                $("#account").focus();
+            }
+        }
+        return isOk;
+    }
+
+    //提交前判断
+    function preSumit() {
+        //判断为空
+    }
+</script>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form
+        //监听提交
+        form.on('submit(submit)', function (data) {
+            var roleIds = "";
+            //获取选中的角色，逗号拼接到后台
+            $("input[name=role]:checkbox:checked").each(function () {
+                if (roleIds == "") {
+                    roleIds = $(this).val();
+                } else {
+                    roleIds += "," + $(this).val();
+                }
+            });
+            //放到form提交的集合中
+            data.field.roleIds = roleIds;
+            //提交前判断
+            if (!checkAccount()) {
+                layer.msg("登录账号重复");
+                $("#account").focus();
+                return;
+            }
+            //ajax提交
+            var res = PublicAjax('/User/addEdit.json', data.field);
+            if (res.success) {
+                layer.msg(res.content);
+                window.location.href = "/UserHtml/index.html";
+            } else {
+                layer.msg(res.content);
+            }
+            return false;
+        });
+        //lay-verify的实现
+        form.verify({
+// 		verifyAccount: function(value, item){ //value：表单的值、item：表单的DOM对象
+// 			alert(value);
+// 		}
+        })
+    });
+</script>
+</html>

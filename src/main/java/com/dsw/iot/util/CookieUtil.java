@@ -2,7 +2,7 @@ package com.dsw.iot.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dsw.iot.constant.CommConfig;
-import com.dsw.iot.model.TpUserDo;
+import com.dsw.iot.model.UserDo;
 
 import org.apache.log4j.Logger;
 
@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 public class CookieUtil {
     protected static final Logger logger = Logger.getLogger(CookieUtil.class);
 
-    public static void addUserToCookie(HttpServletRequest request, HttpServletResponse response, TpUserDo tpUserDo) {
-        String userJson = JSONObject.toJSONString(tpUserDo);
+    public static void addUserToCookie(HttpServletRequest request, HttpServletResponse response, UserDo userDo) {
+        String userJson = JSONObject.toJSONString(userDo);
         Cookie cookie = null;
         try {
             cookie = new Cookie(CommConfig.GUANKONG_USER, AESTool.encrypt(userJson, CommConfig.GUANGKONG_KEY));
@@ -32,15 +32,15 @@ public class CookieUtil {
         response.addCookie(cookie);
     }
 
-    public static TpUserDo getUserFromCookie(HttpServletRequest request, HttpServletResponse response) {
+    public static UserDo getUserFromCookie(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
         if (null != cookies) {
             for (Cookie cookie : cookies) {
                 if (CommConfig.GUANKONG_USER.equals(cookie.getName())) {
                     try {
                         String userJson = AESTool.decrypt(cookie.getValue(), CommConfig.GUANGKONG_KEY);
-                        TpUserDo tpUserDo = JSONObject.parseObject(userJson, TpUserDo.class);
-                        return tpUserDo;
+                        UserDo userDo = JSONObject.parseObject(userJson, UserDo.class);
+                        return userDo;
                     } catch (Exception e) {
                         logger.error("cookie用户解密失败:" + cookie.getValue());
                     }

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<button th:fragment="uploadImgComp(id,name,model)" type="button" class="layui-btn layui-btn-normal" th:id="${id}">
+    <i class="layui-icon">&#xe67c;</i>上传图片
+</button>
+<input th:name="${name}" type="hidden"/>
+<!-- model:值为1 则为单上传，再次上传会覆盖;值为2 则为多上传。-->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(function () {
+
+    });
+    /*]]>*/
+    var elemId = '#' + [[${id}]];
+    var model=[[${model}]];
+    layui.use(['upload', 'layer'], function () {
+        var upload = layui.upload;
+        var layer = layui.layer;
+        var uploadInst = upload.render({
+            elem: elemId,//绑定元素
+            url: '/FileUpload/upload.json', //上传接口
+            multiple: true,
+            done: function (res) {
+                //上传完毕回调
+                if (res.success) {
+                    var path = res.content.path;
+                    var img = '<div id="'+res.content.id+'" class="showImg"  style="float:left;width: 150px;height: 180px;background-size:150px 180px;background-image:url(/FileUpload/showImg.json?path=' + path + ');"></div>'
+                    if(model=="1"){
+                    	if($(".showImg").length==1){
+                    		$(".showImg").css("background-image","url(/FileUpload/showImg.json?path=" + path + ")");
+                    		$(".showImg").attr("id",res.content.id);
+                    	}else if($(".showImg").length==0){
+                    		$(elemId).after(img);
+                        	$("#"+res.content.id).append('<i id="deleteIcon" class="layui-icon" style="display:none;font-size: 30px; color: red;">&#x1006;</i>');
+                    	}
+                    }
+                    if(model=="2"){
+                    	$(elemId).after(img);
+                    	$("#"+res.content.id).append('<i id="deleteIcon" class="layui-icon" style="display:none;font-size: 30px; color: red;">&#x1006;</i>');
+                    }
+                    $("#deleteIcon").click(function(){ //点击删除事件
+                    	var id=$(this).parent().attr("id");
+                    	var res=PublicAjax("/FileUpload/deleteAttachFalse",{"ids":id});
+                    	if(res.success){
+                    		$(this).parent().remove();
+                    	}
+                    	else{
+                    		layer.msg(res.content);
+                    	}
+                    })
+                    $(".showImg").mouseover(function(){
+                    	$(this).find("i").css("display","inline");
+                    })
+                    $(".showImg").mouseleave(function(){
+                    	$(this).find("i").css("display","none");
+                    })
+                    //input hidden name =useIcon;
+                    //input hidden name =useIcon;
+                } else {
+                    layer.msg(res.content);
+                }
+            }, error: function () {
+                //请求异常回调
+            }
+        });
+    });
+</script>
+</html>
+
+

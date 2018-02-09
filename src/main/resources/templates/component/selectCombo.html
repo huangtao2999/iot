@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<!--下拉框组件用规范
+<div th:include="component/selectComp(id='表单元素ID',name='表单元素名称',
+	dictType='字典类型',defaultValue='默认值',verify ='是否必填字段',disabled='为1时不可编辑，其他的可以编辑')"></div>
+-->
+<head>
+    <meta charset="utf-8"/>
+</head>
+<span th:fragment="selectCombo(id,name,dictType,defaultValue,verify,disabled)">
+            <select th:id="${id}" th:name="${name}" lay-verify="" lay-search>
+                <option value="">请选择</option>
+            </select>
+</span>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(function () {
+        var id = [[${id}]];
+        var dictType = [[${dictType}]];
+        var defaultValue = [[${defaultValue}]];
+        var verify = [[${verify}]];
+        $("#" + id).attr("lay-verify", verify);//加verify属性（是否必填等）
+        var disabled = [[ ${disabled} ]];//是否可编辑，为1时不可编辑
+		if(disabled == 1){
+			$("#" + id).attr("disabled", true);
+		}
+        var res = new PublicAjax('/Dictionary/queryComboList.json', {'code': dictType});
+        if (res.success) {
+            var data = res.content;
+            if (data.length > 0) {
+                $.each(data, function (i, obj) {
+                    if (obj.code == defaultValue) {
+                        $('#' + id).append('<option selected="selected" value=' + obj.code + '>' + obj.name + '</option>');
+                    } else {
+                        $('#' + id).append('<option value=' + obj.code + '>' + obj.name + '</option>');
+                    }
+                });
+            }
+        }
+    });
+    /*]]>*/
+</script>
+
+</html>
+
+

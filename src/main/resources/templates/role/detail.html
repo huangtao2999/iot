@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>查看角色</title>
+    <div th:include="inc/common3"></div>
+</head>
+<body>
+<!--主体开始-->
+<table class="youAdd" id="mainForm">
+    <tbody>
+    <tr>
+        <td class="TDleft">
+            <div class="layui-inline">
+                <label class="layui-form-label">角色名</label>
+            </div>
+        </td>
+        <td>
+            <div class="layui-input-inline">
+                <input type="text" name="roleName" autocomplete="off" class="layui-input" th:value='${item.roleName}'>
+            </div>
+        </td>
+        <td class="TDleft">
+            <div class="layui-inline">
+                <label class="layui-form-label">超级角色</label>
+            </div>
+        </td>
+        <td>
+            <div class="layui-input-inline">
+                <select name="isSuper">
+                    <option value=""></option>
+                    <option value="0" th:selected='${item.isSuper==0}'>否</option>
+                    <option value="1" th:selected='${item.isSuper==1}'>是</option>
+                </select>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="TDleft">
+            <div class="layui-inline">
+                <label class="layui-form-label">排序</label>
+            </div>
+        </td>
+        <td>
+            <div class="layui-input-inline">
+                <input type="text" name="sort" th:value='${item.sort}' lay-verify="number" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </td>
+        <td class="TDleft" colspan="2">
+        </td>
+    </tr>
+    <tr>
+        <td class="TDleft" colspan="1">
+            <label class="layui-form-label">描述</label>
+        </td>
+        <td colspan="3">
+            <textarea class="layui-textarea" name="remark" th:text='${item.remark}'></textarea>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<input hidden="true" name="id" th:value="${item.id}">
+</body>
+<script type="text/javascript">
+    $(function () {
+        $('#mainForm').find('input,textarea,select').prop('disabled', true);
+    })
+</script>
+</html>

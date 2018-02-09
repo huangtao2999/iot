@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>角色管理</title>
+    <div th:include="inc/common"></div>
+</head>
+<body>
+<!--主体开始-->
+<div class="layui-fluid">
+    <div class="layui-row layui-bg-gray" style="height: 20px;">
+        <span>角色管理</span>
+    </div>
+    <!--条件区 -->
+    <div class="layui-row layui-form" style="text-align:center;margin-top:10px;">
+        <div class="layui-co1-md1">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="text" id="roleName" name="roleName" class="layui-input"
+                               placeholder="角色名称模糊搜索">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layui-btn-warm" id="queryBut"><i class="layui-icon">&#xe615;</i>查询</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--功能按钮区 -->
+    <div class="layui-row layui-form">
+        <a class="layui-btn layui-btn-primary layui-btn-xs"
+           id="addBut" onclick="jumpToAddEditPage('')" target="view-window"><i class="layui-icon">&#xe654;</i>新增</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs"
+           id="delBut" data-type="getCheckData"><i class="layui-icon">&#xe640;</i>删除</a>
+    </div>
+    <!-- 表格区 -->
+    <div class="layui-row">
+        <table class="table-mins" id="demo" lay-filter="test"></table>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    //跳转到新增编辑页面
+    function jumpToAddEditPage(id) {
+        window.location.href = "/RoleHtml/addEditRole.html?id=" + id;
+    }
+
+</script>
+<script>
+    layui.use(['table', 'layer'], function () {
+        var table = layui.table;
+        //table内容渲染
+        table.render({
+            elem: '#demo',
+            url: '/Role/queryPage.json',
+            cols:
+                [[
+                    {type: 'checkbox'},
+                    {type: 'numbers'},
+                    {
+                        field: 'roleName',
+                        align: 'center',
+                        title: '角色名称'
+                    }, {
+                        field: 'remark',
+                        align: 'center',
+                        title: '描述'
+                    }, {
+                        field: 'createTime',
+                        align: 'center',
+                        title: '创建时间',
+                        templet: '#formatCreateTime'
+                    }, {
+                        field: 'isSuper',
+                        align: 'center',
+                        title: '超级角色',
+                        templet: '#formatIsSuper'
+                    }, {
+                        field: 'sort',
+                        align: 'center',
+                        title: '排序号',
+                        sort: true
+                    }, {
+                        fixed: 'right',
+                        align: 'center',
+                        toolbar: '#optioins'
+                    }
+                ]],
+            limits: [5, 10, 20],
+            page: true
+        });
+        //操作列方法绑定
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+            var event = obj.event;
+            if (event == 'detail') {
+                //查看详情
+                var index = layer.open({
+                    type: 2,
+                    title: "查看角色详情",
+                    shadeClose: true,
+                    closeBtn: 1,
+                    area: ['900px', '400px'],
+                    content: '/RoleHtml/detailDialog.html?id=' + data.id
+                });
+            } else if (event == 'edit') {
+                //编辑
+                jumpToAddEditPage(data.id);
+            } else if (event == 'del') {
+                //删除
+                if (data.isSuper == 1) {
+                    layer.alert("超级角色禁止删除");
+                    return;
+                }
+                if (data.id == 1) {
+                    layer.alert("本角色为超级管理员绑定角色，禁止删除");
+                    return;
+                }
+                var confirm = layer.confirm('是否确认删除？', {btn: ['确定', '取消']},
+                    function (index, layero) {
+                        var msg = PublicAjax('/Role/del.json', {"id": data.id});
+                        if (msg.success) {
+                            layer.msg("删除成功");
+                            table.reload('demo');
+                            layer.close(confirm);
+                        }
+                    }, function (index) {
+                        layer.close(confirm);
+                    });
+            }
+        });
+        //绑定查询点击事件
+        $('#queryBut').on('click', function () {
+            table.reload('demo', {
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }, where: {
+                    roleName: $('#roleName').val()
+                }
+            });
+        });
+
+        //按钮获取数据
+        $('#delBut').on('click', function () {
+            var checkStatus = table.checkStatus('demo')
+                , data = checkStatus.data;
+            var id = "";
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].isSuper != 1) {//只能删除非超级用户
+                    if (id == "") {
+                        id = data[i].id;
+                    } else {
+                        id += "," + data[i].id;
+                    }
+                }
+            }
+            if (id == "") {
+                layer.alert("没有可删除的角色");
+            } else {
+                var confirm = layer.confirm('是否确认删除？', {btn: ['确定', '取消']},
+                    function (index, layero) {
+                        var msg = PublicAjax('/Role/del.json', {"ids": id});
+                        if (msg.success) {
+                            layer.msg("删除成功");
+                            table.reload('demo');
+                            layer.close(confirm);
+                        }
+                    }, function (index) {
+                        layer.close(confirm);
+                    });
+            }
+        });
+    });
+</script>
+<script type="text/html" id="optioins">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script type="text/html" id="formatCreateTime">
+    {{#    var date = new Date(d.createTime) }}
+    {{#    return date.toLocaleString() }}
+</script>
+<script type="text/html" id="formatIsSuper">
+    {{#    if(d.isSuper==1){return "是"}else{return "否"} }}
+</script>
+</html>

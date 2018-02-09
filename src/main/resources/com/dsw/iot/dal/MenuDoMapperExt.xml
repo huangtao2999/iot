@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dsw.iot.dal.MenuDoMapperExt" >
+    <select id="findMenuByUserId" resultMap="BaseResultMap" parameterType="com.dsw.iot.dto.MenuRequest">
+		select
+		<include refid="Base_Column_List"/>
+		from(
+			select distinct t4.*
+			from user t1
+			LEFT JOIN user_role t2
+			on t1.id = t2.user_id
+			LEFT JOIN role_menu t3
+			on t2.role_id = t3.role_id
+			LEFT JOIN menu t4
+			on t3.menu_id = t4.id
+			where t4.is_valid = '1' and t1.id = #{userId,jdbcType=INTEGER}
+		)T
+    </select>
+    <select id="findMenuByRoleId" resultMap="BaseResultMap" parameterType="com.dsw.iot.dto.MenuRequest">
+		select
+		<include refid="Base_Column_List"/>
+		from(
+			select distinct t3.*
+			from role t1
+			LEFT JOIN role_menu t2
+			on t1.id = t2.role_id
+			LEFT JOIN menu t3
+			on t2.menu_id = t3.id
+			where t3.is_valid = '1' and t1.id = #{roleId,jdbcType=INTEGER}
+		)T
+    </select>
+</mapper>

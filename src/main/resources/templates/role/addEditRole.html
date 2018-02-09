@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>角色编辑</title>
+    <div th:include="inc/common3"></div>
+</head>
+<body>
+<!--主体开始-->
+<ul class="breadcrumb">
+    <li class="active">角色管理>角色编辑</li>
+</ul>
+<div class="container-fluid">
+    <form class="layui-form" action="">
+        <table class="youAdd">
+            <tbody>
+            <tr>
+                <td class="TDleft">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">角色名</label>
+                    </div>
+                </td>
+                <td>
+                    <div class="layui-input-inline">
+                        <input type="text" name="roleName" autocomplete="off" class="layui-input"
+                               th:value='${item.roleName}'>
+                    </div>
+                </td>
+                <td class="TDleft">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">超级角色</label>
+                    </div>
+                </td>
+                <td>
+                    <div class="layui-input-inline">
+                        <span th:include="component/selectCombo(id='isSuper',name='isSuper',dictType='YES_NO',defaultValue=${item.isSuper},verify='')"/>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="TDleft">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">排序</label>
+                    </div>
+                </td>
+                <td>
+                    <div class="layui-input-inline">
+                        <input type="text" name="sort" th:value='${item.sort}' lay-verify="number" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </td>
+                <td class="TDleft" colspan="2">
+                </td>
+            </tr>
+            <tr>
+                <td class="TDleft" colspan="1">
+                    <label class="layui-form-label">描述</label>
+                </td>
+                <td colspan="3">
+                    <textarea class="layui-textarea" name="remark" th:text='${item.remark}'></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="TDleft" colspan="1">
+                    <label class="layui-form-label">菜单目录</label>
+                </td>
+                <td colspan="3">
+                    <div class="layui-input-inline" th:each="menu:${menuAll}">
+                        <input type='checkbox' name="menu" th:value="${menu.id}" th:text="${menu.text}"><br/>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="btn-youAdd">
+            <button class="layui-btn" lay-submit="" lay-filter="submit">提交</button>
+            <a class="layui-btn layui-btn-primary" href="javascript:window.location.href='/RoleHtml/index.html'">返回</a>
+        </div>
+        <input type="hidden" name="id" th:value="${item.id}">
+        <input type="hidden" name="menuIds">
+    </form>
+</div>
+</body>
+<script th:inline="javascript">
+    $(function () {
+        var dataList = [[${menuHas}]];
+        for (var i = 0; i < dataList.length; i++) {
+            $("input[name=menu]:checkbox[value='" + dataList[i].id + "']").prop("checked", true);
+        }
+    })
+</script>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+
+        //监听提交
+        form.on('submit(submit)', function (data) {
+            var menuIds = "";
+            //获取选中的角色，逗号拼接到后台
+            $("input[name=menu]:checkbox:checked").each(function () {
+                if (menuIds == "") {
+                    menuIds = $(this).val();
+                } else {
+                    menuIds += "," + $(this).val();
+                }
+            });
+            //放到form提交的集合中
+            data.field.menuIds = menuIds;
+
+            //ajax提交
+            var res = PublicAjax('/Role/saveRole.json', data.field);//content,,,success
+            if (res.success) {
+                layer.msg('保存成功');
+                window.location.href = "/RoleHtml/index.html";
+            } else {
+                layer.msg('保存失败');
+            }
+            return false;
+        });
+
+
+    });
+</script>
+</html>

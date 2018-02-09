@@ -6869,7 +6869,7 @@ KindEditor.plugin('baidumap', function (K) {
                                                    var zoom = map.getZoom();
                                                    var url = [checkbox[0].checked
                                                                   ? self.pluginsPath
-                                                                    + 'baidumap/index.htmlbak'
+                                                                    + 'baidumap/index.html'
                                                                   : 'http://api.map.baidu.com/staticimage',
                                                               '?center='
                                                               + encodeURIComponent(
@@ -9035,8 +9035,8 @@ KindEditor.plugin('multiimage', function (K) {
     SWFUpload.prototype.initSWFUpload = function (settings) {
         try {
             this.customSettings = {};	// A container where developers can place
-            // their own settings associated with
-            // this instance.
+                                      // their own settings associated with
+                                      // this instance.
             this.settings = settings;
             this.eventQueue = [];
             this.movieName = "SWFUpload_" + SWFUpload.movieCount++;
@@ -9152,7 +9152,7 @@ KindEditor.plugin('multiimage', function (K) {
         this.ensureDefault("file_types", "*.*");
         this.ensureDefault("file_types_description", "All Files");
         this.ensureDefault("file_size_limit", 0);	// Default zero means
-        // "unlimited"
+                                                  // "unlimited"
         this.ensureDefault("file_upload_limit", 0);
         this.ensureDefault("file_queue_limit", 0);
 
@@ -9180,7 +9180,7 @@ KindEditor.plugin('multiimage', function (K) {
         // Debug Settings
         this.ensureDefault("debug", false);
         this.settings.debug_enabled = this.settings.debug;	// Here to maintain
-        // v2 API
+                                                           // v2 API
 
         // Event Handlers
         this.settings.return_upload_start_handler = this.returnUploadStart;
@@ -9249,11 +9249,11 @@ KindEditor.plugin('multiimage', function (K) {
         // Append the container and load the flash
         tempParent = document.createElement("div");
         tempParent.innerHTML = this.getFlashHTML();	// Using innerHTML is
-        // non-standard but the
-        // only sensible way to
-        // dynamically add Flash
-        // in IE (and maybe
-        // other browsers)
+                                                    // non-standard but the
+                                                    // only sensible way to
+                                                    // dynamically add Flash in
+                                                    // IE (and maybe other
+                                                    // browsers)
         targetElement.parentNode.replaceChild(tempParent.firstChild,
                                               targetElement);
 

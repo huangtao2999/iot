@@ -12,8 +12,10 @@ import lombok.Data;
  **/
 @Data
 public class LockerResquest extends BaseDto {
-
+    //编号
     private String lockerNo;
-
+    //使用状态
+    private String useStatus;
+    //尺寸
     private String type;
 }

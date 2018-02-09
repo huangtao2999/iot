@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <title>左侧菜单栏</title>
-    <div th:include="inc/common"></div>
+    <div th:include="inc/common3"></div>
 </head>
 
 <body id="div_left">
@@ -14,7 +14,7 @@
        th:id="|lefttu${iterStat.index}|"
     >
         <i th:class="|fa icon-nav${iterStat.index}|"></i>
-        <span th:text="${menu.menuname}"></span>
+        <span th:text="${menu.text}"></span>
     </a>
 
 </div>
@@ -24,7 +24,7 @@
         var tp = document.getElementById(nametu);
         tp.className = "current";	//当前值
 
-        for (var i = 0; i < 9; i++) {
+        for (var i = 0; i < 12; i++) {
             var nametu2 = "lefttu" + i;
             if (i != idt * 1) {
                 var tp2 = document.getElementById('lefttu' + i);

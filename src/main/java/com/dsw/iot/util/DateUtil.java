@@ -11,6 +11,7 @@ public class DateUtil {
     private static final String FORMAT_FULL = "yyyy-MM-dd HH:mm:ss";
     private static final String FORMAT_1 = "yyyyMMddHHmmss";
     private static final String FORMAT_2 = "yyyy-MM-dd";
+	private static final String FORMAT_3 = "yyyy/MM/dd";
 
     public static Long formatTime(String dateStr) {
         SimpleDateFormat sf = new SimpleDateFormat(FORMAT_1);
@@ -36,4 +37,12 @@ public class DateUtil {
         String today = dateTimeFormatter.format(localDateTime);
         return today;
     }
+
+	public static String getDate() {
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter
+				.ofPattern(FORMAT_3);
+		LocalDateTime localDateTime = LocalDateTime.now();
+		String date = dateTimeFormatter.format(localDateTime);
+		return date;
+	}
 }

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>储物柜新增</title>
+	<div th:include="inc/common3"></div>
+</head>
+<body>
+<!--主体开始-->
+<form action="" class="layui-form">
+	<table class="youAdd" id="mainForm">
+		<tbody>
+			<tr>
+				<td class="TDleft">储物柜类型：</td>
+				<td colspan=3> 
+					<div class="layui-input-inline">
+				         <span th:include="component/selectCombo(id='type',name='type',dictType='SIZE',verify='required')"></span>       
+         			</div>
+         		</td>
+			</tr>
+			<tr>
+				<td class="TDleft">储物柜编号：</td>
+				<td >
+						<input id="lockerNo" type="tel" class="layui-input" name="lockerNo" lay-verify="required" autocomplete="off"	>
+						
+				</td>
+				<td colspan=2>
+					<button id="autoGetNum" type="button" class="layui-btn layui-btn-warm">点击获取编号</button>
+				</td>
+			</tr>	
+			<tr>
+				<td class="TDleft">使用状态：</td>
+				<td colspan=3>
+					<div class="layui-input-inline">
+				         <span th:include="component/selectCombo(id='useStatus',name='useStatus',dictType='USE_STATUS',verify='required')"></span>       
+         			</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="TDleft">储物柜状态：</td>
+				<td colspan=3>
+					<div class="layui-input-inline">
+				         <span th:include="component/selectCombo(id='status',name='status',dictType='LOCKER_STATUS',verify='required')"></span>      
+         			</div>
+				</td>
+			</tr>
+			<tr><td colspan=4>入所-电源控制设置</td></tr>
+			<tr>
+				<td class="TDleft">ip</td>
+				<td><input type="tel" name="inIp" lay-verify="required" autocomplete="off" class="layui-input"></td>
+				<td class="TDleft">端口：</td>
+				<td><input type="tel" name="inPort" lay-verify="required" autocomplete="off" class="layui-input"></td>
+			</tr>
+			<tr>
+				<td class="TDleft">路数</td>
+				<td><input type="tel" name="inRoad" lay-verify="required" autocomplete="off" class="layui-input"></td>
+				<td class="TDleft">状态：</td>
+				<td><span th:include="component/selectCombo(id='inStatus',name='inStatus',dictType='OUT_IN_STATUS',verify='required')"></span></td>
+			</tr>
+			<tr><td colspan=4>出所-电源控制设置</td></tr>
+			<tr>
+				<td class="TDleft">ip</td>
+				<td><input type="tel" name="outIp" lay-verify="required" autocomplete="off" class="layui-input"></td>
+				<td class="TDleft">端口：</td>
+				<td><input type="tel" name="outPort" lay-verify="required" autocomplete="off" class="layui-input"></td>
+			</tr>
+			<tr>
+				<td class="TDleft">路数</td>
+				<td><input type="tel" name="outRoad" lay-verify="required" autocomplete="off" class="layui-input"></td>
+				<td class="TDleft">状态：</td>
+				<td><span th:include="component/selectCombo(id='outStatus',name='outStatus',dictType='OUT_IN_STATUS',verify='required')"></span></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="btn-youAdd">
+		<button id="submitAdd" class="layui-btn" lay-submit="" lay-filter="submit">提交</button>
+		<button id="closeBtn" type="button" class="layui-btn layui-btn-danger" lay-submit="" lay-filter="close">关闭</button>
+	</div>
+</form>
+</body>
+<script type="text/javascript">
+layui.use(['form'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,layedit = layui.layedit
+
+  //监听提交
+	form.on('submit(submit)', function(data){
+		//ajax提交
+		var msg = PublicAjax('/Locker/addOrUpdate.json',data.field);//content,,,success
+		if(msg.success){
+			layer.msg('保存成功');
+			var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+			parent.layer.close(index);//关闭弹窗
+			parent.layui.table.reload('demo');//刷新表格
+		}else{
+			layer.msg('保存失败');
+		}
+		return false;
+	});
+  
+  $("#closeBtn").click(function(){//关闭按钮
+		var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+      parent.layer.close(index);//关闭弹窗
+	})
+	
+	
+});
+$("#autoGetNum").click(function(){//自动生成编号
+	var type=$("#type").val();
+	if(type){
+		if(type==1){
+			type="S";
+		}else if(type==2){
+			type="M";
+		}else if(type==3){
+			type="L";
+		}else if(type==4){
+			type="XL";
+		}
+		var res=PublicAjax('/Locker/selectLockerNo.json', {"type":type});
+		if(res.success){
+			var content=res.content;
+			if(content){
+				$("#lockerNo").val(type+content);
+			}else{
+				$("#lockerNo").val(type+"0001");
+			}
+		}else{
+			layer.msg('生成失败！');
+		}
+	}else{
+		layer.msg('请先选择储物柜类型');
+	}
+})
+
+</script>
+</html>

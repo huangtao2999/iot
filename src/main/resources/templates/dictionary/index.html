@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>字典管理</title>
+	<div th:include="inc/common"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{../../vendor/ztree/css/metroStyle/metroStyle.css}"/>
+    <script th:src="@{../../vendor/ztree/js/jquery.ztree.all.js}"></script>
+</head>
+<style>
+.layui-disabled{
+	color: #555555 !important;
+}
+.layui-select-disabled .layui-disabled{
+	border: 1px solid #cccccc !important;
+}
+</style>
+<body>
+<!--主体开始-->
+    <ul class="breadcrumb">
+        <li class="active">字典管理</li>
+    </ul>
+
+<div class="row-fluid">
+<!-- 左边树-->
+	<div class="block span4" style="height:400px;overflow:auto;margin-left:15px">
+		<p class="block-heading">字典目录树</p>
+		<ul id="tree" class="ztree" style="width:95%; overflow:auto;"></ul>
+	</div>
+<!-- 右边编辑详情 -->
+	<div class="block span8" style="height:400px;overflow:auto">
+		<p class="block-heading">字典详情</p>
+		<form class="layui-form" action="" id="mainForm" >
+	            <div class="layui-form-item" >
+                	<label class="layui-form-label">字典名</label>
+                    <div class="layui-input-block" >
+						<input disabled type="text" id="name" name="name" autocomplete="off" class="layui-input"/>
+                    </div>
+                </div>
+	            <div class="layui-form-item" >
+                	<label class="layui-form-label" >编码</label>
+                    <div class="layui-input-block" >
+						<input disabled type="text" id="code" name="code" autocomplete="off" class="layui-input"/>
+                    </div>
+                </div>
+	            <div class="layui-form-item" >
+                	<label class="layui-form-label" >排序号</label>
+                    <div class="layui-input-block" >
+						<input disabled type="text" id="sort" name="sort" autocomplete="off" class="layui-input"/>
+                    </div>
+                </div>
+	            <div class="layui-form-item" >
+                	<label class="layui-form-label" >系统字典</label>
+                    <div class="layui-input-block" >
+                    	<span th:include="component/selectCombo(id='isSystem',name='isSystem',dictType='YES_NO',defaultValue='',verify='')"></span>
+                    </div>
+	            </div>
+	            <div class="layui-form-item" >
+                	<label class="layui-form-label" >备注</label>
+                    <div class="layui-input-block" >
+                    	<textarea disabled class="layui-textarea" name="remark" id="remark"></textarea>
+                    </div>
+	            </div>
+
+			<input type="hidden" id="id" name="id">
+			<input type="hidden" id="pid" name="pid">
+			<input type="hidden" id="type" name="type">
+		</form>
+	</div>
+</div>
+</body>
+<script th:inline="javascript">
+
+//刷新整个树
+function refreshWholeTree(){
+	//根节点就刷新整个树
+	var res = PublicAjax('/Dictionary/queryByPid.json',{"pid":0});
+	dictionaryTree = res.content;
+    var t = $("#tree");
+    t = $.fn.zTree.init(t, setting, dictionaryTree);
+}
+
+//刷新当前节点
+function refreshTreeNode(id){
+    var treeObj = $.fn.zTree.getZTreeObj("tree"),
+    reloadType = "refresh",
+    isSilent = false;
+    if(id == 0){
+    	//传进来的节点id是0，没有该节点，刷新整个树
+    	refreshWholeTree();
+    }else{
+    	//不是根节点就刷新父节点
+	    var nodes = treeObj.getNodeByParam("id", id, null);
+    	//为true时才会刷新
+    	nodes.isParent = true;
+	    treeObj.reAsyncChildNodes(nodes, reloadType, isSilent);
+    }
+}
+
+//树上小按钮--删除节点
+function delNode(treeNode){
+	if(treeNode.isSystem == 1){
+		layer.msg("系统字典请不要删除!",{time:2000});
+		return;
+	}
+	//判断isParent是否是true,false的可以删，true的要提醒验证，再提醒确认删除
+	layer.confirm('是否删除该节点及其子节点所有数据?', {icon: 3, title:'提示'}, function(index){
+		var res = PublicAjax('/Dictionary/deleteTreeNodeCascade.json',{"id":treeNode.id,"code":treeNode.code});
+		if(res.success){
+			//删除后刷新父节点
+			refreshTreeNode(treeNode.pid);
+		}
+		layer.close(index);
+	});
+}
+
+
+//查找根节点的type
+function findRootType(id){
+	debugger;
+	var type;
+	var treeObj = $.fn.zTree.getZTreeObj("tree");
+	var nodes = treeObj.getNodeByParam("id", id, null);
+	type = nodes.type;
+	if(nodes.pid != 0){
+		type = findRootType(nodes.pid);
+	}
+	return type;
+}
+//添加同级
+function addTreeBro(treeNode){
+	var type;
+	if(treeNode.pid == 0){
+		//是根节点
+		type = "";
+	}else{
+		//不是根节点，找根节点的type
+		type = findRootType(treeNode.pid);
+	}
+    layer.open({
+        type: 2,
+        title: '新增同级',
+        maxmin: true,
+        area: ['450px', '450px'],
+        content: '/DictionaryHtml/toAddTreeNode.html?pid='+treeNode.pid+'&type='+type
+    });
+}
+//树上小按钮--添加子集
+function addTreeChild(treeNode){
+    layer.open({
+        type: 2,
+        title: '新增子集',
+        maxmin: true,
+        area: ['450px', '450px'],
+        content: '/DictionaryHtml/toAddTreeNode.html?pid='+treeNode.id+'&type='+treeNode.type
+    });
+}
+//树上小按钮--编辑节点
+function editNode(treeNode){
+    layer.open({
+        type: 2,
+        title: '编辑',
+        maxmin: true,
+        area: ['450px', '450px'],
+        content: '/DictionaryHtml/editNode.html?id='+treeNode.id
+    });
+}
+
+//把当前的节点数据放到右侧显示框里
+function getNodeData(treeNode){
+	$("#id").val(treeNode.id);
+	$("#pid").val(treeNode.pid);
+	$("#name").val(treeNode.name);
+	$("#code").val(treeNode.code);
+	$("#sort").val(treeNode.sort);
+	$("#remark").text(treeNode.remark == null?"":treeNode.remark);
+	$("#isSystem").val(treeNode.isSystem);
+	layui.form.render();//一定要重新用layui渲染下拉框，不然没变化的啦
+}
+
+//鼠标悬停显示
+function addHoverDom(treeId, treeNode) {
+    var sObj = $("#" + treeNode.tId + "_span");
+    if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
+    var htmlStr = "<span class='button add' id='addBtn1_" + treeNode.tId
+					+ "'  title='添加同级' onfocus='this.blur();'></span>";
+    htmlStr += "<span class='button add' id='addBtn_" + treeNode.tId
+					+ "'  title='添加子集' onfocus='this.blur();'></span>";
+    htmlStr += "<span class='button edit' id='editBtn_" + treeNode.tId
+					+ "'  title='编辑当前节点' onfocus='this.blur();'></span>";
+    htmlStr += "<span class='button remove' id='delBtn_" + treeNode.tId
+					+ "'  title='删除当前节点' onfocus='this.blur();'></span>";
+    sObj.after(htmlStr);
+    //绑定按钮事件
+    var btn = $("#addBtn1_"+treeNode.tId);
+    if (btn) btn.bind("click", function(){
+    	addTreeBro(treeNode);
+    });
+    btn = $("#addBtn_"+treeNode.tId);
+    if (btn) btn.bind("click", function(){
+    	addTreeChild(treeNode);
+    });
+    btn = $("#editBtn_"+treeNode.tId);
+    if (btn) btn.bind("click", function(){
+    	editNode(treeNode);
+    });
+    btn = $("#delBtn_"+treeNode.tId);
+    if (btn) btn.bind("click", function(){
+    	delNode(treeNode);
+    });
+};
+
+//鼠标移开时删掉后面的按钮
+function removeHoverDom(treeId, treeNode) {
+    $("#addBtn1_"+treeNode.tId).unbind().remove();
+    $("#addBtn_"+treeNode.tId).unbind().remove();
+    $("#editBtn_"+treeNode.tId).unbind().remove();
+    $("#delBtn_"+treeNode.tId).unbind().remove();
+};
+
+//异步加载树的格式化
+function ajaxDataFilter(treeId, parentNode, responseData) {
+	//获得返回的树内容
+   	responseData = responseData.content;
+    if (responseData.length > 0) {
+	    return responseData;
+    }
+};
+//异步加载结束后的回调方法，如果是叶子就把节点更新图标
+function zTreeOnAsyncSuccess(event, treeId, treeNode, msg) {
+	var treeObj = $.fn.zTree.getZTreeObj(treeId);
+	if(treeNode.children.length == 0)
+		//没有子节点，就把图标变成文件图标
+		treeNode.isParent=false;
+		treeObj.updateNode(treeNode);
+		return;
+};
+//获得跳转页面传过来的树json
+var dictionaryTree = [[ ${dictionaryTree} ]];
+var zTree;
+var setting = {
+    view: {
+        dblClickExpand: false,
+        selectedMulti: false,
+        showLine: true,//设置是否显示节点与节点之间的连线
+        showIcon: true,  //设置是否显示节点图标
+        addHoverDom: addHoverDom,//设置鼠标悬停的按钮
+        removeHoverDom: removeHoverDom
+    },
+    async:{
+        enable:true,
+        url:"/Dictionary/queryByPid.json",
+        autoParam:["id=pid","code"],
+        dataType:"json",
+        dataFilter: ajaxDataFilter
+    },
+    data: {
+        simpleData: {
+            enable: true,
+            idKey: "id", // id编号命名 默认
+            pIdKey: "pid", // 父id编号命名 默认
+            rootPId: 0 // 用于修正根节点父节点数据，即 pIdKey 指定的属性值
+        },
+        key: {
+        	checked: "checked",
+        	children: "children",
+        	isParent: "isParent",
+        	isHidden: "isHidden",
+        	name: "name",
+        	title: "",
+        	url: "url",
+        	icon: "menuIcon"
+        }
+    },
+    callback: {
+		//单击事件
+        onClick: function(event, treeId, treeNode){
+			//把当前的节点数据放到右侧显示框里
+        	getNodeData(treeNode);
+        },
+        //双击刷新当前节点下的子节点
+        onDblClick: function(event, treeId, treeNode) {
+        	refreshTreeNode(treeNode.id);
+        },
+    	onAsyncSuccess: zTreeOnAsyncSuccess
+    }
+};
+
+$(document).ready(function(){
+	//初始化树
+    var t = $("#tree");
+    t = $.fn.zTree.init(t, setting, dictionaryTree);
+    //下拉框不可编辑
+	$("#isSystem").attr("disabled","disabled");
+});
+
+layui.use(['table','layer','form'], function () {
+	var table = layui.table
+	,form = layui.form;
+});
+</script>
+</html>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dsw.iot.dal.RoleDoMapperExt" >
+	<select id="selectRoleDoListByUserId" resultMap="BaseResultMap" parameterType="com.dsw.iot.dto.RoleRequest" >
+		select
+		<include refid="Base_Column_List" />
+		from (
+			select t2.*
+			from user_role t1
+			left join role t2
+			on t1.role_id = t2.id
+			where t1.user_id = #{userId,jdbcType=INTEGER}
+		)T
+	</select>
+</mapper>

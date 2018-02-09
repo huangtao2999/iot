@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <title>头部</title>
-    <div th:include="inc/common"></div>
+    <div th:include="inc/common3"></div>
 </head>
 
 <body id="div_top">
@@ -17,8 +17,8 @@
 </div>
 <div class="top_right">
     <ul class="top_user">
-        <li class="name1">用户名：<span th:text="${user.username}"></span></li>
-        <li class="name2">角色：<span>测试角色</span></li>
+        <li class="name1">用户名：<span th:text="${user.realName}"></span></li>
+        <li class="name2">角色：<span id="roleSpan"></span></li>
         <li class="name3"><a href="../Login/quit.html" target="_parent"
                              title="退出"><i
                 class="fa icon-tuichu"></i><span>退出</span></a></li>
@@ -32,7 +32,7 @@
                 class="fa icon-daibanrenwu"></i>待办任务<span id="badge"
                                                           class="badge">0</span></a>
         </li>
-        <in name="Think.session.user.username" value="admin,grid">
+        <in name="Think.session.user.realName" value="admin,grid">
             <li><a href="__APP__/Admin/BaseData/index.html" class="top_a"
                    target="mainFrame" onClick="tupian('8');" id="xiaotu8"><i
                     class="fa icon-xitongrizhi"></i>基础数据</a></li>
@@ -55,6 +55,23 @@
     </ul>
 </div>
 </body>
+<script th:inline="javascript">
+    $(function () {
+        var dataList = [[${roleList}]];
+        var roleName = "";
+        if (dataList.length == 0) {
+            return;
+        }
+        for (var i = 0; i < dataList.length; i++) {
+            if (roleName == "") {
+                roleName = dataList[i].roleName;
+            } else {
+                roleName += "," + dataList[i].roleName;
+            }
+        }
+        $("#roleSpan").text(roleName);
+    })
+</script>
 <script>
     function tupian(idt) {
         var nametu = "xiaotu" + idt;

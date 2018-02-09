@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>储物柜新增</title>
+    <div th:include="inc/common"></div>
+</head>
+<body>
+<!--主体开始-->
+<form action="" class="layui-form">
+    <table class="youAdd" id="mainForm">
+        <tbody>
+        <tr>
+            <td class="TDleft">储物柜类型：</td>
+            <td colspan=3>
+                <div class="layui-input-inline">
+                    <select name="type" lay-verify="required" lay-search="">
+                        <option value="1">大</option>
+                        <option value="2">中</option>
+                        <option value="3">小</option>
+                    </select>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="TDleft">储物柜编号：</td>
+            <td colspan=3><input type="tel" name="lockerNo" lay-verify="required" autocomplete="off"
+                                 class="layui-input"></td>
+        </tr>
+        <tr>
+            <td class="TDleft">使用状态：</td>
+            <td colspan=3>
+                <div class="layui-input-inline">
+                    <select name="useStatus" lay-verify="required" lay-search="">
+                        <option value="1">大</option>
+                        <option value="2">中</option>
+                        <option value="3">小</option>
+                    </select>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="TDleft">储物柜状态：</td>
+            <td colspan=3>
+                <div class="layui-input-inline">
+                    <select name="status" lay-verify="required" lay-search="">
+                        <option value="1">大</option>
+                        <option value="2">中</option>
+                        <option value="3">小</option>
+                    </select>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan=4>入所-电源控制设置</td>
+        </tr>
+        <tr>
+            <td class="TDleft">ip</td>
+            <td><input type="tel" name="inIp" lay-verify="required" autocomplete="off" class="layui-input"></td>
+            <td class="TDleft">端口：</td>
+            <td><input type="tel" name="inPort" lay-verify="required" autocomplete="off" class="layui-input"></td>
+        </tr>
+        <tr>
+            <td class="TDleft">路数</td>
+            <td><input type="tel" name="inRoad" lay-verify="required" autocomplete="off" class="layui-input"></td>
+            <td class="TDleft">状态：</td>
+            <td><input type="tel" name="inStatus" lay-verify="required" autocomplete="off" class="layui-input"></td>
+        </tr>
+        <tr>
+            <td colspan=4>出所-电源控制设置</td>
+        </tr>
+        <tr>
+            <td class="TDleft">ip</td>
+            <td><input type="tel" name="outIp" lay-verify="required" autocomplete="off" class="layui-input"></td>
+            <td class="TDleft">端口：</td>
+            <td><input type="tel" name="outPort" lay-verify="required" autocomplete="off" class="layui-input"></td>
+        </tr>
+        <tr>
+            <td class="TDleft">路数</td>
+            <td><input type="tel" name="outRoad" lay-verify="required" autocomplete="off" class="layui-input"></td>
+            <td class="TDleft">状态：</td>
+            <td><input type="tel" name="outStatus" lay-verify="required" autocomplete="off" class="layui-input"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="btn-youAdd">
+        <button id="submitAdd" class="layui-btn" lay-submit="" lay-filter="submit">提交</button>
+    </div>
+</form>
+</body>
+<script th:inline="javascript">
+    $(function () {
+        //赋值角色
+// 	var ids = [[ ${roleIds} ]];
+// 	ids = ids.split(",");
+// 	for(var i=0; i<ids.length; i++){
+// 		$("input[name=role]:checkbox[value='"+ids[i]+"']").prop("checked",true);
+// 	};
+    })
+</script>
+<script type="text/javascript">
+    $(function () {
+// 	$("#submitAdd").click(function(){
+// 		var str=PublicAjax(url,data);
+// 	})
+
+    })
+    layui.use(['form'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+
+        //监听提交
+        form.on('submit(submit)', function (data) {
+            //ajax提交
+            var res = PublicAjax('/Locker/addOrUpdate.json', data.field);//content,,,success
+            if (res.success) {
+                layer.msg('保存成功');
+                var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                parent.layer.close(index);//关闭弹窗
+                parent.layui.table.reload('demo');//刷新表格
+            } else {
+                layer.msg(res.errorMsg)
+                layer.msg('保存失败');
+            }
+            return false;
+        });
+
+
+    });
+</script>
+</html>

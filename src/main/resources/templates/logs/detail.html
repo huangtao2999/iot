@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>查看日志详情</title>
+	<div th:include="inc/common"></div>
+</head>
+<body>
+<!--主体开始-->
+	<table class="youAdd" id="mainForm">
+		<tbody>
+			<tr>
+				<td class="TDleft">
+					<div class="layui-inline">
+						<label class="layui-form-label">操作模块</label>
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline">
+						<span th:include="component/selectCombo(id='module',name='module',dictType='LOG_OPT_MODULE',defaultValue=${item.module},verify='',disabled=1)"/>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="TDleft">
+					<div class="layui-inline">
+						<label class="layui-form-label" >操作类型</label>
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline">
+					    <span th:include="component/selectCombo(id='type',name='type',dictType='LOG_OPT_TYPE',defaultValue=${item.type},verify='',disabled=1)"/>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="TDleft">
+					<div class="layui-inline">
+						<label class="layui-form-label" >操作内容</label>
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline">
+					    <textarea readonly type="text" name="content" id="content" autocomplete="off" class="layui-input"
+					    	th:text="${item.content}"/>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="TDleft">
+					<div class="layui-inline">
+						<label class="layui-form-label" >操作人</label>
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline">
+					    <input readonly type="text" name="createUser" id="createUser" autocomplete="off" class="layui-input"
+					    	th:value="${item.createUser}"/>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="TDleft">
+					<div class="layui-inline">
+						<label class="layui-form-label" >操作时间</label>
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline">
+					    <input readonly type="text" name="createTime" id="createTime" autocomplete="off" class="layui-input"
+					    	th:value="${item.createTime}"/>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="TDleft">
+					<div class="layui-inline">
+						<label class="layui-form-label" >ip地址</label>
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline">
+					    <input readonly type="text" name="ip" id="ip" autocomplete="off" class="layui-input"
+					    	th:value="${item.ip}"/>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<input hidden="true" name="id" th:value="${item.id}">
+</body>
+<script th:inline="javascript">
+$(function(){
+	var createTime = [[ ${item.createTime} ]];
+	createTime = createTime.toLocaleString();
+	$("#createTime").val(createTime.replace(/T/g, " "));
+})
+</script>
+</html>

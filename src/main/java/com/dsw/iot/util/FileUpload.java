@@ -3,11 +3,9 @@ package com.dsw.iot.util;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
-
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
@@ -19,11 +17,8 @@ import java.util.List;
 @Service
 public class FileUpload {
     private static final Logger logger = Logger.getLogger(FileUpload.class);
-    @Value("${bl.file.url}")
     private String FILE_URL;
-    @Value("${bl.file.root.path}")
     private String FILE_ROOT_PATH;
-    @Value("${bl.file.dir}")
     private String FILE_DIR;
     //系统目录分隔符
     private static final String SEPARATOR = System.getProperty("file.separator");

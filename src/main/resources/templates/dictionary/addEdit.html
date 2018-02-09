@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>字典管理</title>
+	<div th:include="inc/common"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{../../vendor/ztree/css/metroStyle/metroStyle.css}"/>
+    <script th:src="@{../../vendor/ztree/js/jquery.ztree.all.js}"></script>
+</head>
+<body>
+<!--主体开始-->
+<form action="" class="layui-form">
+	<table class="youAdd" id="mainForm">
+		<tbody>
+			<tr>
+				<td class="TDleft">字典名</td>
+				<td colspan=3>
+					<div class="layui-input-inline">
+				         <input type="text" id="name" name="name" autocomplete="off" class="layui-input"
+				         th:value="${item.name}" lay-verify="required">
+         			</div>
+         		</td>
+			</tr>
+			<tr>
+				<td class="TDleft">编码</td>
+				<td colspan=3>
+					<div class="layui-input-inline">
+				         <input disabled type="text" id="code" name="code" autocomplete="off" class="layui-input"
+				         th:value="${item.code}" lay-verify="required" onblur="checkDicCode()">
+         			</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="TDleft">排序号</td>
+				<td colspan=3>
+					<div class="layui-input-inline">
+				         <input type="text" id="sort" name="sort" autocomplete="off" class="layui-input"
+				         th:value="${item.sort}" onKeyUp="value=value.replace(/\D/g,'')" >
+         			</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="TDleft">系统字典</td>
+				<td colspan=3>
+					<div class="layui-input-inline">
+				         <span th:include="component/selectCombo(id='isSystem',name='isSystem',dictType='YES_NO',defaultValue=${item.isSystem},verify='required')"/>
+         			</div>
+				</td>
+			</tr>
+            <tr>
+                <td class="TDleft">
+                    <label class="layui-form-label">备注</label>
+                </td>
+                <td colspan="3">
+                    <textarea class="layui-textarea" name="remark" id="remark" th:text='${item.remark}'></textarea>
+                </td>
+            </tr>
+		</tbody>
+	</table>
+	<div class="btn-youAdd">
+		<button id="submitAdd" class="layui-btn" lay-submit="" lay-filter="submit">提交</button>
+	</div>
+	<input type="hidden" id="id" name="id" th:value="${item.id}">
+	<input type="hidden" id="pid" name="pid" th:value="${item.pid}">
+	<input type="hidden" id="type" name="type" th:value="${item.type}">
+</form>
+</body>
+<script th:inline="javascript">
+//检查编码重复
+function checkDicCode(){
+	var flag = false;
+	var id = $("#id").val();
+	var code = $("#code").val();
+	var type = $("#type").val();
+	if(id == "" || id == undefined){
+		//新增判断编码重复
+		var res = PublicAjax('/Dictionary/checkDicCode.json',{"code":code, "type":type});
+		if(res.success){
+			flag = true;
+		}else{
+			layer.msg(res.content, {icon: 2});
+		}
+	}else{
+		flag = true;
+	}
+	return flag;
+}
+
+$(document).ready(function(){
+	var itemId = [[${item.id}]];
+	//默认是选择否
+	if(itemId == undefined || itemId == null){
+		$("#isSystem").val(0);
+// 		layui.form.render('select');
+		//放开code为可以编辑
+		$("#code").attr("disabled",false);
+	}
+});
+
+layui.use(['table','layer','form'], function () {
+	var table = layui.table
+	,form = layui.form;
+
+	//监听提交
+	form.on('submit(submit)', function(data){
+		//如果是新增根节点，就默认type为code编码
+		if(data.field.pid == 0){
+			if(data.field.id == "" || data.field.id == null || data.field.id == undefined){
+				data.field.type = data.field.code;
+			}
+		}
+		//检查编码
+		if(!checkDicCode()){
+			return;
+		}
+		//ajax提交
+		var res = PublicAjax('/Dictionary/saveDictionary.json',data.field);
+		if(res.success){
+			layer.msg('保存成功',{icon: 1});
+			var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+			parent.refreshTreeNode( $("#pid").val() );//调用父窗口刷新局部树
+			parent.layer.close(index);//关闭弹窗
+		}else{
+			layer.msg('保存失败');
+		}
+	});
+	//verify规则
+	form.verify({
+		numberCanBlank: function(value, item){
+			if(value == ""){
+			}else{
+				if(!new RegExp("^[0-9]*$").test(value)){
+				    return '排序号请输入数字';
+				}
+			}
+		}
+	})
+});
+</script>
+</html>
