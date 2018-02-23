@@ -211,11 +211,11 @@ public class DictionaryServiceImpl implements DictionaryService {
 	@Override
 	public List<DictionaryDo> queryComboList(DictionaryRequest dictionaryRequest) throws BizException {
 		// 返回参数
-		List<DictionaryDo> DictionaryDo = new ArrayList<>();
+		List<DictionaryDo> resList = new ArrayList<>();
 		// 要查询的编码
 		String code = dictionaryRequest.getCode();
 		if (StringUtils.isBlank(code)) {
-			return DictionaryDo;
+			return resList;
 		}
 		DictionaryDoExample dictionaryDoExample = new DictionaryDoExample();
 		DictionaryDoExample.Criteria criteria = dictionaryDoExample.createCriteria();
@@ -225,14 +225,19 @@ public class DictionaryServiceImpl implements DictionaryService {
 		if (dictionaryDos.size() > 1) {
 			// 通过code查出来多条，抛出异常
 			throw new BizException(code + "在字典表里不是唯一的，无法初始化下拉框");
+		} else if (dictionaryDos.size() == 0) {
+			return resList;
 		}
 		Long id = dictionaryDos.get(0).getId();// 获得id，下面查找pid为这个的，，子节点
 		DictionaryDoExample dictionaryDoExample2 = new DictionaryDoExample();
 		DictionaryDoExample.Criteria criteria2 = dictionaryDoExample2.createCriteria();
 		criteria2.andIsDeletedEqualTo(CommConfig.DELETED.NO.getName());
 		criteria2.andPidEqualTo(id);// 找到子集
-		DictionaryDo = dictionaryDoMapperExt.selectByExample(dictionaryDoExample2);
-		return DictionaryDo;
+		resList = dictionaryDoMapperExt.selectByExample(dictionaryDoExample2);
+		if (CollectionUtils.isEmpty(resList)) {
+			return null;
+		}
+		return resList;
 	}
 
 	/**

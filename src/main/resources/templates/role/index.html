@@ -40,14 +40,12 @@
     </div>
 </div>
 </body>
-<script type="text/javascript">
+<script th:inline="javascript">
     //跳转到新增编辑页面
     function jumpToAddEditPage(id) {
         window.location.href = "/RoleHtml/addEditRole.html?id=" + id;
     }
 
-</script>
-<script>
     layui.use(['table', 'layer'], function () {
         var table = layui.table;
         //table内容渲染

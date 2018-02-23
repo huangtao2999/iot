@@ -29,7 +29,7 @@ public class IotDbAConfig {
     @ConfigurationProperties(prefix = "mybatis")
     public SqlSessionFactoryBean mysqlSqlSessionFactoryBean() throws Exception {
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
-        factoryBean.setDataSource(mysqlDataSource); // 使用mysql数据源, 连接mysql库
+        factoryBean.setDataSource(mysqlDataSource);
         return factoryBean;
     }
 }

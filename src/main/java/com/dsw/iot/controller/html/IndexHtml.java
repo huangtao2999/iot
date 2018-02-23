@@ -6,10 +6,7 @@ import com.dsw.iot.model.UserDo;
 import com.dsw.iot.service.MenuSerivce;
 import com.dsw.iot.service.RoleService;
 import com.dsw.iot.util.CookieUtil;
-import org.apache.ibatis.session.SqlSession;
-import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,20 +29,8 @@ public class IndexHtml {
     @Autowired
     RoleService roleService;
 
-    @Autowired(required = false)
-    @Qualifier("dmSqlSessionFactoryBean")
-    private SqlSessionFactoryBean dmSqlSessionFactoryBean;
-
     @RequestMapping("/index")
     public String index(Model model, HttpServletRequest request, HttpServletResponse response) {
-
-        try {
-            SqlSession session = dmSqlSessionFactoryBean.getObject().openSession();
-            List list = session.selectList("select * from user");
-            System.out.println(list);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         UserDo userDo = CookieUtil.getUserFromCookie(request, response);
         //获取不到用户 跳转到登录页面
