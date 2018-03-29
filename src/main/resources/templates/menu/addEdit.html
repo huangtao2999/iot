@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
-<head>
+<head><meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
 	<meta charset="UTF-8">
 	<title>菜单管理</title>
 	<div th:include="inc/common"></div>
     <link rel="stylesheet" type="text/css" th:href="@{../../vendor/ztree/css/metroStyle/metroStyle.css}"/>
     <script th:src="@{../../vendor/ztree/js/jquery.ztree.all.js}"></script>
+    
 </head>
 <body>
 <!--主体开始-->
@@ -26,7 +31,7 @@
 				<td colspan=3>
 					<div class="layui-input-inline">
 				         <input type="text" id="action" name="action" autocomplete="off" class="layui-input"
-				         th:value="${item.action}" lay-verify="required">
+				         th:value="${item.action}" lay-verify="">
          			</div>
 				</td>
 			</tr>
@@ -34,11 +39,8 @@
 				<td class="TDleft">图标</td>
 				<td colspan=3>
 					<div class="layui-input-inline">
-						<button type="button" class="layui-btn layui-btn-normal" id="imgAttach" name="imgAttach" >
-							<i class="layui-icon">&#xe67c;</i>上传图片
-						</button>
-						<div class="layui-upload-list" id="imgPreview">
-						</div>
+						<span th:include="component/uploadImgComp(id='icon',name='icon',model='1',
+ 							taskId=${item.id},taskBelong='MENU_ICON')"></span>
 					</div>
 				</td>
 			</tr>
@@ -66,11 +68,14 @@
 	</div>
 	<input type="hidden" id="id" name="id" th:value="${item.id}">
 	<input type="hidden" id="pid" name="pid" th:value="${item.pid}">
+	
 </form>
 </body>
 <script th:inline="javascript">
 
 $(document).ready(function(){
+
+	
 	var itemId = [[${item.id}]];
 	//默认是选择否
 	if(itemId == undefined || itemId == null){

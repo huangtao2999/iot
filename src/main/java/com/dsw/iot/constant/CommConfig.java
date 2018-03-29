@@ -12,6 +12,11 @@ public interface CommConfig {
     //is_deleted N 常量
     public static final String NOT_DELETED = "N";
 
+    /**
+     * is_deleted 状态枚举
+     *
+     * @author zhang
+     */
     enum DELETED {
         YES("Y"), NO("N");
         String name;
@@ -29,10 +34,27 @@ public interface CommConfig {
         }
     }
 
+    enum IS_HISTORY {
+        YES("1"), NO("0");
+        String name;
+
+        private IS_HISTORY(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
     /**
      * log日志类型常量枚举
      *
-     * @author zhang
+     * @author ZhangCB
      */
     enum LOG_TYPE {
         /**
@@ -90,7 +112,7 @@ public interface CommConfig {
     /**
      * log操作模块常量枚举
      *
-     * @author zhang
+     * @author ZhangCB
      */
     enum LOG_MODULE {
         /**
@@ -129,5 +151,133 @@ public interface CommConfig {
         }
 
     }
+
+    /**
+     * 附件类型枚举
+     *
+     * @author ZhangCB
+     */
+    enum ATTACH_TYPE {
+        /**
+         * 【系统管理-用户管理】用户头像
+         */
+        USER_HEAD_IMG("【系统管理-用户管理】用户头像", "USER_HEAD_IMG"),
+        /**
+         * 【系统管理-菜单管理】菜单图标
+         */
+        MENU_ICON("【系统管理-菜单管理】菜单图标", "MENU_ICON"),
+
+        /**
+         * 【人员登记】身份证
+         */
+        PERSON_REGISTER_CARD_IMGS("【人员登记】身份证", "PERSON_REGISTER_CARD_IMGS"),
+        /**
+         * 【人员登记】人员照片
+         */
+        PERSON_REGISTER_PERSON_IMGS("【人员登记】人员照片", "PERSON_REGISTER_PERSON_IMGS"),
+        /**
+         * 【人员登记】伤势情况材料上传
+         */
+        INJURY_REGISTER_IMGS("【人员登记】伤势情况材料", "INJURY_REGISTER_IMGS"),
+        /**
+         * 【人员登记】入办案区随身物品照片
+         */
+        GOODS_REGISTER_IMGS("【人员登记】入办案区随身物品照片", "GOODS_REGISTER_IMGS"),
+        /**
+         * 【出所取物】出办案区随身物品照片
+         */
+        GOODS_REGISTER_IMGS_OUT("【出所取物】出办案区随身物品照片", "GOODS_REGISTER_IMGS_OUT"),
+
+        /**
+         * 【电话使用】家属通知使用电话的录音文件
+         */
+        PHONE_RECORD("【电话使用】家属通知使用电话的录音文件", "PHONE_RECORD"),
+
+        FACE_CATCH("云从抓拍图片文件", "FACE_CATCH"),
+
+        FACE_BASE("云从抓拍匹配底库文件", "FACE_BASE"),
+
+        /**
+         * [尿检信息] 手写板签字附件
+         */
+        URINE_TEST_INFO_SIGN_IDENTIFIED("尿检报告-签字-被认定人", "URINE_TEST_INFO_SIGN_IDENTIFIED"),
+        URINE_TEST_INFO_SIGN_COGNIZANT_1("尿检报告-签字-认定人1", "URINE_TEST_INFO_SIGN_COGNIZANT_1"),
+        URINE_TEST_INFO_SIGN_COGNIZANT_2("尿检报告-签字-认定人2", "URINE_TEST_INFO_SIGN_COGNIZANT_2"),
+        URINE_TEST_INFO_SIGN_ORG_MANAGER("尿检报告-签字-办案单位负责人", "URINE_TEST_INFO_SIGN_ORG_MANAGER"),
+        URINE_TEST_INFO_SIGN_IMG("尿检报告-尿检照片", "URINE_TEST_INFO_SIGN_IMG"),
+
+        /**
+         * 【人员登记表台账】手写板签字附件
+         */
+        FORM_HOST_POLICE_SIGN("人员登记表台账-办案民警签名", "FORM_HOST_POLICE_SIGN"),
+        FORM_ADMIN_SIGN("人员登记表台账-管 理 员1签名", "FORM_ADMIN_SIGN"),
+        FORM_CHECK_POLICE_SIGN("人员登记表台账-检查民警签名", "FORM_CHECK_POLICE_SIGN"),
+        FORM_WITNESS_SIGN("人员登记表台账-见证人签名", "FORM_WITNESS_SIGN"),
+        FORM_SUSPECT_SIGN("人员登记表台账-被检查人签名", "FORM_SUSPECT_SIGN"),
+        FORM_GOODS_HOST_POLICE_SIGN("人员登记表台账-随身物品-办案人员签名", "FORM_GOODS_HOST_POLICE_SIGN"),
+        FORM_GOODS_ADMIN_SIGN("人员登记表台账-随身物品-管理员签名", "FORM_GOODS_ADMIN_SIGN"),
+        FORM_GOODS_SUSPECT_SIGN("人员登记表台账-随身物品-涉案人员签名", "FORM_GOODS_SUSPECT_SIGN"),
+        FORM_RECEIVE_SIGN("人员登记表台账-随身物品-领取人签名", "FORM_RECEIVE_SIGN"),
+        FORM_GOODS_HOLD_ADMIN_SIGN("人员登记表台账-扣押物品-管理员签名签名", "FORM_GOODS_HOLD_ADMIN_SIGN");
+
+        // 成员变量
+        String name;
+        String type;
+
+        // 构造方法
+        private ATTACH_TYPE(String name, String type) {
+            this.name = name;
+            this.type = type;
+        }
+
+        // get set 方法
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+    }
+
+    enum ROOM_TYPE {
+        WAIT_ROOM("等候室", "1"),
+        INQUIRY_ROOM("询问室", "2");
+        // 成员变量
+        String name;
+        String type;
+
+        // 构造方法
+        private ROOM_TYPE(String name, String type) {
+            this.name = name;
+            this.type = type;
+        }
+
+        // get set 方法
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+    }
+
 
 }

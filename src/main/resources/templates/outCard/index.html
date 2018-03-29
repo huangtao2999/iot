@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-cn" style="overflow-y: auto;-ms-overflow-y: auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <div th:include="inc/common-new"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{../css/outAreaCss.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{../css/dialog/tableBoxCss-new.css}" />
+    <title>出办案区刷胸牌</title>
+</head>
+<style>
+	.infoOne>span{
+		width: 25%;
+	}
+</style>
+<body class='custom' style="overflow-y: auto">
+    <div id="outAreaBox">
+        <div class="poeRel wh100">
+            <div class="outAreaBox posAbs">
+                <h4>出办案区刷胸牌</h4>
+                <div class="perItemsBox clear">
+                    <div class="leftBox">
+                        <!-- 一行2个 -->
+                        <div class="infoExBox clear">
+                            <div class="infoOne" style="width:90%;">
+                                <div class="mandatoryImgBox hideManda">
+                                    <div class="posRel wh100">
+                                        <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                    </div>
+                                </div>
+                                <span class="">胸牌编号:</span>
+                                <div class="formBox">
+                                    <div class="posRel wh100">
+                                        <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                        <div style="position:absolute;width:100%;height:100%;background:#fff;opacity:0;top:0;left:0;"></div>
+                                        <input id="braceletNo" type="text" class="idCard posAbs wh100">
+                                        <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="infoExBox clear">
+                            <div class="infoOne" style="width:48%;">
+                                <div class="mandatoryImgBox hideManda">
+                                    <div class="posRel wh100">
+                                        <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                    </div>
+                                </div>
+                                <span class="">姓名:</span>
+                                <div class="formBox">
+                                    <div class="posRel wh100">
+                                        <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                        <div style="position:absolute;width:100%;height:100%;background:#fff;opacity:0;top:0;left:0;"></div>
+                                        <input disabled id="name" type="text" class="idCard posAbs wh100">
+                                        <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="infoOne" style="width:48%;">
+                                <div class="mandatoryImgBox hideManda">
+                                    <div class="posRel wh100">
+                                        <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                    </div>
+                                </div>
+                                <span class="">性别:</span>
+                                <div class="formBox">
+                                     <div class="posRel wh100">
+                                        <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                        <div style="position:absolute;width:100%;height:100%;background:#fff;opacity:0;top:0;left:0;"></div>
+                                        <input disabled id="sex" type="text" class="idCard posAbs wh100">
+                                        <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="infoExBox clear">
+                            <div class="infoOne" style="width:48%;">
+                                <div class="mandatoryImgBox hideManda">
+                                    <div class="posRel wh100">
+                                        <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                    </div>
+                                </div>
+                                <span class="">证件编号:</span>
+                                <div class="formBox">
+                                    <div class="posRel wh100">
+                                        <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                        <div style="position:absolute;width:100%;height:100%;background:#fff;opacity:0;top:0;left:0;"></div>
+                                        <input disabled id="cardNo" type="text" class="idCard posAbs wh100">
+                                        <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="infoOne" style="width:48%;">
+                                <div class="mandatoryImgBox hideManda">
+                                    <div class="posRel wh100">
+                                        <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                    </div>
+                                </div>
+                                <span class="">证件类别:</span>
+                                <div class="formBox">
+                                    <div class="posRel wh100">
+                                        <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                        <div style="position:absolute;width:100%;height:100%;background:#fff;opacity:0;top:0;left:0;"></div>
+                                        <input disabled id="cardType" type="text" class="idCard posAbs wh100">
+                                        <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="infoExBox clear">
+                            <div class="infoOne" style="width:48%;">
+                                <div class="mandatoryImgBox hideManda">
+                                    <div class="posRel wh100">
+                                        <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                    </div>
+                                </div>
+                                <span class="">办案民警:</span>
+                                <div class="formBox">
+                                     <div class="posRel wh100">
+                                        <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                        <div style="position:absolute;width:100%;height:100%;background:#fff;opacity:0;top:0;left:0;"></div>
+                                        <input disabled id="hostPoliceName" type="text" class="idCard posAbs wh100">
+                                        <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="infoOne" style="width:48%;">
+                                <div class="mandatoryImgBox hideManda">
+                                    <div class="posRel wh100">
+                                        <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                    </div>
+                                </div>
+                                <span class="">存储时间:</span>
+                                <div class="formBox">
+                                    <div class="posRel wh100">
+                                        <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                        <div style="position:absolute;width:100%;height:100%;background:#fff;opacity:0;top:0;left:0;"></div>
+                                        <input disabled id="lockerTime" type="text" class="idCard posAbs wh100">
+                                        <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="infoExBox clear">
+                             <div class="infoOne speOne" style="width:80%;">
+                                <div class="wh100">
+                                    <div class="mandatoryImgBox hideManda">
+                                        <div class="posRel wh100">
+                                            <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                        </div>
+                                    </div>
+                                    <span>储物柜编号:</span>
+                                    <div class="speOneBox">
+                                        <div class="posRel wh100">
+                                            <img src="../images/lawContro/shurukuang-wenben.png" alt="" class="posAbs wh100">
+                                            <div class="speOneBoxRight posAbs cenMid">
+                                                <div class="switchBox">
+                                                    <img src="../images/lawContro/kaiguan-kai.png" alt="" class="kaiImg">
+                                                    <img src="../images/lawContro/kaiguan-guan.png" alt="" class="guanImg">
+                                                </div>
+                                                <span id="lockerNo">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rightBox">
+                        <div class="posRel wh100">
+                            <img id="faceImg" src="../images/lawContro/face_msrpot.png" alt="" class="posAbs cenMid">
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 物品信息盒子 -->
+                <div class="itemsInfoBox">
+
+                   <div id="leftBox" >
+                        <div id="personRegis-table" >
+                            <div class="dataListBox posAbs cen" >
+
+                                <div class="titBox posAbs" >
+                                    <div class="posRel" >
+                                        <div class="con posAbs wh100 table-head" id="table_head"></div >
+                                    </div >
+                                </div >
+                                <div class="listBox posAbs" id="table-body-list-div" >
+                                    <ul class="table-body" >
+                                        <!-- //动态生成数据 -->
+                                    </ul >
+                                </div >
+                                <div class="pagBox posAbs pageTool" id="box" >
+
+                                </div >
+
+                            </div >
+                        </div >
+                    </div >
+
+                </div>
+
+                <!-- 选项盒子 -->
+                <div class="selectBox">
+                    <div class="selImgBox">
+                        <div class="posRel wh100">
+                            <img src="../images/lawContro/gouxuan01.png" alt="" class="defImg posAbs wh100">
+                            <img src="../images/lawContro/gouxuan02.png" alt="" class="selImg posAbs wh100">
+                        </div>
+                    </div>
+                    <span>请仔细确认取物无误后，再勾选</span>
+                </div>
+
+                <!-- 按钮盒子 -->
+                <div class="btnBox">
+                    <div class="btnConBox clear">
+                        <div class="keepBox box" style="display:none">
+                            <div class="posRel wh100">
+                                <img src="../images/lawContro/baocun-changtai.png" alt="" class="defImg posAbs wh100">
+                                <img src="../images/lawContro/baocun-dianji.png" alt="" class="selImg posAbs wh100">
+                                <span class="posAbs cenMid">签名确认</span>
+                            </div>
+                        </div>
+                        <div class="prevBox box"  onClick="tempConfirm()" style="display:none">
+                            <div class="posRel wh100">
+                                <img src="../images/lawContro/xiayibu-changtai.png" alt="" class="defImg posAbs wh100">
+                                <img src="../images/lawContro/xiayibu-dianji.png" alt="" class="selImg posAbs wh100">
+                                <span class="posAbs cenMid" style="width:70%">确认临时出办案区</span>
+                            </div>
+                        </div>
+                        <div class="nextBox box"  onClick="Confirm()" style="display:none">
+                            <div class="posRel wh100">
+                                <img src="../images/lawContro/xiayibu-changtai.png" alt="" class="defImg posAbs wh100">
+                                <img src="../images/lawContro/xiayibu-dianji.png" alt="" class="selImg posAbs wh100">
+                                <span class="posAbs cenMid" style="width:50%">确认出办案区</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <img src="../images/lawContro/beijing.png" alt="" class="posAbs wh100">
+        </div>
+    </div>
+	<input type="hidden" id="registerId" name="registerId">
+<!-- 	审批单id -->
+	<input type="hidden" id="outId" name="outId">
+	<input type="hidden" id="lockerId" name="lockerId">
+
+</body>
+<script th:src="@{../js/outAreaJs.js}"></script>
+<script th:src="@{../js/module.js}"></script>
+<script th:src="@{../js/custom/tableBoxJs-new.js}"></script>
+<script th:src="@{../js/custom/take-photo.js}"></script>
+<script th:inline="javascript">
+
+/* 查询审批单 start*/
+function getConfirmData(registerId){
+	if(registerId){
+		var res = new PublicAjax("/OutConfirm/getOutConfirmByRid.json",{
+							'registerId':registerId,
+							'status':'1',
+							'isHistory':'0'
+							});//审批通过的	且不是历史的单子
+		if(res.success){
+			var confirmList = res.content;
+			if(confirmList.length > 0){
+				//有审批单子
+				var data = confirmList[0];
+				$("#outId").val(data.id);//审批单的id
+				if(data.outType == '2'){
+					//临时出所，只显示临时出所按钮
+					$(".selectBox").hide();//隐藏复选
+					$(".prevBox").show();//显示临时出所按钮
+					return true;
+				}else{
+					return true;
+				}
+			}else{
+				//没有审批单子
+				layer.msg("未找到该手环的出办案区审批单，请先发起出所申请");
+				return false;
+			}
+		}else{
+			layer.msg("获取审批单失败。");
+			return false;
+		}
+	}else{
+		return false;
+	}
+}
+/* 查询审批单 end*/
+
+function setFaceImg(type, imgId){
+	if(type){
+		$("#faceImg").prop("src","/FileUpload/getAttach.json?id=" + imgId);
+	}else{
+		$("#faceImg").prop("src","../images/lawContro/face_msrpot.png");
+	}
+}
+
+//清空表格
+function clear(){
+    $("#braceletNo").val("");
+    $("#name").val("");
+    $("#hostPoliceName").val("");
+    $("#cardNo").val("");
+    $("#cardType").val("");
+    $("#sex").val("");
+    $("#lockerTime").val("");
+    $("#registerId").val("");
+    $("#outId").val("");
+    $("#lockerId").val("");
+    $("#lockerNo").text("");
+    //清空头像
+    setFaceImg(false);
+    //清空列表
+    $("#table_head").empty();
+    $("#table-body-list-div .table-body").empty();
+}
+
+/* 手环输入框回车事件  start */
+$("#braceletNo").keydown(function(e) {
+	if (e.keyCode == 13) {
+	    if ($("#braceletNo").val() != "") {
+	        var braceletNo = $("#braceletNo").val();
+	        //查询人员出所申请通过状态判断临时和正式出所
+	      	//查人员信息
+	        var res = new PublicAjax("/OutCard/getPersonRegister.json", {"braceletNo": braceletNo});
+	        if (res.success) {
+	            var content = res.content;
+	            if (content != null) {
+
+	                var personInfo = content.personInfo;
+	                //判断是否是待出所状态  1-在办案区；2-申请出办案区；3-待出办案区；4-临时出办案区；5-正式出办案区；
+	                var registerId = personInfo.id;
+	                if(!getConfirmData(registerId)){
+	                	clear();
+	                	return;
+	                }
+
+	                var goodsInfo = content.goodsInfo;
+	                if (goodsInfo != null && goodsInfo.size > 0) {
+	                    $("#lockerTime").val(formatTime(goodsInfo[0].createTime));
+	                } else {
+	                    $("#lockerTime").val(formatTime(personInfo.inTime));
+	                }
+
+	                $("#name").val(personInfo.name);
+	                $("#hostPoliceName").val(personInfo.hostPoliceName);
+	                $("#cardNo").val(personInfo.cardNo);
+	                //证件类型
+	                $("#cardType").val(getGridDict(personInfo.cardType, "PER_CARD_TYPE"));
+	                //性别
+	                $("#sex").val(getGridDict(personInfo.sex, "SEX"));
+	                $("#lockerNo").text(personInfo.lockerNo);
+	                $("#registerId").val(personInfo.id);
+	                $("#lockerId").val(personInfo.lockerId);
+	                //头像
+					setFaceImg(true, personInfo.personImgIds);
+	                //清空列表
+	                $("#table_head").empty();
+	                $("#table-body-list-div .table-body").empty();
+
+	                createTable(personInfo.id); //创建列表
+	            } else {
+	                layer.msg("未找到人员出办案区审批信息");
+					clear();
+	            }
+	        }
+	    }
+	}
+});
+/* 手环输入框回车事件  end */
+
+$(function(){
+	$("#braceletNo").focus();
+})
+</script>
+</html>

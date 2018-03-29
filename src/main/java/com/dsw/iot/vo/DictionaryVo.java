@@ -1,5 +1,7 @@
 package com.dsw.iot.vo;
 
+import com.dsw.iot.util.BaseModel;
+
 import lombok.Data;
 
 /**
@@ -9,7 +11,7 @@ import lombok.Data;
  * @create 2018-01-27 18:34
  **/
 @Data
-public class DictionaryVo {
+public class DictionaryVo extends BaseModel{
 
     private Long id;
     private String code;

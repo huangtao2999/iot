@@ -8,7 +8,8 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from user where
+    from user
+    where
     	is_deleted = 'N'
     	and account != 'admin'
     <if test="search != null and search != ''" >
@@ -17,6 +18,9 @@
 		   or tel like '%${search}%'
 		   or phone like '%${search}%'
 		 )
+    </if>
+    <if test="status != null and status != ''" >
+      and  status = #{status,jdbcType=VARCHAR}
     </if>
     <if test="orderByClause != null" >
       order by ${orderByClause}

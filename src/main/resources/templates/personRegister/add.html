@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <div th:include="inc/common-new"></div>
+    <div th:include="inc/common-table"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{../css/lawControCss.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/dialog/table-height.css}" />
+    <title>人员登记新增编辑</title>
+</head>
+<style>
+		.searchBtnBox {
+		    cursor: pointer;
+		    overflow: hidden;
+		    margin: 0 auto;
+		    width: 100%;
+		    height: 100%;
+		    float:left;
+		}
+
+		.searchBtnBox span {
+		    font-size: 0.8em;
+		    text-align: center;
+		    width: 100%;
+		}
+
+		.searchBtnBox .secImg {
+		    left: 15%;
+		    width: 15%;
+		    height: auto;
+		}
+
+		.infoOne>span {
+			width: 27%;
+		}
+
+		.lawConBox .lawConTabBox .tabCon span {
+		    bottom: -10%;
+		}
+		.needHideManda{
+			visibility: hidden;
+		}
+</style>
+<body style="overflow-y: auto; overflow-x:hidden;">
+    <div id="lawControBox">
+        <div class="posRel wh100">
+            <img style="z-index:-100;" class="posAbs wh100" src="../images/lawContro/beijing.png" alt="">
+<!--             上方按钮，人员分类 -->
+            <div class="lawCtrTabBox" style="margin-bottom:1em;">
+                <div class="posRel wh100">
+                    <ul class="clear posAbs person-type">
+                        <li class="active">
+                            <div class="posRel wh100">
+                                <img src="../images/lawContro/daohang-changtai.png" alt="" class="defImg posAbs wh100">
+                                <img src="../images/lawContro/daohang-xuanzhong.png" alt="" class="selImg posAbs wh100">
+                                <span class="posAbs cenMid" value="1">犯罪嫌疑人</span>
+                            </div>
+                        </li>
+                        <li class="">
+                            <div class="posRel wh100">
+                                <img src="../images/lawContro/daohang-changtai.png" alt="" class="defImg posAbs wh100">
+                                <img src="../images/lawContro/daohang-xuanzhong.png" alt="" class="selImg posAbs wh100">
+                                <span class="posAbs cenMid" value="2">证人</span>
+                            </div>
+                        </li>
+                        <li class="">
+                            <div class="posRel wh100">
+                                <img src="../images/lawContro/daohang-changtai.png" alt="" class="defImg posAbs wh100">
+                                <img src="../images/lawContro/daohang-xuanzhong.png" alt="" class="selImg posAbs wh100">
+                                <span class="posAbs cenMid" value="3">受害人</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <img src="../images/lawContro/zhuangshi.png" alt="" class="lineImg posAbs">
+<!--                     <img src="../images/lawContro/tuichu.png" alt="" class="closeImg posAbs mid"> -->
+                </div>
+            </div>
+<!--             下方所有的控件内容 -->
+            <div class="lawConBox">
+<!--             图片流程信息 -->
+                <div class="lawConTabBox">
+                    <div class="imgBox">
+                        <div class="posRel wh100">
+                            <img src="../images/lawContro/zhouxian-zuo.png" alt="" class="lineLeft posAbs cenMid">
+                        </div>
+                    </div>
+                    <div class="tabCon active">
+                        <div class="posRel wh100">
+                            <img src="../images/lawContro/renyuan02.png" alt="" class="defImg posAbs cenMid">
+                            <img src="../images/lawContro/renyuanxinxi.png" alt="" class="selImg posAbs cenMid">
+                            <span class="posAbs" value="01">人员信息</span>
+                        </div>
+                    </div>
+                    <div class="imgBox">
+                        <div class="posRel wh100">
+                            <img src="../images/lawContro/zhouxian.png" alt="" class="lineLeft posAbs cenMid">
+                        </div>
+                    </div>
+                    <div class="tabCon">
+                        <div class="posRel wh100">
+                            <img src="../images/lawContro/bananqu.png" alt="" class="defImg posAbs cenMid">
+                            <img src="../images/lawContro//bananqu02.png" alt="" class="selImg posAbs cenMid">
+                            <span class="posAbs" value="02">办案区信息</span>
+                        </div>
+                    </div>
+                    <div class="imgBox">
+                        <div class="posRel wh100">
+                            <img src="../images/lawContro/zhouxian.png" alt="" class="lineLeft posAbs cenMid">
+                        </div>
+                    </div>
+                    <div class="tabCon">
+                        <div class="posRel wh100">
+                            <img src="../images/lawContro/qita.png" alt="" class="defImg posAbs cenMid">
+                            <img src="../images/lawContro/qita02.png" alt="" class="selImg posAbs cenMid">
+                            <span class="posAbs" value="03">其他</span>
+                        </div>
+                    </div>
+                    <div class="imgBox">
+                        <div class="posRel wh100">
+                            <img src="../images/lawContro/zhouxian-you.png" alt="" class="lineLeft posAbs cenMid">
+                        </div>
+                    </div>
+                </div>
+                <!-- 人员基本信息的盒子 -->
+                <div class="perMsgBox">
+<!--                 内容部分上方三个人员类型选择 -->
+                    <div class="IdentyBox" style="height:1em;">
+                        <div class="posRel wh100">
+                            <ul class="clear posAbs">
+                                <li class="active">
+                                    <div class="posRel wh100">
+                                        <img src="../images/lawContro/gouxuan01.png" alt="" class="defImg posAbs mid">
+                                        <img src="../images/lawContro/gouxuan02.png" alt="" class="selImg posAbs mid">
+                                        <span class="posAbs mid" value="0">身份明确</span>
+                                    </div>
+                                </li>
+                                <li class="check-not-null">
+                                    <div class="posRel wh100">
+                                        <img src="../images/lawContro/gouxuan01.png" alt="" class="defImg posAbs mid">
+                                        <img src="../images/lawContro/gouxuan02.png" alt="" class="selImg posAbs mid">
+                                        <span class="posAbs mid" value="1">身份不明确</span>
+                                    </div>
+                                </li>
+                                <li class="">
+                                    <div class="posRel wh100">
+                                        <img src="../images/lawContro/gouxuan01.png" alt="" class="defImg posAbs mid">
+                                        <img src="../images/lawContro/gouxuan02.png" alt="" class="selImg posAbs mid">
+                                        <span class="posAbs mid" value="2">外国人</span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <img src="../images/lawContro/zhuangshi02.png" alt="" class="zhuangshiImg posAbs">
+                            <img src="../images/lawContro/zhuangshi.png" alt="" class="zhuangshiImg1 posAbs">
+                        </div>
+                    </div>
+                    <div class="inforBox">
+                        <div class="inforBoxCon clear">
+                            <div class="clear mainConBox">
+                                <!-- 一行3个 -->
+                                <div class="infoExBox clear">
+                                    <div class="infoOne" style="width:31%;">
+                                        <div class="mandatoryImgBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                            </div>
+                                        </div>
+                                        <span class="">证件号码：</span>
+                                        <div class="formBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <input th:value="${cardNo}" id="cardNo" name="cardNo" type="text" class="idCard posAbs wh100">
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+                                        </div>
+                                    </div>
+			                        <div class="infoOne" style="width:31%;">
+			                        	<span class=""></span>
+			                        	<div class="formBox" style="float:left;">
+											<section class="searchBtnBox" id="readCard">
+									            <div class="posRel wh100">
+									                <img src="../images/perRegis/renyuandengji_bg4.png" alt="" class="bg posAbs wh100">
+									                <span class="posAbs mid" style="width:100%;color:#fcaa00;">点击读卡</span>
+									            </div>
+									        </section>
+				                         </div>
+			                        </div>
+                                    <div class="infoOne" style="width:31%;">
+                                        <div class="mandatoryImgBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                            </div>
+                                        </div>
+                                        <span class="">证件类型：</span>
+                                        <div class="formBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <div class="selBox posAbs mid">
+													<span th:include="component/selectCombo(id='cardType',name='cardType',dictType='PER_CARD_TYPE')" />
+                                                </div>
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="infoExBox clear">
+                                    <div class="infoOne" style="width:31%;">
+                                        <div id="no_three" class="mandatoryImgBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                            </div>
+                                        </div>
+                                        <span class="">姓名：</span>
+                                        <div class="formBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <input th:value="${name}" id="name" name="name" type="text" class="idCard posAbs wh100">
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="infoOne" style="width:31%;">
+                                        <div class="mandatoryImgBox hideManda">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                            </div>
+                                        </div>
+                                        <span class="">性别：</span>
+                                        <div class="formBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <div class="selBox posAbs mid">
+													<span th:include="component/selectCombo(id='sex',name='sex',dictType='SEX')" />
+                                                </div>
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="infoOne" style="width:31%;">
+                                        <div class="mandatoryImgBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                            </div>
+                                        </div>
+                                        <span class="">出生日期：</span>
+                                        <div class="formBox">
+				                            <div class="posRel wh100">
+				                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+				                                <div class="iptBg"></div>
+				                                <input id="birthDate" name="birthDate" class="posAbs wh100" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})">
+				                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+				                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+								<div class="infoExBox clear">
+                                    <div class="infoOne" style="width:31%;">
+                                        <div class="mandatoryImgBox hideManda">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                            </div>
+                                        </div>
+                                        <span class="">曾用名：</span>
+                                        <div class="formBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <input id="oldName" name="oldName" type="text" class="idCard posAbs wh100">
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="infoOne" style="width:31%;">
+                                        <div class="mandatoryImgBox hideManda">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                            </div>
+                                        </div>
+                                        <span class="">别名：</span>
+                                        <div class="formBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <input id="extraName" name="extraName" type="text" class="idCard posAbs wh100">
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="infoOne" style="width:31%;">
+                                        <div class="mandatoryImgBox hideManda">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                            </div>
+                                        </div>
+                                        <span class="">绰号：</span>
+                                        <div class="formBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <input id="nickName" name="nickName" type="text" class="idCard posAbs wh100">
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+								<div class="infoExBox clear">
+                                    <div class="infoOne" style="width:31%;">
+                                        <div class="mandatoryImgBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                            </div>
+                                        </div>
+                                        <span class="">联系电话：</span>
+                                        <div class="formBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <input id="phone" name="phone" type="text" class="idCard posAbs wh100">
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="infoOne" style="width:31%;">
+                                        <div class="mandatoryImgBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                            </div>
+                                        </div>
+                                        <span class="">文化程度：</span>
+                                        <div class="formBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <div class="selBox posAbs mid">
+													<span th:include="component/selectCombo(id='educationLevel',name='educationLevel',dictType='EDUCATION_LEVEL')" />
+                                                </div>
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="infoOne" style="width:31%;">
+                                        <div class="mandatoryImgBox hideManda">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                            </div>
+                                        </div>
+                                        <span class="">政治面貌：</span>
+                                        <div class="formBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <div class="selBox posAbs mid">
+													<span th:include="component/selectCombo(id='political',name='political',dictType='PER_POLITICAL')" />
+                                                </div>
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+								<div class="infoExBox clear">
+                                    <div class="infoOne" style="width:31%;">
+                                        <div class="mandatoryImgBox hideManda">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                            </div>
+                                        </div>
+                                        <span class="">国籍：</span>
+                                        <div class="formBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <div class="selBox posAbs mid">
+													<span th:include="component/selectCombo(id='nationality',name='nationality',dictType='PER_NATIONALITY')" />
+                                                </div>
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="infoOne" style="width:31%;">
+                                        <div class="mandatoryImgBox hideManda">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                            </div>
+                                        </div>
+                                        <span class="">民族：</span>
+                                        <div class="formBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <div class="selBox posAbs mid">
+													<span th:include="component/selectCombo(id='minority',name='minority',dictType='ETHNICITY')" />
+                                                </div>
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="infoOne" style="width:31%;">
+                                        <div class="mandatoryImgBox hideManda">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                            </div>
+                                        </div>
+                                        <span class="">身份类别：</span>
+                                        <div class="formBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <div class="selBox posAbs mid">
+													<span th:include="component/selectCombo(id='personType',name='personType',dictType='PERSON_TYPE')" />
+                                                </div>
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+								<div class="infoExBox clear">
+                                    <div class="infoOne" style="width:45%;">
+                                        <div class="mandatoryImgBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                            </div>
+                                        </div>
+                                        <span class="" style="width:19%">户籍地：</span>
+                                        <div class="formBox" style="width:70%">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <input id="domicilePlace" name="domicilePlace" type="text" class="idCard posAbs wh100">
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="infoOne" style="width:45%;">
+                                        <div class="mandatoryImgBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                            </div>
+                                        </div>
+                                        <span class="" style="width:22%">户籍地区划：</span>
+                                        <div class="formBox" style="width:69%">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <input id="domicileArea" name="domicileArea" type="text" class="idCard posAbs wh100">
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+								<div class="infoExBox clear">
+                                    <div class="infoOne" style="width:45%;">
+                                        <div class="mandatoryImgBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                            </div>
+                                        </div>
+                                        <span class="" style="width:19%">现住地：</span>
+                                        <div class="formBox" style="width:70%">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <input id="livingPlace" name="livingPlace" type="text" class="idCard posAbs wh100">
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="infoOne" style="width:45%;">
+                                        <div class="mandatoryImgBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                            </div>
+                                        </div>
+                                        <span class="" style="width:22%">现住地区划：</span>
+                                        <div class="formBox" style="width:69%">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <input id="livingArea" name="livingArea" type="text" class="idCard posAbs wh100">
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                 </div>
+                                 <div class="infoExBox clear">
+                                    <div class="infoOne" style="width:100%;">
+                                        <div class="mandatoryImgBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                            </div>
+                                        </div>
+                                        <span class="" style="width:9%">工作单位：</span>
+                                        <div class="formBox" style="width:79%">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <input id="workUnit" name="workUnit" type="text" class="idCard posAbs wh100">
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+								<div class="infoExBox clear">
+	                                <div class="infoOne" style="width:31%;">
+	                                    <div class="mandatoryImgBox hideManda">
+	                                        <div class="posRel wh100">
+	                                            <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+	                                        </div>
+	                                    </div>
+	                                    <span class="">婚姻状况：</span>
+	                                    <div class="formBox">
+	                                        <div class="posRel wh100">
+	                                            <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+	                                            <div class="iptBg"></div>
+	                                            <div class="selBox posAbs mid">
+													<span th:include="component/selectCombo(id='marriageType',name='marriageType',dictType='PER_MARRIAGE_TYPE')" />
+	                                            </div>
+	                                            <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <div class="infoOne" style="width:31%;">
+	                                    <div class="mandatoryImgBox hideManda">
+	                                        <div class="posRel wh100">
+	                                            <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+	                                        </div>
+	                                    </div>
+	                                    <span class="">宗教信仰：</span>
+	                                    <div class="formBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <input id="relief" name="relief" type="text" class="idCard posAbs wh100">
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+	                                    </div>
+	                                </div>
+	                                <div class="infoOne" style="width:31%;">
+	                                    <div class="mandatoryImgBox hideManda">
+	                                        <div class="posRel wh100">
+	                                            <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+	                                        </div>
+	                                    </div>
+	                                    <span class="">兵役状况：</span>
+	                                    <div class="formBox">
+	                                        <div class="posRel wh100">
+	                                            <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+	                                            <div class="iptBg"></div>
+	                                            <div class="selBox posAbs mid">
+													<span th:include="component/selectCombo(id='minitary',name='minitary',dictType='PER_MILITARY')" />
+	                                            </div>
+	                                            <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+								<div class="infoExBox clear">
+	                                <div class="infoOne" style="width:31%;">
+	                                    <div class="mandatoryImgBox hideManda">
+	                                        <div class="posRel wh100">
+	                                            <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+	                                        </div>
+	                                    </div>
+	                                    <span class="">身高：</span>
+	                                    <div class="formBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <input id="height" name="height" type="text" class="idCard posAbs wh100">
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+	                                    </div>
+	                                </div>
+	                                <div class="infoOne" style="width:31%;">
+	                                    <div class="mandatoryImgBox hideManda">
+	                                        <div class="posRel wh100">
+	                                            <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+	                                        </div>
+	                                    </div>
+	                                    <span class="">人员标签：</span>
+	                                    <div class="formBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <input id="personLable" name="personLable" type="text" class="idCard posAbs wh100">
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+	                                    </div>
+	                                </div>
+	                                <div class="infoOne" style="width:31%;">
+	                                    <div class="mandatoryImgBox hideManda">
+	                                        <div class="posRel wh100">
+	                                            <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+	                                        </div>
+	                                    </div>
+	                                    <span class="">职业类别：</span>
+	                                    <div class="formBox">
+                                            <div class="posRel wh100">
+                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                                <div class="iptBg"></div>
+                                                <input id="professionType" name="professionType" type="text" class="idCard posAbs wh100">
+                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                            </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+                            </div>
+<!-- 照片下面的输入框 -->
+                            <div class="otherBox">
+                                <span style="height: 230px;">
+                                    <img id="faceImg" src="../images/lawContro/face_msrpot.png" alt="" style="height:100%">
+                                </span>
+                                <ul class="otherUl" style="margin-top:2em">
+                                    <li>
+	                                    <div class="infoExBox clear">
+		                                 	<div class="infoOne" style="width:100%;">
+	                                            <div class="posRel wh100">
+	                                                <img id="no_one" src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid hideManda">
+			                                        <span class="posAbs mid">指纹编号：</span>
+	                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+	                                                <div class="iptBg"></div>
+	                                                <input id="fingerNo" name="fingerNo" type="text" class="idCard posAbs wh100">
+	                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+	                                            </div>
+		                                    </div>
+		                                </div>
+                                    </li>
+                                    <li>
+	                                    <div class="infoExBox clear">
+		                                 	<div class="infoOne" style="width:100%;">
+	                                            <div class="posRel wh100">
+	                                                <img id="no_two" src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid hideManda">
+			                                        <span class="posAbs mid">DNA编号：</span>
+	                                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+	                                                <div class="iptBg"></div>
+	                                                <input id="dnaNo" name="dnaNo" type="text" class="idCard posAbs wh100">
+	                                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+	                                            </div>
+		                                    </div>
+		                                </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!--                 办案区信息的盒子 -->
+                <div class="workAreaBox areaBox" style="margin-top:1.5em;">
+                    <!-- 基础信息的盒子 -->
+					<div class="infoExBox clear">
+                        <div class="infoOne" style="width:24%;">
+                            <div class="mandatoryImgBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="">入区时间：</span>
+                            <div class="formBox">
+	                            <div class="posRel wh100">
+	                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+	                                <div class="iptBg"></div>
+	                                <!-- onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true})" -->
+	                                <input readonly id="inTime" class="posAbs wh100">
+	                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+	                            </div>
+                            </div>
+                        </div>
+                        <div class="infoOne" style="width:24%;">
+                            <div class="mandatoryImgBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="">到案方式：</span>
+                            <div class="formBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                    <div class="iptBg"></div>
+                                    <div class="selBox posAbs mid">
+										<span th:include="component/selectCombo(id='inType',name='inType',dictType='IN_TYPE')" />
+                                    </div>
+                                    <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="infoOne" style="width:24%;">
+                            <div class="mandatoryImgBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="">办案区：</span>
+                            <div class="formBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                    <div class="iptBg"></div>
+                                    <input id="handlingArea" name="handlingArea" type="hidden" class="handlingArea posAbs wh100" th:value="420202000000">
+                                    <input type="text" class="handlingArea posAbs wh100" th:value="黄石港分局" disabled="">
+                                    <!--<span th:include="component/selectCombo(id='handlingArea',name='handlingArea',dictType='ORG')" />-->
+                                    <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="infoOne" style="width:24%;">
+                            <div class="mandatoryImgBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="" style="width:37%">入办案区原因：</span>
+                            <div class="formBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                    <div class="iptBg"></div>
+                                    <div class="selBox posAbs mid">
+										<span th:include="component/selectCombo(id='inReason',name='inReason',dictType='PER_IN_REASON')" />
+                                    </div>
+                                    <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					<div class="infoExBox clear">
+                        <div class="infoOne" style="width:24%;">
+                            <div class="mandatoryImgBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="">特殊群体：</span>
+                            <div class="formBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                    <div class="iptBg"></div>
+                                    <div class="selBox posAbs mid">
+										<span th:include="component/selectCombo(id='specialGroup',name='specialGroup',dictType='PER_SPECIAL_GROUP')" />
+                                    </div>
+                                    <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                </div>
+                            </div>
+                        </div>
+						<div class="infoOne" style="width:24%;">
+                            <div class="mandatoryImgBox hideManda">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="">案件类型：</span>
+                            <div class="formBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                    <div class="iptBg"></div>
+                                    <div class="selBox posAbs mid">
+										<span th:include="component/selectCombo(id='caseType',name='caseType',dictType='CASE_TYPE')" />
+                                    </div>
+                                    <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="infoOne" style="width:24%;">
+                            <div class="mandatoryImgBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="" >同案预警：</span>
+                            <div class="formBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                    <div class="iptBg"></div>
+                                    <div class="selBox posAbs mid">
+										<span th:include="component/selectCombo(id='isWarned',name='isWarned',dictType='YES_NO')" />
+                                    </div>
+                                    <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+					<div class="infoExBox clear">
+                        <div class="infoOne" style="width:24%;">
+                            <div class="mandatoryImgBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="">主办民警：</span>
+                            <div class="formBox">
+	                            <div class="posRel wh100">
+	                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+	                                <div class="iptBg"></div>
+	                                <input id="hostPoliceName" name="hostPoliceName" type="text" class="idCard posAbs wh100">
+	                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+	                            </div>
+                            </div>
+                        </div>
+                        <div class="infoOne" style="width:24%;">
+                            <div class="mandatoryImgBox hideManda">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="">主胸牌号：</span>
+                            <div class="formBox">
+	                            <div class="posRel wh100">
+	                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+	                                <div class="iptBg"></div>
+	                                <input id="hostPoliceCardNo" name="hostPoliceCardNo" type="text" class="idCard posAbs wh100">
+	                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+	                            </div>
+                            </div>
+                        </div>
+                        <div class="infoOne" style="width:24%;">
+                            <div class="mandatoryImgBox hideManda">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="">协办民警：</span>
+                            <div class="formBox">
+	                            <div class="posRel wh100">
+	                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+	                                <div class="iptBg"></div>
+	                                <input id="joinPoliceName" name="joinPoliceName" type="text" class="idCard posAbs wh100">
+	                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+	                            </div>
+                            </div>
+                        </div>
+                        <div class="infoOne" style="width:24%;">
+                            <div class="mandatoryImgBox hideManda">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="">协胸牌号：</span>
+                            <div class="formBox">
+	                            <div class="posRel wh100">
+	                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+	                                <div class="iptBg"></div>
+	                                <input id="joinPoliceCardNo" name="joinPoliceCardNo" type="text" class="idCard posAbs wh100">
+	                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+	                            </div>
+                            </div>
+                        </div>
+                    </div>
+					<div class="infoExBox clear">
+                        <div class="infoOne" style="width:49%;">
+                            <div class="mandatoryImgBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="" style="width:13%">抓获地：</span>
+                            <div class="formBox" style="width:75%">
+	                            <div class="posRel wh100">
+	                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+	                                <div class="iptBg"></div>
+	                                <input id="handingPlace" name="handingPlace" type="text" class="idCard posAbs wh100">
+	                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+	                            </div>
+                            </div>
+                        </div>
+                        <div class="infoOne" style="width:24%;">
+                            <div class="mandatoryImgBox hideManda">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="">警情编号：</span>
+                            <div class="formBox">
+	                            <div class="posRel wh100">
+	                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+	                                <div class="iptBg"></div>
+	                                <input id="alarmNumber" name="alarmNumber" type="text" class="idCard posAbs wh100">
+	                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+	                            </div>
+                            </div>
+                        </div>
+                        <div class="infoOne" style="width:24%;">
+                            <div class="mandatoryImgBox hideManda">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="">文书编号：</span>
+                            <div class="formBox">
+	                            <div class="posRel wh100">
+	                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+	                                <div class="iptBg"></div>
+	                                <input id="wordNumber" name="wordNumber" type="text" class="idCard posAbs wh100">
+	                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+	                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+					<div class="infoExBox clear">
+                        <div class="infoOne speOne" style="width:70%">
+                            <div class="mandatoryImgBox hideManda">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span style="width:9%">柜尺寸：</span>
+                            <div class="speOneBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/shurukuang-wenben.png" alt="" class="posAbs wh100">
+                                    <div class="speOneBoxRight posAbs cenMid">
+                                        <div class="selBox">
+											<span th:include="component/selectCombo(id='box_size',name='box_size',dictType='SIZE')" />
+                                        </div>
+<!--                                         <span>L09:</span> -->
+                                        <div class="switchBox">
+                                            <img src="../images/lawContro/kaiguan-guan.png" alt="" class="guanImg" style="display:none">
+                                            <img src="../images/lawContro/kaiguan-kai.png" alt="" class="kaiImg" style="display:block">
+                                        </div>
+                                        <span>  柜子编号:</span>
+                                        <span id="lockerNo" name="lockerNo"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="infoOne" style="width:27%;">
+                            <div class="mandatoryImgBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="">手环编号：</span>
+                            <div class="formBox" style="width:62%">
+	                            <div class="posRel wh100">
+	                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+	                                <div class="iptBg"></div>
+	                                <input id="braceletNo" name="braceletNo" type="text" class="idCard posAbs wh100">
+	                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+	                            </div>
+                            </div>
+	                    </div>
+                 	</div>
+<!-- 多选框 -->
+					<div class="infoExBox clear" >
+                       <div class="infoOne boxesBox" style="width:100%;">
+                           <div class="mandatoryImgBox hideManda" >
+                               <div class="posRel wh100" >
+                                   <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs">
+                               </div>
+                           </div>
+                           <span class="" style="width:10%;">采集项目：</span>
+                           <div class="formBox clear collectProject-cls" style="width:60%;">
+                               <div class="checkOneBox">
+                                   <div class="posRel wh100">
+                                       <img src="../images/lawContro/gouxuan01.png" alt="" class="posAbs mid defImg">
+                                       <img src="../images/lawContro/gouxuan02.png" alt="" class="posAbs mid selImg">
+                                       <span class="posAbs mid">指纹</span>
+                                   </div>
+                               </div>
+                               <div class="checkOneBox">
+                                   <div class="posRel wh100">
+                                       <img src="../images/lawContro/gouxuan01.png" alt="" class="posAbs mid defImg">
+                                       <img src="../images/lawContro/gouxuan02.png" alt="" class="posAbs mid selImg">
+                                       <span class="posAbs mid">血液</span>
+                                   </div>
+                               </div>
+                               <div class="checkOneBox">
+                                   <div class="posRel wh100">
+                                       <img src="../images/lawContro/gouxuan01.png" alt="" class="posAbs mid defImg">
+                                       <img src="../images/lawContro/gouxuan02.png" alt="" class="posAbs mid selImg">
+                                       <span class="posAbs mid">尿液</span>
+                                   </div>
+                               </div>
+                               <div class="checkOneBox">
+                                   <div class="posRel wh100">
+                                       <img src="../images/lawContro/gouxuan01.png" alt="" class="posAbs mid defImg">
+                                       <img src="../images/lawContro/gouxuan02.png" alt="" class="posAbs mid selImg">
+                                       <span class="posAbs mid">其他</span>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                 	</div>
+
+                   <!-- 是否核查比对选项盒子 -->
+                    <div class="selectBox">
+                        <div class="selImgBox">
+                            <div class="posRel wh100">
+                                <img src="../images/lawContro/gouxuan01.png" alt="" class="defImg posAbs wh100">
+                                <img src="../images/lawContro/gouxuan02.png" alt="" class="selImg posAbs wh100">
+                            </div>
+                        </div>
+                        <span>是否自动分配等候室</span>
+                    </div>
+
+                    <!-- 物品信息盒子 -->
+                    <div class="itemsInfoBox goods-list" style="margin-top:2em;">
+                        <div class="titMainBox">
+                            <div class="posRel wh100">
+                                <img src="../images/lawContro/leibiaokuang.png" alt="" class="posAbs wh100">
+                                <span class="titCon posAbs">存放物品信息</span>
+                                <div class="tabConBox clear posAbs">
+                                    <span style="width:20%;">物品名称</span>
+                                    <span style="width:40%;">物品描述</span>
+                                    <span style="width:40%;">照片</span>
+                                </div>
+                                <div class="addBtnBox posAbs" cls="goods-list" data-type="inGoods">
+                                    <div class="posRel wh100">
+                                        <img src="../images/lawContro/tianjia-changtai.png" alt="" class="defImg posAbs wh100">
+                                        <img src="../images/lawContro/tianjia-dianji.png" alt="" class="selImg posAbs wh100">
+                                        <span class="posAbs cenMid">添加+</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="itemsInfoMainBox">
+                            <div id="columIscBox" class="columIscBox">
+                                <ul>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- textarea盒子 -->
+                    <div class="textAreaBox">
+                        <div class="tarLeft">
+                            <div class="posRel wh100">
+                                <textarea name="medicalHistory" id="medicalHistory" class="textareaLeft posAbs cenMid" placeholder="自诉有无疾病、伤情及受伤原因"></textarea>
+                                <img src="../images/lawContro/shurukuang-wenben.png" alt="" class="posAbs wh100">
+                            </div>
+                        </div>
+                        <div class="tarRight">
+                            <div class="posRel wh100">
+                                <textarea name="checkBodyResult" id="checkBodyResult" class="textareaRight posAbs cenMid" placeholder="检查发现体表特俗特征、伤情及处理情况"></textarea>
+                                <img src="../images/lawContro/shurukuang-wenben.png" alt="" class="posAbs wh100">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 伤情信息盒子 -->
+                    <div class="itemsInfoBox injury-list" style="margin-top:2em">
+                        <div class="titMainBox">
+                            <div class="posRel wh100">
+                                <img src="../images/lawContro/leibiaokuang.png" alt="" class="posAbs wh100">
+                                <span class="titCon posAbs">伤情信息</span>
+                                <div class="tabConBox clear posAbs">
+                                    <span style="width:20%;">部位</span>
+                                    <span style="width:40%;">伤情描述</span>
+                                    <span style="width:40%;">照片</span>
+                                </div>
+                                <div class="addBtnBox posAbs injuryAdd" cls="injury-list"  data-type="injury">
+                                    <div class="posRel wh100">
+                                        <img src="../images/lawContro/tianjia-changtai.png" alt="" class="defImg posAbs wh100">
+                                        <img src="../images/lawContro/tianjia-dianji.png" alt="" class="selImg posAbs wh100">
+                                        <span class="posAbs cenMid">添加+</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="itemsInfoMainBox">
+                            <div id="columIscBox" class="columIscBox">
+                                <ul>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 抓获信息的盒子 -->
+                <div class="otherConBox workAreaBox" style="margin-top:1.5em;">
+                    <!-- 基础信息的盒子 -->
+					<div class="infoExBox clear">
+                        <div class="infoOne" style="width:24%;">
+                            <div class="mandatoryImgBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="">抓获日期：</span>
+                            <div class="formBox">
+	                            <div class="posRel wh100">
+	                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+	                                <div class="iptBg"></div>
+	                                <input id="catchTime" name="catchTime" class="posAbs wh100" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})" readonly="readonly">
+	                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+	                            </div>
+                            </div>
+                        </div>
+                        <div class="infoOne" style="width:24%;">
+                            <div class="mandatoryImgBox hideManda">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="">抓获人：</span>
+                            <div class="formBox">
+	                            <div class="posRel wh100">
+	                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+	                                <div class="iptBg"></div>
+	                                <input id="catchPerson" name="catchPerson" type="text" class="idCard posAbs wh100">
+	                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+	                            </div>
+                            </div>
+                        </div>
+                        <div class="infoOne" style="width:24%;">
+                            <div class="mandatoryImgBox hideManda">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="">嫌疑属性：</span>
+                            <div class="formBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                    <div class="iptBg"></div>
+                                    <div class="selBox posAbs mid">
+										<span th:include="component/selectCombo(id='suspectProperty',name='suspectProperty',dictType='PER_SUSPECT_OPTION')" />
+                                    </div>
+                                    <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="infoOne" style="width:24%;">
+                            <div class="mandatoryImgBox hideManda">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="" style="width:37%">保密级别：</span>
+                            <div class="formBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                    <div class="iptBg"></div>
+                                    <div class="selBox posAbs mid">
+										<span th:include="component/selectCombo(id='securityLevel',name='securityLevel',dictType='PER_CATCH_SECRET')" />
+                                    </div>
+                                    <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					<div class="infoExBox clear">
+                        <div class="infoOne" style="width:24%;">
+                            <div class="mandatoryImgBox hideManda">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="">健康状况：</span>
+                            <div class="formBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                    <div class="iptBg"></div>
+                                    <div class="selBox posAbs mid">
+										<span th:include="component/selectCombo(id='healthy',name='healthy',dictType='PER_HEALTH')" />
+                                    </div>
+                                    <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="infoOne" style="width:24%;">
+                            <div class="mandatoryImgBox hideManda">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                                </div>
+                            </div>
+                            <span class="">吸毒检测：</span>
+                            <div class="formBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                    <div class="iptBg"></div>
+                                    <div class="selBox posAbs mid">
+										<span th:include="component/selectCombo(id='isCheckDrug',name='isCheckDrug',dictType='YES_NO')" />
+                                    </div>
+                                    <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="infoExBox clear">
+                       <div class="infoOne" style="width:45%;">
+                           <div class="mandatoryImgBox hideManda">
+                               <div class="posRel wh100">
+                                   <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                               </div>
+                           </div>
+                           <span class="" style="width:20%">抓获地点：</span>
+                           <div class="formBox" style="width:70%">
+                               <div class="posRel wh100">
+                                   <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                   <div class="iptBg"></div>
+                                   <input id="catchPlace" name="catchPlace" type="text" class="idCard posAbs wh100">
+                                   <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                               </div>
+                           </div>
+                       </div>
+                       <div class="infoOne" style="width:45%;">
+                           <div class="mandatoryImgBox hideManda">
+                               <div class="posRel wh100">
+                                   <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                               </div>
+                           </div>
+                           <span class="" style="width:22%">抓获方式：</span>
+                           <div class="formBox" style="width:69%">
+                               <div class="posRel wh100">
+                                   <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                   <div class="iptBg"></div>
+                                   <input id="catchMethod" name="catchMethod" type="text" class="idCard posAbs wh100">
+                                   <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+
+                   <div class="infoExBox clear">
+                       <div class="infoOne" style="width:45%;">
+                           <div class="mandatoryImgBox hideManda">
+                               <div class="posRel wh100">
+                                   <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                               </div>
+                           </div>
+                           <span class="" style="width:20%">抓获单位：</span>
+                           <div class="formBox" style="width:70%">
+                               <div class="posRel wh100">
+                                   <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                   <div class="iptBg"></div>
+                                   <input id="catchUnit" name="catchUnit" type="text" class="idCard posAbs wh100">
+                                   <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                               </div>
+                           </div>
+                       </div>
+                       <div class="infoOne" style="width:45%;">
+                           <div class="mandatoryImgBox hideManda">
+                               <div class="posRel wh100">
+                                   <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                               </div>
+                           </div>
+                           <span class="" style="width:22%">案发地：</span>
+                           <div class="formBox" style="width:69%">
+                               <div class="posRel wh100">
+                                   <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                   <div class="iptBg"></div>
+                                   <input id="happenedPlace" name="happenedPlace" type="text" class="idCard posAbs wh100">
+                                   <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+
+                    <div class="infoExBox clear">
+                       <div class="infoOne" style="width:45%;">
+                           <div class="mandatoryImgBox hideManda">
+                               <div class="posRel wh100">
+                                   <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                               </div>
+                           </div>
+                           <span class="" style="width:20%">局外抓获单位：</span>
+                           <div class="formBox" style="width:70%">
+                               <div class="posRel wh100">
+                                   <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                   <div class="iptBg"></div>
+                                   <input id="catchUnitOut" name="catchUnitOut" type="text" class="idCard posAbs wh100">
+                                   <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                               </div>
+                           </div>
+                       </div>
+                       <div class="infoOne" style="width:45%;">
+                           <div class="mandatoryImgBox hideManda">
+                               <div class="posRel wh100">
+                                   <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                               </div>
+                           </div>
+                           <span class="" style="width:22%">现实状况：</span>
+                           <div class="formBox" style="width:69%">
+                               <div class="posRel wh100">
+                                   <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                   <div class="iptBg"></div>
+                                   <input id="reality" name="reality" type="text" class="idCard posAbs wh100">
+                                   <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+
+                    <div class="infoExBox clear">
+                       <div class="infoOne" style="width:45%;">
+                           <div class="mandatoryImgBox hideManda">
+                               <div class="posRel wh100">
+                                   <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                               </div>
+                           </div>
+                           <span class="" style="width:20%">可疑依据：</span>
+                           <div class="formBox" style="width:70%">
+                               <div class="posRel wh100">
+                                   <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                   <div class="iptBg"></div>
+                                   <input id="doubtProof" name="doubtProof" type="text" class="idCard posAbs wh100">
+                                   <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                               </div>
+                           </div>
+                       </div>
+                       <div class="infoOne" style="width:45%;">
+                           <div class="mandatoryImgBox hideManda">
+                               <div class="posRel wh100">
+                                   <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
+                               </div>
+                           </div>
+                           <span class="" style="width:22%">作案原因：</span>
+                           <div class="formBox" style="width:69%">
+                               <div class="posRel wh100">
+                                   <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
+                                   <div class="iptBg"></div>
+                                   <input id="motivation" name="motivation" type="text" class="idCard posAbs wh100">
+                                   <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+
+                    <!-- 监护人的盒子 -->
+                    <div class="cardBox clear">
+                        <div class="card guardian">
+                            <div class="posRel wh100">
+                                <ul class="perInfoBox posAbs cen">
+                                    <!-- 性别的盒子单独的 -->
+                                    <li class="sexBox">
+                                        <div class="infoOne wh100">
+                                            <span class="">性别：</span>
+                                            <div class="formBox clear">
+                                                <div class="sexManBox sexOneBox active">
+                                                    <div class="posRel wh100">
+                                                        <img src="../images/lawContro/gouxuan01.png" alt="" class="posAbs mid defImg">
+                                                        <img src="../images/lawContro/gouxuan02.png" alt="" class="posAbs mid selImg">
+                                                        <span class="posAbs mid">男</span>
+                                                    </div>
+                                                </div>
+                                                <div class="sexWoanBox sexOneBox">
+                                                    <div class="posRel wh100">
+                                                        <img src="../images/lawContro/gouxuan01.png" alt="" class="posAbs mid defImg">
+                                                        <img src="../images/lawContro/gouxuan02.png" alt="" class="posAbs mid selImg">
+                                                        <span class="posAbs mid">女</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="infoOne wh100">
+                                            <span class="">姓名：</span>
+                                            <div class="formBox">
+                                                <div class="posRel wh100">
+                                                    <img src="../images/lawContro/shurukaung.png" alt="" class="posAbs wh100">
+                                                    <input id="name2" name="name" type="text" class="posAbs cenMid">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="infoOne wh100">
+                                            <span class="">证件号码：</span>
+                                            <div class="formBox">
+                                                <div class="posRel wh100">
+                                                    <img src="../images/lawContro/shurukaung.png" alt="" class="posAbs wh100">
+                                                    <input id="cardNo2" name="cardNo" type="text" class="posAbs cenMid">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="infoOne wh100">
+                                            <span class="">联系方式：</span>
+                                            <div class="formBox">
+                                                <div class="posRel wh100">
+                                                    <img src="../images/lawContro/shurukaung.png" alt="" class="posAbs wh100">
+                                                    <input id="phone2" name="phone" type="text" class="posAbs cenMid">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="infoOne wh100">
+                                            <span class="" >双方关系：</span>
+                                            <div class="formBox" >
+                                                <div class="posRel wh100">
+                                                    <img src="../images/lawContro/shurukaung.png" alt="" class="posAbs wh100">
+                                                    <div class="selBox posAbs mid">
+                                                        <span style="width:100%;height:100%" th:include="component/selectCombo(id='relationship2',name='relationship',dictType='PER_RELATIONSHIP')" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="infoOne wh100">
+                                            <span class="">胸牌编号：</span>
+                                            <div class="formBox">
+                                                <div class="posRel wh100">
+                                                    <img src="../images/lawContro/shurukaung.png" alt="" class="posAbs wh100">
+                                                    <input id="chipNo2" name="chipNo" type="text" class="posAbs cenMid">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <span class="tit posAbs">监护人</span>
+                                <img src="../images/lawContro/bankuaibeijing.png" alt="" class="posAbs wh100">
+                            </div>
+                        </div>
+
+                        <div class="card translator">
+                            <div class="posRel wh100">
+                                <ul class="perInfoBox posAbs cen">
+                                    <!-- 性别的盒子单独的 -->
+                                    <li class="sexBox">
+                                        <div class="infoOne wh100">
+                                            <span class="">性别：</span>
+                                            <div class="formBox clear">
+                                                <div class="sexManBox sexOneBox active">
+                                                    <div class="posRel wh100">
+                                                        <img src="../images/lawContro/gouxuan01.png" alt="" class="posAbs mid defImg">
+                                                        <img src="../images/lawContro/gouxuan02.png" alt="" class="posAbs mid selImg">
+                                                        <span class="posAbs mid">男</span>
+                                                    </div>
+                                                </div>
+                                                <div class="sexWoanBox sexOneBox">
+                                                    <div class="posRel wh100">
+                                                        <img src="../images/lawContro/gouxuan01.png" alt="" class="posAbs mid defImg">
+                                                        <img src="../images/lawContro/gouxuan02.png" alt="" class="posAbs mid selImg">
+                                                        <span class="posAbs mid">女</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="infoOne wh100">
+                                            <span class="">姓名：</span>
+                                            <div class="formBox">
+                                                <div class="posRel wh100">
+                                                    <img src="../images/lawContro/shurukaung.png" alt="" class="posAbs wh100">
+                                                    <input id="name3" name="name" type="text" class="posAbs cenMid">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="infoOne wh100">
+                                            <span class="">证件号码：</span>
+                                            <div class="formBox">
+                                                <div class="posRel wh100">
+                                                    <img src="../images/lawContro/shurukaung.png" alt="" class="posAbs wh100">
+                                                    <input id="cardNo3" name="cardNo" type="text" class="posAbs cenMid">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="infoOne wh100">
+                                            <span class="">联系方式：</span>
+                                            <div class="formBox">
+                                                <div class="posRel wh100">
+                                                    <img src="../images/lawContro/shurukaung.png" alt="" class="posAbs wh100">
+                                                    <input id="phone3" name="phone" type="text" class="posAbs cenMid">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="infoOne wh100">
+                                            <span class="" >翻译语种：</span>
+                                            <div class="formBox" >
+                                                <div class="posRel wh100">
+                                                    <img src="../images/lawContro/shurukaung.png" alt="" class="posAbs wh100">
+                                                    <div class="selBox posAbs mid">
+                                                        <span style="width:100%;height:100%" th:include="component/selectCombo(id='language',name='language',dictType='PER_LANGUAGE')" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="infoOne wh100">
+                                            <span class="">胸牌编号：</span>
+                                            <div class="formBox">
+                                                <div class="posRel wh100">
+                                                    <img src="../images/lawContro/shurukaung.png" alt="" class="posAbs wh100">
+                                                    <input id="chipNo3" name="chipNo" type="text" class="posAbs cenMid">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <span class="tit posAbs">翻译人</span>
+                                <img src="../images/lawContro/bankuaibeijing.png" alt="" class="posAbs wh100">
+                            </div>
+                        </div>
+
+                        <div class="card comwork">
+                            <div class="posRel wh100">
+                                <ul class="perInfoBox posAbs cen">
+                                    <!-- 性别的盒子单独的 -->
+                                    <li class="sexBox">
+                                        <div class="infoOne wh100">
+                                            <span class="">性别：</span>
+                                            <div class="formBox clear">
+                                                <div class="sexManBox sexOneBox active">
+                                                    <div class="posRel wh100">
+                                                        <img src="../images/lawContro/gouxuan01.png" alt="" class="posAbs mid defImg">
+                                                        <img src="../images/lawContro/gouxuan02.png" alt="" class="posAbs mid selImg">
+                                                        <span class="posAbs mid">男</span>
+                                                    </div>
+                                                </div>
+                                                <div class="sexWoanBox sexOneBox">
+                                                    <div class="posRel wh100">
+                                                        <img src="../images/lawContro/gouxuan01.png" alt="" class="posAbs mid defImg">
+                                                        <img src="../images/lawContro/gouxuan02.png" alt="" class="posAbs mid selImg">
+                                                        <span class="posAbs mid">女</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="infoOne wh100">
+                                            <span class="">姓名：</span>
+                                            <div class="formBox">
+                                                <div class="posRel wh100">
+                                                    <img src="../images/lawContro/shurukaung.png" alt="" class="posAbs wh100">
+                                                    <input id="name4" name="name" type="text" class="posAbs cenMid">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="infoOne wh100">
+                                            <span class="">证件号码：</span>
+                                            <div class="formBox">
+                                                <div class="posRel wh100">
+                                                    <img src="../images/lawContro/shurukaung.png" alt="" class="posAbs wh100">
+                                                    <input id="cardNo4" name="cardNo" type="text" class="posAbs cenMid">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="infoOne wh100">
+                                            <span class="">联系方式：</span>
+                                            <div class="formBox">
+                                                <div class="posRel wh100">
+                                                    <img src="../images/lawContro/shurukaung.png" alt="" class="posAbs wh100">
+                                                    <input id="phone4" name="phone" type="text" class="posAbs cenMid">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="infoOne wh100">
+                                            <span class="" >双方关系：</span>
+                                            <div class="formBox" >
+                                                <div class="posRel wh100">
+                                                    <img src="../images/lawContro/shurukaung.png" alt="" class="posAbs wh100">
+                                                    <div class="selBox posAbs mid">
+                                                        <span style="width:100%;height:100%" th:include="component/selectCombo(id='relationship4',name='relationship',dictType='PER_RELATIONSHIP')" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="infoOne wh100">
+                                            <span class="">胸牌编号：</span>
+                                            <div class="formBox">
+                                                <div class="posRel wh100">
+                                                    <img src="../images/lawContro/shurukaung.png" alt="" class="posAbs wh100">
+                                                    <input id="chipNo4" name="chipNo" type="text" class="posAbs cenMid">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <span class="tit posAbs">社区人员</span>
+                                <img src="../images/lawContro/bankuaibeijing.png" alt="" class="posAbs wh100">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 按钮盒子 -->
+                <div class="btnBox">
+                    <div class="btnConBox clear">
+                        <div class="prevBox box">
+                            <div class="posRel wh100">
+                                <img src="../images/lawContro/xiayibu-changtai.png" alt="" class="defImg posAbs wh100">
+                                <img src="../images/lawContro/xiayibu-dianji.png" alt="" class="selImg posAbs wh100">
+                                <span class="posAbs cenMid">上一步</span>
+                            </div>
+                        </div>
+                        <div class="keepBox box">
+                            <div class="posRel wh100">
+                                <img src="../images/lawContro/baocun-changtai.png" alt="" class="defImg posAbs wh100">
+                                <img src="../images/lawContro/baocun-dianji.png" alt="" class="selImg posAbs wh100">
+                                <span class="posAbs cenMid">完成</span>
+                            </div>
+                        </div>
+                        <div class="nextBox box">
+                            <div class="posRel wh100">
+                                <img src="../images/lawContro/xiayibu-changtai.png" alt="" class="defImg posAbs wh100">
+                                <img src="../images/lawContro/xiayibu-dianji.png" alt="" class="selImg posAbs wh100">
+                                <span class="posAbs cenMid">下一步</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+	<div id="hidden_elem" class="hideInputs">
+<!--        隐藏页面值--人员id -->
+		<input type="hidden" id="id" name="id">
+<!-- 		人员照片返回id -->
+		<input type="hidden" id="personImgIds" name="personImgIds">
+<!-- 		身份证照片返回id -->
+		<input type="hidden" id="cardImgIds" name="cardImgIds">
+<!--        人员类型隐藏控件 -->
+		<input type="hidden" id="peopleType" name="peopleType">
+<!-- 		身份不明 -->
+		<input type="hidden" id="unknownPerson" name="unknownPerson">
+<!-- 		主办民警编号 -->
+		<input type="hidden" id="hostPoliceNo" name="hostPoliceNo">
+<!-- 		协办民警编号 -->
+		<input type="hidden" id="joinPoliceNo" name="joinPoliceNo">
+<!-- 		储物柜id -->
+		<input type="hidden" id="lockerId" name="lockerId">
+<!-- 		采集项目 -->
+		<input type="hidden" id="collectProject" name="collectProject">
+<!-- 		是否核查比对 -->
+		<input type="hidden" id="doCheck" name="doCheck" value="0">
+	</div>
+
+        <!-- //点击添加的遮罩层 -->
+        <div id="maskBox" class="posFix">
+
+        </div>
+
+    </div>
+
+ <!--第一步 加入标签-->
+<!--拍照时 子页面回传到父页面的值 保存在这里-->
+<!--注意 此页面不需要引入 take-photo.js 文件 所以必须加入这句标签 如果引入并且调用dsw_take_photo方法就不需要这句 -->
+<input type='hidden' data-dsw-take-photo-temp='[]' />
+
+<!-- 身份证读卡器 -->
+<!--<object id="CertCtl" TYPE="application/cert-reader" width=0 height=0"></object>-->
+<OBJECT  classid="clsid:10946843-7507-44FE-ACE8-2B3483D179B7"
+         id="CVR_IDCard" name="CVR_IDCard" width="0" height="0"  >
+</OBJECT>
+</body>
+<script th:src="@{../js/module.js}"></script>
+<script th:src="@{../js/lawControJs.js}"></script>
+<script th:src="@{../js/personRegisterAdd.js}"></script>
+<script th:inline="javascript">
+var delGoods = ""; //物品全删时，记录全删的id
+var delInjury = "";//伤情信息全删id
+
+$(function(){
+
+	// 第二步 绑定事件 打开拍照页面
+	$(".lawConBox .workAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul").on("click",'li .pics .cameraImg',function(e){
+		var self=this;
+		var $pics=$(this).closest('.pics');
+        var type=$(this).data('type');
+		layer.open({
+			type:2,
+			title:false,
+			resize:false,
+            content: '/Video/index.html?type='+type,
+			area:['900px', '500px'],
+			success:function(layero,index){
+				var _imgs=[];
+
+				// 获取当前数据
+				($pics.data('imgs') + '').split(',').forEach(function(v,k){
+					if(!!v){
+						_imgs.push('/FileUpload/getAttach.json?id='+v);
+					}
+				});
+
+				var frameWindow=window[layero.find('iframe').prop('name')];
+
+				 // 传递当前数据到 拍照页面
+				frameWindow.take_photo({initImages:_imgs,maxCount:1});
+			},
+			end:function(){
+				var temp = $('input[type="hidden"][data-dsw-take-photo-temp]');
+				var _imgs=[];
+
+				if(temp.data('dsw-take-photo-temp-updated')){
+
+					temp.data('dsw-take-photo-temp-updated',false);
+
+					// 获取拍照页面 回传数据
+					temp.data('dsw-take-photo-temp').forEach(function(v,k){
+						var _id=v.match(/id=(\d*)/)[1];
+						if(!!id){
+							_imgs.push(_id);
+						}
+					});
+
+					// 更新当前数据
+					var _imgHtml='';
+					_imgs.forEach(function(v,k){
+						_imgHtml+=createPresonGoodsImg(v);
+					});
+					$(self).siblings('.imgsBox').html(_imgHtml);
+					$pics.data('imgs',_imgs.join(','));
+
+				}
+
+			}
+
+		});
+	});
+
+	//存物图片点击删除方法
+    $(".lawConBox .workAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul").on("click",'li .pics .imgsBox .imgOne .closeImg', function () {
+    	var index=$(this).closest('.imgsBox').find('.imgOne').index($(this).closest('.imgOne'));
+    	var imgs=String($(this).closest('.pics').data('imgs')).split(',');
+
+    	var _deletedId=imgs.splice(index,1)[0];
+
+    	$(this).closest('.pics').data('imgs',imgs.join(','));
+
+        $(this).closest(".imgOne").remove();
+    });
+
+    //存物图片点击预览方法
+    $(".lawConBox .workAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul").on("click",'li .pics .imgsBox .imgOne img:not(.closeImg)', function () {
+
+        var _data = [];
+        var _index=$(this).closest('.imgsBox').find('.imgOne').index($(this).closest('.imgOne'));
+        $(this).closest('.imgsBox').find('.imgOne img:not(.closeImg)').each(function() {
+            _data.push({ src: $(this).prop('src') });
+        });
+
+
+        layer.photos({
+        	shade:[0.3,'#000'],
+            photos: {
+                "title": "", //相册标题
+                "id": '', //相册id
+                "start": _index, //初始显示的图片序号，默认0
+                "data": _data
+            }
+        });
+    });
+
+    //存物全删的方法
+    $(".lawConBox .workAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul").on("click",'li .pics .delAll', function () {
+
+    	var type = $(this).closest('.itemsInfoBox');
+    	if($(type).attr('class').indexOf("goods-list") >= 0){
+			delGoods += $(this).closest('li').find('input[name=hide-id]').val() + ",";
+    	}else{
+	    	delInjury += $(this).closest('li').find('input[name=hide-id]').val() + ",";
+    	}
+        $(this).closest('li').remove();
+    });
+
+
+
+	//跳转页面
+	var step = [[${step}]];
+	var registerId = [[${registerId}]];
+	if(step && registerId){
+		toPage(step, registerId);
+	}
+
+	//人脸识别跳过来，先下载，再上传
+	var faceAttach = [[${attachDo}]];
+	if(faceAttach){
+		$("#faceImg").prop("src","/FileUpload/getAttach.json?id=" + faceAttach.id);//显示头像
+		$("#personImgIds").val(faceAttach.id);
+	}
+
+
+	//读身份证操作
+    $("#readCard").on("click",function () {
+        var loading = wait();
+        var CVR_IDCard = document.getElementById("CVR_IDCard");
+        var strReadResult = CVR_IDCard.ReadCard();
+        waitOver(loading);
+        if(strReadResult == "0"){
+            clearForm();
+            var gender = CVR_IDCard.Sex;
+            var sex = null;//性别
+            var name =CVR_IDCard.Name;
+            var birthDate = CVR_IDCard.Born;
+            var domicilePlace = CVR_IDCard.Address;
+            var cardNo = CVR_IDCard.CardNo;
+            var picture64 = CVR_IDCard.Picture;
+            if(gender == "男"){
+                sex = "man";
+            }else{
+                sex = "woman";
+            }
+            $("#name").val(name);
+            $("#sex").find("[value='"+sex+"']").prop("selected",true);
+            $("#domicilePlace").val(domicilePlace);
+            $("#birthDate").val(birthDate.substr(0,4) + "-" + birthDate.substr(4,2) + "-" + birthDate.substr(6,2));
+            $("#cardNo").val(cardNo);
+            $("#cardType").find("[value='1']").prop("selected",true);
+            //上传身份证照片
+            var filename=cardNo+".jpg"
+            var res = PublicAjax('/FileUpload/uploadBase64.json',{'base64':picture64, 'fileName':filename});
+            if(res.success){
+                $("#faceImg").prop("src","/FileUpload/getAttach.json?id=" + res.content.id);//显示头像
+                $("#personImgIds").val(res.content.id);
+            }else{
+                layer.msg('保存失败');
+            }
+            layui.form.render();
+        }else{
+            layer.msg("读取失败，请重试！");
+        }
+    });
+
+    function clearForm() {
+        $("#name").val("");
+        $("#sex").val("");
+        $("#domicilePlace").val("");
+        $("#birthDate").val("");
+        $("#cardNo").val("");
+        return true;
+    }
+
+});
+</script>
+</html>

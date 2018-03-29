@@ -1,8 +1,47 @@
-/**
- * 说明：通用JS抽取
- * author：WS
- */
 
+/*
+检查是否安装 flash 及 版本号
+*/
+function detectFlash() {  
+    //navigator.mimeTypes是MIME类型，包含插件信息  
+    if (navigator.mimeTypes.length > 0) {  
+        //application/x-shockwave-flash是flash插件的名字  
+        var flashAct = navigator.mimeTypes["application/x-shockwave-flash"];  
+        return flashAct != null ? flashAct.enabledPlugin != null : false;  
+    } else if (self.ActiveXObject) {  
+        try {  
+            new ActiveXObject('ShockwaveFlash.ShockwaveFlash');  
+            return true;  
+        } catch (oError) {  
+            return false;  
+        }  
+    }  
+}
+
+function flashChecker() {
+    var hasFlash = 0; //是否安装了flash
+    var flashVersion = 0; //flash版本
+    var isIE =/*@cc_on!@*/0; //是否IE浏览器
+    if (isIE) {
+        var swf = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
+        if (swf) {
+            hasFlash = 1;
+            flashVersion = swf.GetVariable("$version");
+        }
+    } else {
+        if (navigator.plugins && navigator.plugins.length > 0) {
+            var swf = navigator.plugins["Shockwave Flash"];
+            if (swf) {
+                hasFlash = 1;
+                flashVersion = swf.description.split(" ");
+            }
+        }
+    }
+    return {
+        f: hasFlash,
+        v: flashVersion
+    };
+}
 
 /**
  * 删除
@@ -11,14 +50,12 @@
  *
  */
 function doDelete(url, trId) {
-
     if (typeof(trId) == 'undefined') {//如果找不到trId
         trId = getId('delete');
         if (trId == false) {
             return;
         }
     }
-
     //执行删除操作
     if (confirm("确定删除吗？")) {
         $.ajax({
@@ -41,7 +78,6 @@ function doDelete(url, trId) {
     }
 
 }
-
 
 /**
  * 勾选已选择ID
@@ -78,27 +114,12 @@ function getId(msg) {
 
 }
 
-
-/**
- * JS 取系统当前时间 如： 2014-08-20
- */
-function getNowDate() {
-    var md = new Date();
-    var yyyy = md.getFullYear();
-    var MM = (md.getMonth() + 1) < 10 ? "0" + (md.getMonth() + 1) : (md.getMonth() + 1);
-    var DD = md.getDate() < 10 ? "0" + md.getDate() : md.getDate();
-    var nowDate = yyyy + "-" + MM + "-" + DD;
-    return nowDate;
-}
-
-
 /**
  *   全选/反选
  **/
 function checkAll(obj) {
     jQuery('input[type="checkbox"]').attr('checked', obj.checked);
 }
-
 
 /**
  * 全/反选
@@ -109,7 +130,6 @@ function checkAll(obj) {
 function selectAll(obj, name) {
     jQuery('input[name=' + name + ']').attr('checked', obj.checked);
 }
-
 
 /**
  * 表单提交前的验证
@@ -212,7 +232,6 @@ function checkObj(obj) {
     return res;
 }
 
-
 //同步访问ajax函数
 function synchroAjax(url, data, type) {
     if (typeof(type) == 'undefined')
@@ -237,16 +256,43 @@ function synchroAjax(url, data, type) {
     });
     return str;
 }
+/***
+ *字典缓存文件
+ */
+var dictonaryMap= new Map();
 
-//通过类型获取字典类别
+/**
+ * 通过类型获取字典类别
+ */
 function findDicItems(dictType) {
-    var res = new PublicAjax('/Dictionary/queryTableListByType.json', {'type': dictType});
-    if (res.success) {
-        return res.content;
+    if(dictonaryMap.has(dictType)){
+        return dictonaryMap.get(dictType);
+    }else{
+//        var res = new PublicAjax('/Dictionary/queryTableListByType.json', {'type': dictType});
+        var res = new PublicAjax('/Dictionary/queryComboList.json', {'code': dictType});//查单层字典，传code
+        if (res.success) {
+            dictonaryMap.set(dictType,res.content)
+            return res.content;
+        }
     }
 }
 
-//公用ajax封装
+/**
+ * 列表里获取某列的字典翻译成汉字（只查找当前code的下一级）
+ */
+function getGridDict(val, code){
+	var dicList = findDicItems(code);
+	for(var e = 0; e < dicList.length; e++){
+		if(val == dicList[e].code){
+			return dicList[e].name;
+		}
+	}
+	return "";
+}
+
+/**
+ * 公用ajax封装
+ */
 function PublicAjax(url, data) {
     // var load = new loading();
     // load.show();
@@ -254,6 +300,7 @@ function PublicAjax(url, data) {
     jQuery.ajax({
         async: false,
         url: url,
+        cache:false,
         data: data,
         type: 'POST',
         dataType: 'json',
@@ -268,43 +315,259 @@ function PublicAjax(url, data) {
     // load.close();
     return str;
 }
-
-//同步访问ajax函数
-function ajaxJson(url, data, succ_callback, error_callback) {
+/**
+ * 公用ajax-json封装
+ */
+function PublicAjaxToJson(url, data) {
     // var load = new loading();
     // load.show();
-    // var str = '';
+    var str = '';
     jQuery.ajax({
         async: false,
         url: url,
-        // headers: {
-        //           // "Content-type": "application/json; charset=UTF-8",
-        //           "appId": '87a21758189ded250cce06bfc32a3118',
-        //           "appKey": 'd862f894b2e022c2c4755cdcf41bfab5'
-        //        },
-        data: data,
+        data: JSON.stringify(data),
         type: 'POST',
         dataType: 'json',
+        contentType:"application/json",
         success: function (text) {
-            succ_callback(text);
+            str = text;
         },
         error: function () {
             // load.close();
-            // alert('访问失败');
-            error_callback();
+            alert('访问失败');
         }
     });
     // load.close();
-    // return str;
+    return str;
 }
 
-//打开等待框
+/**
+ * 打开等待框
+ */
 function openWaitWindow() {
     return layer.msg('努力中...', {icon: 16, shade: [0.5, '#f5f5f5'], scrollbar: false, offset: 'auto', time: 10000});
 }
 
-//关闭等待框
+/**
+ * 关闭等待框
+ */
 function closeWaitWindow(index) {
     layer.close(index);
 }
 
+/**
+ * ht 解决IE版本态度 不支持Map
+ * @constructor
+ */
+function Map() {
+    this.elements = new Array();
+    // 获取Map元素个数
+    this.size = function() {
+        return this.elements.length;
+    },
+        // 判断Map是否为空
+        this.isEmpty = function() {
+            return (this.elements.length < 1);
+        },
+        // 删除Map所有元素
+        this.clear = function() {
+            this.elements = new Array();
+        },
+        // 向Map中增加元素（key, value)
+        this.put = function(_key, _value) {
+            if (this.containsKey(_key) == true) {
+                if (this.containsValue(_value)) {
+                    if (this.remove(_key) == true) {
+                        this.elements.push({
+                            key : _key,
+                            value : _value
+                        });
+                    }
+                } else {
+                    this.elements.push({
+                        key : _key,
+                        value : _value
+                    });
+                }
+            } else {
+                this.elements.push({
+                    key : _key,
+                    value : _value
+                });
+            }
+        },
+        // 向Map中增加元素（key, value)
+        this.set = function(_key, _value) {
+            if (this.containsKey(_key) == true) {
+                if (this.containsValue(_value)) {
+                    if (this.remove(_key) == true) {
+                        this.elements.push({
+                            key : _key,
+                            value : _value
+                        });
+                    }
+                } else {
+                    this.elements.push({
+                        key : _key,
+                        value : _value
+                    });
+                }
+            } else {
+                this.elements.push({
+                    key : _key,
+                    value : _value
+                });
+            }
+        },
+        // 删除指定key的元素，成功返回true，失败返回false
+        this.remove = function(_key) {
+            var bln = false;
+            try {
+                for (i = 0; i < this.elements.length; i++) {
+                    if (this.elements[i].key == _key) {
+                        this.elements.splice(i, 1);
+                        return true;
+                    }
+                }
+            } catch (e) {
+                bln = false;
+            }
+            return bln;
+        },
+
+        // 删除指定key的元素，成功返回true，失败返回false
+        this.delete = function(_key) {
+            var bln = false;
+            try {
+                for (i = 0; i < this.elements.length; i++) {
+                    if (this.elements[i].key == _key) {
+                        this.elements.splice(i, 1);
+                        return true;
+                    }
+                }
+            } catch (e) {
+                bln = false;
+            }
+            return bln;
+        },
+
+        // 获取指定key的元素值value，失败返回null
+        this.get = function(_key) {
+            try {
+                for (i = 0; i < this.elements.length; i++) {
+                    if (this.elements[i].key == _key) {
+                        return this.elements[i].value;
+                    }
+                }
+            } catch (e) {
+                return null;
+            }
+        },
+
+        // set指定key的元素值value
+        this.setValue = function(_key, _value) {
+            var bln = false;
+            try {
+                for (i = 0; i < this.elements.length; i++) {
+                    if (this.elements[i].key == _key) {
+                        this.elements[i].value = _value;
+                        return true;
+                    }
+                }
+            } catch (e) {
+                bln = false;
+            }
+            return bln;
+        },
+
+        // 获取指定索引的元素（使用element.key，element.value获取key和value），失败返回null
+        this.element = function(_index) {
+            if (_index < 0 || _index >= this.elements.length) {
+                return null;
+            }
+            return this.elements[_index];
+        },
+
+        // 判断Map中是否含有指定key的元素
+        this.containsKey = function(_key) {
+            var bln = false;
+            try {
+                for (i = 0; i < this.elements.length; i++) {
+                    if (this.elements[i].key == _key) {
+                        bln = true;
+                    }
+                }
+            } catch (e) {
+                bln = false;
+            }
+            return bln;
+        },
+
+        // 判断Map中是否含有指定key的元素
+        this.has = function(_key) {
+            var bln = false;
+            try {
+                for (i = 0; i < this.elements.length; i++) {
+                    if (this.elements[i].key == _key) {
+                        bln = true;
+                    }
+                }
+            } catch (e) {
+                bln = false;
+            }
+            return bln;
+        },
+
+        // 判断Map中是否含有指定value的元素
+        this.containsValue = function(_value) {
+            var bln = false;
+            try {
+                for (i = 0; i < this.elements.length; i++) {
+                    if (this.elements[i].value == _value) {
+                        bln = true;
+                    }
+                }
+            } catch (e) {
+                bln = false;
+            }
+            return bln;
+        },
+
+        // 获取Map中所有key的数组（array）
+        this.keys = function() {
+            var arr = new Array();
+            for (i = 0; i < this.elements.length; i++) {
+                arr.push(this.elements[i].key);
+            }
+            return arr;
+        },
+
+        // 获取Map中所有value的数组（array）
+        this.values = function() {
+            var arr = new Array();
+            for (i = 0; i < this.elements.length; i++) {
+                arr.push(this.elements[i].value);
+            }
+            return arr;
+        };
+
+    /**
+     * map遍历数组
+     * @param callback [function] 回调函数；
+     * @param context [object] 上下文；
+     */
+    this.forEach = function forEach(callback,context){
+        context = context || window;
+
+        //IE6-8下自己编写回调函数执行的逻辑
+        var newAry = new Array();
+        for(var i = 0; i < this.elements.length;i++) {
+            if(typeof  callback === 'function') {
+                var val = callback.call(context,this.elements[i].value,this.elements[i].key,this.elements);
+                newAry.push(this.elements[i].value);
+            }
+        }
+        return newAry;
+    }
+
+}

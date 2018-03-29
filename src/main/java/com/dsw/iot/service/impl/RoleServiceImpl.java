@@ -16,10 +16,10 @@ import com.dsw.iot.dto.RoleRequest;
 import com.dsw.iot.model.RoleDo;
 import com.dsw.iot.model.RoleDoExample;
 import com.dsw.iot.model.RoleMenuDo;
-import com.dsw.iot.model.RoleMenuDoExample;
 import com.dsw.iot.service.CurrentUserService;
 import com.dsw.iot.service.LogService;
 import com.dsw.iot.service.RoleService;
+import com.dsw.iot.util.BizException;
 import com.dsw.iot.util.DomainUtil;
 import com.dsw.iot.util.PageDto;
 import com.dsw.iot.util.PageResult;
@@ -34,25 +34,6 @@ public class RoleServiceImpl implements RoleService {
     private CurrentUserService currentUserService;
 	@Autowired
 	private LogService logService;
-//    @Autowired
-//    private PrivilegeInfo pvgInfo;
-
-//    @Autowired
-//    private TpRoleDoMapper tpRoleDoMapper;
-
-    /**
-     * 每5秒执行一次任务
-     */
-//    @Scheduled(cron="0/5 * * * * ?")
-    @Override
-    public void print() {
-//        System.out.println(LocalDateTime.now());
-//        TpRoleDoExample example = new TpRoleDoExample();
-//        List<TpRoleDo> list = tpRoleDoMapper.selectByExample(example);
-//        list.stream().forEach(item->{
-//            System.out.println(item.getId() +":"+item.getRolename());
-//        });
-    }
 
     /**
      * 角色分页查询
@@ -66,7 +47,7 @@ public class RoleServiceImpl implements RoleService {
         //添加条件
         RoleDoExample.Criteria criteria = example.createCriteria();
         //默认条件添加is_deleted="N"
-        criteria.andIsDeletedEqualTo(CommConfig.DELETED.NO.getName());//criteria.andIsDeletedEqualTo(CommConfig.NOT_DELETED);
+		criteria.andIsDeletedEqualTo(CommConfig.DELETED.NO.getName());
         //角色名
         if (StringUtils.isNotEmpty(request.getRoleName())) {
             criteria.andRoleNameLike("%" + request.getRoleName() + "%");
@@ -96,8 +77,7 @@ public class RoleServiceImpl implements RoleService {
      * @param id
      */
     @Override
-    @Transactional
-    public RoleDo selectByPrimaryKey(Long id) {
+	public RoleDo getRole(Long id) {
         return roleDoMapperExt.selectByPrimaryKey(id);
     }
 
@@ -125,14 +105,9 @@ public class RoleServiceImpl implements RoleService {
 
         //删除角色下的菜单
         Long roleId = Long.parseLong(record.getId() + "");
-        RoleMenuDoExample exp = new RoleMenuDoExample();
-        //添加默认条件is_deleted='N'
-        RoleMenuDoExample.Criteria con = exp.createCriteria();
-        con.andIsDeletedEqualTo(CommConfig.DELETED.NO.getName());
         if (roleId != 0) {
             //执行删除
-            con.andRoleIdEqualTo(roleId);
-            roleMenuDoMapperExt.deleteByExample(exp);
+			roleMenuDoMapperExt.deleteByRoleId(roleId);
 			// 写日志
 			logService.insertLog(request, CommConfig.LOG_MODULE.ROLE.getModule(),
 					CommConfig.LOG_TYPE.DELETE.getType(),
@@ -158,17 +133,30 @@ public class RoleServiceImpl implements RoleService {
     }
 
     /**
-     * 删除
-     */
+	 * 删除
+	 * 
+	 * @throws BizException
+	 */
     @Override
     @Transactional
-	public void delRole(RoleRequest param) {
+	public void removeRole(RoleRequest param) throws BizException {
+		// 先删除该角色下的菜单，再删除角色
         if (param.getId() != null) {
-			roleDoMapperExt.deleteByPrimaryKey(param.getId());
+			if (1 == param.getId()) {
+				throw new BizException("超级管理员角色禁止删除");
+			}
+			// 执行删除角色下的菜单
+			roleMenuDoMapperExt.deleteByRoleId(param.getId());
+			roleDoMapperExt.deleteByPrimaryKeyReal(param.getId());
         } else if (StringUtils.isNotEmpty(param.getIds())) {
             String ids[] = param.getIds().split(",");
             for (int j = 0; j < ids.length; j++) {
-				roleDoMapperExt.deleteByPrimaryKey((long) Integer.parseInt(ids[j]));
+				if ("1".equals(ids[j])) {
+					throw new BizException("超级管理员角色禁止删除");
+				}
+				// 执行删除角色下的菜单
+				roleMenuDoMapperExt.deleteByRoleId(Long.parseLong(ids[j]));
+				roleDoMapperExt.deleteByPrimaryKeyReal(Long.parseLong(ids[j]));
             }
         }
     }
@@ -177,7 +165,7 @@ public class RoleServiceImpl implements RoleService {
      * 查询所有的角色
      */
     @Override
-    public List<RoleDo> selectAllRole() {
+	public List<RoleDo> listAllRole() {
         RoleDoExample example = new RoleDoExample();
         //添加条件
         RoleDoExample.Criteria criteria = example.createCriteria();
@@ -189,11 +177,26 @@ public class RoleServiceImpl implements RoleService {
      * 查询登陆人拥有的角色列表
      */
     @Override
-    public List<RoleDo> selectRoleDoListByUserId(Long userId) {
+	public List<RoleDo> listRoleByUserId(Long userId) {
         RoleRequest param = new RoleRequest();
         param.setUserId(userId);
         return roleDoMapperExt.selectRoleDoListByUserId(param);
     }
+
+	@Override
+	public List<RoleDo> listRoles(RoleRequest param) {
+		//定义查询条件容器
+        RoleDoExample example = new RoleDoExample();
+        //添加条件
+        RoleDoExample.Criteria criteria = example.createCriteria();
+        //默认条件添加is_deleted="N"
+        criteria.andIsDeletedEqualTo(CommConfig.DELETED.NO.getName());
+        //排序
+        example.setOrderByClause("sort asc, create_time desc");
+        //查询数据集合
+        List<RoleDo> list = roleDoMapperExt.selectByExample(example);
+		return list;
+	}
 
 
 }

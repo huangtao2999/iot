@@ -1,0 +1,25 @@
+@charset "utf-8";
+
+/* /OutConfirmHtml/add.html?registerId=115 */
+body.custom .dataListBox .listBox ul li{
+	height:64px;
+}
+
+body.custom .dataListBox .listBox ul li .titOne span{
+	line-height:64px;
+}
+
+/* /PersonRegisterHtml/stepTo.html?step=2&registerId=114 */
+.lawConBox .workAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li{
+	height:64px;
+}
+
+.lawConBox .workAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .pics .imgsBox .imgOne .closeImg{
+	width:16px;
+}
+
+/* /OutFetchHtml/index.html */
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.custom-img-column-take-photo .dsw-take-photo-img-btn{
+	-ms-transform:translate(0,60%);
+	transform:translate(0,60%);
+}

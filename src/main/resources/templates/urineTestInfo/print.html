@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+
+<head><meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/common.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{../css/dialogCss.css}" />
+	<div th:include="inc/common"></div>
+    <title>diologHtml</title>
+</head>
+
+<style>
+	.container-fluid.dsw-container{
+		background: url(../images/lawContro/beijing_dialog.png) no-repeat scroll 0 0;
+		background-size: 100% 100%;
+		background-color: #1b4067;
+	}
+	.container-fluid.dsw-container input,
+	.container-fluid.dsw-container input[disabled]{
+		border-radius: 0;
+		border: none;
+		border-bottom: 1px solid #333;
+		background-color:transparent;
+	}
+
+
+	.container-fluid.dsw-container input:focus{
+
+	}
+
+	.container-fluid.dsw-container .youAdd{
+		border : none;
+	}
+
+	.container-fluid.dsw-container #diologBox{
+		background-color : transparent;
+	}
+
+	.container-fluid.dsw-container  #diologBox .topBoxCon .formBox .selBox{
+		overflow : visible;
+	}
+
+	.container-fluid.dsw-container .layui-form-select{
+		top : -12px;
+	}
+	span{
+		display:inline-block;
+	}
+</style>
+<body style="overflow-y: auto; overflow-x:hidden;background-color:#15385c;">
+<div class="content">
+    <div class="container-fluid dsw-container">
+        <br/>
+    <form action=""  class="layui-form">
+    <div class="youAdd">
+    <div id="diologBox">
+        <div class="posRel wh100">
+            <div class="mainConBox posAbs">
+                <div class="topBoxCon">
+                    <div class="formBox" style="display: none;">
+                        <div class="posRel wh100">
+                            <img src="../images/lawContro/shurukaung.png" alt="" class="posAbs wh100">
+                            <div class="selBox posAbs mid">
+                            	<span th:include="component/selectCombo(id='reportType',name='reportType',defaultValue=${urineTestInfoVo.reportType},dictType='URINE_TEST_INFO',verify='require',disabled=1)"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="iptBox" style="display: none;">
+                        <div class="posRel wh100">
+                            <span class="posAbs mid">手环编号:</span>
+                            <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid">
+                            <div style="position:absolute;width:100%;height:100%;background:#fff;opacity:0;top:0;left:0;"></div>
+                            <input type="text" class="posAbs" readonly="readonly" name="registerId" id="registerId" th:value='${urineTestInfoVo.registerId}'>
+                            <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid">
+                        </div>
+                    </div>
+                    <div class="paizhaoBox" style="display: none;">
+                        <div class="posRel wh100">
+                            <img class="wh100 posAbs defImg" src="../images/lawContro/paizhao-anniu-changtai.png" alt="">
+                            <img class="wh100 posAbs selImg" src="../images/lawContro/paizhao-anniu-dianji.png" alt="">
+                            <span class="posAbs cenMid">拍照</span>
+                        </div>
+                    </div>
+                    <div class="searchBox" style="display: none;">
+                        <div class="posRel wh100">
+                            <img class="wh100 posAbs defImg" src="../images/lawContro/chaxun-changtai.png" alt="">
+                            <img class="wh100 posAbs selImg" src="../images/lawContro/chaxun-dianji.png" alt="">
+                            <span class="posAbs cenMid">查询用户信息</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="conBox">
+                    <!-- //每一行的模板3个 -->
+                   <!--  <div class="clear" > -->
+
+
+<!-- 现 场 检 测 报 告 书 -->
+					<div id="addPart1" class="well" style="width:100%; margin:0 auto;">
+						<h3 style="text-align:center; font-weight:normal;display:none;">下 陆 区 分 局 团 城 山 派 出 所</h3>
+						<h2 style="text-align:center; font-weight:normal; margin-top:0;">现 场 检 测 报 告 书</h2>
+						<h4 style="text-align:right; font-weight:normal;">
+							<p style="display:none;">下公（
+								<input type="text" name="tuan" value="团" class="input-mini">） 检字[
+								<input type="text" name="jianzi" id="jianzi" class="input-mini">]
+								<input type="text" name="no" class="input-mini"  readonly="true"></h4>
+						<br/></p>
+						<div class="align-center">
+							<font color="red">*</font>被检测人姓名：
+							<input type="text" name="name" id="name" readonly="readonly" th:value='${urineTestInfoVo.name}' class="layui-input" style="width:90px" required="true">
+							<font color="red">*</font>性别：
+							<span th:include="component/selectCombo(id='sex',name='sex',dictType='SEX',defaultValue=${urineTestInfoVo.sex},verify='require',disabled=1)"></span>
+							<font color="red">*</font>出生日期：
+							<input type="text" name="birthDate" readonly="readonly" id="birthDate"  th:if="${urineTestInfoVo.birthDate}" th:value="${#calendars.format(urineTestInfoVo.birthDate, 'yyyy-MM-dd')}" class="layui-input" style="width:90px" required="true">
+							<p></p>身份证件号码：
+							<input type="text" name="cardNo" readonly="readonly" id="cardNo" th:value='${urineTestInfoVo.cardNo}' class="layui-input" style="width:200px" required="true">
+							<p></p>现场检测时间：
+							<input type="text" name="checkDate" readonly="readonly" id="checkDate" th:if="${urineTestInfoVo.checkDate}" th:value="${#calendars.format(urineTestInfoVo.checkDate, 'yyyy-MM-dd')}" class="layui-input" style="width:90px" required="true">
+							<p></p>现场检测地点 ：
+							<input type="text" name="checkPlace" readonly="readonly" id="checkPlace" th:value='${urineTestInfoVo.checkPlace}' class="layui-input" style="width:350px" required="true">
+							<p></p>
+							<font color="red">*</font>a 瓶 编 号 ：
+							<input type="text" name="bottlea" readonly="readonly" id="bottlea" th:value='${urineTestInfoVo.bottlea}' class="layui-input" style="width:150px" required="true">
+							<p></p>
+							<font color="red">*</font>b 瓶 编 号 ：
+							<input type="text" name="bottleb" readonly="readonly" id="bottleb" th:value='${urineTestInfoVo.bottleb}' class="layui-input" style="width:150px" required="true">
+							<p></p>现场检测方法：经提取被检测人新鲜尿样少许，采用
+							<div class="layui-input-inline">
+								<span th:include="component/selectCombo(id='checkWay',name='checkWay',defaultValue=${urineTestInfoVo.checkWay},dictType='URINE_TYPE_INFO',verify='require',disabled=1)"></span>
+							</div>胶体金法检测试剂进行检测。
+							<p></p>现场检测结果：
+							<input type="text" class="layui-input" th:value='${urineTestInfoVo.name}' style="width:90px" required="true"readonly="readonly" >的检测样本进行检测。 结果呈
+							<span th:include="component/selectCombo(id='checkResult',name='checkResult',defaultValue=${urineTestInfoVo.checkResult},dictType='URINE_RESULT_INFO',verify='require',disabled=1)"></span>
+							<p>&nbsp;&nbsp;依照《吸毒检测程序规定》第十条、第十八条第二检测人对现场款规定，被 检测人对现场检测结果有异议的，可以在被告知检测结果之日三日内，向现场检测的公安机关 提出实验室检测申请，被检测人申请实验室检测，费用由申请人承担，但具有《公安机关办理 行政案件程序规定》第八十二条第一款第一项至第七项情形之一或者其他违反检测情形的除外。</p>
+							<p>
+								被检测人：
+								<span th:include="component/signatureComp(id='checkPerson1',name='checkPerson1',defaultValue=${urineTestInfoVo.identified},disabled=1)"></span>
+								检测人：
+								<span th:include="component/signatureComp(id='checkPerson2',name='checkPerson2',defaultValue=${urineTestInfoVo.cognizant1},disabled=1)"></span>
+							</p>
+							<p>
+								<input type="text"  th:if="${urineTestInfoVo.updateTime}" th:value="${#dates.format(urineTestInfoVo.updateTime, 'yyyy-MM-dd')}" class="layui-input" style="width:100px;margin: 0 66px 0;">
+								<input type="text"  th:if="${urineTestInfoVo.updateTime}" th:value="${#dates.format(urineTestInfoVo.updateTime, 'yyyy-MM-dd')}"  class="layui-input" style="width:100px">
+							</p>
+						</div>
+					</div>
+
+<!-- 吸 毒 成 瘾 认 定 书 -->
+					<div id="addPart2" class="well" style="width:100%; margin:0 auto;display:none;">
+						<h3 style="text-align:center; font-weight:normal;display:none;">下 陆 区 分 局 团 城 山 派 出 所</h3>
+						<h2 style="text-align:center; font-weight:normal; margin-top:0;">吸 毒 成 瘾 认 定 书</h2>
+						<h4 style="text-align:right; font-weight:normal;">
+							<p style="display:none;">下公（
+								<input type="text" name="tuan" value="团" class="input-mini">） 检字[
+								<input type="text" name="jianzi" class="input-mini">]
+								<input type="text" name="no" class="input-mini"  readonly="true">号</h4>
+						<br/></p>
+						<div class="align-center">
+							<font color="red">*</font>被检测人姓名：
+							<input type="text" name="name2" id="name2" readonly="readonly" th:value='${urineTestInfoVo.name}' class="layui-input" style="width:90px" required="true">
+							<font color="red">*</font>性别：
+							<span th:include="component/selectCombo(id='sex2',name='sex2',dictType='SEX',defaultValue=${urineTestInfoVo.sex},verify='require',disabled=1)"></span>
+							<font color="red">*</font>出生日期：
+							<input type="text" name="birthDate2" id="birthDate2" readonly="readonly" th:if="${urineTestInfoVo.birthDate}" th:value="${#dates.format(urineTestInfoVo.birthDate, 'yyyy-MM-dd')}" class="layui-input" style="width:90px" required="true">
+							<p></p>身份证件号码：
+							<input type="text" name="cardNo2" id="cardNo2" readonly="readonly" th:value='${urineTestInfoVo.cardNo}' class="layui-input" style="width:200px" required="true">
+							<p></p>现住址：
+							<input type="text" name="livingPlace2" id="livingPlace2" readonly="readonly" th:value='${urineTestInfoVo.livingPlace}' class="layui-input" style="width:540px;" required="true">
+							<p></p>工作单位：
+							<input type="text" name="workUnit2" id="workUnit2" readonly="readonly" th:value='${urineTestInfoVo.workUnit}' class="layui-input" style="width:540px; " required="true">
+							<p></p>现查明：
+							<textarea type="text" name="findOut2" id="findOut2" readonly="readonly" th:text='${urineTestInfoVo.findOut}' style="width:540px; height:100px; border: 1px solid #cccccc;    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);"></textarea>
+							<p>
+							</p>
+							<p>相关证据：
+								<input name="proof" type="checkbox" id="proof_1" value="proof_1" disabled="disabled">
+								<label>被认定人员供述</label>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<input name="proof" type="checkbox" value="proof_2" disabled="disabled">
+								<label>证人证言</label>
+								<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<br />
+								<input name="proof" type="checkbox" value="proof_3" disabled="disabled">
+								<label>视听资料物证</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<input name="proof" type="checkbox" value="proof_4" disabled="disabled">
+								<label>毒品检测报告书</label>
+								<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<br />
+								<input name="proof" type="checkbox" value="proof_5" disabled="disabled">
+								<label>吸毒史相关证据</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<input name="proof" type="checkbox" value="proof_6" disabled="disabled">
+								<label>其他</label>
+								<br /></p>
+							<p style="line-height:35px;">&nbsp;&nbsp;&nbsp;&nbsp;根据《吸毒成瘾认定方法》第七条规定其吸毒成瘾。</p>
+							<br/>
+
+
+							<p style="text-align:right">办案单位负责人（签名）:
+								<span th:include="component/signatureComp(id='orgManager_part2',name='orgManager_part2',defaultValue=${urineTestInfoVo.orgManager},disabled=1)"></span>
+							</p>
+							<p style="text-align:right;">
+								<input type="text" name="now_date31" id="now_date31" readonly="readonly" th:value="${#dates.format(urineTestInfoVo.createTime, 'yyyy-MM-dd')}" class="layui-input" style="width:100px"></p>
+							<p style="text-align:right">
+								被认定人（签名）：
+								<span th:include="component/signatureComp(id='identified_part2',name='identified_part2',defaultValue=${urineTestInfoVo.identified},disabled=1)"></span>
+								&nbsp;&nbsp;&nbsp;
+								认定人员（签名）：1）
+								<span th:include="component/signatureComp(id='cognizant1_part2',name='cognizant1_part2',defaultValue=${urineTestInfoVo.cognizant1},disabled=1)"></span>
+								<br/>2）
+								<span th:include="component/signatureComp(id='cognizant2_part2',name='cognizant2_part2',defaultValue=${urineTestInfoVo.cognizant2},disabled=1)"></span>
+								<br/>日期：
+								<input type="text" name="now_date21" id="now_date21" readonly="readonly" th:if="${urineTestInfoVo.createTime}" th:value="${#dates.format(urineTestInfoVo.createTime, 'yyyy-MM-dd')}" class="layui-input" style="width:100px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 日期：
+								<input type="text" name="now_date22" id="now_date22" readonly="readonly" th:if="${urineTestInfoVo.createTime}" th:value="${#dates.format(urineTestInfoVo.createTime, 'yyyy-MM-dd')}" class="layui-input" style="width:100px">
+							</p>
+						</div>
+					</div>
+
+<!-- 吸 毒 成 瘾 严 重 认 定 书 -->
+					<div id="addPart3" class="well" style="width:100%; margin:0 auto;display:none;">
+						<h3 style="text-align:center; font-weight:normal;display:none;">下 陆 区 分 局 团 城 山 派 出 所</h3>
+						<h2 style="text-align:center; font-weight:normal; margin-top:0;">吸 毒 成 瘾 严 重 认 定 书</h2>
+						<h4 style="text-align:right; font-weight:normal;">
+							<p style="display:none;">下公（
+								<input type="text" name="tuan" value="团" class="input-mini">） 检字[
+								<input type="text" name="jianzi" class="input-mini">]
+								<input type="text" name="no" class="input-mini" readonly="true">号</h4>
+						<br/></p>
+						<div class="align-center">
+							<font color="red">*</font>被检测人姓名：
+							<input type="text" name="name3" id="name3" readonly="readonly" th:value='${urineTestInfoVo.name}' class="layui-input" style="width:90px" required="true">
+							<font color="red">*</font>性别：
+							<span th:include="component/selectCombo(id='sex3',name='sex3',dictType='SEX',defaultValue=${urineTestInfoVo.sex},verify='require',disabled=1)"></span>
+							<font color="red">*</font>出生日期：
+							<input type="text" name="birthDate3" id="birthDate3" readonly="readonly" th:if="${urineTestInfoVo.birthDate}" th:value="${#dates.format(urineTestInfoVo.birthDate, 'yyyy-MM-dd')}" class="layui-input" style="width:90px" required="true">
+							<p></p>身份证件号码：
+							<input type="text" name="cardNo3" id="cardNo3" readonly="readonly" th:value='${urineTestInfoVo.cardNo}' class="layui-input" style="width:200px" required="true">
+							<p></p>现住址：
+							<input type="text" name="livingPlace3" id="livingPlace3" readonly="readonly" th:value='${urineTestInfoVo.livingPlace}' class="layui-input" style="width:540px;" required="true">
+							<p></p>工作单位：
+							<input type="text" name="workUnit3" id="workUnit3" readonly="readonly" th:value='${urineTestInfoVo.workUnit}' class="layui-input" style="width:540px; " required="true">
+							<p></p>现查明：
+							<textarea type="text" name="findOut3" id="findOut3" readonly="readonly" th:text='${urineTestInfoVo.findOut}' style="width:540px; height:100px; border: 1px solid #cccccc;    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);"></textarea>
+							<p>
+							</p>
+							<p>相关证据：
+								<input name="proof3" type="checkbox" value="proof_1" disabled="disabled">
+								<label>被认定人员供述</label>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<input name="proof3" type="checkbox" value="proof_2" disabled="disabled">
+								<label>证人证言</label>
+								<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<br />
+								<input name="proof3" type="checkbox" value="proof_3" disabled="disabled">
+								<label>视听资料物证</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<input name="proof3" type="checkbox" value="proof_4" disabled="disabled">
+								<label>毒品检测报告书</label>
+								<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<br />
+								<input name="proof3" type="checkbox" value="proof_5" disabled="disabled">
+								<label>吸毒史相关证据</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<input name="proof3" type="checkbox" value="proof_6" disabled="disabled">
+								<label>其他</label>
+								<br /></p>
+							<p style="line-height:35px;">&nbsp;&nbsp;&nbsp;&nbsp;（根据《吸毒检测程序规定》第八条的规定，认定其吸毒成瘾严重。</p>
+							<br/>
+							<p style="text-align:right">办案单位负责人（签名）:
+								<span th:include="component/signatureComp(id='orgManager_part3',name='orgManager_part3',defaultValue=${urineTestInfoVo.orgManager},disabled=1)"></span>
+							<p style="text-align:right;">
+								<input type="text" name="now_date31" id="now_date31" readonly="readonly" th:value="${#dates.format(urineTestInfoVo.createTime, 'yyyy-MM-dd')}" class="layui-input" style="width:100px"></p>
+							<p style="text-align:right">被认定人（签名）：
+								<span th:include="component/signatureComp(id='identified_part3',name='identified_part3',defaultValue=${urineTestInfoVo.identified},disabled=1)"></span>&nbsp;&nbsp;&nbsp;
+								认定人员（签名）：1）
+								<span th:include="component/signatureComp(id='cognizant1_part3',name='cognizant1_part3',defaultValue=${urineTestInfoVo.cognizant1},disabled=1)"></span>
+								<br/>2）
+								<span th:include="component/signatureComp(id='cognizant2_part3',name='cognizant2_part3',defaultValue=${urineTestInfoVo.cognizant2},disabled=1)"></span>
+								<br/>日期：
+								<input type="text" name="now_date32" id="now_date32" readonly="readonly" th:if="${urineTestInfoVo.createTime}" th:value="${#dates.format(urineTestInfoVo.createTime, 'yyyy-MM-dd')}" class="layui-input" style="width:100px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 日期：
+								<input type="text" name="now_date33" id="now_date33" readonly="readonly" th:if="${urineTestInfoVo.createTime}" th:value="${#dates.format(urineTestInfoVo.createTime, 'yyyy-MM-dd')}" class="layui-input" style="width:100px"></p></div>
+					</div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+
+            <br/>
+            <div class="btn-youAdd">
+				<a class="btn btn-primary" onclick="printBtn()"  id="print">打印</a>
+				<a class="btn btn-primary"  id="back">返回</a>
+            </div>
+	</div>
+        </form>
+    </div>
+</div>
+</div>
+</body>
+<script th:src="@{../js/jquery-3.2.1.min.js}"></script>
+<script th:src="@{../js/dialogJs.js}"></script>
+
+<script th:inline="javascript" >
+$(document).ready(function(){
+	var value= $("#reportType").val();
+	if(value=="1"){//吸毒检测报告
+		$("#addPart1").show();
+		$("#addPart2").hide();
+		$("#addPart3").hide();
+		var heightAll = $(".mainConBox").height();
+		$("#diologBox").height(heightAll + 50 + 'px');
+	}else if(value=="2"){//吸毒成瘾认定书
+		$("#addPart1").hide();
+		$("#addPart2").show();
+		$("#addPart3").hide();
+		var heightAll = $(".mainConBox").height();
+	    $("#diologBox").height(heightAll + 50 + 'px');
+	 	var idss = [[ ${urineTestInfoVo.proof} ]];
+		var ids = idss.split(",");
+		for(var i=0; i<ids.length; i++){
+			$("input[name=proof]:checkbox[value='"+ids[i]+"']").prop("checked", true);
+		};
+		layui.form.render();
+		$("#proof_1").attr("checked","checked");
+	}else if(value=="3"){//吸毒成瘾严重认定书
+		$("#addPart1").hide();
+		$("#addPart2").hide();
+		$("#addPart3").show();
+		var heightAll = $(".mainConBox").height();
+	    $("#diologBox").height(heightAll + 50 + 'px');
+	    var idss = [[ ${urineTestInfoVo.proof} ]];
+		var ids = idss.split(",");
+		for(var i=0; i<ids.length; i++){
+			$("input[name=proof3]:checkbox[value='"+ids[i]+"']").prop("checked", true);
+		};
+		layui.form.render();
+		$("#proof_1").attr("checked","checked");
+	}
+});
+
+//返回事件绑定，关闭窗口
+$("#back").click(function () {
+    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+//    parent.table.loadBody();//刷新列表
+	parent.layer.close(index);//关闭弹窗
+});
+function printBtn(){
+	$("#print").hide();
+    $("#back").hide();
+	window.print();
+    $("#print").show();
+    $("#back").show();
+}
+</script>
+
+<style type="text/css"> 
+.align-center{ 
+margin:0 auto; /* 居中 这个是必须的，，其它的属性非必须 */ 
+width:100%; /* 给个宽度 顶到浏览器的两边就看不出居中效果了 */ 
+/* background:red; 背景色 */ 
+}
+</style>
+
+</html>

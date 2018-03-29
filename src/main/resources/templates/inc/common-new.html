@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<div th:fragment="common-new">
+    <title>公安机关执法办案管控平台</title>
+    <link rel="stylesheet" type="text/css" th:href="@{../../vendor/layui/css/layui.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/common.css}" />
+    <script th:src="@{../../js/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{../../vendor/layer/layer.js}"></script>
+    <script th:src="@{../../vendor/layui/layui.js}"></script>
+    <script th:src="@{../../js/sys-common.js}"></script>
+    <script th:src="@{../vendor/My97DatePicker/WdatePicker.js}"></script>
+    <script th:src="@{../js/placeholder/jquery.placeholder.js}"></script>
+    
+    <script>
+    	$(function(){
+    		$('input,textarea').placeholder({});
+    	});
+    </script>
+    <style>
+    	input.placeholder[placeholder],
+    	textarea.placeholder[placeholder]{
+    		color:#b5983c !important;
+    	}
+    </style>
+</div>
+</html>

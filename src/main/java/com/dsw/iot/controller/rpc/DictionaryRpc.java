@@ -104,12 +104,23 @@ public class DictionaryRpc {
 
 	/**
 	 * 判断编码是否有重复（新增根节点时，code和type是一样的，新增子节点时，code和type不一样）
-	 * 
+	 *
 	 * @param code
 	 * @return
 	 */
 	@RequestMapping("/checkDicCode")
 	public ActionResult<String> checkDicCode(DictionaryRequest dictionaryRequest) {
 		return dictionaryService.checkDicCode(dictionaryRequest);
+	}
+
+	/**
+	 * 通过pid查询下一级树,自带判断是否为文件夹
+	 *
+	 * @param pid
+	 * @return
+	 */
+	@RequestMapping("/queryByPidIsParent")
+	public List<DictionaryTreeVo> queryByPidIsParent(Long pid) {
+		return dictionaryService.selectDictionaryByPidIsParent(pid);
 	}
 }

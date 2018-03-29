@@ -1,0 +1,550 @@
+body.custom .searchBox {
+  width      : 98%;
+  height     : 12%;
+  z-index    : 2;
+  padding    : 1% 0;
+  box-sizing : border-box;
+}
+
+body.custom .searchBox .editBox {
+  width  : 50%;
+  height : 65%;
+  left   : 0;
+}
+
+body.custom .searchBox .editBox ul li {
+  width        : 25%;
+  height       : 100%;
+  margin-right : 3%;
+  float        : left;
+  cursor       : pointer;
+}
+
+body.custom .searchBox .editBox ul li .typeImg {
+  left   : 15%;
+  width  : 15%;
+  height : auto;
+}
+
+body.custom .searchBox .editBox ul li span {
+  font-size : 1em;
+  color     : #01BAE2;
+  right     : 15%;
+}
+
+body.custom .searchBox .radioBox {
+  width  : 50%;
+  height : 75%;
+  right  : 0;
+}
+
+body.custom .searchBox .radioBox ul li {
+  width        : 24%;
+  height       : 100%;
+  margin-right : 1%;
+  float        : left;
+  cursor       : pointer;
+}
+
+body.custom .searchBox .radioBox ul li img {
+  width  : 15%;
+  height : auto;
+  left   : 10%;
+}
+
+body.custom .searchBox .radioBox ul li .selImg {
+  display : none;
+}
+
+body.custom .searchBox .radioBox ul li span {
+  font-size : 0.7em;
+  color     : #01BAE2;
+  left      : 30%;
+}
+
+body.custom .searchBox .radioBox ul .active .selImg {
+  display : block;
+}
+
+body.custom .searchBox .radioBox ul .active .defImg {
+  display : none;
+}
+
+body.custom .searchBox .selectImgBox {
+  width  : 8em;
+  height : 1em;
+  left   : 0;
+  top    : 75%;
+  cursor : pointer;
+}
+
+body.custom .searchBox .selectImgBox img {
+  display : none;
+  width   : 15%;
+  height  : auto;
+}
+
+body.custom .searchBox .selectImgBox span {
+  font-size : 0.8em;
+  color     : #00D8FF;
+  left      : 30%;
+}
+
+body.custom .searchBox .selectImgBox .downImg {
+  display : block;
+}
+
+body.custom .searchBox .adSearchBox {
+  border     : 1px solid #01BAE2;
+  width      : 95%;
+  background : #03173A;
+  left       : 3%;
+  top        : 80%;
+  display    : none;
+  padding    : 0em 0em 0.5em 0em;
+  box-sizing : border-box;
+}
+
+body.custom .searchBox .adSearchBox > span {
+  font-size   : 0.8em;
+  color       : #00D8FF;
+  width       : 100%;
+  line-height : 1.4em;
+}
+
+body.custom .searchBox .adSearchBox .searBox {
+  width      : 50%;
+  height     : 2.2em;
+  float      : left;
+  box-sizing : border-box;
+}
+
+body.custom .searchBox .adSearchBox .searBox span,
+body.custom .searchBox .adSearchBox .searBox input,
+body.custom .searchBox .adSearchBox .searBox select {
+  float     : left;
+  height    : 100%;
+  color     : #01BAE2;
+  font-size : 0.8em;
+}
+
+body.custom .searchBox .adSearchBox .searBox span {
+  font-size   : 0.8em;
+  color       : #01BAE2;
+  line-height : 2.3em;
+}
+
+body.custom .searchBox .adSearchBox .searBox .desc {
+  width : 30%;
+}
+
+body.custom .searchBox .adSearchBox .searBox input,
+body.custom .searchBox .adSearchBox .searBox select {
+  width      : 65%;
+  height     : 1.5em;
+  margin-top : 0.4em;
+  background : #1B2E4E;
+  border     : 0.1px solid #00D8FF;
+  text-align : center;
+}
+
+.tableBoxSelect {
+  height       : 1.5em;
+  background   : #1B2E4E;
+  border       : 0.1px solid #00D8FF;
+  text-align   : center;
+  padding-left : 5px;
+  width        : 50px;
+  color        : #01BAE2 !important;
+}
+
+body.custom .searchBox .adSearchBox .searBox .timeSel {
+  width : 30%;
+}
+
+body.custom .searchBox .adSearchBox .searchBtnBox {
+  cursor   : pointer;
+  width    : 5em;
+  height   : 2em;
+  overflow : hidden;
+  margin   : 0 auto;
+}
+
+body.custom .searchBox .adSearchBox .searchBtnBox span {
+  font-size : 1em;
+  color     : #FCAA00;
+  right     : 15%;
+}
+
+body.custom .searchBox .adSearchBox .searchBtnBox .secImg {
+  left   : 15%;
+  width  : 15%;
+  height : auto;
+}
+
+body.custom .dataListBox {
+  width      : 96%;
+  /*height: 85%;*/
+  z-index    : 1;
+  box-sizing : border-box;
+  bottom     : 0;
+  position   : relative;
+}
+
+body.custom .dataListBox .titBox {
+  width: 100%;
+  /*height: 2.5em;*/
+  position: relative;
+}
+
+body.custom .dataListBox .titBox .table-head {
+  background: url(../../images/custom/renyuandengji_biankuangxiao1.png) no-repeat scroll 0 0;
+  background-size: 100% 100%;
+  position : relative;
+  height : 2.5em;
+}
+
+/*自定义 head start */
+body.custom .dataListBox .titBox .table-head.demo{
+  background: url(../../images/custom/leibiaokuang.png) no-repeat scroll 0 0;
+  -webkit-background-size : 100% 100%;
+  background-size         : 100% 100%;
+  height : 4em;
+}
+
+body.custom .dataListBox .titBox .table-head.demo .titOne{
+  height: auto;
+  margin-top: 22px;
+}
+/*自定义 head end*/
+
+
+/*自定义 tbody start*/
+body.custom .dataListBox .listBox .table-body.demo .body-data-list.demo{
+
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.demo{
+
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.demo > span{
+  position : relative;
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.demo input[type='radio'].custom-choose,
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.demo input[type='radio'].custom-choose + span{
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translate(0,-50%);
+  transform: translate(0,-50%);
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.demo input[type='radio'].custom-choose{
+  opacity : 0;
+  -ms-filter : progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  filter     : progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.demo input[type='radio'].custom-choose-ok,
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.demo input[type='radio'].custom-choose-ok + span{
+  left: 35%;
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.demo input[type='radio'].custom-choose-ok{
+  z-index : 10;
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.demo input[type='radio'].custom-choose-ok + span{
+  background: url("../../images/custom/chooseDef.png") no-repeat scroll 0 0;
+  background-size: 100% 100%;
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.demo input[type='radio'].custom-choose-no,
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.demo input[type='radio'].custom-choose-no + span{
+  right : 35%;
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.demo input[type='radio'].custom-choose-no{
+  z-index : 10;
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.demo input[type='radio'].custom-choose-no + span{
+  background: url("../../images/custom/noChooseDef.png") no-repeat scroll 0 0;
+  background-size: 100% 100%;
+
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.demo input[type='radio']:checked.custom-choose-ok + span{
+  background: url("../../images/custom/chooseSel.png") no-repeat scroll 0 0;
+  background-size: 100% 100%;
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.demo input[type='radio']:checked.custom-choose-no + span{
+  background: url("../../images/custom/noChooseSel.png") no-repeat scroll 0 0;
+  background-size: 100% 100%;
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list.custom-row{
+  height : 4em;
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list.custom-row .titOne > span{
+  line-height : 5em;
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.custom-img-column{
+
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.custom-img-column .dsw-take-photo-img-box{
+  position: relative;
+  display: inline-block;
+  width: auto;
+  margin: 3px;
+  height: auto;
+  float: left;
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.custom-img-column .dsw-take-photo-img-main{
+  width : 40px;
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.custom-img-column .dsw-take-photo-img-close{
+  width : 12px;
+  position : absolute;
+  top : 0;
+  right : 0;
+}
+
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.custom-img-column-take-photo .dsw-take-photo-img-box{
+  position: relative;
+  display: inline-block;
+  width: auto;
+  margin: 3px;
+  height: auto;
+  float: left;
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.custom-img-column-take-photo .dsw-take-photo-img-main{
+  width : 40px;
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.custom-img-column-take-photo .dsw-take-photo-img-close{
+  width : 12px;
+  position : absolute;
+  top : 0;
+  right : 0;
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.custom-img-column-take-photo .dsw-take-photo-img-btn{
+  float : right;
+}
+
+
+/*自定义 tbody end*/
+
+
+
+
+body.custom .dataListBox .titBox .con > img {
+  z-index : -1;
+}
+
+body.custom .dataListBox .titBox .con .titOne {
+  float   : left;
+  z-index : 1;
+  height  : 100%;
+}
+
+body.custom .dataListBox .titBox .con .titOne span {
+  z-index     : 1;
+  line-height : 2.5em;
+  font-size   : 0.9em;
+  color       : #17F3EA;
+  width       : 100%;
+  text-align  : center;
+}
+
+body.custom .dataListBox .titBox .con .selBox {
+  height : 100%;
+}
+
+body.custom .dataListBox .titBox .con .selBox img {
+  z-index : 1;
+  display : none;
+  width   : 16px;
+  height  : auto;
+  cursor  : pointer;
+}
+
+body.custom .dataListBox .titBox .con .selBox .defImg {
+  display : block;
+}
+
+body.custom .dataListBox .titBox .con .nameBox {
+  height : 100%;
+}
+
+body.custom .dataListBox .listBox {
+  width    : 100%;
+  /* bottom: 10%; */
+  /* height: 80%; */
+  /*top: 2.5em;*/
+  position : relative;
+}
+
+body.custom .dataListBox .listBox ul li {
+  width            : 100%;
+  height           : 1.8em;
+  border-top       : 0.1px solid #00D8FF;
+  border-left      : 0.1px solid #00D8FF;
+  border-right     : 0.1px solid #00D8FF;
+  box-sizing       : border-box;
+  z-index          : 999;
+  background-color : #032547;
+  cursor           : pointer;
+}
+
+body.custom .dataListBox .listBox ul li:last-child {
+  border     : 0.1px solid #01BAE2;
+  box-sizing : border-box;
+}
+
+body.custom .dataListBox .listBox ul li .titOne {
+  float  : left;
+  height : 100%;
+}
+
+body.custom .dataListBox .listBox ul li .selBox {
+  height : 100%;
+}
+
+body.custom .dataListBox .listBox ul li .selBox img {
+  z-index : 1;
+  display : none;
+  width   : 20%;
+  height  : auto;
+}
+
+body.custom .dataListBox .listBox ul li .selBox .defImg {
+  display : block;
+}
+
+body.custom .dataListBox .listBox ul .active .selBox .defImg {
+  display : none;
+}
+
+body.custom .dataListBox .listBox ul .active .selBox .selImg {
+  display : block;
+}
+
+body.custom .dataListBox .listBox ul .active {
+  background : #073157;
+}
+
+body.custom .dataListBox .listBox ul li .titOne span {
+  z-index     : 1;
+  font-size   : 0.8em;
+  color       : #01BAE2;
+  width       : 100%;
+  height      : 100%;
+  text-align  : center;
+  line-height : 2.2em;
+  overflow    : hidden;
+}
+
+body.custom .dataListBox .pagBox {
+  width    : 100%;
+  /* height: 10%; */
+  /* bottom: 0; */
+  /* padding: 3% 4%; */
+  position : relative;
+  /* top: 2.5em; */
+  margin   : 20px 0 0;
+}
+
+body.custom .dataListBox .pagBox button,
+body.custom .dataListBox .pagBox input,
+body.custom .dataListBox .pagBox div {
+  float       : right;
+  color       : #01BAE2;
+  font-size   : 0.8em;
+  margin-left : 1em;
+  cursor      : pointer;
+}
+
+body.custom .dataListBox .pagBox p {
+  float       : right;
+  color       : #01BAE2;
+  font-size   : 0.8em;
+  margin-left : 1em;
+}
+
+body.custom .dataListBox .pagBox .jump-text,
+body.custom .dataListBox .pagBox .jump-button {
+  display : none;
+}
+
+body.custom .dataListBox .pagBox .pageWrap ul {
+  overflow : hidden;
+}
+
+body.custom .dataListBox .pagBox .pageWrap li {
+  float      : left;
+  width      : 1.4em;
+  text-align : center;
+  cursor     : pointer;
+}
+
+body.custom .dataListBox .pagBox .pageWrap ul .sel-page {
+  color : #F3A503;
+}
+
+.body.custom-data-list a {
+  display : inline-block;
+}
+
+.body.custom-data-list a + a {
+  margin-left : 10px;
+}
+
+/*take-photo start*/
+body.custom .youAdd td img.dsw-take-photo-img-btn{
+  width : 35px;
+  height : 25px;
+  cursor : pointer;
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.custom-img-column .dsw-take-photo-img-box{
+  position: relative;
+
+  float: left;
+  margin-right: 5px;
+
+  line-height: 0;
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.custom-img-column .dsw-take-photo-img-main{
+
+  width: 60px;
+  height: 60px;
+}
+
+body.custom .dataListBox .listBox .table-body.demo .body-data-list .titOne.custom-img-column .dsw-take-photo-img-close{
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  width: 10px;
+  height: 10px;
+
+  cursor: pointer;
+}
+/*take-photo end*/
+
+

@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/common.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{../css/dialogCss.css}"/>
+    <div th:include="inc/common"></div>
+    <title>查看尿检照片</title>
+</head>
+
+<style>
+    .container-fluid.dsw-container {
+        background: url(../images/lawContro/beijing_dialog.png) no-repeat scroll 0 0;
+        /*background-size: 100% 100%;*/
+        background-size: cover;
+        background-color: #1b4067;
+    }
+
+    .container-fluid.dsw-container input,
+    .container-fluid.dsw-container input[disabled] {
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid #333;
+        background-color: transparent;
+    }
+
+    .container-fluid.dsw-container input:focus {
+
+    }
+
+    .container-fluid.dsw-container .youAdd {
+        border: none;
+    }
+
+    .container-fluid.dsw-container #diologBox {
+        background-color: transparent;
+    }
+
+    .container-fluid.dsw-container #diologBox .topBoxCon .formBox .selBox {
+        overflow: visible;
+    }
+
+    .container-fluid.dsw-container .layui-form-select {
+        top: -12px;
+    }
+
+    span {
+        display: inline-block;
+    }
+    .layui-layer-iframe{
+        overflow: hidden;
+    }
+</style>
+
+<body style="overflow-y: auto; overflow-x:hidden;background-color:#15385c;">
+<div class="content">
+    <div class="container-fluid dsw-container">
+        <br/>
+        <form action="" class="layui-form">
+            <div class="youAdd">
+                <div id="diologBox">
+                    <div class="posRel wh100">
+                        <div class="mainConBox posAbs">
+                            <div class="topBoxCon">
+                                <div class="formBox">
+                                    <div class="posRel wh100">
+                                        <img src="../images/lawContro/shurukaung.png" alt="" class="posAbs wh100">
+                                        <div class="selBox posAbs mid">
+                                            <span class="wh100" th:include="component/selectCombo(id='reportType',name='reportType',dictType='URINE_TEST_INFO',defaultValue='1',verify='require')"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="iptBox">
+                                    <div class="posRel wh100">
+                                        <span class="posAbs mid">手环编号:</span>
+                                        <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid">
+                                        <div style="position:absolute;width:100%;height:100%;background:#fff;opacity:0;top:0;left:0;"></div>
+                                        <input type="text" class="posAbs" name="braceletNo" id="braceletNo"
+                                               style='position:absolute;top:-5px;'>
+                                        <img src="../images/lawContro/shurukuangkuang-yilou.png" alt=""
+                                             class="yilouImg posAbs mid">
+                                    </div>
+                                </div>
+                                <div class="paizhaoBox">
+                                    <div class="posRel wh100" id='dsw-take-photo' data-type="urine">
+                                        <img class="wh100 posAbs defImg"
+                                             src="../images/lawContro/paizhao-anniu-changtai.png" alt="">
+                                        <img class="wh100 posAbs selImg"
+                                             src="../images/lawContro/paizhao-anniu-dianji.png" alt="">
+                                        <span class="posAbs cenMid">拍照</span>
+                                    </div>
+                                </div>
+                                <div class="searchBox" onclick="cxyh()">
+                                    <div class="posRel wh100">
+                                        <img class="wh100 posAbs defImg" src="../images/lawContro/chaxun-changtai.png"
+                                             alt="">
+                                        <img class="wh100 posAbs selImg" src="../images/lawContro/chaxun-dianji.png"
+                                             alt="">
+                                        <span class="posAbs cenMid">查询用户信息</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="conBox">
+                                <!-- //每一行的模板3个 -->
+                                <!--  <div class="clear" > -->
+
+
+                                <!-- 现 场 检 测 报 告 书 -->
+                                <div id="addPart1" class="well" style="width:100%; margin:0 auto;">
+                                    <h3 style="text-align:center; font-weight:normal;display:none;">下 陆 区 分 局 团 城 山 派 出
+                                        所</h3>
+                                    <h2 style="text-align:center; font-weight:normal; margin-top:0;">现 场 检 测 报 告 书</h2>
+                                    <h4 style="text-align:right; font-weight:normal;">
+                                        <p style="display:none;">下公（
+                                            <input type="text" name="tuan" value="团" class="input-mini">） 检字[
+                                            <input type="text" name="jianzi" id="jianzi" class="input-mini">]
+                                            <input type="text" name="no" class="input-mini" readonly="true"></h4>
+                                    <br/></p>
+                                    <div class="align-center">
+                                        <font color="red">*</font>被检测人姓名：
+                                        <input type="text" name="name" id="name" class="layui-input" style="width:90px"
+                                               disabled="disabled">
+                                        <font color="red">*</font>性别：
+                                        <span th:include="component/selectCombo(id='sex',name='sex',dictType='SEX',verify='require',disabled=1)"></span>
+                                        <font color="red">*</font>出生日期：
+                                        <input type="text" name="birthDate" id="birthDate" class="layui-input"
+                                               style="width:90px" disabled="disabled">
+                                        <p></p>身份证件号码：
+                                        <input type="text" name="cardNo" id="cardNo" class="layui-input"
+                                               style="width:200px" disabled="disabled">
+                                        <p></p>现场检测时间：
+                                        <input type="text" name="checkDate" id="checkDate" class="layui-input"
+                                               style="width:90px" required="true">
+                                        <p></p>现场检测地点 ：
+                                        <input type="text" name="checkPlace" id="checkPlace" class="layui-input"
+                                               style="width:350px" required="true">
+                                        <p><button class="btn" style="background-color:#F2F2F2;" type="button" onclick="getNum()">生成编号</button></p>
+                                        <font color="red">*</font>a 瓶 编 号 ：
+                                        <input type="text" name="bottlea" id="bottlea" class="layui-input"
+                                               style="width:150px" required="true">
+                                        <p></p>
+                                        <font color="red">*</font>b 瓶 编 号 ：
+                                        <input type="text" name="bottleb" id="bottleb" class="layui-input"
+                                               style="width:150px">
+                                        <p></p>现场检测方法：经提取被检测人新鲜尿样少许，采用
+                                        <div class="layui-input-inline">
+                                            <span th:include="component/selectCombo(id='checkWay',name='checkWay',dictType='URINE_TYPE_INFO',verify='require')"></span>
+                                        </div>
+                                        胶体金法检测试剂进行检测。
+                                        <p></p>现场检测结果：
+                                        <input type="text" id="name" name="name" class="layui-input" style="width:90px"
+                                               disabled="disabled">的检测样本进行检测。 结果呈
+                                        <span th:include="component/selectCombo(id='checkResult',name='checkResult',dictType='URINE_RESULT_INFO',verify='require')"></span>
+                                        <p>&nbsp;&nbsp;依照《吸毒检测程序规定》第十条、第十八条第二检测人对现场款规定，被
+                                            检测人对现场检测结果有异议的，可以在被告知检测结果之日三日内，向现场检测的公安机关
+                                            提出实验室检测申请，被检测人申请实验室检测，费用由申请人承担，但具有《公安机关办理
+                                            行政案件程序规定》第八十二条第一款第一项至第七项情形之一或者其他违反检测情形的除外。</p>
+                                        <p>
+                                            被检测人：
+                                            <span th:include="component/signatureComp(id='identified',name='identified')"></span>
+                                            检测人：
+                                            <span th:include="component/signatureComp(id='cognizant1',name='cognizant1')"></span>
+                                        </p>
+                                        <p>
+                                            <input type="text" id="createTime" class="layui-input"
+                                                   style="width:100px;margin-right: 66px;">
+                                            <input type="text" id="updateTime" class="layui-input"
+                                                   style="width:100px;margin-right: 66px;">
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- 吸 毒 成 瘾 认 定 书 -->
+                                <div id="addPart2" class="well" style="width:100%; margin:0 auto;display:none;">
+                                    <h3 style="text-align:center; font-weight:normal;display:none;">下 陆 区 分 局 团 城 山 派 出
+                                        所</h3>
+                                    <h2 style="text-align:center; font-weight:normal; margin-top:0;">吸 毒 成 瘾 认 定 书</h2>
+                                    <h4 style="text-align:right; font-weight:normal;">
+                                        <p style="display:none;">下公（
+                                            <input type="text" name="tuan" value="团" class="input-mini">） 检字[
+                                            <input type="text" name="jianzi" class="input-mini">]
+                                            <input type="text" name="no" class="input-mini" readonly="true">号</h4>
+                                    <br/></p>
+                                    <div class="align-center">
+                                        <font color="red">*</font>被检测人姓名：
+                                        <input type="text" name="name2" id="name2" class="layui-input"
+                                               style="width:90px" disabled="disabled">
+                                        <font color="red">*</font>性别：
+                                        <span th:include="component/selectCombo(id='sex2',name='sex2',dictType='SEX',verify='require',disabled=1)"></span>
+                                        <font color="red">*</font>出生日期：
+                                        <input type="text" name="birthDate2" id="birthDate2" class="layui-input"
+                                               style="width:90px" disabled="disabled">
+                                        <p></p>身份证件号码：
+                                        <input type="text" name="cardNo2" id="cardNo2" class="layui-input"
+                                               style="width:200px" disabled="disabled">
+                                        <p></p>现住址：
+                                        <input type="text" name="livingPlace2" id="livingPlace2" class="layui-input"
+                                               style="width:540px;" required="true">
+                                        <p></p>工作单位：
+                                        <input type="text" name="workUnit2" id="workUnit2" class="layui-input"
+                                               style="width:540px; " required="true">
+                                        <p></p>现查明：
+                                        <textarea type="text" name="findOut2" id="findOut2"
+                                                  style="width:540px; height:100px; border: 1px solid #cccccc;    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);"></textarea>
+                                        <p>
+                                        </p>
+                                        <p>相关证据：
+                                            <input name="proof" type="checkbox" value="proof_1">
+                                            <label>被认定人员供述</label>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input name="proof" type="checkbox" value="proof_2">
+                                            <label>证人证言</label>
+                                            <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <br/>
+                                            <input name="proof" type="checkbox" value="proof_3">
+                                            <label>视听资料物证</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input name="proof" type="checkbox" value="proof_4">
+                                            <label>毒品检测报告书</label>
+                                            <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <br/>
+                                            <input name="proof" type="checkbox" value="proof_5">
+                                            <label>吸毒史相关证据</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input name="proof" type="checkbox" value="proof_6">
+                                            <label>其他</label>
+                                            <br/></p>
+                                        <p style="line-height:35px;">&nbsp;&nbsp;&nbsp;&nbsp;根据《吸毒成瘾认定方法》第七条规定其吸毒成瘾。</p>
+                                        <br/>
+                                        <p style="text-align:right">办案单位负责人（签名）:
+                                            <span th:include="component/signatureComp(id='orgManager_part2',name='orgManager_part2')"></span>
+                                        </p>
+                                        <p style="text-align:right">
+                                            被认定人（签名）：
+                                            <span th:include="component/signatureComp(id='identified_part2',name='identified_part2')"></span>
+                                            &nbsp;&nbsp;&nbsp;
+                                            认定人员（签名）：1）
+                                            <span th:include="component/signatureComp(id='cognizant1_part2',name='cognizant1_part2')"></span>
+                                            <br/>2）
+                                            <span th:include="component/signatureComp(id='cognizant2_part2',name='cognizant2_part2')"></span>
+                                            <br/>日期：
+                                            <input type="text" name="now_date21" id="now_date21" class="layui-input"
+                                                   style="width:100px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            日期：
+                                            <input type="text" name="now_date22" id="now_date22" class="layui-input"
+                                                   style="width:100px">
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- 吸 毒 成 瘾 严 重 认 定 书 -->
+                                <div id="addPart3" class="well" style="width:100%; margin:0 auto;display:none;">
+                                    <h3 style="text-align:center; font-weight:normal;display:none;">下 陆 区 分 局 团 城 山 派 出
+                                        所</h3>
+                                    <h2 style="text-align:center; font-weight:normal; margin-top:0;">吸 毒 成 瘾 严 重 认 定
+                                        书</h2>
+                                    <h4 style="text-align:right; font-weight:normal;">
+                                        <p style="display:none;">下公（
+                                            <input type="text" name="tuan" value="团" class="input-mini">） 检字[
+                                            <input type="text" name="jianzi" class="input-mini">]
+                                            <input type="text" name="no" class="input-mini" readonly="true">号</h4>
+                                    <br/></p>
+                                    <div class="align-center">
+                                        <font color="red">*</font>被检测人姓名：
+                                        <input type="text" name="name3" id="name3" class="layui-input"
+                                               style="width:90px" disabled="disabled">
+                                        <font color="red">*</font>性别：
+                                        <span th:include="component/selectCombo(id='sex3',name='sex3',dictType='SEX',verify='require',disabled=1)"></span>
+                                        <font color="red">*</font>出生日期：
+                                        <input type="text" name="birthDate3" id="birthDate3" class="layui-input"
+                                               style="width:90px" disabled="disabled">
+                                        <p></p>身份证件号码：
+                                        <input type="text" name="cardNo3" id="cardNo3" class="layui-input"
+                                               style="width:200px" disabled="disabled">
+                                        <p></p>现住址：
+                                        <input type="text" name="livingPlace3" id="livingPlace3" class="layui-input"
+                                               style="width:540px;" required="true">
+                                        <p></p>工作单位：
+                                        <input type="text" name="workUnit3" id="workUnit3" class="layui-input"
+                                               style="width:540px; " required="true">
+                                        <p></p>现查明：
+                                        <textarea type="text" name="findOut3" id="findOut3"
+                                                  style="width:540px; height:100px; border: 1px solid #cccccc;    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);"></textarea>
+                                        <p>
+                                        </p>
+                                        <p>相关证据：
+                                            <input name="proof" type="checkbox" value="proof_1">
+                                            <label>被认定人员供述</label>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input name="proof" type="checkbox" value="proof_2">
+                                            <label>证人证言</label>
+                                            <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <br/>
+                                            <input name="proof" type="checkbox" value="proof_3">
+                                            <label>视听资料物证</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input name="proof" type="checkbox" value="proof_4">
+                                            <label>毒品检测报告书</label>
+                                            <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <br/>
+                                            <input name="proof" type="checkbox" value="proof_5">
+                                            <label>吸毒史相关证据</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input name="proof" type="checkbox" value="proof_6">
+                                            <label>其他</label>
+                                            <br/></p>
+                                        <p style="line-height:35px;">&nbsp;&nbsp;&nbsp;&nbsp;（根据《吸毒检测程序规定》第八条的规定，认定其吸毒成瘾严重。</p>
+                                        <br/>
+                                        <p style="text-align:right">办案单位负责人（签名）:
+                                            <span th:include="component/signatureComp(id='orgManager_part3',name='orgManager_part3')"></span>
+                                        </p>
+                                        <p style="text-align:right;">
+                                            <input type="text" name="now_date31" id="now_date31" class="layui-input"
+                                                   style="width:100px"></p>
+                                        <p style="text-align:right">被认定人（签名）：
+                                            <span th:include="component/signatureComp(id='identified_part3',name='identified_part3')"></span>&nbsp;&nbsp;&nbsp;
+                                            认定人员（签名）：1）
+                                            <span th:include="component/signatureComp(id='cognizant1_part3',name='cognizant1_part3')"></span>
+                                            <br/>2）
+                                            <span th:include="component/signatureComp(id='cognizant2_part3',name='cognizant2_part3')"></span>
+                                            <br/>日期：
+                                            <input type="text" name="now_date32" id="now_date32" class="layui-input"
+                                                   style="width:100px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            日期：
+                                            <input type="text" name="now_date33" id="now_date33" class="layui-input"
+                                                   style="width:100px"></p></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br/>
+                <div class="btn-youAdd" style='margin:10px 0 50px;'>
+                    <a class="btn btn-primary" lay-submit lay-filter="formDemo">保存</a>
+                    <a class="btn btn-primary" id="back">返回</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+
+<!--第一步 加入标签-->
+<!--拍照时 子页面回传到父页面的值 保存在这里-->
+<!--注意 此页面不需要引入 take-photo.js 文件 所以必须加入这句标签 如果引入并且调用dsw_take_photo方法就不需要这句 -->
+<input type='hidden' data-dsw-take-photo-temp='[]'/>
+
+</body>
+<script th:src="@{../js/jquery-3.2.1.min.js}"></script>
+<script th:src="@{../js/dialogJs.js}"></script>
+
+<script language="javascript" type="text/javascript">
+
+
+    // 第二步 绑定事件 打开拍照页面
+    $('#dsw-take-photo').click(function (e) {
+        var type=$(this).data('type');
+        layer.open({
+            type: 2,
+            title: false,
+            resize: false,
+            content: '/Video/index.html?type='+type,
+            area: ['900px', '500px'],
+            success: function (layero, index) {
+                var _imgs = $('input[type="hidden"][data-dsw-take-photo-temp]').data('dsw-take-photo-temp');
+                var frameWindow = window[layero.find('iframe').prop('name')];
+
+                frameWindow.take_photo({initImages: _imgs, maxCount: 2});
+            },
+            end: function () {
+
+            }
+
+        });
+    });
+
+
+    var date = new Date;
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    month = (month < 10 ? "0" + month : month);
+    var data = date.getDate();
+    var dateTime = (year.toString() + "-" + month.toString() + "-" + data.toString());
+    $("#createTime").val(dateTime);
+    $("#updateTime").val(dateTime);
+    $("#checkDate").val(dateTime);
+    $(document).ready(function () {
+        $('#reportType').change(function () {
+            var value = $(this).children('option:selected').val();//这就是selected的值
+            if (value == "1") {
+                $("#createTime").val(dateTime);
+                $("#updateTime").val(dateTime);
+                $("#checkDate").val(dateTime);
+                $("#addPart1").show();
+                $("#addPart2").hide();
+                $("#addPart3").hide();
+                var heightAll = $(".mainConBox").height();
+                $("#diologBox").height(heightAll + 'px');
+            } else if (value == "2") {
+                $("#now_date21").val(dateTime);
+                $("#now_date22").val(dateTime);
+                $("#addPart1").hide();
+                $("#addPart2").show();
+                $("#addPart3").hide();
+                var heightAll = $(".mainConBox").height();
+                $("#diologBox").height(heightAll + 'px');
+            } else if (value == "3") {
+                $("#now_date31").val(dateTime);
+                $("#now_date32").val(dateTime);
+                $("#now_date33").val(dateTime);
+                $("#addPart1").hide();
+                $("#addPart2").hide();
+                $("#addPart3").show();
+                var heightAll = $(".mainConBox").height();
+                $("#diologBox").height(heightAll + 'px');
+            }
+        })
+    });
+
+    var registerId;
+    function cxyh() {
+        $("#name").val("");
+        $("#sex").val("");
+        $("#birthDate").val("");
+        $("#cardNo").val("");
+        $("#name2").val("");
+        $("#sex2").val("");
+        $("#birthDate2").val("");
+        $("#cardNo2").val("");
+        $("#name3").val("");
+        $("#sex3").val("");
+        $("#birthDate3").val("");
+        $("#cardNo3").val("");
+
+        var reportTypeSelect = $("#reportType").val();
+        if(!reportTypeSelect){
+            layer.msg("请选择报告模板!");
+            return;
+        }
+        //取数据
+        var braceletNo = $("#braceletNo").val();
+        //存放数据
+        var res = new PublicAjax('/UrineTestInfo/PersonRegister.json', {braceletNo: braceletNo});
+        if (res.content == null) {
+            layer.msg("未查询到人员信息!");
+        } else {
+            registerId = res.content.personInfo.id;
+            if (reportTypeSelect == "1") {
+                var birthDate = res.content.personInfo.birthDate;
+                $("input[name=name]").val(res.content.personInfo.name);
+                $("#sex").val(res.content.personInfo.sex);
+                $("#birthDate").val(formatDate(birthDate));
+                $("#cardNo").val(res.content.personInfo.cardNo);
+            } else if (reportTypeSelect == "2") {
+                var birthDate = res.content.personInfo.birthDate;
+                $("#name2").val(res.content.personInfo.name);
+                $("#sex2").val(res.content.personInfo.sex);
+                $("#birthDate2").val(formatDate(birthDate));
+                $("#cardNo2").val(res.content.personInfo.cardNo);
+            } else if (reportTypeSelect == "3") {
+                var birthDate = res.content.personInfo.birthDate;
+                $("#name3").val(res.content.personInfo.name);
+                $("#sex3").val(res.content.personInfo.sex);
+                $("#birthDate3").val(formatDate(birthDate));
+                $("#cardNo3").val(res.content.personInfo.cardNo);
+            }
+        }
+    };
+
+    function getImgData() {
+        var ids = "";
+        var _imgs = $('input[type="hidden"][data-dsw-take-photo-temp]').data('dsw-take-photo-temp');
+        _imgs.forEach(function (v, k) {
+            if (!!v) {
+                ids += v.match(/id=(\d*)/)[1] + ","
+            }
+        });
+        return ids;
+    }
+
+    //返回事件绑定，关闭窗口
+    $("#back").click(function () {
+        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+        parent.layer.close(index);//关闭弹窗
+    });
+
+    layui.use(['layer', 'form'], function () {
+        var layer = layui.layer;
+        var form = layui.form;
+
+        form.on('submit(formDemo)', function (data) {
+            var reportTypeSelect = $("#reportType").val();
+            data.field.photoFileIds = getImgData();
+            if (reportTypeSelect == "1") {
+                //获取数据
+                var reportType = reportTypeSelect;
+                var jianzi = $("#jianzi").val();
+                var name = $("#name").val();
+                var sex = $("#sex").val();
+                var birthDate = $("#birthDate").val();
+                var cardNo = $("#cardNo").val();
+                var checkDate = $("#checkDate").val();
+                var checkPlace = $("#checkPlace").val();
+                var bottlea = $("#bottlea").val();
+                var bottleb = $("#bottleb").val();
+                var checkWay = $("#checkWay").val();
+                var checkResult = $("#checkResult").val();
+                var identified = $("#identified").data("id");
+                var cognizant1 = $("#cognizant1").data("id");
+                if (name == "") {
+                    layer.msg("被检查人姓名不能为空！");
+                    return;
+                }
+                if (bottlea == "") {
+                    layer.msg("a瓶编号不能为空！");
+                    return;
+                }
+                if (bottleb == "") {
+                    layer.msg("b瓶编号不能为空！");
+                    return;
+                }
+                //存放数据
+                data.field.isDealed = "N"
+                data.field.isDeleted = "N"
+                data.field.reportType = reportType;
+                data.field.registerId = registerId;
+                data.field.jianzi = jianzi;
+                data.field.name = name;
+                data.field.sex = sex;
+                data.field.birthDate = birthDate;
+                data.field.cardNo = cardNo;
+                data.field.checkDate = checkDate;
+                data.field.checkPlace = checkPlace;
+                data.field.bottlea = bottlea;
+                data.field.bottleb = bottleb;
+                data.field.checkWay = checkWay;
+                data.field.checkResult = checkResult;
+                data.field.identified = identified;
+                data.field.cognizant1 = cognizant1;
+                var res = new PublicAjax('/UrineTestInfo/savePerson.json', data.field);
+                if (res.success) {
+                    layer.msg("保存成功!");
+                    parent.table.loadBody();//调用父窗口刷新整个
+                    $("#back").triggerHandler('click');
+                } else {
+                    layer.msg("数据保存错误!");
+                }
+            } else if (reportTypeSelect == "2") {
+                //获取数据
+                var reportType = reportTypeSelect;
+                var name = $("#name2").val();
+                var sex = $("#sex2").val();
+                var birthDate = $("#birthDate2").val();
+                var cardNo = $("#cardNo2").val();
+                var livingPlace = $("#livingPlace2").val();
+                var workUnit = $("#workUnit2").val();
+                var findOut = $("#findOut2").val();
+                var proof_check = document.getElementsByName('proof');
+                var proof = "";
+                for (var i = 0; i < proof_check.length; i++) {
+                    if (proof_check[i].checked) {
+                        proof += proof_check[i].value + ",";
+                    }
+                }
+                var orgManager = $("#orgManager_part2").data("id");
+                var identified = $("#identified_part2").data("id");
+                var cognizant1 = $("#cognizant1_part2").data("id");
+                var cognizant2 = $("#cognizant2_part2").data("id");
+                if (name == "") {
+                    layer.msg("被检查人姓名不能为空！");
+                    return;
+                }
+                //存放数据
+                data.field.isDealed = "N"
+                data.field.isDeleted = "N"
+                data.field.reportType = reportType;
+                data.field.registerId = registerId;
+                data.field.name = name;
+                data.field.sex = sex;
+                data.field.birthDate = birthDate;
+                data.field.cardNo = cardNo;
+                data.field.livingPlace = livingPlace;
+                data.field.workUnit = workUnit;
+                data.field.findOut = findOut;
+                data.field.proof = proof;
+                data.field.identified = identified;
+                data.field.orgManager = orgManager;
+                data.field.cognizant1 = cognizant1;
+                data.field.cognizant2 = cognizant2;
+                var res = new PublicAjax('/UrineTestInfo/savePerson.json', data.field);
+                if (res.success) {
+                    layer.msg("保存成功!");
+                    parent.table.loadBody();//调用父窗口刷新整个
+                    $("#back").triggerHandler('click');
+                } else {
+                    layer.msg("数据保存错误!");
+                }
+            } else if (reportTypeSelect == "3") {
+                //获取数据
+                var reportType = reportTypeSelect;
+                var name = $("#name3").val();
+                var sex = $("#sex3").val();
+                var birthDate = $("#birthDate3").val();
+                var cardNo = $("#cardNo3").val();
+                var livingPlace = $("#livingPlace3").val();
+                var workUnit = $("#workUnit3").val();
+                var findOut = $("#findOut3").val();
+                var proof_check = document.getElementsByName('proof');
+                var proof = "";
+                for (var i = 0; i < proof_check.length; i++) {
+                    if (proof_check[i].checked) {
+                        proof += proof_check[i].value + ",";
+                    }
+                }
+                var orgManager = $("#orgManager_part3").data("id");
+                var identified = $("#identified_part3").data("id");
+                var cognizant1 = $("#cognizant1_part3").data("id");
+                var cognizant2 = $("#cognizant2_part3").data("id");
+                if (name == "") {
+                    layer.msg("被检查人姓名不能为空！");
+                    return;
+                }
+                //存放数据
+                data.field.isDealed = "N"
+                data.field.isDeleted = "N"
+                data.field.reportType = reportType;
+                data.field.registerId = registerId;
+                data.field.name = name;
+                data.field.sex = sex;
+                data.field.birthDate = birthDate;
+                data.field.cardNo = cardNo;
+                data.field.livingPlace = livingPlace;
+                data.field.workUnit = workUnit;
+                data.field.findOut = findOut;
+                data.field.proof = proof;
+                data.field.identified = identified;
+                data.field.orgManager = orgManager;
+                data.field.cognizant1 = cognizant1;
+                data.field.cognizant2 = cognizant2;
+                var res = new PublicAjax('/UrineTestInfo/savePerson.json', data.field);
+                if (res.success) {
+                    layer.msg("保存成功!");
+                    parent.table.loadBody();//调用父窗口刷新整个
+                    $("#back").triggerHandler('click');
+                } else {
+                    layer.msg("数据保存错误!");
+                }
+            } else {
+                layer.msg("请选择报告书类别!");
+            }
+            //return false;
+        });
+    });
+
+    //生成AB瓶编号
+    function getNum(){
+    	var date=new Date().format("yyyyMMddhhmmss");
+    	$("#bottlea").val("A"+date);
+    	$("#bottleb").val("B"+date);
+    }
+
+</script>
+
+<style type="text/css">
+    .align-center {
+        margin: 0 auto; /* 居中 这个是必须的，，其它的属性非必须 */
+        width: 100%; /* 给个宽度 顶到浏览器的两边就看不出居中效果了 */
+    }
+</style>
+</html>

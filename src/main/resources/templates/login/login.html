@@ -1,165 +1,169 @@
-﻿<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>无标题文档</title>
-    <div th:include="inc/common"></div>
-    <style>
-        * {
-            padding: 0px;
-            margin: 0px;
-            border: none;
-        }
+<!DOCTYPE html>
+<html lang="zh-cn">
 
-        #con {
-            width: 700px;
-            height: 500px;
-            margin: 0 auto;
-            position: absolute;
-            top: 8%;
-            left: 50%;
-            margin-left: -350px;
-        }
-
-        div.logo {
-            margin: 0 auto;
-            width: 100%;
-            height: 200px;
-        }
-
-        div.logo p.l-img {
-            width: 100%;
-            height: 100px;
-            line-height: 100 pxl;
-            text-align: center;
-        }
-
-        div.logo img {
-            width: 100px;
-            height: 100px;
-            text-align: center;
-            display: inline-block;
-            line-height: 100px;
-        }
-
-        div.logo h4 {
-            width: 100%;
-            height: 40px;
-            line-height: 40px;
-            text-align: center;
-            color: #fff;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        div.login {
-            position: absolute;
-            z-index: 99;
-            margin: 0 auto;
-            left: 50%;
-            margin-left: -215px;
-            width: 430px;
-            height: 240px;
-            background: url("../../images/login/kuang.png") no-repeat;
-            background-size: 100% 100%;
-        }
-
-        div.login div.kuang {
-            margin: 0 auto;
-            width: 100%;
-            height: 200px;
-            line-height: 70px;
-            text-align: center;
-            padding-top: 9%;
-
-        }
-
-        div.login div.kuang p {
-            width: 100%;
-            height: 40px;
-            text-align: center;
-            font-size: 20px;
-            line-height: 40px;
-            color: #fff;
-        }
-
-        div.login div.kuang input {
-            display: inline-block;
-            width: 200px;
-            height: 30px;
-            background-color: #f3f3f3;
-            padding: 0px;
-            margin: 0px;
-            margin-left: 1%;
-            line-height: 30px;
-        }
-
-        div.login div.kuang input.btn {
-            width: 80px;
-            height: 38px;
-            line-height: 38px;
-            font-size: 20px;
-            background-color: #0071bc;
-            margin: 0 auto;
-            border: none;
-            padding: 0px;
-            color: #fff;
-            border-radius: 4px;
-        }
-
-        p.copyright {
-            width: 100%;
-            height: 40px;
-            line-height: 40px;
-            text-align: center;
-            overflow: hidden;
-            color: #fff;
-            font-size: 12px;
-        }
-    </style>
+<head><meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<div th:include="inc/common-new"></div>
+	<link rel="stylesheet" type="text/css" th:href="@{../../css/login.css}" />
+	<script th:src="@{../../js/login.js}"></script>
+	<title>login</title>
 </head>
 
+<script>
 
-<body>
-<img th:src="@{../../images/login/bg1.png}" alt=""
-     style="left:0px; right:0px; top:0px; bottom:0px; position:absolute; z-index:-1; width:100%; height:100%;"/>
-<div id="con">
-    <div class="logo">
-        <p class="l-img"><img th:src="@{../../images/login/logo.png}" alt=""/>
-        </p>
-        <h4>公安机关执法办案管控平台</h4>
-    </div>
-    <div class="login">
-        <div class="kuang">
-            <p>用户名：<input type="text" name="username" id="username"
-                          style="text-align: left;" value="admin"/></p>
-            <p>密&nbsp; &nbsp;码：<input type="password"
-                                      name="password" id="password"
-                                      style="text-align: left;" value="1"/>
-            </p>
-            <p>&nbsp;</p>
-            <p>
-                <input type="submit" value="登录" onclick="login()"
-                       style="width:100px; height:38px; font-size:20px; font-weight:bold; border-radius:4px; background-color:#0071bc; border:none; margin:0px; padding:5px; color:#fff;"/>
-            </p>
-        </div>
-        <p class="copyright">copyright©黄石港分局</p>
-    </div>
-</div>
-</body>
-</html>
-<script type="text/javascript">
-    function login() {
-        var userName = $("#username").val();
-        var passWord = $("#password").val();
-        var res = PublicAjax('../loginRpc/login.json',
-                             {'userName': userName, 'passWord': passWord});
-        if (res.success == true) {
-            window.location.href = "../Index/index.html";
-        } else {
-            alert(res.errorMsg);
-            return;
-        }
-    }
+if(navigator.userAgent.toLowerCase().indexOf("chrome") != -1){ 
+   var inputers = document.getElementsByTagName("input"); 
+   for(var i=0;i<inputers.length;i++){ 
+    if((inputers[i].type !== "submit") && (inputers[i].type !== "password")){ 
+     inputers[i].disabled= true; 
+    } 
+   } 
+   setTimeout(function(){ 
+    for(var i=0;i<inputers.length;i++){ 
+     if(inputers[i].type !== "submit"){ 
+      inputers[i].disabled= false; 
+     } 
+    } 
+   },0);
+ }
 </script>
+
+<body onkeydown="keyLogin();">
+	<div id="loginBox">
+		<div class="posRel wh100">
+			<div id="logBox" class="posAbs">
+				<div class="boxCon wh100">
+					<div class="conBox">
+						<div class="posRel wh100">
+							<div class="logoBox posAbs">
+								<img src="../images/login/guohui.png" alt="">
+								<div class="desc">
+									<span class="zhcn">公安机关执法办案管控平台</span>
+								</div>
+							</div>
+							<div class="cirBox posAbs">
+								<div class="posRel wh100">
+									<img src="../images/login/kejixian.png" alt="" class="kejixian posAbs">
+									<div class="circleBox1 posAbs circleBox">
+										<div class="wh100 posRel">
+											<span>人</span>
+											<img src="../images/login/dongxiao_a_01.png" alt="" class="imgS">
+											<img src="../images/login/dongxiao_a_02.png" alt="" class="imgB">
+										</div>
+									</div>
+									<div class="circleBox2 posAbs circleBox">
+										<div class="wh100 posRel">
+											<span>案</span>
+											<img src="../images/login/dongxiao_b_01.png" alt="" class="imgS">
+											<img src="../images/login/dongxiao_b_02.png" alt="" class="imgB">
+										</div>
+									</div>
+									<div class="circleBox3 posAbs circleBox">
+										<div class="wh100 posRel">
+											<span>物</span>
+											<img src="../images/login/dongxiao_b_01.png" alt="" class="imgS">
+											<img src="../images/login/dongxiao_b_02.png" alt="" class="imgB">
+										</div>
+									</div>
+									<div class="circleBox4 posAbs circleBox">
+										<div class="wh100 posRel">
+											<span>场</span>
+											<img src="../images/login/dongxiao_b_01.png" alt="" class="imgS">
+											<img src="../images/login/dongxiao_b_02.png" alt="" class="imgB">
+										</div>
+									</div>
+									<div class="circleBox5 posAbs circleBox">
+										<div class="wh100 posRel">
+											<span>卷</span>
+											<img src="../images/login/dongxiao_b_01.png" alt="" class="imgS">
+											<img src="../images/login/dongxiao_b_02.png" alt="" class="imgB">
+										</div>
+									</div>
+									<div class="circleBox6 posAbs circleBox">
+										<div class="wh100 posRel">
+											<span>行为</span>
+											<img src="../images/login/dongxiao_c_01.png" alt="" class="imgS">
+											<img src="../images/login/dongxiao_c_02.png" alt="" class="imgB">
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<style>
+								input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+								  background-color: transparent;
+								  background-image: none;
+								  color: #333;
+								  -webkit-text-fill-color: #00a6ec;
+								}
+								input:-webkit-autofill:hover {
+								  /* style code */
+								}
+								input:-webkit-autofill:focus {
+								  /* style code */
+								}
+							</style>
+							
+							<div class="logBox posAbs">
+								<div class="posRel wh100">
+									<img src="../images/login/denglukuang.png" alt="" class="bg">
+									<div class="nameBox iptBox posAbs cen">
+										<div class="posRel wh100">
+											<img src="../images/login/zhanghu.png" alt="" class="mid posAbs">
+											<input type="text" class="posAbs" id="username" placeholder='请输入您的账户' autocomplete='off'>
+											<!--<span class="pla posAbs">请输入您的账户</span>-->
+										</div>
+									</div>
+									<div class="PassBox iptBox posAbs cen">
+										<div class="posRel wh100">
+											<img src="../images/login/pas.png" alt="" class="mid posAbs">
+											<input type="password" class="posAbs" id="password" placeholder='请输入您的密码' autocomplete='new-password'>
+											<!--<span class="pla posAbs">请输入您的密码</span>-->
+										</div>
+									</div>
+									<a href="javascript:;" class="loginBtn posAbs cen" onclick="toLogin()">登录</a>
+									<span class="descCon posAbs">copyright @ 黄石市公安局法制支队</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+
+
+
+function toLogin(){
+	var userName = $("#username").val();
+	var passWord = $("#password").val();
+	var res = PublicAjax('../loginRpc/login.json',
+	                     {'userName': userName, 'passWord': passWord});
+	if (res.success == true) {
+	    window.location.href = "../Index/index.html";
+	} else {
+	    layer.msg(res.errorMsg);
+	    return;
+	}
+}
+
+//键盘点击监控
+function keyLogin(e){
+	//兼容ie，谷歌，火狐
+	var theEvent = window.event || arguments.callee.caller.arguments[0];
+	var code = theEvent.keyCode;
+	//如果是点击回车键
+	if(code==13){
+		toLogin();
+	}
+}
+</script>
+</html>

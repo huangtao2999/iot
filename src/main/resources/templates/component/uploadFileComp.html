@@ -1,33 +1,49 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
-<button th:fragment="uploadImgComp(id,name,fileType)" type="button" class="layui-btn layui-btn-normal" th:id="${id}"
+<!--文件上传插件：
+<div th:include="component/uploadFileComp(id='表单元素ID',name='表单元素名称',
+	taskId='所属业务id',taskBelong ='所属业务类型',isView = '1-是查看页面(不显示按钮)')"></div>
+-->
+<button th:fragment="uploadFileComp(id,name,taskId,taskBelong,isView)" type="button" class="layui-btn layui-btn-normal" th:id="${id}+1"
         th:name="${name}">
     <i class="layui-icon">&#xe67c;</i>上传文件
 </button>
+<input th:id="${id}" th:name="${name}" type="hidden"/>
 <script th:inline="javascript">
-    /*<![CDATA[*/
-    $(function () {
-
-    });
-    /*]]>*/
-    var elemId = '#' + [[${id}]];
-    var uploadFileType=[[${uploadNum}]];//文件上传类型 例如 'jpg|png|gif|bmp|jpeg'
+	var elemId = '#' + [[${id}]];	//表单元素id
+	var elemName = [[${name}]];	//表单元素名
+	var fileName = elemName + "file";//文件的公用名称
+    var taskId = [[${taskId}]];	//业务id
+    var taskBelong = [[${taskBelong}]];	//业务所属类型
+    var isView = [[${isView}]];	//是否查看页面调用
+	if(isView == "1" || isView == 1){
+		$(elemId + 1).hide();	//查看页面隐藏上传按钮
+	}
     layui.use(['upload', 'layer'], function () {
         var upload = layui.upload;
-        var layer = layui.layer;//文件上传 类型控制处
+        var layer = layui.layer;
         var uploadInst = upload.render({
-            elem: elemId,//绑定元素
-            exts:uploadFileType,
+            elem: elemId + 1,//绑定元素
+            accept: 'file',	//接收所有文件
+            method: 'POST',
             url: '/FileUpload/upload.json', //上传接口
             multiple: true,
+            auto: true,
             done: function (res) {
                 //上传完毕回调
                 if (res.success) {
-                    var path = res.content.path;
-                    var file = '<a style="color:blue;" href="/FileUpload/showImg.json?path='+res.content.path+'" download="'+res.content.fileName+'">'+res.content.fileName+'</a>'
+                    var id = res.content.id;
+                    var fileName = res.content.fileName;
+                    var file = '<p><a style="color:blue;" href="/FileUpload/getAttach.json?id='+id+'" download="'+fileName+'">'+fileName+'</a>&nbsp;<i id="deleteIcon" class="layui-icon" style="display:inline;font-size: 20px; color: red;">&#x1006;</i></p>'
                     $(elemId).after(file);
-                    //input hidden name =useIcon;
-                    //input hidden name =useIcon;
+        			//赋值隐藏input
+        			$(elemId).val(getFileIds());
+        			//绑定事件
+                    $("#deleteIcon").click(function(){
+                   		$(this).parent().remove();
+            			//赋值隐藏input
+            			$(elemId).val(getFileIds());
+                    })
                 } else {
                     layer.msg(res.content);
                 }
@@ -36,6 +52,53 @@
             }
         });
     });
+    //如果是编辑页面，列表出已上传的内容
+    if(taskId != null && taskBelong != null){
+    	//查找所有该业务上传的附件
+    	var res = new PublicAjax('/FileUpload/listAttach.json', {'taskId': taskId, 'taskBelong':taskBelong});
+    	if(res.success){
+    		var resList = res.content;
+    		if(resList.length > 0){
+    			var ids = "";
+    			//有记录就循环展示
+				for(var i = 0; i < resList.length; i++){
+                    var id = resList[i].id;
+                    var fileName = resList[i].fileName;
+                    //查看页面不显示小红叉
+                	if(isView == "1" || isView == 1){
+	                    var file = '<p><a style="color:blue;" href="/FileUpload/getAttach.json?id='+id+'" download="'+fileName+'">'+fileName+'</a></p>'
+                	}else{
+	                    var file = '<p><a style="color:blue;" href="/FileUpload/getAttach.json?id='+id+'" download="'+fileName+'">'+fileName+'</a>&nbsp;<i id="deleteIcon" class="layui-icon" style="display:inline;font-size: 20px; color: red;">&#x1006;</i></p>'
+                	}
+            		$(elemId).after(file);
+				}
+    			//赋值隐藏input
+    			$(elemId).val(getFileIds());
+    			//绑定事件
+                $("#deleteIcon").click(function(){
+               		$(this).parent().remove();
+	    			//赋值隐藏input
+	    			$(elemId).val(getFileIds());
+                })
+    		}
+    	} else {
+            layer.msg(res.content);
+        }
+    }
+
+    //获得文件的id列表
+    function getFileIds(){
+    	var ids = "";
+    	var eles = document.getElementsByName(fileName);
+    	for(var i = 0; i < eles.length; i ++){
+    		if(ids == ""){
+        		ids = eles[i].id;
+    		}else {
+    			ids += "," + eles[i].id;
+    		}
+    	}
+    	return ids;
+    }
 </script>
 <script>
 </script>

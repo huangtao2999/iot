@@ -12,16 +12,27 @@ import com.dsw.iot.vo.MenuTreeVo;
  */
 public interface MenuSerivce {
 	/**
-	 * 通过用户id，查出所有的菜单
+	 * 通过用户id，查出所有的菜单,查找当前用户的菜单，平级返回，没有树形结构
+	 *
 	 * @param userId
 	 * @return
 	 */
     public List<MenuDo> findMenuByUserId(Long userId);
-    /**
-     * 查找所有的菜单
-     * @param userId
-     * @return
-     */
+
+	/**
+	 * 通过用户id，查出菜单树返回
+	 *
+	 * @param userId
+	 * @return
+	 */
+	public List<MenuTreeVo> findMenuTreeByUserId();
+
+	/**
+	 * 查找所有的菜单
+	 *
+	 * @param userId
+	 * @return
+	 */
     public List<MenuDo> findAllMenu();
     /**
      * 通过角色查找菜单
@@ -49,7 +60,7 @@ public interface MenuSerivce {
      * @param loginUserDo
      * @return
      */
-	public int saveMenu(MenuDo menuDo);
+	public void saveMenu(MenuDo menuDo);
 
 	/**
 	 * 级联删除菜单

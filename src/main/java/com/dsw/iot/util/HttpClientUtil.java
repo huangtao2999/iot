@@ -1,15 +1,7 @@
 package com.dsw.iot.util;
 
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Map.Entry;
-
+import com.alibaba.fastjson.JSON;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -26,13 +18,19 @@ import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.apache.log4j.Logger;
 
-import com.alibaba.fastjson.JSON;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.*;
+import java.util.Map.Entry;
 
 /* 
  * 利用HttpClient进行post请求的工具类 
  */
 public class HttpClientUtil {
+    protected static final Logger logger = Logger.getLogger(HttpClientUtil.class);
 
     private static final String APPLICATION_JSON = "application/json";
     private static final String CONTENT_TYPE_TEXT_JSON = "text/json";
@@ -203,4 +201,51 @@ public class HttpClientUtil {
             throw e;
         }
     }
+
+    /**
+     * 发送body报文
+     *
+     * @param urlPath
+     * @param json
+     * @return
+     * @throws Exception
+     */
+    public static String postBody(String urlPath, String json) {
+        String response = null;
+        try {
+            // Configure and open a connection to the site you will send the request
+            URL url = new URL(urlPath);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            // 设置doOutput属性为true表示将使用此urlConnection写入数据
+            urlConnection.setDoOutput(true);
+            // 定义待写入数据的内容类型，我们设置为application/x-www-form-urlencoded类型
+            urlConnection.setRequestProperty("content-type", "application/json;charset=UTF-8");
+            urlConnection.setRequestProperty("Accept-Charset", "UTF-8");
+            urlConnection.setRequestProperty("contentType", "UTF-8");
+            // 得到请求的输出流对象
+            OutputStreamWriter out = new OutputStreamWriter(urlConnection.getOutputStream(), "UTF-8");
+            // 把数据写入请求的Body
+            out.write(json);
+            out.flush();
+            out.close();
+
+            // 从服务器读取响应
+            InputStream inputStream = urlConnection.getInputStream();
+            String encoding = urlConnection.getContentEncoding();
+            String body = IOUtils.toString(inputStream, "UTF-8");
+            if (urlConnection.getResponseCode() == 200) {
+                response = body;
+            }
+        } catch (IOException e) {
+            logger.error("发送报文失败！", e);
+        }
+        return response;
+    }
+
+//    public static void main(String[] args) {
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.put("userId", "c11aa5249fb64ba5bfc10f93e123320a");
+//        String res = postBody("http://192.168.0.188:8280/cw-afaps/extService/warningRecord/select", jsonObject.toJSONString());
+//        System.out.println(res);
+//    }
 }  

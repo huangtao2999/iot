@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html>
+<head><meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+    <meta charset="UTF-8">
+    <div th:include="inc/common"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{../css/index-common.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/dialog/tableBoxCss-new.css}" />
+    <script th:src="@{../js/tableBoxJs.js}"></script>
+    <script th:src="@{../js/phone/qnviccub.js}"></script>
+    <script th:src="@{../js/phone/qnvfunc.js}"></script>
+    <script>
+	function AppendStatus(szStatus)
+	{
+		qnviccub.QNV_Tool(QNV_TOOL_WRITELOG,0,szStatus,NULL,NULL,0);//写本地日志到控件注册目录的userlog目录下
+	}
+	function AppendStatusEx(uID,szStatus)
+	{
+		uID=uID+1;
+		AppendStatus("通道"+uID+":"+szStatus);
+	}
+	
+	function  T_GetEvent(uID,uEventType,uHandle,uResult,szdata)
+	{
+		var vValue=" type="+uEventType+" Handle="+uHandle+" Result="+uResult+" szdata="+szdata;
+		switch(uEventType)
+		{
+		case BriEvent_PhoneHook:// 本地电话机摘机事件
+			AppendStatusEx(uID,"本地电话机摘机"+vValue);
+		break;	
+		case BriEvent_PhoneDial:// 只有在本地话机摘机，没有调用软摘机时，检测到DTMF拨号
+			AppendStatusEx(uID,"本地话机拨号"+vValue);
+		break;	
+		case BriEvent_PhoneHang:// 本地电话机挂机事件
+			AppendStatusEx(uID,"本地电话机挂机"+vValue);
+			//layer.msg('本地挂机，停止录音');
+			dsw_qnviccub_hangup('本地挂机，停止录音',false);
+		break;
+		case BriEvent_CallIn:// 外线通道来电响铃事件
+			AppendStatusEx(uID,"外线通道来电响铃事件"+vValue);
+		break;
+		case BriEvent_GetCallID://得到来电号码
+			AppendStatusEx(uID,"得到来电号码"+vValue);
+		break;
+		case BriEvent_StopCallIn:// 对方停止呼叫(产生一个未接电话)
+			AppendStatusEx(uID,"对方停止呼叫(产生一个未接电话)"+vValue);
+		break;
+		case BriEvent_DialEnd:// 调用开始拨号后，全部号码拨号结束
+			AppendStatusEx(uID,"调用开始拨号后，全部号码拨号结束"+vValue);
+		break;
+		case BriEvent_PlayFileEnd:// 播放文件结束事件
+			AppendStatusEx(uID,"播放文件结束事件"+vValue);
+		break;
+		case BriEvent_PlayMultiFileEnd:// 多文件连播结束事件
+			AppendStatusEx(uID,"多文件连播结束事件"+vValue);
+		break;
+		case BriEvent_PlayStringEnd://播放字符结束
+			AppendStatusEx(uID,"播放字符结束"+vValue);
+		break
+		case BriEvent_RepeatPlayFile:// 播放文件结束准备重复播放
+			AppendStatusEx(uID,"播放文件结束准备重复播放"+vValue);
+		break;
+		case BriEvent_SendCallIDEnd:// 给本地设备发送震铃信号时发送号码结束
+			AppendStatusEx(uID,"给本地设备发送震铃信号时发送号码结束"+vValue);
+		break;
+		case BriEvent_RingTimeOut://给本地设备发送震铃信号时超时
+			AppendStatusEx(uID,"给本地设备发送震铃信号时超时"+vValue);
+		break;	
+		case BriEvent_Ringing://正在内线震铃
+			AppendStatusEx(uID,"正在内线震铃"+vValue);
+		break;
+		case BriEvent_Silence:// 通话时检测到一定时间的静音.默认为5秒
+			AppendStatusEx(uID,"通话时检测到一定时间的静音"+vValue);
+		break;
+		case BriEvent_GetDTMFChar:// 线路接通时收到DTMF码事件
+			AppendStatusEx(uID,"线路接通时收到DTMF码事件"+vValue);
+		break;
+		case BriEvent_RemoteHook:// 拨号后,被叫方摘机事件
+			AppendStatusEx(uID,"拨号后,被叫方摘机事件"+vValue);
+			dsw_qnviccub_anwser('对方已接听，现在开始录音');
+		break;
+		case BriEvent_RemoteHang://对方挂机事件
+			AppendStatusEx(uID,"对方挂机事件"+vValue);
+			//qnviccub.QNV_RecordFile(uID,QNV_RECORD_FILE_STOPALL,0,0,NULL);
+			//T_WriteCallLog(uID);	
+			var vd=new Date();
+			vbusytime=vd.getFullYear() + "/"+(vd.getMonth()+1)+"/"+vd.getDate()+" " +vd.getHours()+":"+vd.getMinutes()		+":"+vd.getSeconds();
+			//layer.msg('对方挂机，停止录音');
+			dsw_qnviccub_hangup('对方挂机，停止录音',true);
+		break;
+		case BriEvent_Busy:// 检测到忙音事件,表示PSTN线路已经被断开
+			AppendStatusEx(uID,"检测到忙音事件,表示PSTN线路已经被断开"+vValue);
+			//qnviccub.QNV_RecordFile(uID,QNV_RECORD_FILE_STOPALL,0,0,NULL);
+			//T_WriteCallLog(uID);	
+			var vd=new Date();
+			vbusytime=vd.getFullYear() + "/"+(vd.getMonth()+1)+"/"+vd.getDate()+" " +vd.getHours()+":"+vd.getMinutes()+":"+vd.getSeconds();
+		break;
+		case BriEvent_PSTNFree:
+				//AppendStatusEx(uID,"线路空闲");
+				AppendStatusEx(uID,"线路空闲");
+				qnviccub.QNV_RecordFile(uID,QNV_RECORD_FILE_STOPALL,0,0,NULL);
+				//T_WriteCallLog(uID);		
+				break;
+		case BriEvent_DialTone:// 本地摘机后检测到拨号音
+			AppendStatusEx(uID,"本地摘机后检测到拨号音"+vValue);
+		break;
+		case BriEvent_RingBack:// 电话机拨号结束呼出事件。
+			AppendStatusEx(uID,"电话机拨号结束呼出事件"+vValue);
+		break;
+		case BriEvent_MicIn:// MIC插入状态
+			AppendStatusEx(uID,"MIC插入状态"+vValue);
+		break;
+		case BriEvent_MicOut:// MIC拔出状态
+			AppendStatusEx(uID,"MIC拔出状态"+vValue);
+		break;
+		case BriEvent_FlashEnd:// 拍插簧(Flash)完成事件，拍插簧完成后可以检测拨号音后进行二次拨号
+			AppendStatusEx(uID,"拍插簧(Flash)完成事件，拍插簧完成后可以检测拨号音后进行二次拨号"+vValue);
+		break;
+		case BriEvent_RefuseEnd:// 拒接完成
+			AppendStatusEx(uID,"拒接完成"+vValue);
+		break;
+		case BriEvent_SpeechResult:// 语音识别完成 
+			AppendStatusEx(uID,"语音识别完成"+vValue);
+		break;
+		case BriEvent_FaxRecvFinished:// 接收传真完成
+			AppendStatusEx(uID,"接收传真完成"+vValue);
+		break;
+		case BriEvent_FaxRecvFailed:// 接收传真失败
+			AppendStatusEx(uID,"接收传真失败"+vValue);
+		break;
+		case BriEvent_FaxSendFinished:// 发送传真完成
+			AppendStatusEx(uID,"发送传真完成"+vValue);
+		break;
+		case BriEvent_FaxSendFailed:// 发送传真失败
+			AppendStatusEx(uID,"发送传真失败"+vValue);
+		break;
+		case BriEvent_OpenSoundFailed:// 启动声卡失败
+			AppendStatusEx(uID,"启动声卡失败"+vValue);
+		break;
+		case BriEvent_UploadSuccess://远程上传成功
+			AppendStatusEx(uID,"远程上传成功"+vValue);
+		break;
+		case BriEvent_UploadFailed://远程上传失败
+			AppendStatusEx(uID,"远程上传失败"+vValue);
+		break;
+		case BriEvent_EnableHook:// 应用层调用软摘机/软挂机成功事件
+			AppendStatusEx(uID,"应用层调用软摘机/软挂机成功事件"+vValue);
+		break;
+		case BriEvent_EnablePlay:// 喇叭被打开或者/关闭
+			AppendStatusEx(uID,"喇叭被打开或者/关闭"+vValue);
+		break;
+		case BriEvent_EnableMic:// MIC被打开或者关闭
+			AppendStatusEx(uID,"MIC被打开或者关闭"+vValue);
+		break;
+		case BriEvent_EnableSpk:// 耳机被打开或者关闭
+			AppendStatusEx(uID,"耳机被打开或者关闭"+vValue);
+		break;
+		case BriEvent_EnableRing:// 电话机跟电话线(PSTN)断开/接通
+			AppendStatusEx(uID,"电话机跟电话线(PSTN)断开/接通"+vValue);
+		break;
+		case BriEvent_DoRecSource:// 修改录音源
+			AppendStatusEx(uID,"修改录音源"+vValue);
+		break;
+		case BriEvent_DoStartDial:// 开始软件拨号
+			AppendStatusEx(uID,"开始软件拨号"+vValue);
+		break;
+		case BriEvent_RecvedFSK:// 接收到FSK信号，包括通话中FSK/来电号码的FSK
+			AppendStatusEx(uID,"接收到FSK信号，包括通话中FSK/来电号码的FSK"+vValue);
+		break;
+		case BriEvent_DevErr://设备错误
+			AppendStatusEx(uID,"设备错误"+vValue);
+		break;
+		default:
+			if(uEventType < BriEvent_EndID)
+				AppendStatusEx(uID,"忽略其它事件发生:ID=" + uEventType+ vValue);	
+		break;
+		}
+		
+	}
+	function  T_WriteCallLog(uID)
+	{
+		var lBeginTime=qnviccub.QNV_CallLog(uID,QNV_CALLLOG_BEGINTIME,0,0);
+		var lEndTime=qnviccub.QNV_CallLog(uID,QNV_CALLLOG_ENDTIME,0,0);
+		if(lEndTime - lBeginTime <= 2)//时间少于N秒，丢弃
+		{
+			AppendStatusEx(uID,"时间太短,丢弃录音"+'bt='+lBeginTime+' et='+lEndTime);
+			return;
+		}else
+		{
+			var lSerial=qnviccub.QNV_DevInfo(uID,QNV_DEVINFO_GETSERIAL);
+			var lRingBackTime=qnviccub.QNV_CallLog(uID,QNV_CALLLOG_RINGBACKTIME,0,0);
+			var lConnectedTime=qnviccub.QNV_CallLog(uID,QNV_CALLLOG_CONNECTEDTIME,0,0);
+			var lCallType=qnviccub.QNV_CallLog(uID,QNV_CALLLOG_CALLTYPE,0,0);
+			var lCallResult=qnviccub.QNV_CallLog(uID,QNV_CALLLOG_CALLRESULT,0,0);
+			var vcallid=qnviccub.QNV_CallLog(uID,QNV_CALLLOG_CALLID,0,0);
+			var vfilepath=qnviccub.QNV_CallLog(uID,QNV_CALLLOG_CALLRECFILE,0,0);	//如果没有启动录音，录音文件路径就为空
+			AppendStatusEx(uID,'来电记录:'+vcallid);
+			var vd=new Date();
+			var vsubpath='subpath='+'remoterec/'+vd.getFullYear()+(vd.getMonth()+1)+'/'+vd.getDate();
+			var vlog=vsubpath;
+			vlog+='&uubegintime='+lBeginTime+'&uuendtime='+lEndTime+'&busytime='+vbusytime;
+			vlog+='&uucalltype='+lCallType+'&uucallresult='+lCallResult+'&uudevserial='+lSerial+'&uucallid='+vcallid+'&vfilepath='+encodeURI(vfilepath);
+			//vlog+='&uuaccount='+encodeURI(fnLoadValue('uuname'));
+			//vlog+='&jsessionid='+fnGetCookie();
+			//var url='http://'+geturlip(location.href)+':'+geturlport(location.href)+'/fileupload/upload.htm?'+vlog;
+			//服务器接收到数据后返回Result:1	
+			var url='http://127.0.0.1/fileupload/upload.htm?'+vlog;	
+			//alert(url);	
+			var vret=qnviccub.QNV_Remote(QNV_REMOTE_UPLOAD_START,OPTYPE_REMOVE|OPTYPE_SAVE,url,vfilepath,0,0);
+			qnviccub.QNV_CallLog(uID,QNV_CALLLOG_RESET,0,0);
+			
+			//if(vret <= 0) 	AppendStatusEx(uID,"上传录音失败...");		
+			//else AppendStatusEx(uID,"开始上传录音");		
+		}
+	}  
+  </script>
+
+<SCRIPT LANGUAGE="JavaScript" FOR="qnviccub" EVENT="OnQnvEvent(chID,type,handle,result,param,szdata,szdataex)">
+	T_GetEvent(chID,type,handle,result,szdata)
+</SCRIPT>
+<style>
+	.callPhone{
+	    background: #393D49;
+	    padding: 64px 0;
+	    text-align: center;
+	}
+	.callPhone h3{
+		color:#FFF !important;
+	}
+	.callPhone #hangUpBtn{
+		margin:20px auto 10px;
+		width:60px;
+		height:32px;
+		line-height:32px;
+		background-color:red;
+		color:#144068;
+		cursor:pointer;
+	}
+	.callPhone #hangUpBtn label,
+	.callPhone #hangUpBtn object{
+		width:118% !important;
+	}
+</style>
+</head>
+
+<body class="custom" onUnload="TV_Disable()">
+
+<div class="container-fluid you-bg" >
+    <object style="display:none;" classid="clsid:F44CFA19-6B43-45EE-90A3-29AA08000510" id="qnviccub" data="DATA:application/x-oleobject;BASE64,GfpM9ENr7kWQoymqCAAFEAADAAD7FAAADhEAAA==
+" width="33" height="33" ></object >
+    <div class="btn-toolbar" >
+        <table class="youAdd" style="width:100%;" >
+            <tr >
+                <td colspan="6" class="THtitle">电话使用</td >
+            </tr >
+            <tr>
+                <td class="TDleft"><label>证件类别：</label></td>
+               	<td><span th:include="component/selectCombo(id='cardType',name='cardType',dictType='PER_CARD_TYPE',defaultValue=${personRegisterDo.cardType},verify='',disabled='1')"/></td>
+                <td class="TDleft">证件号码：</td>
+				<td th:text='${personRegisterDo.cardNo}'></td>
+            </tr>
+            <tr>
+           		<input type="hidden" id="RegisterId" th:value="${personRegisterDo.id}"/>
+                <td class="TDleft">姓名：</td>
+                <td th:text='${personRegisterDo.name}'></td>
+                <td class="TDleft">性别：</td>
+                <td><span th:include="component/selectCombo(id='sex',name='sex',dictType='SEX',defaultValue=${personRegisterDo.sex},verify='',disabled='1')"/></td>
+            </tr>
+        </table >
+        <br />
+        <div id="leftBox">
+            <div id="personRegis-table" th:include="inc/dialog-table-dataField"></div>
+        </div>
+    </div >
+</div >
+</body>
+<script th:inline="javascript">
+    var dsw_timestamp='demo';
+    $( function () {
+        var table = new iotTable({
+            // dataUrl : 'http://192.168.0.201:8090/OutConfirm/queryPage.json?callback=?&limit=5&page=1',
+            dataUrl : '/RelatedPhoneConfirm/queryPage.json',
+            dataType:'json',
+            renderTo : '#personRegis-table',
+            queryParams:{
+            	registerId:$("#RegisterId").val()
+            },
+            heads : [{
+                text : '联系人',
+                width : 20,
+                name : 'callName'
+                //dicCode : ''需要数据字典转换的，这里填数据字典的code
+                //dateFormat : 'yyyy-MM-dd'需要进行时间类型转换的，这里填时间的format
+            },{
+                text : '手机号码',
+                width : 20,
+                name : 'tel'
+            },{
+                text : '主办民警',
+                width : 20,
+                name : 'policeName'
+            },{
+            	text:'操作',
+            	width:30,
+            	name:'recordId',
+            	renderHtml:function(val){
+            		if(val){
+            			return "已拨打";
+            		}else{
+            			return '<a href="javascript:void(0);" class="btn btn-success" lay-event="拨打" onclick="callPhone(this)">拨打</a>';
+            		}
+            	}
+            }]
+        });
+        table.init();
+    } );
+
+    var taskId = 0 ;//拨号
+    function callPhone(me){
+        taskId = $(me).parents(".body-data-list").data("id");
+        if(!!taskId){
+            //继电器打开失败
+            var res=new PublicAjax('/RelayRpc/open.json', {"type": "phone"});
+            if(!res.success){
+                layer.msg(res.content);
+            }
+        }
+        var res= new PublicAjax('/RelatedPhoneConfirm/getRelatedPhoneConfirm.json', {"id": taskId});
+    	if(res.success){
+    		var tel=res.content.tel
+    		if(null!=tel&&tel!=""){
+    			TV_Disable();//关闭设备
+    			TV_Initialize();//打开设备
+    			TV_OpenDoPlay(0);//打开喇叭
+    			TV_EnableMic(0,true);//打开麦克风
+    			TV_StartDial(0,tel);//拨打电话
+
+                var date=(new Date());
+                dsw_timestamp=String(date.getFullYear())+(date.getMonth()+1)+date.getDate()+date.getHours()+date.getMinutes()+date.getSeconds();
+    			
+				layer.open({
+				        type: 1,
+				        title: false, //不显示标题栏
+				        closeBtn: false,
+				        area: '300px;',
+				        shade: 0.5,
+				        id: 'LAY_layuipro', //设定一个id，防止重复弹出
+				        btnAlign: 'c',
+				        moveType: 1, //拖拽模式，0或者1
+				        content: '<div class="callPhone"><h3>拨打中...</h3><br><br><div id="hangUpBtn">挂断</div></div>',
+				        
+				});
+					
+    		}else{
+    			layer.msg("电话号码为空！");
+    		}
+    	}else{
+    		layer.msg("拨打失败！")
+    	}
+    }
+    
+	$("body").on('click','#hangUpBtn',function(e){ //挂断点击事件
+		layer.closeAll();
+		TV_StopRecordFile(0);//停止录音
+		TV_HangUpCtrl(0);//挂断
+	});
+	
+	function dsw_qnviccub_hangup(msg,isStop){
+		layer.closeAll();
+		layer.msg(msg);
+		
+		if(isStop===true){
+			TV_StopRecordFile(0);//停止录音
+			TV_HangUpCtrl(0);//挂断
+		}
+		
+		var res = qnviccub.QNV_Remote(QNV_REMOTE_UPLOAD_START,OPTYPE_REMOVE|OPTYPE_SAVE,'http://192.168.100.2:8090/FileUpload/uploadAudio.json?taskId='+taskId,'C:/recordFilePath/'+dsw_timestamp+'.wav',0,0);
+//		TV_Disable();//关闭设备
+
+        //继电器关闭
+        new PublicAjax('/RelayRpc/close.json', {"type": "phone"});
+        window.location.reload();
+    }
+	
+	function dsw_qnviccub_anwser(msg){
+		layer.msg(msg);
+    	TV_StartRecordFile(0,0);//开始录音
+	}
+
+
+</script >
+

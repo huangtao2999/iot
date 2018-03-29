@@ -157,7 +157,7 @@ public class DictionaryServiceImpl implements DictionaryService {
 			List<DictionaryDo> dictionaryDos = TreeUtil.getListByRootId(list, dictionaryRequest.getId());
 			for (int m = 0; m < dictionaryDos.size(); m++) {
 				DictionaryDo dictionaryDo = dictionaryDos.get(m);
-				int i = dictionaryDoMapperExt.deleteByPrimaryKey(dictionaryDo.getId());
+				int i = dictionaryDoMapperExt.deleteByPrimaryKey(dictionaryDo);
 				if (i == 0) {
 					throw new BizException("删除失败");
 				}
@@ -290,6 +290,20 @@ public class DictionaryServiceImpl implements DictionaryService {
 			actionResult.setContent("编码可用");
 		}
 		return actionResult;
+	}
+
+	/**
+	 * 通过pid查询下级节点，带判断是否为文件夹
+	 */
+	@Override
+	public List<DictionaryTreeVo> selectDictionaryByPidIsParent(Long pid) {
+		// 定义树集合
+		List<DictionaryTreeVo> dictionaryTreeVos = new ArrayList<>();
+		if (null != pid) {
+			// 获得返回数据（只有一层）
+			dictionaryTreeVos = dictionaryDoMapperExt.selectByPidWithIsParent(pid);
+		}
+		return dictionaryTreeVos;
 	}
 
 	// /**

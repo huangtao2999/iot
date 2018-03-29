@@ -1,76 +1,154 @@
-<extend name="Public/base" />
-
-
-
-<block name="main">
-  <!--主体开始-->
-  <div class="content">
-        <ul class="breadcrumb">
-            <li class="active">系统消息</li>
-        </ul>
-
-        <div class="container-fluid">
-<div class="block-tab">
-<table class="table-mins">
-  <tr>
-    <th width="10"></th>
-    <th>标题</th>
-    <th width="150">发布时间</th>
-  </tr>
-   <foreach name="list" item="vo" >
-  <tr>
-    <td>{$nowpage*$pagesize+$key+1}</td>
-    <td class="alink"><a href="javascript:doAudit('__APP__/{$vo.url}','{$vo.id}')">{$vo.title}</a></td>
-    <td>{$vo.add_date}</td>
-  </tr>
-  </foreach>
-</table>
-</div>
-<div class="block-foot">
-    <div class="pagination">
-      <!--   <a href="#">首页</a>
-        <a href="#">上一页</a>
-        <a href="#">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">下一页</a>
-        <a href="#">末页</a> -->
-        {$page}
-    </div>
-</div>
-
-                    
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html>
+<head><meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+    <meta charset="UTF-8">
+    <title>代办任务</title>
+	<div th:include="inc/common-new"></div>
+	<div th:include="inc/common-table"></div>
+</head>
+<body>
+	<input id="roleIds"  type="hidden"  th:value="${roleIds}"/>
+    <div id="leftBox" style="width:100%;height:100%">
+        <div class="posRel wh100">
+            <div class="searchBox posAbs cen">
+                <div class="posRel wh100">
+                    <div class="editBox posAbs">
+                        <ul class="wh100">
+                            <li>
+                                <div class="posRel wh100" id="editBtn">
+                                    <img src="../images/perRegis/renyuandengji_bg1.png" alt="" class="bg posAbs wh100">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_bianji.png" alt="" class="typeImg posAbs mid">
+                                    <span class="posAbs mid">查看详情</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+ <!--                     通用高级查询html -->
+					<div th:include="inc/table-query"></div>
+                </div>
+            </div>
+<!--        table公用数据html -->
+			<div id="personRegis-table" th:include="inc/table-dataField"></div>
+            <img src="../images/perRegis/renyuandengji_biankaungzuo.jpg" alt="" class="bgImg posAbs wh100">
         </div>
     </div>
- 
-</div>  
+</body>
+<script type="text/javascript">
+	var roleIds = $("#roleIds").val(); //角色ids
+	//alert(roleIds);
+    var table = new iotTable({
+        dataUrl : '/Remind/queryPage.json?roleIds='+roleIds,
+        renderTo : '#personRegis-table',
+        select : false,
+        heads : [{
+            text : '标题',
+            width : 15,
+            name : 'title'
+        },{
+            text : '内容',
+            width : 15,
+            name : 'content'
+        },{
+            text : '处理人机构',
+            width : 15,
+            name : 'org'
+        },{
+            text : '创建人',
+            width : 15,
+            name : 'createUser'
+        },{
+            text : '创建时间',
+            width : 15,
+            name : 'createTime',
+            dateFormat : 'yyyy-MM-dd hh:mm:ss'
+        },{
+            text : '处理',
+            width : 10,
+            name : 'taskBelong',
+            html : '<a href="#" class="btn btnLB btn-success" onclick="toCheck(this)" lay-event="点击审批" style="color:#f5a302;">点击审批</a>'
+        }],
+        queryFields : [{
+            text : '姓名',
+            name : 'createUser',
+        } ,{
+            text : '标题',
+            name : 'title'
+        },{
+            text : '时间',
+            name : 'createStartTime',
+            type : 'date'
+        },{
+            text : '至',
+            name : 'createEndTime',
+            type : 'date'
+        }]
+    });
+    table.init();
+    layui.use(['layer'], function () {
+        var layer = layui.layer;
+        //查看详情
+        $("#editBtn").click(function () {
+        	var dataArr=$(".table-body").find(".active");
+        	if(dataArr.length==1){
+        		var id=dataArr[0].getAttribute("data-id");
+                layer.open({
+                    type: 2,
+                    title: false,
+                    maxmin: false,
+                    area: ['600px', '400px'],
+                    content: "/RemindHtml/detail.html?id="+id
+                });
+        	}else if(dataArr.length<=0){
+        		layer.msg("请先选择数据");
+        	}else{
+        		layer.msg("只能编辑一条数据");
+        	}
 
-</block>
+        });
+    });
 
+    //点击审批
+    function toCheck(me){
+    	var taskId = "";
+    	var taskBelong = "";
+    	var path = "";
+    	var id = $(me).parents(".body-data-list").data("id");
+    	var res = new PublicAjax('/Remind/getRemind.json', {'id': id});
 
-<block name="script">
+        if (res.success) {
+            var data = res.content;
+            if(!data){
+            	return;
+            }
+            taskId = data.taskId;
+            taskBelong = data.taskBelong;
+            path = data.path;
+        }
 
-  <script type="text/javascript">
-    
-    function doAudit(url,remind_id){
-       //iframe层
-          layer.open({
-                  type: 2,
-                  // title: 'layer mobile页',
-                  shadeClose: true,
-                  // shade: 0.8,
-                  area: ['1000px', '700px'],
-                  content: url+"&remind="+remind_id, //iframe的url
-                   cancel: function(index, layero){ 
-                       layer.close(index);
-                       location.reload();
-                       // document.getElementById('form1').submit();
-                       return false; 
-                    }   
-                }); 
+    	var areaValue;
+    	var contentValue;
+    	if(taskBelong == '1'){//人员出所审核
+    		areaValue = ['80%', '100%'];
+    	}else if(taskBelong == '2'){//延期置留审核
+    		areaValue= ['80%', '90%'];
+    	}
+    	if(path){
+	    	contentValue = path + "?id=" + taskId;
+    	}else{
+    		layer.msg("该记录跳转路径不全，无法打开链接");
+    		return false;
+    	}
+    	  layer.open({
+              type: 2,
+              title:false,
+              area: areaValue,
+              content: contentValue
+          });
     }
-
-  </script>
-
-</block>
+</script>
+</html>

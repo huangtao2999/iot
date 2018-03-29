@@ -4,11 +4,15 @@
 <div th:include="component/selectComp(id='表单元素ID',name='表单元素名称',
 	dictType='字典类型',defaultValue='默认值',verify ='是否必填字段',disabled='为1时不可编辑，其他的可以编辑')"></div>
 -->
-<head>
+<head><meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
     <meta charset="utf-8"/>
 </head>
-<span th:fragment="selectCombo(id,name,dictType,defaultValue,verify,disabled)">
-            <select th:id="${id}" th:name="${name}" lay-verify="" lay-search>
+<span style="width:100%;height:100%;" th:fragment="selectCombo(id,name,dictType,defaultValue,verify,disabled)">
+            <select STYLE="display: block" th:id="${id}" th:name="${name}" lay-verify="" lay-search lay-ignore>
                 <option value="">请选择</option>
             </select>
 </span>
@@ -27,12 +31,15 @@
         var res = new PublicAjax('/Dictionary/queryComboList.json', {'code': dictType});
         if (res.success) {
             var data = res.content;
+            if(!data){
+            	return;
+            }
             if (data.length > 0) {
                 $.each(data, function (i, obj) {
                     if (obj.code == defaultValue) {
-                        $('#' + id).append('<option selected="selected" value=' + obj.code + '>' + obj.name + '</option>');
+                        $('#' + id).append('<option selected="selected" value="' + obj.code + '">' + obj.name + '</option>');
                     } else {
-                        $('#' + id).append('<option value=' + obj.code + '>' + obj.name + '</option>');
+                        $('#' + id).append('<option value="' + obj.code + '">' + obj.name + '</option>');
                     }
                 });
             }

@@ -23,37 +23,37 @@ public class FileUpload {
     //系统目录分隔符
     private static final String SEPARATOR = System.getProperty("file.separator");
 
-    /**
-     * 把内容content写的path文件中
-     */
-    public String saveRemote(String content, String fileName) {
-        String today = DateUtil.getToday();
-        String path = FILE_ROOT_PATH + SEPARATOR + FILE_DIR + SEPARATOR + today;
-        String fileAddress = FILE_URL + "/" + FILE_DIR + "/" + today + "/" + fileName;
-        BufferedWriter bw = null;
-        try {
-            File dir = new File(path);
-            if (!dir.exists()) {//判断文件目录是否存在
-                dir.mkdirs();
-            }
-            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path + System.getProperty("file.separator") + fileName, true), "GBK"));
-            if (content != null) {
-                bw.write(content);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (bw != null) {
-                try {
-                    bw.flush();
-                    bw.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return fileAddress;
-    }
+//    /**
+//     * 把内容content写的path文件中
+//     */
+//    public String saveRemote(String content, String fileName) {
+//        String today = DateUtil.getToday();
+//        String path = FILE_ROOT_PATH + SEPARATOR + FILE_DIR + SEPARATOR + today;
+//        String fileAddress = FILE_URL + "/" + FILE_DIR + "/" + today + "/" + fileName;
+//        BufferedWriter bw = null;
+//        try {
+//            File dir = new File(path);
+//            if (!dir.exists()) {//判断文件目录是否存在
+//                dir.mkdirs();
+//            }
+//            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path + System.getProperty("file.separator") + fileName, true), "GBK"));
+//            if (content != null) {
+//                bw.write(content);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (bw != null) {
+//                try {
+//                    bw.flush();
+//                    bw.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//        return fileAddress;
+//    }
 
     /**
      * 根据byte数组，生成文件

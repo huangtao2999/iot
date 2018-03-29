@@ -1,0 +1,315 @@
+#diologBox {
+    width: 100%;
+    z-index: 999;
+    background-color: #032547;
+    /*min-height: 800px;*/
+}
+
+#diologBox .mainConBox {
+    width: 100%;
+}
+
+#diologBox .conBox {
+    width: 90%;
+    z-index: 999;
+    margin: 3em auto 2em;
+}
+
+.infoExBox {
+    width: 100%;
+}
+
+.infoExBox .infoOne {
+    width: 20%;
+    float: left;
+    height: 1.8em;
+    margin-bottom: 0.5em;
+}
+
+.infoExBox .infoOne>span {
+    float: left;
+    line-height: 2.5em;
+    font-size: 0.8em;
+    color: #00d8fc;
+    margin-right: 2em;
+}
+
+.infoExBox .infoOne .formBox {
+    width: 60%;
+    float: left;
+    height: 100%;
+}
+
+.infoExBox .infoOne .formBox .selBox {
+    width: 90%;
+    height: 90%;
+    right: 10%;
+    z-index: 666;
+    color: #00d8fc;
+    background: url(../images/lawContro/xiala.png) no-repeat right;
+    overflow: hidden;
+}
+
+.infoExBox .infoOne .formBox .selBox select {
+    width: 118%;
+    height: 100%;
+    right: 0;
+    z-index: 666;
+    color: #00d8fc;
+    font-size: 1em;
+    text-align: center;
+}
+
+.infoExBox .infoOne .formBox input {
+    width: 100%;
+    height: 100%;
+    right: 0;
+    z-index: 666;
+    color: #00d8fc;
+    font-size: 1em;
+    text-align: center;
+}
+
+
+.infoExBox .leftFloatBox,
+.infoExBox .rightFloatBox {
+    float: left;
+}
+
+.infoExBox .leftFloatBox {
+    width: 80%;
+}
+
+.infoExBox .rightFloatBox {
+    width: 20%;
+}
+
+.infoExBox .rightFloatBox img {
+    width: 35%;
+}
+
+#diologBox .topBoxCon {
+    width: 100%;
+    height: 1.8em;
+    z-index: 333;
+    margin-top: 0.5em;
+    padding-left: 2em;
+    box-sizing: border-box;
+}
+
+#diologBox .topBoxCon .formBox {
+    width: 18%;
+    height: 100%;
+    float: left;
+    margin-right: 0.5em;
+}
+
+#diologBox .topBoxCon .formBox .selBox {
+    width: 90%;
+    height: 90%;
+    right: 10%;
+    z-index: 666;
+    color: #00d8fc;
+    /*background: url(../images/lawContro/xiala.png) no-repeat right;*/
+    overflow: hidden;
+}
+
+#diologBox .topBoxCon .formBox .selBox select {
+    width: 110%;
+    height: 100%;
+    right: 0;
+    z-index: 666;
+    color: #00d8fc;
+    font-size: 1em;
+    text-align: center;
+}
+
+#diologBox .topBoxCon .iptBox {
+    width: 25%;
+    height: 100%;
+    float: left;
+    margin-right: 0.5em;
+}
+
+#diologBox .topBoxCon .iptBox span {
+    width: 45%;
+    font-size: 0.8em;
+    color: #00d8fc;
+}
+
+#diologBox .topBoxCon .iptBox img {
+    height: 90%;
+    width: 55%;
+    right: 0;
+    display: none;
+}
+
+#diologBox .topBoxCon .iptBox .defImg {
+    display: block;
+}
+
+#diologBox .topBoxCon .iptBox input {
+    width: 55%;
+    height: 90%;
+    right: 0;
+    z-index: 666;
+    color: #00d8fc;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+#diologBox .topBoxCon .paizhaoBox {
+    width: 12%;
+    height: 100%;
+    float: left;
+    margin-right: 0.5em;
+    cursor: pointer;
+}
+
+#diologBox .topBoxCon .paizhaoBox img {
+    display: none;
+}
+
+#diologBox .topBoxCon .paizhaoBox .defImg {
+    display: block;
+}
+
+#diologBox .topBoxCon .paizhaoBox:active .defImg {
+    display: none;
+}
+
+#diologBox .topBoxCon .paizhaoBox:active .selImg {
+    display: block;
+}
+
+#diologBox .topBoxCon .paizhaoBox span {
+    font-size: 0.8em;
+    color: #00d8fc;
+}
+
+#diologBox .topBoxCon .searchBox {
+    width: 20%;
+    height: 100%;
+    float: left;
+    margin-right: 0.5em;
+    cursor: pointer;
+}
+
+#diologBox .topBoxCon .searchBox img {
+    display: none;
+}
+
+#diologBox .topBoxCon .searchBox .defImg {
+    display: block;
+}
+
+#diologBox .topBoxCon .searchBox:active .defImg {
+    display: none;
+}
+
+#diologBox .topBoxCon .searchBox:active .selImg {
+    display: block;
+}
+
+#diologBox .topBoxCon .searchBox span {
+    font-size: 0.8em;
+    color: #00d8fc;
+    width: 100%;
+    text-align: center;
+}
+
+#diologBox .btnBox {
+    height: 2.8em;
+    z-index: 333;
+}
+
+#diologBox .btnBox .btnConBox {
+    margin: 0 auto;
+    height: 100%;
+    width: 16em;
+}
+
+#diologBox .btnBox .btnConBox .box {
+    width: 7em;
+    height: 100%;
+    cursor: pointer;
+    float: left;
+    margin-right: 1em;
+}
+
+#diologBox .btnBox .btnConBox .box img {
+    display: none;
+}
+
+#diologBox .btnBox .btnConBox .box .defImg {
+    display: block;
+}
+
+#diologBox .btnBox .btnConBox .box:active .defImg {
+    display: none;
+}
+
+#diologBox .btnBox .btnConBox .box:active .selImg {
+    display: block;
+}
+
+#diologBox .btnBox .btnConBox .box span {
+    color: #00d8fc;
+    font-size: 1em;
+}
+
+.infoExBox .infoOne .mandatoryImgBox {
+    float: left;
+    width: 1.5em;
+    height: 100%;
+}
+
+.infoExBox .infoOne .hideManda {
+    visibility: hidden;
+}
+
+.infoExBox .infoOne .mandatoryImgBox img {
+    width: 40%;
+    height: auto;
+}
+
+.infoExBox .infoOne .formBox .checkOneBox {
+    width: 3em;
+    margin-right: 0.5em;
+    height: 100%;
+    float: left;
+    cursor: pointer;
+}
+
+.infoExBox .infoOne .formBox .checkOneBox img {
+    display: none;
+    width: 20%;
+    height: auto;
+}
+
+.infoExBox .infoOne .formBox .checkOneBox .defImg {
+    display: block;
+}
+
+.infoExBox .infoOne .formBox .active .selImg {
+    display: block;
+}
+
+.infoExBox .infoOne .formBox .active .defImg {
+    display: none;
+}
+
+.infoExBox .infoOne .formBox .checkOneBox span {
+    font-size: 0.8em;
+    color: #00d8fc;
+    line-height: 1.8em;
+    left: 40%;
+}
+
+/* 文本域 */
+.infoExBox .infoOne .formBox textarea {
+    z-index: 666;
+    color: #00d8fc;
+    font-size: 1em;
+    min-height: 2em;
+}

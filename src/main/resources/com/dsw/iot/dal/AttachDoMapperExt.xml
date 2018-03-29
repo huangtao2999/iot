@@ -1,3 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.dsw.iot.dal.AttachDoMapperExt" />
+<mapper namespace="com.dsw.iot.dal.AttachDoMapperExt" >
+<!-- 单张图片上传，更新之前图片的状态为暂存，同时把业务所属更新为空，is_deleted更新为Y -->
+	<update id="updateToUnuse" parameterType="com.dsw.iot.model.AttachDo" >
+		update attach set
+<!-- 			is_deleted = 'Y', -->
+			task_id = null,
+			task_belong = '',
+			status = '0',
+			update_user=#{updateUser,jdbcType=VARCHAR},
+			update_time=sysdate()
+		where ID = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>

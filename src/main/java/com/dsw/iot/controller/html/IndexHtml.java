@@ -7,6 +7,7 @@ import com.dsw.iot.service.MenuSerivce;
 import com.dsw.iot.service.RoleService;
 import com.dsw.iot.util.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,20 +30,25 @@ public class IndexHtml {
     @Autowired
     RoleService roleService;
 
+    @Value("${driverUrl}")
+    private String driverUrl;
+
     @RequestMapping("/index")
     public String index(Model model, HttpServletRequest request, HttpServletResponse response) {
 
         UserDo userDo = CookieUtil.getUserFromCookie(request, response);
         //获取不到用户 跳转到登录页面
         if (null == userDo) {
-            return "/login/login";
+            return "login/login";
         }
         userDo.setPassword(null);
         model.addAttribute("user", userDo);
         //初始化菜单
         List<MenuDo> menus = menuSerivce.findMenuByUserId(userDo.getId());
         model.addAttribute("menus", menus);
-        //
+        // 查询当前用户的角色，返回给前台
+        List<RoleDo> roleHas = roleService.listRoleByUserId(userDo.getId());
+        model.addAttribute("roleList", roleHas);
         return "index/index";
     }
 
@@ -76,9 +82,30 @@ public class IndexHtml {
         UserDo userDo = CookieUtil.getUserFromCookie(request, response);
         userDo.setPassword(null);
         //查询当前用户的角色，返回给前台
-        List<RoleDo> roleHas = roleService.selectRoleDoListByUserId(userDo.getId());
+        List<RoleDo> roleHas = roleService.listRoleByUserId(userDo.getId());
         model.addAttribute("user", userDo);
         model.addAttribute("roleList", roleHas);
     }
+
+    /**
+     * 新界面引用（中间内容部分）
+     *
+     * @param model
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("/indexHtml")
+    public String indexHtml(Model model, HttpServletRequest request, HttpServletResponse response) {
+        initModel(model, request, response);
+        return "index/indexHtml";
+    }
+
+    @RequestMapping("/help")
+    public String help(Model model) {
+        model.addAttribute("driverUrl", driverUrl);
+        return "index/help";
+    }
+
 
 }

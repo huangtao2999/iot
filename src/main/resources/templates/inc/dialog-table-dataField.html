@@ -1,0 +1,36 @@
+<div class="dataListBox posAbs cens" id="personRegis-table" style="margin: 0 auto;">
+                <div class="posRel wh100">
+                    <div class="titBox posAbs">
+                        <div class="posRel wh100">
+                            <div class="con posAbs wh100 table-head">
+                                <img src="../images/perRegis/renyuandengji_biankuangxiao1.png" alt="" class="posAbs wh100">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="listBox posAbs" id="table-body-list-div">
+                        <ul class="wh100 table-body">
+                            <!-- //动态生成数据 -->
+                        </ul>
+                    </div>
+                    <div class="pagBox posAbs pageTool" id="box" style='line-height:20px;'>
+               			<input type="text" placeholder="1" class="jump-text" id="jumpText">
+               			<p class="total-pages">共&nbsp;<font class="page-count"></font>&nbsp;页</p>
+               			<p class="total-count">合计&nbsp;<font class="page-count-data"></font>&nbsp;条数据</p>
+               			<p class="select-limit" style='margin: -2px 0px 0 1em;'>每页显示
+               				<select class="tableBoxSelect">
+               					<option value="5">5</option>
+               					<option value="10">10</option>
+               					<option value="20">20</option>
+               					<option value="50">50</option>
+               				</select>
+               			条数据</p>
+                    	
+               			<button type="button" id="reload-data">刷新</button>
+               			<button type="button" id="lastPage" class="last-page">尾页</button>
+               			<button class="turnPage" id="nextPage">下一页</button>
+              			<p>第<font class="page-num"></font>页</p>
+               			<button class="turnPage" id="prePage">上一页</button>
+               			<button type="button" id="firstPage" class="turnPage first-page">首页</button>
+           			</div>
+                </div>
+            </div>

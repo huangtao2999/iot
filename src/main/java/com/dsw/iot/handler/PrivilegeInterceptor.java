@@ -1,17 +1,18 @@
 package com.dsw.iot.handler;
 
-import com.alibaba.fastjson.JSONObject;
-import com.dsw.iot.model.UserDo;
-import com.dsw.iot.service.CurrentUserService;
-import com.dsw.iot.util.CookieUtil;
-import com.dsw.iot.util.PrivilegeInfo;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.alibaba.fastjson.JSONObject;
+import com.dsw.iot.model.UserDo;
+import com.dsw.iot.service.CurrentUserService;
+import com.dsw.iot.util.CookieUtil;
+import com.dsw.iot.util.PrivilegeInfo;
 
 /**
  * 请求拦截读取登录用户
@@ -41,6 +42,7 @@ public class PrivilegeInterceptor extends HandlerInterceptorAdapter {
         UserDo userDo = CookieUtil.getUserFromCookie(request, response);
         if (null != userDo) {
             privilegeInfo.setAccount(userDo.getAccount());
+			privilegeInfo.setUserId(userDo.getId());
             currentUserService.setPvginfo(privilegeInfo);
         }
         //如果是.html 需要校验菜单权限 TODO

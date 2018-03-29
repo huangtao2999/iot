@@ -1,196 +1,150 @@
 <!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <html>
-<head>
+<head><meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
     <meta charset="UTF-8">
     <title>用户管理</title>
-    <div th:include="inc/common"></div>
+	<div th:include="inc/common-new"></div>
+	<div th:include="inc/common-table"></div>
 </head>
 <body>
-<!--主体开始-->
-<div class="layui-fluid">
-    <div class="layui-row layui-bg-gray" style="height: 20px;">
-        <span>用户管理</span>
-    </div>
-    <!--条件区 -->
-    <div class="layui-row layui-form" style="text-align:center;margin-top:10px;">
-        <div class="layui-co1-md1">
-            <div class="layui-form-item" style="margin-bottom:0px;">
-                <div class="layui-inline">
-                    <div class="layui-input-inline" style="width: 200px;">
-                        <input type="text" id="search" name="search" class="layui-input" placeholder="账号、姓名、手机模糊搜索">
+    <div id="leftBox" style="width:100%;height:100%">
+        <div class="posRel wh100">
+            <div class="searchBox posAbs cen">
+                <div class="posRel wh100">
+                    <div class="editBox posAbs">
+                        <ul class="wh100">
+                            <li>
+                                <div class="posRel wh100" id="addBtn">
+                                    <img src="../images/perRegis/renyuandengji_bg1.png" alt="" class="bg posAbs wh100">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_xinzeng.png" alt="" class="typeImg posAbs mid">
+                                    <span class="posAbs mid">新增</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="posRel wh100" id="editBtn">
+                                    <img src="../images/perRegis/renyuandengji_bg1.png" alt="" class="bg posAbs wh100">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_bianji.png" alt="" class="typeImg posAbs mid">
+                                    <span class="posAbs mid">编辑</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="posRel wh100" id="delBtn">
+                                    <img src="../images/perRegis/renyuandengji_bg1.png" alt="" class="bg posAbs wh100">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_shanchu.png" alt="" class="typeImg posAbs mid">
+                                    <span class="posAbs mid">删除</span>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                </div>
-                <div class="layui-inline">
-                    <button class="layui-btn layui-btn-warm" id="queryBut"><i class="layui-icon">&#xe615;</i>查询</button>
+<!--                     通用高级查询html -->
+					<div th:include="inc/table-query"></div>
                 </div>
             </div>
+<!--        table公用数据html -->
+			<div id="personRegis-table" th:include="inc/table-dataField"></div>
+            <img src="../images/perRegis/renyuandengji_biankaungzuo.jpg" alt="" class="bgImg posAbs wh100">
         </div>
     </div>
-    <!--功能按钮区 -->
-    <div class="layui-row layui-form">
-        <a class="layui-btn layui-btn-primary layui-btn-xs"
-           id="addBut" onclick="jumpToAddEditPage(1,'')" target="view-window"><i class="layui-icon">&#xe654;</i>新增</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs"
-           id="delBut" data-type="getCheckData"><i class="layui-icon">&#xe640;</i>删除</a>
-    </div>
-    <!-- 表格区 -->
-    <div class="layui-row">
-        <table class="table-mins" id="demo" lay-filter="test"></table>
-    </div>
-</div>
 </body>
 <script th:inline="javascript">
-	//跳转到新增编辑页面
-	function jumpToAddEditPage(type, id) {
-	    if (type == 2) {
-	        //更新
-	        window.location.href = "/UserHtml/editPage.html?id=" + id;
-	    } else {
-	        //新增
-	        window.location.href = "/UserHtml/addUser.html?id=" + id;
-	    }
-	}
-
-	//用户状态字典
-	var account_status = findDicItems('USER_ACCOUNT_STATUS');
-    layui.use(['table', 'layer'], function () {
-        var table = layui.table;
-        //table内容渲染
-        table.render({
-            elem: '#demo',
-            url: '/User/queryPage.json',
-            cols:
-                [[
-                    {type: 'checkbox'},
-                    {type: 'numbers'},
-                    {
-                        field: 'account',
-                        align: 'center',
-                        title: '登录账号'
-                    }, {
-                        field: 'org',
-                        align: 'center',
-                        title: '组织机构'
-                    }, {
-                        field: 'realName',
-                        align: 'center',
-                        title: '真实姓名',
-                        width: 100
-                    }, {
-                        field: 'phone',
-                        align: 'center',
-                        title: '手机号码'
-                    }, {
-                        field: 'idcard',
-                        align: 'center',
-                        title: '身份证号'
-                    }, {
-                        field: 'status',
-                        align: 'center',
-                        title: '状态',
-                        templet: function(d){
-                        	var status = "";
-							$.each(account_status,function(i, obj){
-								if(d.status == obj.code){
-									status = obj.name;
-								}
-							})
-							return status;
-                        },
-                        width: 80
-                    }, {
-                        field: 'createTime',
-                        align: 'center',
-                        title: '创建时间',
-                        templet: function(d){
-                        	var date = new Date(d.createTime);
-                        	return date.toLocaleString();
-                        }
-                    }, {
-                        fixed: 'right',
-                        align: 'center',
-                        toolbar: '#optioins'
-                    }
-                ]],
-            limits: [5, 10, 20],
-            page: true
-        });
-        //操作列方法绑定
-        table.on('tool(test)', function (obj) {
-            var data = obj.data;
-            var event = obj.event;
-            if (event == 'detail') {
-                //查看详情
-                var index = layer.open({
-                    type: 2,
-                    title: "查看用户详情",
-                    shadeClose: true,
-                    closeBtn: 1,
-                    area: ['1000px', '500px'],
-                    content: '/UserHtml/detailDialog.html?id=' + data.id
-                });
-            } else if (event == 'edit') {
-                //编辑
-                jumpToAddEditPage(2, data.id);
-            } else if (event == 'del') {
-                //删除
-                var confirm = layer.confirm('是否确认删除？', {btn: ['确定', '取消']},
-                    function (index, layero) {
-                        var msg = PublicAjax('/User/del.json', {"id": data.id});
-                        if (msg.success) {
-                            layer.msg("删除成功");
-                            table.reload('demo');
-                            layer.close(confirm);
-                        }
-                    }, function (index) {
-                        layer.close(confirm);
-                    });
-            }
-        });
-        //绑定查询点击事件
-        $('#queryBut').on('click', function () {
-            table.reload('demo', {
-                page: {
-                    curr: 1 //重新从第 1 页开始
-                }, where: {
-                    search: $('#search').val()
-                }
+    var table = new iotTable({
+        dataUrl : '/User/queryPage.json',
+        renderTo : '#personRegis-table',
+        select : false,
+        heads : [{
+            text : '警号',
+            width : 11,
+            name : 'account'
+        },{
+            text : '真实姓名',
+            width : 10,
+            name : 'realName'
+        },{
+            text : '组织机构',
+            width : 20,
+            name : 'org',
+            dicCode: '420202000000'
+        },{
+            text : '手机号码',
+            width : 17,
+            name : 'phone'
+        },{
+            text : '状态',
+            width : 10,
+            name : 'status',
+            dicCode : 'STATUS'
+        },{
+            text : '创建时间',
+            width : 17,
+            name : 'createTime',
+            dateFormat : 'yyyy-MM-dd hh:mm:ss'
+        }],
+        queryFields : [{
+            text : '账号',
+            name : 'search'
+        },{
+            text : '姓名',
+            name : 'search',
+        } ,{
+            text : '状态',
+            name : 'status',
+            type : 'select',
+            dicCode : 'STATUS'
+            }]
+    });
+    table.init();
+    layui.use(['layer'], function () {
+        var layer = layui.layer;
+        //新增
+        $("#addBtn").click(function () {
+            layer.open({
+                type: 2,
+                title: false,
+                maxmin: false,
+                anim:-1,
+                area: ['80%', '95%'],
+                content: "/UserHtml/add.html"
             });
         });
-
-        //按钮获取数据
-        $('#delBut').on('click', function () {
-            var checkStatus = table.checkStatus('demo')
-                , data = checkStatus.data;
-            var id = "";
-            for (var i = 0; i < data.length; i++) {
-                if (id == "") {
-                    id = data[i].id;
-                } else {
-                    id += "," + data[i].id;
-                }
-            }
-            if (id == "") {
-                layer.alert("没有可删除的用户");
-            } else {
-                var confirm = layer.confirm('是否确认删除？', {btn: ['确定', '取消']},
-                    function (index, layero) {
-                        var msg = PublicAjax('/User/del.json', {"ids": id});
-                        if (msg.success) {
-                            layer.msg("删除成功");
-                            table.reload('demo');
-                            layer.close(confirm);
-                        }
-                    }, function (index) {
-                        layer.close(confirm);
-                    });
-            }
+        //编辑
+        $("#editBtn").click(function () {
+        	var dataArr=$(".table-body").find(".active");
+        	if(dataArr.length==1){
+        		var id=dataArr[0].getAttribute("data-id");
+                layer.open({
+                    type: 2,
+                    title: false,
+                    area: ['80%', '95%'],
+                    content: "/UserHtml/edit.html?id=" + id
+                });
+        	}else if(dataArr.length<=0){
+        		layer.msg("请先选择数据");
+        	}else{
+        		layer.msg("只能编辑一条数据");
+        	}
+        });
+        //删除
+        $("#delBtn").click(function () {
+        	var dataArr=$(".table-body").find(".active");//获取选中的数据
+        	if(dataArr.length>0){
+        		var ids="";
+        		for(var i=0;i<dataArr.length;i++){
+        			ids += dataArr[i].getAttribute("data-id")+",";//从data-id属性中取得数据ID
+        		}
+        		layer.confirm("是否确定删除？", function (index) {
+                    layer.close(index);
+                    var res=PublicAjax('/User/removeUser.json', {"ids": ids});
+                    table.loadBody();//刷新表格
+                })
+        	}else{
+        		layer.msg("请先选择数据");
+        	}
         });
     });
-</script>
-<script type="text/html" id="optioins">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 </html>

@@ -30,4 +30,14 @@ public class BizExceptionHandler {
         actionResult.setErrorMsg(e.getMessage());
         return actionResult;
     }
+
+    @ExceptionHandler(value = Exception.class)
+    @ResponseBody
+    public Object errorHandler(HttpServletRequest req, Exception e) throws Exception {
+        logger.error(MessageFormat.format("---Exception Handler---Host {0} invokes url {1} ERROR: {2}", req.getRemoteHost(), req.getRequestURL(), e.getMessage()));
+        ActionResult actionResult = new ActionResult();
+        actionResult.setSuccess(false);
+        actionResult.setErrorMsg(e.getMessage());
+        return actionResult;
+    }
 }

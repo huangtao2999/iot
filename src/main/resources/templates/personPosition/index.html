@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org"
+	xmlns="http://www.w3.org/1999/xhtml">
+<html>
+<head><meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+<meta charset="UTF-8">
+<title>3D人员定位</title>
+<div th:include="inc/common-new"></div>
+<div th:include="inc/common-table"></div>
+
+<script th:src="@{../../personPosition/jquery-2.1.4.min.js}"></script>
+<script th:src="@{../../personPosition/jquery.ui.js}"></script>
+<script th:src="@{../../personPosition/jquery.string.js}"></script>
+<script th:src="@{../../personPosition/jquery.layout.js}"></script>
+<script th:src="@{../../personPosition/jquery-ui-timepicker-addon.js}"></script>
+<script th:src="@{../../personPosition/sockjs.js}"></script>
+<script th:src="@{../../personPosition/stomp.js}"></script>
+<script th:src="@{../../personPosition/raphael.js}"></script>
+<script th:src="@{../../personPosition/ido.prototype.js}"></script>
+<script th:src="@{../../personPosition/ido.hashmap.js}"></script>
+<script th:src="@{../../personPosition/ido.log.js}"></script>
+<script th:src="@{../../personPosition/ido.map.2d.js}"></script>
+<script th:src="@{../../personPosition/ido.map.3d.js}"></script>
+<script th:src="@{../../personPosition/webVideoCtrl.js}"></script>
+<script th:src="@{../../personPosition/police.js}"></script>
+<script th:src="@{../../personPosition/fengmap.min.js}"></script>
+<script th:src="@{../../personPosition/bootstrap.min.js}"></script>
+<script th:src="@{../../personPosition/createBubble.js}"></script>
+
+</head>
+<body>
+<table style="width: 100%;height: 100%;">
+	<tr>
+		<td width="20%"  style="vertical-align: top;">
+			<div style="clear:both;color:#fff;text-align:left;padding:5px;" class="header" th:text="${orgName}"></div>
+			<ol id="plans" style="color: white;"></ol>
+			<div style="color:white;text-align:left;padding:5px;" class="header">在所人员</div>
+			<ol id="tags">
+				<li><input type="text" name="tag-name" class="tag-name" /><button class="tag-follow">跟踪</button></li>
+			</ol>
+		</td>
+		<td width="70%" style="vertical-align: top;">
+			<div id="fengMap" style="height: 100%;"></div>
+		</td>
+		<td width="10%" style="vertical-align: top;">
+			<div id="screen">
+				<div id="divPlugin" class="plugin" style="width: 200px; height: 200px;"></div>
+			</div>
+		</td>
+	</tr>
+</table>
+</body>
+<script th:inline="javascript">
+    var url = [[${url}]];
+    $(function(){
+    var plans =[];
+//	$.ajax({
+//		async : false,
+//		type: 'GET',
+//		url: url+"/service/plan.json?action=get.plans",
+//		contentType: "application/json; charset=utf-8",
+//        dataType: 'jsonp',
+//        data : {
+//		},
+//		error: function(XMLHttpRequest, textStatus, errorThrown) {
+//        	alert("responseText: " + XMLHttpRequest.responseText+ ", textStatus: " + textStatus+ ", errorThrown: " + errorThrown);
+//        },
+//        success : function (data) {
+//        	plans = data.plans;
+//        	var html = "";
+//        	for(var i=0; i < plans.length; i++){
+//        		html += '<li id="plan_'+plans[i].planId+'" style="list-style-type: none;">'+plans[i].name+"</li>";
+//        	}
+//        	$('#plans').html(html);
+//		}
+//	});
+
+	var tags =[];
+	$.ajax({
+		type: 'GET',
+		url: url+"/service/tag.json?action=get.issued.tags",
+		//contentType: "application/json; charset=utf-8",
+        dataType: 'jsonp',
+        success : function (data) {
+        	 tags = data.tags;
+        	var html = "";
+        	for(var i=0, tag; tag = tags[i]; i++){
+//        		html += '<li id="tag_'+tag.euid+'" style="list-style-type: none;color:white">'+tag.name+tag.euid+'</li>';
+                html += '<li id="tag_'+tag.euid+'" style="list-style-type: none;color:white">'+tag.name+'</li>';
+            }
+        	$('#tags').append(html);
+		}
+	});
+
+
+	Panel.start(1);
+
+	$("#tags .tag-follow").click(function(){
+
+		if($("#tags .tag-name").val() == "" || $("#tags .tag-name").val() == null){
+			alert("请输入标签ID或者姓名");
+			return;
+		}
+		var tagName = $.trim($("#tags .tag-name").val());
+		var isFollow = true;
+		for(var i=0; i<tags.length; i++){
+			if(tags[i].name == tagName || tags[i].euid == tagName){
+				Panel.follow(tags[i].euid);
+				isFollow = false;
+				break;
+			}
+		}
+		if(isFollow){
+			alert("请输入正确的标签ID或者姓名");
+		}
+
+	});
+
+	$("#fengMap").dblclick(function(){
+		if($("#fengMap").hasClass("fengMap")){
+			$("#fengMap").removeClass("fengMap");
+			$("#screen").show();
+		}else{
+			$("#fengMap").addClass("fengMap");
+			$("#screen").hide();
+		}
+
+	});
+})
+</script>
+<script type="text/javascript">
+	document.title = '视频AND定位' + fengmap.VERSION;
+	var map;
+	var fmapID = 'zoodac-huangshigang';
+	var navi;
+	var groupControl;
+	var locationMarker;
+	var groupLayer;
+	var navigation = true;
+	var position_data;
+	var curveDatas = new HashMap();
+	var localX, localY;
+	var imageMarker = null;
+	var naviLines = [];
+	var startNavi = true;
+	window.onload = function() {
+		if (navi) {
+			navi.stop();
+			navi = null;
+		}
+		var ctlOpt = new fengmap.controlOptions({
+			position : fengmap.controlPositon.RIGHT_TOP,
+			showBtnCount : 7,
+			allLayer : true,
+		});
+		map = new fengmap.FMMap({
+			container : document.getElementById('fengMap'),
+			mapServerURL : '../../personPosition/data/' + fmapID,
+			mapThemeURL : '../../personPosition/data/theme',
+			defaultThemeName : '2002',
+			defaultMapScaleLevel : 22,
+			focusAlphaMode : true,
+			focusAnimateMode : false,
+			focusAlpha : 0,
+			viewModeAnimateMode : true,
+			defaultTiltAngle : 30,
+			key : 'c8e965cef46ca96287c7e4acb88ee327',
+            appName : 'zoodac_haungshigang',
+		});
+		map.openMapById(fmapID);
+
+		//添加文字标签层
+		function addTextMarker(euid) {
+			var group = map.getFMGroup(map.groupIDs[0]);
+			var layer = new fengmap.FMTextMarkerLayer();
+			group.addLayer(layer);
+			var tm = new fengmap.FMTextMarker({
+				x : 12808160.47 + curveDatas.get(euid).localX,
+				y : 3533397.83 - curveDatas.get(euid).localY,
+				z : 1,
+				name: curveDatas.get(euid).name,
+				size : 26,
+				//填充色
+				fillcolor: "255,0,0",
+				callback: function() {
+					// 在载入完成后，设置 "一直可见"
+					tm.alwaysShow();
+				}
+			});
+			layer.addMarker(tm);
+			curveDatas.get(euid).text = tm;
+		};
+		//添加图片标签层
+		function addMarker(euid) {
+			var group = map.getFMGroup(map.groupIDs[0]);
+			var layer = new fengmap.FMImageMarkerLayer();
+			group.addLayer(layer);
+			var imageMarker = new fengmap.FMImageMarker({
+				name : curveDatas.get(euid).name,
+				x : 12808160.47 + curveDatas.get(euid).localX,
+				y : 3533397.83 - curveDatas.get(euid).localY,
+				z : 1,
+				url : '../../personPosition/image/peopleMarker.png',
+				size : 26,
+				callback : function() {
+					imageMarker.alwaysShow();
+				}
+			});
+			layer.addMarker(imageMarker);
+			curveDatas.get(euid).img = imageMarker;
+		};
+		//移动位置
+		function peopleMove(euid) {
+			if (typeof (curveDatas.get(euid).img) === "undefined") {
+				return;
+			}
+			(curveDatas.get(euid).img).moveTo({
+				x : curveDatas.get(euid).localX + 12808160.47,
+				y : 3533397.83 - curveDatas.get(euid).localY,
+				z : 1,
+				time : 1
+			});
+		};
+		var sock = new SockJS(url+'/rtls/sockjs');
+		var client = Stomp.over(sock);
+		client.debug = null;
+		client.connect({}, function(frame) {
+			client.subscribe("/queue/position", function(message) {
+				position_data = JSON.parse(message.body);
+				if (position_data.errorCase == 0) {
+					var euid = position_data.tagEuid;
+                    localX = position_data.localX * 0.01662+4;
+                    localY = position_data.localY * 0.01662+6;
+                    if (curveDatas.get(euid)) {
+						curveDatas.get(euid).localX = localX;
+						curveDatas.get(euid).localY = localY;
+					} else {
+						var curveData = new Object();
+						curveData.localX = localX;
+						curveData.localY = localY;
+						curveData.name = position_data.tagAlias;
+						curveDatas.put(euid, curveData);
+						addMarker(euid);
+					}
+					peopleMove(euid);
+				}
+			});
+		});
+		sock.onclose = function(event) {
+		};
+		$("#fengMap canvas").width($("#fengMap").width());
+		$("#fengMap canvas").height($("#fengMap").height());
+	};
+</script>
+</html>

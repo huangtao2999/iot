@@ -1,24 +1,131 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>公安机关执法办案管控平台</title>
-    <div th:include="inc/common3"></div>
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+
+<head><meta charset="UTF-8">
+	<title>公安机关执法办案管控平台</title>
+    <meta http-equiv="content-type" content="text/html">
+	<meta name="render" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<div th:include="inc/common-new"></div>
+	<link rel="stylesheet" type="text/css" th:href="@{../../css/index.css}" />
 </head>
-<frameset rows="92,*" cols="*" frameborder="no" border="0" framespacing="0">
-    <frame src="top.html" name="topFrame" frameborder="no" scrolling="no"
-           noresize="noresize" id="topFrame"/>
-    <frameset name="myFrame" cols="141,*" frameborder="no" border="0"
-              framespacing="0">
-        <frame src="left.html" name="leftFrame" frameborder="no"
-               scrolling="auto" noresize="noresize" id="leftFrame"/>
-        <frame src="main.html" name="mainFrame" frameborder="no"
-               id="mainFrame"/>
-    </frameset>
-</frameset>
-<noframes>
-    <body>
-    </body>
-</noframes>
+
+<body>
+	<div id="indexBox">
+		<div class="indexConBox posRel">
+			<img src="../images/index/tuichu.png" alt="" class="cancellationImg posAbs">
+			<img src="../images/index/bg.png" alt="" class="posAbs indexBgImg">
+			<div class="logoBox posAbs">
+				<div class="posRel wh100">
+					<img src="../images/index/guohui.png" alt="" class="logoImg posAbs mid">
+					<div class="descCon posAbs mid">
+						<div class="posRel wh100">
+							<span class="zhcn posAbs mid">公安机关执法办案管控平台</span>
+							<!--<span class="zhcn posAbs mid">蕲春县公安局执法办案管控平台</span>-->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="loginBox posAbs clear">
+				<div class="con">
+					<img src="../images/index/zhanghu.png" alt="" class="posAbs mid">
+					<span class="posAbs mid" th:text="${user.realName}"></span>
+				</div>
+				<div class="con">
+					<!--<span id='login-role'>-->
+						<img src="../images/index/juese.png" alt="" class="posAbs mid">
+						<img src="../images/index/down.png" alt="" class="posAbs mid downImg">
+						<img src="../images/index/up.png" alt="" class="posAbs mid upImg">
+						<div class="downBox posAbs">
+							<div class="posRel wh100">
+								<img src="../images/index/bg-2.png" alt="" class="bgImg posAbs wh100">
+								<ul class="posAbs cenMid">
+									<li class="posRel update-pwd">
+										<span class="posAbs cenMid">修改密码</span>
+										<img src="../images/index/menu/caidan-xuanzhong.png" alt="" class="posAbs wh100">
+									</li>
+									<li class="posRel update-user">
+										<span class="posAbs cenMid">帮助信息</span>
+										<img src="../images/index/menu/caidan-xuanzhong.png" alt="" class="posAbs wh100">
+									</li>
+								</ul>
+							</div>
+						</div>
+					<!--</span>-->
+					<span class="posAbs mid" id="roleSpan"></span>
+
+				</div>
+			</div>
+			<div class="menuBox posAbs">
+				<div class="posRel wh100">
+					<img src="../images/index/menu/caidanbeijing.png" alt="" class="bg">
+					<ul class="posAbs menu">
+
+					</ul>
+					<div class="circleBox posAbs circleBox1">
+						<div class="posRel wh100">
+							<img src="../images/index/menu/da-nei.png" alt="" class="imgS">
+							<img src="../images/index/menu/da-wai.png" alt="" class="imgB">
+						</div>
+					</div>
+					<div class="circleBox posAbs circleBox2">
+						<div class="posRel wh100">
+							<img src="../images/index/menu/xiao-nei.png" alt="" class="imgS">
+							<img src="../images/index/menu/xiao-wai.png" alt="" class="imgB">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tabHtmlBox posAbs">
+				<div class="tabBox">
+					<ul>
+						<li  class="posRel dsw-click-refresh" data-href="../Index/indexHtml">
+							<span class="posAbs mid desc">首页</span>
+							<img src="../images/index/menu/caidan-xuanzhong.png" alt="" class="posAbs wh100 tabBgImg">
+						</li>
+					</ul>
+				</div>
+				<div id="htmlBox" class="htmlBox">
+
+					<ul >
+						<li data-href="" ><iframe src="../Index/indexHtml" scrolling="no" frameborder="0"></iframe></li >
+					</ul >
+
+				</div>
+				<!-- <iframe src="../Index/indexHtml" scrolling="no" frameborder="0" class="htmlBox" id="ifr"></iframe> -->
+			</div>
+			<img src="../images/index/menu/zicaidan-xitongguanli-jiantou.png" alt="" class="packUpImg posAbs mid">
+			<img src="../images/index/menu/xitongguanli-jiantou.png" alt="" class="showUpImg posAbs mid">
+		</div>
+	</div>
+</body>
+<script th:inline="javascript">
+$(function () {
+    var dataList = [[${roleList}]];
+    var roleName = "";
+    if (dataList.length == 0) {
+        return;
+    }
+    for (var i = 0; i < dataList.length; i++) {
+        if (roleName == "") {
+            roleName = dataList[i].roleName;
+        } else {
+            roleName += "," + dataList[i].roleName;
+        }
+    }
+    $("#roleSpan").text(roleName);
+
+
+    $('#login-role').hover(function ( e ) {
+    $(this).find('.downBox.posAbs').show().siblings('.downImg').hide().siblings('.upImg').show();
+  },function ( e ) {
+    $(this).find('.downBox.posAbs').hide().siblings('.upImg').hide().siblings('.downImg').show();
+  });
+})
+</script>
+<script th:src="@{../../js/index.js}"></script>
 </html>

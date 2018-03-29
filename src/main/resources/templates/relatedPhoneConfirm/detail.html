@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html>
+<head><meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+    <meta charset="UTF-8">
+    <div th:include="inc/common"></div>
+</head>
+<body class="custom">
+<div class="container-fluid you-bg">
+    <form action=""  class="layui-form">
+	<input type="hidden" name="registerId" th:value="${personRegisterDo.id}">
+        <input type="hidden" name="applyName" th:value="${personRegisterDo.name}">
+        <table class="youAdd" style="width:100%;">
+            <tr>
+                <td colspan="6" class="THtitle">人员基本信息</td>
+            </tr>
+            <tr>
+                <td class="TDleft"><label>证件类别：</label></td>
+               	<td><span th:include="component/selectCombo(id='cardType',name='cardType',dictType='PER_CARD_TYPE',defaultValue=${personRegisterDo.cardType},verify='',disabled='1')"/></td>
+                <td class="TDleft">证件号码：</td>
+				<td th:text='${personRegisterDo.cardNo}'></td>
+            </tr>
+            <tr>
+                <td class="TDleft">姓名：</td>
+                <td th:text='${personRegisterDo.name}'></td>
+                <td class="TDleft">性别：</td>
+                <td><span th:include="component/selectCombo(id='sex',name='sex',dictType='SEX',defaultValue=${personRegisterDo.sex},verify='',disabled='1')"/></td>
+            </tr>
+            <tr>
+                <td colspan="6" class="THtitle">申请信息填写</td>
+            </tr>
+
+            <tr>
+                <input type="hidden" name="user_id" value="{$per.id}"/>
+                <input type="hidden" name="username" value="{$per.username}"/>
+                <td class="TDleft">联系人：</td>
+                <td><input type="text" name="callName" class="input-large" th:value="${relatedPhoneConfirmDo.callName}" disabled></td>
+                <td class="TDleft no-star">申请原因：</td>
+                <td><input type="text" name="applyReason" class="input-large" th:value="${relatedPhoneConfirmDo.applyReason}" disabled></td>
+            </tr>
+            <tr>
+                <td class="TDleft">手机号码：</td>
+                <td><input type="isMobile" name="tel" class="input-medium" th:value="${relatedPhoneConfirmDo.tel}" disabled></td>
+                <td class="TDleft">通话时间：</td>
+                <td><input type="number" name="talkTime" class="input-small" th:value="${relatedPhoneConfirmDo.talkTime}" disabled> 分钟</td>
+            </tr>
+            <tr>
+                <td class="TDleft">主办民警：</td>
+                <td><input type="text" name="policeName" class="input-large" readonly="readonly" th:value="${relatedPhoneConfirmDo.policeName}">
+                </td>
+                <td class="TDleft">申请时间：</td>
+                <td th:text= "${#dates.format(relatedPhoneConfirmDo.applyTime, 'yyyy-MM-dd HH:mm:ss')}" disabled></td>
+                <td></td>
+            </tr>
+        </table>
+
+        <div class="btn-youAdd">
+            <button class="btn btn-primary" id="returnIndex">返回</button>
+        </div>
+    </form>
+    <br/>
+</div>
+</body>
+
+<script type="text/javascript">
+
+//返回按钮，关闭窗口
+$("#returnIndex").click(function(){
+	var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+    parent.layer.close(index);//关闭弹窗
+})
+</script>

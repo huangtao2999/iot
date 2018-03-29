@@ -1,0 +1,177 @@
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+section,
+div,
+header,
+footer,
+nav,
+article,
+aside,
+ul,
+li,
+ol,
+dl,
+dt,
+dd,
+form,
+table,
+td,
+tr,
+text,
+th,
+thead,
+textarea,
+input,
+select,
+option,
+a,
+span,
+i,
+img,
+b,
+em,
+strong,
+p,
+button {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Microsoft YaHei";
+	font: inherit;
+}
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	font: 100%/1 sans-serif;
+}
+
+a,
+img,
+span {
+	display: block;
+}
+
+a {
+	text-decoration: none;
+	color: #FFFFFF;
+}
+
+li {
+	list-style: none;
+}
+
+.clear:after {
+	display: block;
+	content: "";
+	clear: both;
+	overflow: hidden;
+	visibility: hidden;
+}
+
+.posRel {
+	position: relative;
+}
+
+.posAbs {
+	position: absolute;
+}
+
+.posFix {
+	position: fixed;
+}
+
+/* input,
+textarea,
+tr,
+td,
+button,
+th,
+thead,
+tfoot,
+select,
+option {
+	border: none;
+	outline: none;
+	background: none;
+	resize: none;
+	overflow: hidden;
+} */
+
+/* select {
+	cursor: pointer;
+	appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+} */
+
+/*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+
+/* select::-ms-expand {
+	display: none;
+} */
+
+.cen {
+	left: 50%;
+	transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	/* for Chrome || Safari */
+	-moz-transform: translateX(-50%);
+	/* for Firefox */
+	-ms-transform: translateX(-50%);
+	/* for IE */
+	-o-transform: translateX(-50%);
+	/* for Opera */
+}
+
+.mid {
+	top: 50%;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	/* for Chrome || Safari */
+	-moz-transform: translateY(-50%);
+	/* for Firefox */
+	-ms-transform: translateY(-50%);
+	/* for IE */
+	-o-transform: translateY(-50%);
+	/* for Opera */
+}
+
+.cenMid {
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	/* for Chrome || Safari */
+	-moz-transform: translate(-50%, -50%);
+	/* for Firefox */
+	-ms-transform: translate(-50%, -50%);
+	/* for IE */
+	-o-transform: translate(-50%, -50%);
+	/* for Opera */
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.wh100 {
+	width: 100%;
+	height: 100%;
+}
+
+.wrapper {
+	margin: 0 auto;
+}

@@ -1,25 +1,10 @@
 package com.dsw.iot.util;
 
-import org.mybatis.generator.api.CommentGenerator;
-import org.mybatis.generator.api.GeneratedJavaFile;
-import org.mybatis.generator.api.GeneratedXmlFile;
-import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.PluginAdapter;
-import org.mybatis.generator.api.dom.java.Field;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.api.dom.java.TopLevelClass;
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.Document;
-import org.mybatis.generator.api.dom.xml.TextElement;
-import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.api.dom.java.CompilationUnit;
-import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.api.*;
+import org.mybatis.generator.api.dom.java.*;
+import org.mybatis.generator.api.dom.xml.*;
 import org.mybatis.generator.codegen.XmlConstants;
-
+import org.mybatis.generator.config.PropertyRegistry;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -112,6 +97,16 @@ public class DswGeneratePlugin extends PluginAdapter {
     }
 
     @Override
+    public boolean clientDeleteByPrimaryKeyMethodGenerated(Method method, Interface interfaze,
+                                                           IntrospectedTable introspectedTable) {
+        Parameter parameter = new Parameter(new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()),
+                "record");
+        method.getParameters().clear();
+        method.addParameter(parameter);
+        return super.clientDeleteByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable);
+    }
+
+    @Override
     public boolean modelExampleClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         addPageDto(topLevelClass, introspectedTable, "pageDto");
         return super.modelExampleClassGenerated(topLevelClass, introspectedTable);
@@ -195,6 +190,43 @@ public class DswGeneratePlugin extends PluginAdapter {
     public boolean sqlMapInsertSelectiveElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
         selectKey(element, introspectedTable);
         return super.sqlMapInsertSelectiveElementGenerated(element, introspectedTable);
+    }
+
+    /**
+     * 删除方法重写，所有删除都是软删除
+     *
+     * @param element
+     * @param introspectedTable
+     * @return
+     */
+    @Override
+    public boolean sqlMapDeleteByPrimaryKeyElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
+        element.setName("update");
+        int replaceInd = -1;
+        for (int i = 0; i < element.getAttributes().size(); i++) {
+            Attribute attr = element.getAttributes().get(i);
+            if (attr.getName().equals("parameterType")) {
+                replaceInd = i;
+                break;
+            }
+        }
+        if (replaceInd >= 0) {
+            element.getAttributes().remove(replaceInd);
+            element.getAttributes().add(replaceInd,
+                    new Attribute("parameterType", introspectedTable.getBaseRecordType()));
+        }
+
+        List<Element> removeElement = new ArrayList<Element>();
+        for (int i = 5; i < element.getElements().size(); i++) {
+            removeElement.add(element.getElements().get(i));
+
+        }
+        element.getElements().removeAll(removeElement);
+
+        element.getElements().add(new TextElement("update "
+                + introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime()
+                + " set is_deleted = 'Y',update_user=#{updateUser,jdbcType=VARCHAR},update_time=sysdate() where ID = #{id,jdbcType=NUMERIC}"));
+        return super.sqlMapDeleteByPrimaryKeyElementGenerated(element, introspectedTable);
     }
 
     /**

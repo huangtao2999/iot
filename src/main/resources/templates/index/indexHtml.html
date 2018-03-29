@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+
+<head><meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <div th:include="inc/common-new"></div>
+    <div th:include="inc/common-table"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/indexHtml.css}" />
+	<script th:src="@{../../js/Chart.js}"></script>
+	<script th:src="@{../../js/echarts.js}"></script>
+	<script th:inline="javascript">
+		//获得角色，给隐藏控件赋值，待办任务通过这个角色查找
+		$(function () {
+		    var dataList = [[${roleList}]];
+		    var roleIds = "";
+		    if (dataList.length == 0) {
+		        return;
+		    }
+		    for (var i = 0; i < dataList.length; i++) {
+		        if (roleIds == "") {
+		        	roleIds = dataList[i].id;
+		        } else {
+		        	roleIds += "," + dataList[i].id;
+		        }
+		    }
+		    $("#roleList_hidden").val(roleIds);
+		})
+	</script>
+	<script th:inline="javascript" th:src="@{../../js/indexHtml.js}"></script>
+	<script th:inline="javascript" th:src="@{/js/custom/tooltip.js}"></script>
+</head>
+
+<body>
+<!-- 	角色 -->
+	<input type="hidden" id="roleList_hidden">
+
+    <div class="warningBox posAbs">
+        <ul class="wh100">
+			<li class="posRel">
+			  <img src="../images/index/warn/riquyujing-beijing.png" alt="" class="bg">
+			  <div class="namesBox clear posAbs mid data-8">
+
+			  </div>
+			  <div class="circleBox posAbs circleBoxX">
+			    <div class="posRel wh100">
+			      <span class="time cenMid posAbs title-8">8H预警</span>
+			      <img src="../images/index/warn/wai.png" alt="" class="imgB image-8"></div>
+			  </div>
+			</li>
+			<li class="posRel">
+			  <img src="../images/index/warn/riquyujing-beijing.png" alt="" class="bg">
+			  <div class="namesBox clear posAbs mid data-12">
+
+			  </div>
+			  <div class="circleBox posAbs circleBoxX">
+			    <div class="posRel wh100">
+			      <span class="time cenMid posAbs title-12">12H预警</span>
+			      <img src="../images/index/warn/wai.png" alt="" class="imgB image-12"></div>
+			  </div>
+			</li>
+			<li class="posRel">
+			  <img src="../images/index/warn/riquyujing-beijing.png" alt="" class="bg">
+			  <div class="namesBox clear posAbs mid data-24">
+
+			  </div>
+			  <div class="circleBox posAbs circleBoxX">
+			    <div class="posRel wh100">
+			      <span class="time cenMid posAbs title-24">24H预警</span>
+			      <img src="../images/index/warn/wai.png" alt="" class="imgB image-24"></div>
+			  </div>
+			</li>
+			<li class="posRel">
+			  <img src="../images/index/warn/riquyujing-beijing.png" alt="" class="bg">
+			  <div class="namesBox clear posAbs mid data-48">
+
+			  </div>
+			  <div class="circleBox posAbs circleBoxX">
+			    <div class="posRel wh100">
+			      <span class="time cenMid posAbs title-48">48H预警</span>
+			      <img src="../images/index/warn/wai.png" alt="" class="imgB image-48"></div>
+			  </div>
+			</li>
+        </ul>
+    </div>
+    
+    
+    <!--div class="dsw-tooltip fade in bottom" role="tooltip">
+	    <div class="dsw-tooltip-arrow"></div>
+	    <div class="dsw-tooltip-inner">
+	    	<div class='dsw-tooltip-content'>
+		    	<ul class='dsw-tooltip-content-lists'>
+		    		<li class='dsw-tooltip-content-item'>
+		    			<span class='dsw-tooltip-content-item-key'>姓名 :</span>
+		    			<span class='dsw-tooltip-content-item-val'>姓名张三</span>
+		    		</li>
+		    		
+		    		<li class='dsw-tooltip-content-item'>
+		    			<span class='dsw-tooltip-content-item-key'>性别 :</span>
+		    			<span class='dsw-tooltip-content-item-val'>性别张三</span>
+		    		</li>
+		    		
+		    		<li class='dsw-tooltip-content-item'>
+		    			<span class='dsw-tooltip-content-item-key'>入所原因 :</span>
+		    			<span class='dsw-tooltip-content-item-val'>入所原因张三风</span>
+		    		</li>
+		    		
+		    		<li class='dsw-tooltip-content-item'>
+		    			<span class='dsw-tooltip-content-item-key'>入所时间 :</span>
+		    			<span class='dsw-tooltip-content-item-val'>2018-03-27 14:52:52</span>
+		    		</li>
+		    	</ul>
+		    	<img class='dsw-tooltip-content-img' alt='' src='/images/custom/demo.png' />
+		    </div>
+	    </div>
+    </div-->
+    
+    
+    
+    <style>
+    	.dsw-tooltip{
+    		position:absolute;
+    		top:20px;
+    		left:30%;
+    		width:300px;
+    		background-color:#1f70c1;
+    		box-sizing:border-box;
+    		padding:10px;
+    	}
+    	
+    	.dsw-tooltip .dsw-tooltip-arrows{
+    		width:0;
+    		height:0;
+    		border:10px solid transparent;
+    		border-bottom:10px solid #1f70c1;
+    		position:absolute;
+    		-ms-transform:translate(-50%,-150%);
+    		transform:translate(-50%,-150%);
+    	}
+    	
+    	.dsw-tooltip-content{
+    		clear: both;
+		    overflow: hidden;
+		    position: relative;
+    	}
+    	
+    	.dsw-tooltip-content-lists{
+    		
+    	}
+    	
+    	.dsw-tooltip-content .dsw-tooltip-content-lists .dsw-tooltip-content-item{
+    		clear:both;
+    		overflow:hidden;
+    		margin:18px 0;
+    		width:auto;
+    		height:auto;
+    	}
+    	
+    	.dsw-tooltip .dsw-tooltip-content .dsw-tooltip-content-lists .dsw-tooltip-content-item span{
+    		font-size: 14px;
+		    color: #eee;
+		    float: left;
+		    width: auto;
+		    height: auto;
+		    line-height: normal;
+		    margin: 0;
+    	}
+    	
+    	.dsw-tooltip .dsw-tooltip-content .dsw-tooltip-content-lists .dsw-tooltip-content-item span.dsw-tooltip-content-item-key{
+    		margin-right:5px;
+    		text-align:right;
+    		width:64px;
+    	}
+    	
+    	.dsw-tooltip .dsw-tooltip-content .dsw-tooltip-content-lists .dsw-tooltip-content-item span.dsw-tooltip-content-item-val{
+    		
+    	}
+    	
+    	.dsw-tooltip-content-img{
+    		width: 100px;
+		    height: 120px;
+		    position: absolute;
+		    top: 0;
+		    right: 0;
+    	}
+    </style>
+    
+    <script>
+    	$(function(){
+    		$('.namesBox').tooltip({
+    			//trigger:'click',
+    			//animation:false,
+    			container:'.warningBox > ul',
+    			selector:'span',
+    			title:function(){
+    				var $el=$(this);
+    				var id=$el.data('id') || 0;
+    				var html='';
+    				
+    				var res=PublicAjax('/PersonRegister/getPersonListClickVo.json', {'id': id});
+    				
+    				if(res.success){
+    					var content=res.content;
+    					html+="<div class='dsw-tooltip-content'>"+
+					    	"<ul class='dsw-tooltip-content-lists'>"+
+					    		"<li class='dsw-tooltip-content-item'>"+
+					    			"<span class='dsw-tooltip-content-item-key'>"+content.showInfo[0]['name']+" :</span>"+
+					    			"<span class='dsw-tooltip-content-item-val'>"+content.showInfo[0]['value']+"</span>"+
+					    		"</li>"+
+					    		"<li class='dsw-tooltip-content-item'>"+
+					    			"<span class='dsw-tooltip-content-item-key'>"+content.showInfo[1]['name']+" :</span>"+
+					    			"<span class='dsw-tooltip-content-item-val'>"+content.showInfo[1]['value']+"</span>"+
+					    		"</li>"+
+					    		"<li class='dsw-tooltip-content-item'>"+
+					    			"<span class='dsw-tooltip-content-item-key'>"+content.showInfo[7]['name']+" :</span>"+
+					    			"<span class='dsw-tooltip-content-item-val'>"+content.showInfo[7]['value']+"</span>"+
+					    		"</li>"+
+					    		"<li class='dsw-tooltip-content-item'>"+
+					    			"<span class='dsw-tooltip-content-item-key'>"+content.showInfo[6]['name']+" :</span>"+
+					    			"<span class='dsw-tooltip-content-item-val'>"+content.showInfo[6]['value']+"</span>"+
+					    		"</li>"+
+					    	"</ul>"+
+					    	"<img class='dsw-tooltip-content-img' alt='' src='/FileUpload/getAttach.json?id="+content.photoUrl+"' />"+
+					    "</div>";
+    				}
+    				
+    				return html;
+    			},
+    			template:'<div class="dsw-tooltip" role="tooltip">'+
+						    '<div class="dsw-tooltip-arrow"></div>'+
+						    '<div class="dsw-tooltip-inner">'+
+						    '</div>'+
+					    '</div>',
+    			html:true
+    		});
+    	});
+    </script>
+    
+    
+    <div class="warnBeyongBox posAbs">
+        <div class="posRel wh100">
+            <div class="titBox posAbs clear">
+                <img src="../images/index/warnbeyong/niaoyangchaoqi.png" alt="" class="titLogo">
+                <span class="desc">尿样超期预警</span>
+            </div>
+            <a href="javascript:;" class="posAbs seeMore" onclick="parent.addMenuTab('尿检信息','/UrineTestInfoHtml/index')">更多</a>
+            <div class="titTop posAbs">
+                <span>尿样编号</span>
+                <span>主办民警</span>
+                <span>到期时间</span>
+            </div>
+            <ul class="posAbs urineOverTime">
+
+            </ul>
+            <img src="../images/index/warnbeyong/niaoyangchaoqi-beijing.png" alt="" class="bg wh100">
+        </div>
+    </div>
+    <div class="toDoBox posAbs warnBeyongBox">
+        <div class="posRel wh100">
+            <div class="titBox posAbs">
+                <img src="../images/index/toDo/daibanrenwu.png" alt="" class="titLogo">
+                <span class="desc">待办任务</span>
+            </div>
+            <a href="javascript:;" class="posAbs seeMore" onclick="openRemindIndex();">更多</a>
+            <div class="gtask-title titTop posAbs">
+                <span>任务名称</span>
+                <span>申请时间</span>
+            </div>
+            <ul class="posAbs gtask-list">
+
+            </ul>
+            <img src="../images/index/warnbeyong/niaoyangchaoqi-beijing.png" alt="" class="bg wh100">
+        </div>
+    </div>
+    <div class="cenMidCircle posAbs cenMid">
+        <div class="posRel wh100">
+            <img src="../images/index/mid/yq-490.png" alt="" class="img1">
+            <img src="../images/index/mid/yq-470.png" alt="" class="img2">
+            <img src="../images/index/mid/yq-450.png" alt="" class="img3">
+            <img src="../images/index/mid/04.png" alt="" class="img4">
+            <img src="../images/index/mid/05.png" alt="" class="img5">
+            <img src="../images/index/mid/06.png" alt="" class="img6">
+            <img src="../images/index/mid/07.png" alt="" class="img7">
+        </div>
+    </div>
+    <!-- <div class="backIndex posAbs">
+        <img src="../images/index/fanhui.png" alt="">
+        <span>返回首页</span>
+    </div> -->
+    <div class="rightTop posAbs">
+        <div class="leftBox">
+            <div class="posRel wh100">
+                <img src="../images/index/right/daoantongji.png" alt="" class="posAbs mid">
+                <span class="posAbs mid">到案方式统计</span>
+            </div>
+        </div>
+        <div class="rightBox">
+            <div class="posRel active">
+                <img src="../images/index/right/anniu-changtai.png" alt="" class="bg">
+                <img src="../images/index/right/anniu-xuanzhong.png" alt="" class="bgs">
+                <span class="posAbs cenMid">周系统</span>
+            </div>
+            <div class="posRel">
+                <img src="../images/index/right/anniu-changtai.png" alt="" class="bg">
+                <img src="../images/index/right/anniu-xuanzhong.png" alt="" class="bgs">
+                <span class="posAbs cenMid">月系统</span>
+            </div>
+            <div class="posRel">
+                <img src="../images/index/right/anniu-changtai.png" alt="" class="bg">
+                <img src="../images/index/right/anniu-xuanzhong.png" alt="" class="bgs">
+                <span class="posAbs cenMid">年系统</span>
+            </div>
+        </div>
+    </div>
+    <div class="rightBox1 posAbs">
+        <div class="posRel wh100">
+            <img src="../images/index/right/daoantogji.png" alt="" class="bg wh100">
+            <div class="barBox posAbs">
+            	 <div class="btnBox">
+                    <div class="prenBtn buttonBox">
+                        <div class="posRel wh100">
+
+                            <img src="../images/index/bananqu/renyuandengji_tubiao_zuojiantou.png" alt="" class="posAbs mid prenImg">
+                            <span class="posAbs mid">上一周</span>
+                            <input type="hidden" id="preInput">
+                        </div>
+                    </div>
+                    <input readonly type="text" id="nowInput" style="text-align:center;color:#01bae2;margin-left:8px;margin-top:3px;width:55%">
+                    <div class="nextBtn buttonBox">
+                        <div class="posRel wh100">
+
+                            <img src="../images/index/bananqu/renyuandengji_tubiao_youjiantou.png" alt="" class="posAbs mid nextImg">
+                            <span class="posAbs mid">下一周</span>
+                            <input type="hidden" id="nextInput">
+                        </div>
+                    </div>
+                </div>
+<!-- 				<ul class="tabBox accoWayCountTitle"> -->
+
+<!-- 				</ul> -->
+<!--                 <div class="titText"> -->
+<!--                     <div class="posRel wh100"> -->
+<!--                         <span class="posAbs mid">统计单位:</span> -->
+<!--                         <span class="textName mid posAbs"></span> -->
+<!--                     </div> -->
+<!--                	</div> -->
+                <div id="main" class="timeEcharts"></div>
+            </div>
+             <div class="typeBox posAbs">
+                <div>
+                    <div class="titBox">
+                        <div class="posRel wh100">
+                            <img src="../images/index/bananqu/tongji.png" alt="" class="posAbs mid">
+                            <span class="mid posAbs">入办案区人员身份类别统计</span>
+                        </div>
+                    </div>
+<!--                     <div class="dataBox"> -->
+<!--                         <div> -->
+<!--                             <span class="bgg bg1"></span> -->
+<!--                             <span>最大人数</span> -->
+<!--                         </div> -->
+<!--                         <div> -->
+<!--                             <span class="bgg bg2"></span> -->
+<!--                             <span>总人数</span> -->
+<!--                         </div> -->
+<!--                     </div> -->
+                </div>
+                <div id="dbzhexian"></div>
+            </div>
+        </div>
+    </div>
+    <div class="rightBox2 posAbs">
+        <div class="posRel wh100">
+            <img src="../images/index/right/bananqu-beijing.png" alt="" class="bg wh100">
+            <div class="foldBox posAbs">
+                <div class="titBox">
+                    <div class="posRel wh100">
+                        <img src="../images/index/bananqu/renshu.png" alt="" class="posAbs mid">
+                        <span class="posAbs mid">最近7天入办案区人数</span>
+                    </div>
+                </div>
+                <div id="zhexian"></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script th:inline="javascript">
+	function openRemindIndex(){
+		var roleIds = $("#roleList_hidden").val();
+		//alert(roleIds);
+		parent.addMenuTab('待办任务','/RemindHtml/index?roleIds='+roleIds);
+	}
+</script>
+</html>

@@ -33,14 +33,13 @@ public class MenuRpc {
 	 * @throws Exception
 	 */
 	@RequestMapping("/saveMenu")
-	public int saveMenu(MenuDo menuDo) {
-		int i = menuSerivce.saveMenu(menuDo);
-        return i;
+	public void saveMenu(MenuDo menuDo) {
+		menuSerivce.saveMenu(menuDo);
     }
 
     /**
 	 * 删除菜单
-	 * 
+	 *
 	 * @param param
 	 * @return
 	 * @throws BizException
@@ -82,4 +81,15 @@ public class MenuRpc {
     	res.setContent(menuDo);
     	return res;
     }
+
+	/**
+	 * 首页查询菜单树
+	 *
+	 * @return
+	 */
+	@RequestMapping("/getMenuTreeForIndex")
+	public List<MenuTreeVo> getMenuTreeForIndex() {
+		return menuSerivce.findMenuTreeByUserId();
+	}
+
 }

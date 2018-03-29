@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html>
+<head><meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+    <meta charset="UTF-8">
+    <title>人脸识别</title>
+    <div th:include="inc/common-new"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/video/perPhotoCss.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{../css/tableBoxCss.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{../css/index-common.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/video/tableBox-video.css}" />
+    <script th:src="@{../js/module.js}"></script>
+    <script th:src="@{../js/video/tableBoxJs-video.js}"></script>
+    <script th:src="@{../js/paging.js}"></script>
+</head>
+<body>
+<div id="leftBox" style="width:100%;height:100%">
+    <div class="posRel wh100">
+        <div class="searchBox posAbs cen">
+            <div class="posRel wh100">
+                <div class="editBox posAbs">
+                    <ul class="wh100">
+                        <li>
+                            <div class="posRel wh100" id="addBtn">
+                                <img src="../images/perRegis/renyuandengji_bg1.png" alt="" class="bg posAbs wh100">
+                                <img src="../images/perRegis/renyuandengji_tubiao_xinzeng.png" alt="" class="typeImg posAbs mid">
+                                <span class="posAbs mid">刷卡登记</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 通用高级查询html -->
+                <div th:include="inc/table-query"></div>
+            </div>
+        </div>
+        <!-- table公用数据html -->
+        <div id="personRegis-table" th:include="inc/table-dataField-div"></div>
+        <img src="../images/perRegis/renyuandengji_biankaungzuo.jpg" alt="" class="bgImg posAbs wh100">
+    </div>
+</div>
+</body>
+<script th:src="@{../../js/echarts.js}"></script>
+<script th:inline="javascript">
+	//点击迪赛威通道触发
+	function openVideoLeft(data){
+
+
+	}
+	//点击人员登记触发
+	function openVideoRight(data){
+        layer.open({
+            type: 2,
+            title: false,
+            anim: -1,
+            area: ["98%","95%"],
+            content: "/PersonRegisterHtml/faceTo.html?step=1&cardNo="+data.cardId+"&name="+encodeURI(data.name)+"&faceUrl="+encodeURI(data.groupFaceFullUrl),
+        });
+	}
+    var table = new iotTable({
+        dataUrl : '/Video/queryPage.json',
+        renderTo : '#personRegis-table',
+        queryFields : [{
+            text : '开始时间',
+            name : 'startTime',
+            type : 'date',
+        },{
+            text : '结束时间',
+            name : 'endTime',
+            type : 'date',
+        },{
+            text : '编号',
+            name : 'lockerNo',
+        }]
+    });
+    table.init();
+    //新增
+    $("#addBtn").click(function () {
+        layer.open({
+            type: 2,
+            title: false,
+            area: ['98%', '95%'],
+            content: "/PersonRegisterHtml/add.html"
+        });
+    });
+</script>
+</html>

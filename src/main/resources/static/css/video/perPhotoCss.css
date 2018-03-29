@@ -1,0 +1,108 @@
+ .perPhotoBox .perOnePhoto {
+    width: 48%;
+    margin: 10px;
+    float: left;
+    background: #003444;
+}
+
+@media screen and (min-width:1200px){
+	.perPhotoBox .perOnePhoto {
+	    width: 30%;
+	}
+}
+
+ .perPhotoBox .perOnePhoto .perDescBox {
+    width: 100%;
+    line-height: 2em;
+    font-size: 1em;
+    background: #b12222;
+    color: #ffffff;
+    padding: 0 0.5em;
+    box-sizing: border-box;
+}
+
+ .perPhotoBox .perOnePhoto .conBox {
+    width: 100%;
+    margin: 1em 0em;
+}
+
+ .perPhotoBox .perOnePhoto .conBox .imgLeft,
+ .perPhotoBox .perOnePhoto .conBox .imgRight {
+    float: left;
+    border: 1px solid #00d8ff;
+    width: 30%;
+    height: 10em;
+    margin: 0 1.666666666%;
+}
+
+ .perPhotoBox .perOnePhoto .conBox .mainBox {
+    float: left;
+    width: 30%;
+    height: 10em;
+    margin: 0 1.666666666%;
+}
+
+ .perPhotoBox .perOnePhoto .conBox .mainBox .piBox {
+    width: 100%;
+    height: 7em;
+}
+
+ .perPhotoBox .perOnePhoto .conBox .mainBox span {
+    width: 100%;
+    font-size: 1em;
+    color: #00d8ff;
+    text-align: center;
+    line-height: 1.5em;
+}
+
+ .perPhotoBox .perOnePhoto .botBox {
+    width: 100%;
+    height: 2em;
+    border-top: 0.1px solid #00d8ff;
+    margin-top: 1em;
+}
+
+ .perPhotoBox .perOnePhoto .botBox img {
+    height: 1.2em;
+    width: auto;
+    margin: 0.4em 0.5em 0.4em 0.5em;
+    float: left;
+}
+
+ .perPhotoBox .perOnePhoto .botBox>span {
+    font-size: 1em;
+    color: #00d8ff;
+    line-height: 2em;
+    float: left;
+}
+
+ .perPhotoBox .perOnePhoto .botBox .radioBox {
+    float: right;
+    font-size: 1em;
+    color: #00d8ff;
+    line-height: 2em;
+}
+
+ .perPhotoBox .perOnePhoto .botBox .radioBox span,
+ .perPhotoBox .perOnePhoto .botBox .radioBox div {
+    float: left;
+}
+
+ .perPhotoBox .perOnePhoto .botBox .radioBox span {
+    font-size: 1em;
+    color: #00d8ff;
+    line-height: 2em;
+    margin-right: 0.5em;
+}
+
+ .perPhotoBox .perOnePhoto .botBox .radioBox div input {
+    width: 1.2em;
+    height: 1.2em;
+    margin: 0.4em;
+}
+
+ .perPhotoBox .perOnePhoto .botBox .radioBox div span {
+    font-size: 1em;
+    color: #00d8ff;
+    line-height: 2em;
+}

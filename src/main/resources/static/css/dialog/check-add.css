@@ -1,0 +1,23 @@
+@charset "utf-8";
+
+.container-fluid.dsw-container{
+  background: url(../images/lawContro/beijing_dialog.png) no-repeat scroll 0 0;
+  background-size: 100% 100%;
+  background-color: #1b4067;
+}
+
+.container-fluid.dsw-container .youAdd{
+  border : none;
+}
+
+.container-fluid.dsw-container #diologBox{
+  background-color : transparent;
+}
+
+.container-fluid.dsw-container  #diologBox .topBoxCon .formBox .selBox{
+  overflow : visible;
+}
+
+.container-fluid.dsw-container .layui-form-select{
+  top : -12px;
+}

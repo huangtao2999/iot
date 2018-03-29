@@ -21,38 +21,51 @@ public class LockerHtml {
     @Autowired
     private LockerService lockerService;
 
-    @RequestMapping("index")
+	/**
+	 * 储物柜管理页面首页
+	 *
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/index")
     public String index(Model model) {
-//        List<TpLockerDo> lockers = lockerService.queryLocker();
-//        model.addAttribute("lockers", lockers);
         return "locker/index";
     }
 
-    @RequestMapping("index2")
-    public String index2(Model model) {
-//        List<TpLockerDo> lockers = lockerService.queryLocker();
-//        model.addAttribute("lockers", lockers);
-        return "locker/index2";
-    }
-
-    // 新增页面
-    @RequestMapping("add")
+	/**
+	 * 新增页面
+	 *
+	 * @return
+	 */
+	@RequestMapping("/add")
     public String add() {
         return "locker/add";
     }
 
-    // 查看页面
-    @RequestMapping("detail")
+	/**
+	 * 查看页面
+	 *
+	 * @param model
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/detail")
     public String detail(Model model, Long id) {
-        LockerDo lockerDo = lockerService.selectByPrimaryKey(id);
+		LockerDo lockerDo = lockerService.getLocker(id);
         model.addAttribute("lockerDo", lockerDo);
         return "locker/detail";
     }
 
-    // 编辑页面
-    @RequestMapping("edit")
+	/**
+	 * 编辑页面
+	 *
+	 * @param model
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/edit")
     public String edit(Model model, Long id) {
-        LockerDo lockerDo = lockerService.selectByPrimaryKey(id);
+		LockerDo lockerDo = lockerService.getLocker(id);
         model.addAttribute("lockerDo", lockerDo);
         return "locker/edit";
     }

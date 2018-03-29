@@ -1,0 +1,140 @@
+@charset "utf-8";
+
+.fl{
+  float : left;
+}
+
+.fr{
+  float : right;
+}
+
+.clearfix{
+  *zoom:1;
+}
+
+.clearfix::after,
+.clearfix::before{
+  content : '';
+  display : table;
+  clear : both;
+  visibility : hidden;
+  height : 0;
+  line-height : 0;
+}
+
+body.custom{
+  background-color: #144068;
+}
+
+body .container-fluid{
+  background-color : #144068;
+  background: url(../../images/custom/beijing_dialog.png) no-repeat scroll 0 0;
+  -webkit-background-size : 100% 100%;
+  background-size         : 100% 100%;
+  padding: 40px 10px 20px;
+  height : 100%;
+}
+
+body .youAdd,
+body .youAdd td{
+  border : none;
+}
+
+body .youAdd td.TDleft{
+  /*background-color: #032547;*/
+  background-color: transparent;
+}
+
+body .youAdd td,
+body .youAdd td.TDleft{
+  color : #00d8fc;
+}
+
+
+body .youAdd td.TDleft.require::before{
+  content: '*';
+  color: #c29111;
+  font-size: 24px;
+  margin-right: 5px;
+  vertical-align: bottom;
+  height: 16px;
+  display: inline-block;
+  line-height: 16px;
+}
+
+body .youAdd td.THtitle{
+  background: none;
+  border : none;
+  color : #00d8fc;
+}
+
+
+body .youAdd td.TDleft.img{
+  text-align : left;
+  vertical-align : top;
+}
+
+body .youAdd td img{
+  width : 100%;
+  /*height: 80px;*/
+}
+
+body textarea{
+  background: #032547;
+  color: #00d8fc;
+  resize : none;
+}
+
+body input[type]{
+  background: url(../../images/custom/shurukaung.png) no-repeat scroll 0 0;
+  border: none;
+  width: 205px;
+  height: 30px;
+  color: #00d8fc;
+}
+
+body .btn-youAdd .btn{
+  background: url(../../images/custom/baocun-changtai.png) no-repeat scroll 0 0;
+  color: #00d8fc;
+  width: 112px;
+  height: 45px;
+  border: navajowhite;
+  background-size: 100% 100%;
+  outline: none;
+}
+
+body .btn-youAdd .btn:hover,
+body .btn-youAdd .btn:active{
+  background : url("../../images/custom/baocun-dianji.png") no-repeat scroll 0 0;
+  background-size: 100% 100%;
+}
+
+
+
+body select::-ms-expand {
+  display: none;
+}
+
+body select {
+  width: 206px;
+  height: 30px;
+  /*为下拉小箭头留出一点位置，避免被文字覆盖*/
+  padding-right: 14px;
+
+  color: #00fcff;
+  border: none;
+  background-color: rgb(3, 37, 71);
+  /*在选择框的最右侧中间显示小箭头图片*/
+  background-image: url("http://ourjs.github.io/static/2015/arrow.png") no-repeat scroll right center transparent;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  /*很关键：将默认的select选择框样式清除*/
+  appearance: none;
+}
+
+body select option {
+  width: 100%;
+}
+
+

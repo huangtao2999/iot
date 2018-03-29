@@ -3,6 +3,7 @@ package com.dsw.iot.controller.rpc;
 import com.dsw.iot.model.UserDo;
 import com.dsw.iot.service.LoginService;
 
+import com.dsw.iot.util.ActionResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,5 +26,10 @@ public class LoginRpc {
     @RequestMapping("/login")
     public UserDo login(String userName, String passWord, HttpServletRequest request, HttpServletResponse response) throws Exception {
         return loginService.login(userName, passWord, request, response);
+    }
+
+    @RequestMapping("/logout")
+    public ActionResult logout(HttpServletRequest request, HttpServletResponse response) {
+        return loginService.logout(request, response);
     }
 }

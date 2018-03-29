@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.dsw.iot.util.BaseModel;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators.StringIdGenerator;
 
 import lombok.Data;
 
@@ -19,7 +20,7 @@ public class MenuTreeVo extends BaseModel{
     private Long pid;
     private String text;
     private String action;
-    private String icon;
+//    private String icon;
     private Integer sort;
     private String isValid;
     private String isDeleted;
@@ -28,6 +29,7 @@ public class MenuTreeVo extends BaseModel{
     private Date updateTime;
     private String updateUser;
 
+    private String menuIcon;
     /**
      * 树节点名（可以通过ztree配置，识别text；但是由id和pid生成的树必须是name）
      */

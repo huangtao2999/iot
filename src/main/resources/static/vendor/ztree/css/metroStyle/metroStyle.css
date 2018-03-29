@@ -84,6 +84,10 @@ website:    http://code.google.com/p/jquerytree/
 .ztree li span.button.add:hover {
   background-position: -168px 0;
 }
+.ztree li span.button.list {margin-left:2px; margin-right: -1px; background-position: -189px -63px; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.list:hover {
+  background-position: -168px -63px;
+}
 .ztree li span.button.ico_loading{margin-right:2px; background:url(./img/loading.gif) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
 
 ul.tmpTargetzTree {background-color:#FFE6B0; opacity:0.8; filter:alpha(opacity=80)}

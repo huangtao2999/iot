@@ -1,0 +1,359 @@
+#leftBox .searchBox {
+    width: 98%;
+    height: 12%;
+    z-index: 2;
+    padding: 1% 0;
+    box-sizing: border-box;
+}
+
+#leftBox .searchBox .editBox {
+    width: 50%;
+    height: 65%;
+    left: 0;
+}
+
+#leftBox .searchBox .editBox ul li {
+    width: 25%;
+    height: 100%;
+    margin-right: 3%;
+    float: left;
+    cursor: pointer;
+}
+
+#leftBox .searchBox .editBox ul li .typeImg {
+    left: 15%;
+    width: 15%;
+    height: auto;
+}
+
+#leftBox .searchBox .editBox ul li span {
+    font-size: 1em;
+    color: #01bae2;
+    right: 15%;
+}
+
+#leftBox .searchBox .radioBox {
+    width: 50%;
+    height: 75%;
+    right: 0;
+}
+
+#leftBox .searchBox .radioBox ul li {
+    width: 24%;
+    height: 100%;
+    margin-right: 1%;
+    float: left;
+    cursor: pointer;
+}
+
+#leftBox .searchBox .radioBox ul li img {
+    width: 15%;
+    height: auto;
+    left: 10%;
+}
+
+#leftBox .searchBox .radioBox ul li .selImg {
+    display: none;
+}
+
+#leftBox .searchBox .radioBox ul li span {
+    font-size: 0.7em;
+    color: #01bae2;
+    left: 30%;
+}
+
+#leftBox .searchBox .radioBox ul .active .selImg {
+    display: block;
+}
+
+#leftBox .searchBox .radioBox ul .active .defImg {
+    display: none;
+}
+
+#leftBox .searchBox .selectImgBox {
+    width: 8em;
+    height: 1em;
+    left: 0;
+    top: 75%;
+    cursor: pointer;
+}
+
+#leftBox .searchBox .selectImgBox img {
+    display: none;
+    width: 15%;
+    height: auto;
+}
+
+#leftBox .searchBox .selectImgBox span {
+    font-size: 0.8em;
+    color: #00d8ff;
+    left: 30%;
+}
+
+#leftBox .searchBox .selectImgBox .downImg {
+    display: block;
+}
+
+#leftBox .searchBox .adSearchBox {
+    border: 1px solid #01bae2;
+    width: 95%;
+    background: #03173a;
+    left: 3%;
+    top: 80%;
+    display: none;
+    padding: 0em 0em 0.5em 0em;
+    box-sizing: border-box;
+}
+
+#leftBox .searchBox .adSearchBox>span {
+    font-size: 0.8em;
+    color: #00d8ff;
+    width: 100%;
+    line-height: 1.4em;
+}
+
+#leftBox .searchBox .adSearchBox .searBox {
+    width: 50%;
+    height: 2.2em;
+    float: left;
+    box-sizing: border-box;
+}
+
+#leftBox .searchBox .adSearchBox .searBox span,
+#leftBox .searchBox .adSearchBox .searBox input,
+#leftBox .searchBox .adSearchBox .searBox select {
+    float: left;
+    height: 100%;
+    color: #01bae2;
+    font-size: 0.8em;
+}
+
+#leftBox .searchBox .adSearchBox .searBox span {
+    font-size: 0.8em;
+    color: #01bae2;
+    line-height: 2.3em;
+}
+
+#leftBox .searchBox .adSearchBox .searBox .desc {
+    width: 30%;
+}
+
+#leftBox .searchBox .adSearchBox .searBox input,
+#leftBox .searchBox .adSearchBox .searBox select {
+    width: 65%;
+    height: 1.5em;
+    margin-top: 0.4em;
+    background: #1b2e4e;
+    border: 0.1px solid #00d8ff;
+    text-align: center;
+}
+
+.tableBoxSelect{
+    height: 1.5em;
+    background: #1b2e4e;
+    border: 0.1px solid #00d8ff;
+    text-align: center;
+    padding-left: 5px;
+    width: 50px;
+    color : #01bae2 !important;
+}
+
+#leftBox .searchBox .adSearchBox .searBox .timeSel {
+    width: 30%;
+}
+
+#leftBox .searchBox .adSearchBox .searchBtnBox {
+    cursor: pointer;
+    width: 5em;
+    height: 2em;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+#leftBox .searchBox .adSearchBox .searchBtnBox span {
+    font-size: 1em;
+    color: #fcaa00;
+    right: 15%;
+}
+
+#leftBox .searchBox .adSearchBox .searchBtnBox .secImg {
+    left: 15%;
+    width: 15%;
+    height: auto;
+}
+
+#leftBox .dataListBox {
+    width: 100%;
+    height: 85%;
+    z-index: 1;
+    box-sizing: border-box;
+    bottom: 0;
+}
+
+#leftBox .dataListBox .titBox {
+    width: 100%;
+    height: 2.5em;
+}
+
+#leftBox .dataListBox .titBox .con>img {
+    z-index: -1;
+}
+
+#leftBox .dataListBox .titBox .con .titOne {
+    float: left;
+    z-index: 1;
+    height: 100%;
+}
+
+#leftBox .dataListBox .titBox .con .titOne span {
+    z-index: 1;
+    line-height: 2.5em;
+    font-size: 0.9em;
+    color: #17f3ea;
+    width: 100%;
+    text-align: center;
+}
+
+#leftBox .dataListBox .titBox .con .selBox {
+    height: 100%;
+}
+
+#leftBox .dataListBox .titBox .con .selBox img {
+    z-index: 1;
+    display: none;
+    width: 16px;
+    height: auto;
+    cursor: pointer;
+}
+
+#leftBox .dataListBox .titBox .con .selBox .defImg {
+    display: block;
+}
+
+#leftBox .dataListBox .titBox .con .nameBox {
+    height: 100%;
+}
+
+#leftBox .dataListBox .listBox {
+    width: 100%;
+    /* bottom: 10%; */
+    /* height: 80%; */
+    top: 2.5em;
+}
+
+#leftBox .dataListBox .listBox ul li {
+    width: 100%;
+    height: 1.8em;
+    border-top: 0.1px solid #00d8ff;
+    border-left: 0.1px solid #00d8ff;
+    border-right: 0.1px solid #00d8ff;
+    box-sizing: border-box;
+    z-index : 999;
+    background-color:#032547;
+    cursor: pointer;
+}
+#leftBox .dataListBox .listBox ul li:last-child {
+    border: 0.1px solid #01bae2;
+    box-sizing: border-box;
+}
+
+#leftBox .dataListBox .listBox ul li .titOne {
+    float: left;
+    height: 100%;
+}
+
+#leftBox .dataListBox .listBox ul li .selBox {
+    height: 100%;
+}
+
+#leftBox .dataListBox .listBox ul li .selBox img {
+    z-index: 1;
+    display: none;
+    width: 20%;
+    height: auto;
+}
+
+#leftBox .dataListBox .listBox ul li .selBox .defImg {
+    display: block;
+}
+
+#leftBox .dataListBox .listBox ul .active .selBox .defImg {
+    display: none;
+}
+
+#leftBox .dataListBox .listBox ul .active .selBox .selImg {
+    display: block;
+}
+
+#leftBox .dataListBox .listBox ul .active {
+    background: #073157;
+}
+
+#leftBox .dataListBox .listBox ul li .titOne span {
+    z-index: 1;
+    font-size: 0.8em;
+    color: #01bae2;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 2.2em;
+    overflow: hidden;
+}
+
+#leftBox .dataListBox .pagBox {
+    width: 100%;
+    height: 10%;
+    bottom: 0;
+    padding: 3% 4%;
+}
+
+#leftBox .dataListBox .pagBox button,
+#leftBox .dataListBox .pagBox input,
+#leftBox .dataListBox .pagBox div {
+    float: right;
+    color: #01bae2;
+    font-size: 0.8em;
+    margin-left: 1em;
+    cursor: pointer;
+}
+
+#leftBox .dataListBox .pagBox p {
+    float: right;
+    color: #01bae2;
+    font-size: 0.8em;
+    margin-left: 1em;
+}
+
+#leftBox .dataListBox .pagBox .jump-text,
+#leftBox .dataListBox .pagBox .jump-button {
+    display: none;
+}
+
+#leftBox .dataListBox .pagBox .pageWrap ul {
+    overflow: hidden;
+}
+
+#leftBox .dataListBox .pagBox .pageWrap li {
+    float: left;
+    width: 1.4em;
+    text-align: center;
+    cursor: pointer;
+}
+
+#leftBox .dataListBox .pagBox .pageWrap ul .sel-page {
+    color: #f3a503;
+}
+
+.body-data-list {
+	display: inline-block;
+}
+.body-data-list a+a{
+	margin-left: 10px;
+}
+.body-data-list input{
+	display: inline-block;
+	cursor: pointer;
+}
+.body-data-list input+input{
+	margin-left: 10px;
+}

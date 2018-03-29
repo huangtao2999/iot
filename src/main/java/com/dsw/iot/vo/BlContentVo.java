@@ -1,10 +1,9 @@
 package com.dsw.iot.vo;
 
-import java.util.List;
-
 import com.dsw.iot.util.BaseModel;
-
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * 笔录对象

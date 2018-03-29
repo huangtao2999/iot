@@ -1,0 +1,883 @@
+body{
+    background: #032547;
+}
+.warningBox {
+    width: 30%;
+    height: 80%;
+}
+
+.warningBox ul>li {
+       width: 100%;
+    height: 23%;
+    margin-bottom: 1%;
+}
+
+.warningBox ul>li .bg {
+    width: 100%;
+    height: 100%;
+}
+
+.warningBox ul>li .tit {
+    font-size: 0.9em;
+    color: #b5983c;
+    width: 100%;
+    position: absolute;
+    top: 13%;
+    left: 10%;
+}
+
+.warningBox ul>li .namesBox {
+       position: absolute;
+    width: 80%;
+    top: 50%;
+    left: 5%;
+}
+
+.warningBox ul>li .namesBox span {
+       font-size: 0.8em;
+    color: #01bae2;
+    float: left;
+    width: 30%;
+    display: block;
+    overflow: hidden;
+    height: 1.2em;
+    line-height: 1.2em;
+    margin: 0.15em 1%;
+    cursor:pointer;
+}
+
+.warningBox ul>li .circleBoxX {
+    width: 4em;
+    height: 4em;
+    right: -7%;
+    top: 45%;
+}
+
+.warningBox ul>li .circleBoxX div .imgS {
+   width: 70%;
+    height: auto;
+    top: 15%;
+    left: 15%;
+    position: absolute;
+    transition: all 500000000s linear;
+}
+
+.warningBox ul>li .circleBoxX div .imgB {
+    width: 100%;
+    height: auto;
+    top: 0%;
+    left: 0%;
+    position: absolute;
+    transition: all 1000000000s linear;
+}
+
+.warningBox ul>li .circleBoxX .time {
+    font-size: 0.9em;
+    color: #b5983c;
+    text-align: center;
+}
+
+.warningBox ul>li .circleBoxX div .rotateZ {
+    transform-origin: center;
+    transform: rotate(20800000000deg);
+    -ms-transform: rotate(20800000000deg);
+
+    -moz-transform: rotate(20800000000deg);
+
+    -webkit-transform: rotate(20800000000deg);
+
+    -o-transform: rotate(20800000000deg);
+}
+
+.warningBox ul>li .circleBoxX div .rotateF {
+    transform-origin: center;
+    transform: rotate(-10800000000deg);
+    -ms-transform: rotate(-10800000000deg);
+
+    -moz-transform: rotate(-10800000000deg);
+
+    -webkit-transform: rotate(-10800000000deg);
+
+    -o-transform: rotate(-10800000000deg);
+}
+
+.warnBeyongBox {
+    width: 30%;
+    height: 20%;
+    bottom: 0%;
+    left: 0%;
+}
+
+.warnBeyongBox .titBox {
+    width: 70%;
+    top: 10%;
+    left: 5%;
+    height: 23%;
+}
+
+.warnBeyongBox .seeMore {
+    width: 15%;
+    height: 23%;
+    top: 10%;
+    right: 0;
+    font-size: 0.8em;
+    color: #01bae2;
+    line-height: 1.6em;
+}
+
+.warnBeyongBox .titBox img {
+    width: 0.8em;
+    height: auto;
+    margin-right: 1.8em;
+    float: left;
+    margin-top: 2px;
+}
+
+.warnBeyongBox .titBox span {
+    font-size: 0.8em;
+    color: #b5983c;
+    float: left;
+    line-height: 1.6em;
+}
+
+.warnBeyongBox ul {
+    width: 100%;
+    left: 0%;
+    bottom: 0%;
+    height: 40%;
+}
+
+.warnBeyongBox .titTop {
+    width: 100%;
+    height: 20%;
+    top: 35%;
+    left: 0%;
+}
+
+.warnBeyongBox .titTop span {
+    font-size: 0.8em;
+    color: #01bae2;
+    width: 30%;
+    float: left;
+    line-height: 1.4em;
+    text-align: center;
+}
+
+.warnBeyongBox ul li {
+    width: 100%;
+    height: 50%;
+}
+
+.warnBeyongBox ul li span {
+    font-size: 0.8em;
+    color: #01bae2;
+    width: 30%;
+    float: left;
+    line-height: 1.4em;
+    text-align: center;
+}
+
+.toDoBox {
+    width: 30%;
+    height: 20%;
+    bottom: 0%;
+    left: 33%;
+}
+
+.toDoBox ul {
+    width: 100%;
+    height: 40%;
+    bottom: 0%;
+}
+
+.toDoBox ul li {
+    width: 100%;
+    height: 33%;
+    float: left;
+    line-height: 1.4em;
+    text-align: center;
+}
+
+.toDoBox ul li .descCon {
+    font-size: 0.8em;
+    color: #01bae2;
+    width: 50%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.toDoBox ul li .type {
+    font-size: 0.8em;
+    color: #01bae2;
+    width: 50%;
+}
+
+.toDoBox ul .do .descCon,
+.toDoBox ul .do .type {
+    color: #01bae2;
+}
+
+.cenMidCircle {
+    width: 300px;
+    height: 300px;
+}
+
+@media screen and (max-width:960px){
+	.cenMidCircle {
+	    width: 260px;
+	    height: 260px;
+	}
+}
+
+.cenMidCircle .img1 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: all 1000000000s linear;
+}
+
+.cenMidCircle .rotate1 {
+    transform-origin: center;
+    transform: rotate(-10800000000deg);
+    -ms-transform: rotate(-10800000000deg);
+    /* IE 9 */
+    -moz-transform: rotate(-10800000000deg);
+    /* Firefox */
+    -webkit-transform: rotate(-10800000000deg);
+    /* Safari �� Chrome */
+    -o-transform: rotate(-10800000000deg);
+}
+
+.cenMidCircle .img2 {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    top: 5%;
+    left: 5%;
+    transition: all 3000000000s linear;
+}
+
+.cenMidCircle .rotate2 {
+    transform-origin: center;
+    transform: rotate(10800000000deg);
+    -ms-transform: rotate(10800000000deg);
+    /* IE 9 */
+    -moz-transform: rotate(10800000000deg);
+    /* Firefox */
+    -webkit-transform: rotate(10800000000deg);
+    /* Safari �� Chrome */
+    -o-transform: rotate(10800000000deg);
+}
+
+.cenMidCircle .img3 {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    top: 10%;
+    left: 10%;
+    transition: all 5000000000s linear;
+}
+
+.cenMidCircle .rotate3 {
+    transform-origin: center;
+    transform: rotate(-10800000000deg);
+    -ms-transform: rotate(-10800000000deg);
+    /* IE 9 */
+    -moz-transform: rotate(-10800000000deg);
+    /* Firefox */
+    -webkit-transform: rotate(-10800000000deg);
+    /* Safari �� Chrome */
+    -o-transform: rotate(-10800000000deg);
+}
+
+.cenMidCircle .img4 {
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    top: 15%;
+    left: 15%;
+    transition: all 7000000000s linear;
+}
+
+.cenMidCircle .rotate4 {
+    transform-origin: center;
+    transform: rotate(10800000000deg);
+    -ms-transform: rotate(10800000000deg);
+    /* IE 9 */
+    -moz-transform: rotate(10800000000deg);
+    /* Firefox */
+    -webkit-transform: rotate(10800000000deg);
+    /* Safari �� Chrome */
+    -o-transform: rotate(10800000000deg);
+}
+
+.cenMidCircle .img5 {
+    position: absolute;
+    width: 35%;
+    height: 35%;
+    top: 32.5%;
+    left: 32.5%;
+    transition: all 9000000000s linear;
+}
+
+.cenMidCircle .rotate5 {
+    transform-origin: center;
+    transform: rotate(-10800000000deg);
+    -ms-transform: rotate(-10800000000deg);
+    /* IE 9 */
+    -moz-transform: rotate(-10800000000deg);
+    /* Firefox */
+    -webkit-transform: rotate(-10800000000deg);
+    /* Safari �� Chrome */
+    -o-transform: rotate(-10800000000deg);
+}
+
+.cenMidCircle .img6 {
+    position: absolute;
+    width: 30%;
+    height: 30%;
+    top: 35%;
+    left: 35%;
+    transition: all 11000000000s linear;
+}
+
+.cenMidCircle .rotate6 {
+    transform-origin: center;
+    transform: rotate(10800000000deg);
+    -ms-transform: rotate(10800000000deg);
+    /* IE 9 */
+    -moz-transform: rotate(10800000000deg);
+    /* Firefox */
+    -webkit-transform: rotate(10800000000deg);
+    /* Safari �� Chrome */
+    -o-transform: rotate(10800000000deg);
+}
+
+.cenMidCircle .img7 {
+    position: absolute;
+    width: 25%;
+    height: 25%;
+    top: 37.5%;
+    left: 37.5%;
+    transition: all 600000000s linear;
+}
+
+.cenMidCircle .rotate7 {
+    transform-origin: center;
+    transform: rotate(-10800000000deg);
+    -ms-transform: rotate(-10800000000deg);
+    /* IE 9 */
+    -moz-transform: rotate(-10800000000deg);
+    /* Firefox */
+    -webkit-transform: rotate(-10800000000deg);
+    /* Safari �� Chrome */
+    -o-transform: rotate(-10800000000deg);
+}
+.backIndex {
+    top: 9%;
+    right: 5%;
+    cursor: pointer;
+}
+
+.backIndex img {
+    width: 1.4em;
+    height: auto;
+    margin-right: 0.8em;
+    float: left;
+}
+
+.backIndex span {
+    font-size: 1.2em;
+    color: #01bae2;
+    float: left;
+}
+
+.rightTop {
+    width: 35%;
+    height: 6%;
+    top: 0%;
+    right: 0%;
+}
+
+.rightTop .leftBox {
+    float: left;
+    width: 40%;
+    height: 100%;
+}
+
+.rightTop .leftBox img {
+    width: 10%;
+    height: auto;
+}
+
+.rightTop .leftBox span {
+    font-size: 1em;
+    color: #02aacf;
+    left: 15%;
+}
+
+.rightTop .rightBox {
+    float: left;
+    width: 60%;
+    height: 100%;
+}
+
+.rightTop .rightBox div {
+    width: 33%;
+    height: 100%;
+    float: left;
+    cursor: pointer;
+}
+
+.rightTop .rightBox div img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.rightTop .rightBox div .bgs {
+    display: none;
+}
+
+.rightTop .rightBox .active .bgs {
+    display: block;
+}
+
+.rightTop .rightBox div span {
+    font-size: 0.8em;
+    color: #01bae2;
+    width: 100%;
+    text-align: center;
+}
+
+.rightBox1 {
+        width: 35%;
+    height: 58%;
+    top: 7%;
+    right: 0%;
+}
+
+.rightBox2 {
+       width: 35%;
+    height: 34%;
+    bottom: 0%;
+    right: 0%;
+}
+
+.barBox {
+       width: 100%;
+    height: 50%;
+    top: 0;
+    left: 0;
+}
+
+.barBox .tabBox {
+    width: 100%;
+    height: 7%;
+    margin-top: 5%;
+    margin-bottom: 1%;
+}
+
+.barBox .tabBox li {
+    float: right;
+    width: 13%;
+    box-sizing: border-box;
+}
+
+.barBox .tabBox li .barColor {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    float: left;
+    margin-top: 1px;
+}
+
+.barBox .tabBox li .barColor1 {
+    background: #00eaff;
+}
+
+.barBox .tabBox li .barColor2 {
+    background: #ffb400;
+}
+
+.barBox .tabBox li .barColor3 {
+    background: #f95e02;
+}
+
+.barBox .tabBox li .barColor4 {
+    background: #f24a68;
+}
+
+.barBox .tabBox li .barColor5 {
+    background: #bf41fb;
+}
+
+.barBox .tabBox li .barColor6 {
+    background: #3e73fb;
+}
+
+.barBox .tabBox li .barColor7 {
+    background: #39ea8d;
+}
+
+.barBox .tabBox li .desc {
+    font-size: 6px;
+    color: #04acd2;
+    margin-left: 3px;
+    float: left;
+    line-height: 10px;
+}
+
+.barBox .titText {
+    width: 100%;
+    height: 10%;
+}
+
+.barBox .titText span {
+    color: #02aacf;
+    font-size: 0.8em;
+    left: 5%;
+}
+
+.barBox .titText .textName {
+    left: 25%;
+}
+
+.barBox .scaleBox {
+    width: 100%;
+    margin-top: 1%;
+}
+
+.barBox .scaleBox ul {
+    width: 100%;
+}
+
+.barBox .scaleBox ul li {
+    width: 100%;
+    height: 13px;
+    padding: 0px 5px;
+    box-sizing: border-box;
+}
+
+.barBox .scaleBox ul li span:nth-of-type(1) {
+    font-size: 8px;
+    color: #02aacf;
+    text-align: right;
+    width: 4%;
+    line-height: 13px;
+    float: left;
+}
+
+.barBox .scaleBox ul li .dash {
+    border-bottom: dashed 1px #2d405c;
+    width: 90%;
+    height: 70%;
+    box-sizing: border-box;
+    margin-left: 10px;
+    float: left;
+}
+
+.barBox .barDataBox {
+    width: 100%;
+    height: 80px;
+    bottom: 8px;
+}
+
+.barBox .barDataBox ul {
+    width: 100%;
+    height: 100%;
+    padding: 0px 0px 0px 40px;
+}
+
+.barBox .barDataBox ul li {
+    float: left;
+    width: 13%;
+    height: 100%;
+    position: relative;
+}
+
+.barBox .barDataBox ul li .barData {
+    width: 20px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 17px;
+}
+
+.barBox .barDataBox ul li .desc {
+    font-size: 8px;
+    color: #02b5db;
+    bottom: 0;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+}
+
+.barBox .barDataBox ul li .dataCon {
+    display: none;
+}
+
+.barBox .barDataBox ul li .barData1 {
+    background: #00d5eb;
+    background: -webkit-linear-gradient(#00d5eb, #02738f, #032547);
+    /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#00d5eb, #02738f, #032547);
+    /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#00d5eb, #02738f, #032547);
+    /* Firefox 3.6 - 15 */
+    background: linear-gradient(#00d5eb, #02738f, #032547);
+    /* 鏍囧噯鐨勮娉� */
+}
+
+.barBox .barDataBox ul li .barData2 {
+    background: #e7a506;
+    background: -webkit-linear-gradient(#e7a506, #81671e, #032547);
+    /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#e7a506, #81671e, #032547);
+    /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#e7a506, #81671e, #032547);
+    /* Firefox 3.6 - 15 */
+    background: linear-gradient(#e7a506, #81671e, #032547);
+    /* 鏍囧噯鐨勮娉� */
+}
+
+.barBox .barDataBox ul li .barData3 {
+    background: #f75e02;
+    background: -webkit-linear-gradient(#f75e02, #93421a, #032547);
+    /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#f75e02, #93421a, #032547);
+    /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#f75e02, #93421a, #032547);
+    /* Firefox 3.6 - 15 */
+    background: linear-gradient(#f75e02, #93421a, #032547);
+    /* 鏍囧噯鐨勮娉� */
+}
+
+.barBox .barDataBox ul li .barData4 {
+    background: #f74b69;
+    background: -webkit-linear-gradient(#f74b69, #8a3555, #032547);
+    /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#f74b69, #8a3555, #032547);
+    /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#f74b69, #8a3555, #032547);
+    /* Firefox 3.6 - 15 */
+    background: linear-gradient(#f74b69, #8a3555, #032547);
+    /* 鏍囧噯鐨勮娉� */
+}
+
+.barBox .barDataBox ul li .barData5 {
+    background: #bf41fb;
+    background: -webkit-linear-gradient(#bf41fb, #7031ab, #032547);
+    /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#bf41fb, #7031ab, #032547);
+    /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#bf41fb, #7031ab, #032547);
+    /* Firefox 3.6 - 15 */
+    background: linear-gradient(#bf41fb, #7031ab, #032547);
+    /* 鏍囧噯鐨勮娉� */
+}
+
+.barBox .barDataBox ul li .barData6 {
+    background: #3d72f9;
+    background: -webkit-linear-gradient(#3d72f9, #1e4394, #032547);
+    /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#3d72f9, #1e4394, #032547);
+    /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#3d72f9, #1e4394, #032547);
+    /* Firefox 3.6 - 15 */
+    background: linear-gradient(#3d72f9, #1e4394, #032547);
+    /* 鏍囧噯鐨勮娉� */
+}
+
+.barBox .barDataBox ul li .barData7 {
+    background: #38e58b;
+    background: -webkit-linear-gradient(#38e58b, #1e8063, #032547);
+    /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#38e58b, #1e8063, #032547);
+    /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#38e58b, #1e8063, #032547);
+    /* Firefox 3.6 - 15 */
+    background: linear-gradient(#38e58b, #1e8063, #032547);
+    /* 鏍囧噯鐨勮娉� */
+}
+
+.rightBox2 .foldBox {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.rightBox2 .foldBox .titBox {
+    width: 100%;
+    margin-top: 3%;
+    box-sizing: border-box;
+    height: 18%;
+}
+
+.rightBox2 .foldBox .titBox img {
+    width: 4%;
+    height: auto;
+}
+
+.rightBox2 .foldBox .titBox span {
+    font-size: 1em;
+    color: #02aacf;
+    left: 6%;
+}
+
+.rightBox1 .typeBox {
+       width: 100%;
+    height: 50%;
+    bottom: 0;
+    left: 0;
+    padding-top: 2px;
+    box-sizing: border-box;
+}
+
+.rightBox1 .typeBox>div {
+    width: 100%;
+    height: 2em;
+}
+
+.rightBox1 .typeBox>div .titBox {
+    width: 70%;
+    height: 100%;
+    box-sizing: border-box;
+    float: left;
+}
+
+.rightBox1 .typeBox>div .titBox img {
+    width: 5%;
+    height: auto;
+}
+
+.rightBox1 .typeBox>div .titBox span {
+    font-size: 1em;
+    color: #02aacf;
+    left: 7%;
+}
+
+.rightBox1 .typeBox>div .dataBox {
+    width: 30%;
+    height: 100%;
+    float: right;
+}
+
+.rightBox1 .typeBox>div .dataBox div {
+    width: 50%;
+    float: left;
+}
+
+.rightBox1 .typeBox>div .dataBox div .bgg {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    margin-right: 4px;
+    float: left;
+    margin-top: 11px;
+}
+
+.rightBox1 .typeBox>div .dataBox div>.bg1 {
+    background: #00eaff;
+}
+
+.rightBox1 .typeBox>div .dataBox div>.bg2 {
+    background: #ffb400;
+}
+
+.rightBox1 .typeBox>div .dataBox div span {
+    font-size: 8px;
+    color: #02aacf;
+    float: left;
+    line-height: 30px;
+}
+
+.btnBox {
+    width: 95%;
+    height: 20%;
+    margin: 3.5% auto 0%;
+}
+
+.btnBox .buttonBox {
+    cursor: pointer;
+}
+
+.btnBox .buttonBox span {
+    font-size: 0.8em;
+    color: #01bae2;
+}
+
+.btnBox .prenBtn {
+    width: 20%;
+    height: 100%;
+    float: left;
+}
+
+.btnBox .prenBtn .prenImg {
+    width: 40%;
+    height: auto;
+    left: 5%;
+}
+
+.btnBox .prenBtn span {
+    right: 5%;
+}
+
+.btnBox .nextBtn {
+    width: 20%;
+    height: 100%;
+    float: right;
+}
+
+.btnBox .nextBtn .nextImg {
+    width: 40%;
+    height: auto;
+    right: 5%;
+}
+
+.btnBox .nextBtn span {
+    left: 5%;
+}
+
+
+.timeEcharts {
+    width: 100%;
+    height: 75%;
+    margin-top: 4%;
+}
+
+#zhexian,
+#dbzhexian {
+    width: 100%;
+    height: 75%;
+    margin-top: 1%;
+}
+.warningBox .namesBox > span{
+	overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.urineOverTime > li > a > span{
+	overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.gtask-title span{
+	width : 50% !important;
+}
+.gtask-list > li > a > span{
+	overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+#nowInput{
+	color: #01bae2;
+    position: relative;
+    top: 3px;
+    left: 10px;
+    width: 204px;
+}

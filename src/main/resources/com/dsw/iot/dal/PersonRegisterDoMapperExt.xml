@@ -1,3 +1,152 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.dsw.iot.dal.PersonRegisterDoMapperExt" />
+<mapper namespace="com.dsw.iot.dal.PersonRegisterDoMapperExt" >
+<!-- 延期预警，提前一小时预警 -->
+  <select id="selectDelayAlarmList" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from person_register
+	where 1=1
+	and is_deleted = 'N'
+	and person_status = '1'
+	<![CDATA[
+	and DATE_ADD(in_time, INTERVAL delay_hour - 1  hour) < SYSDATE()
+	]]>
+  </select>
+<!-- 延期预警，单个预警查询，提前一小时预警 -->
+  <select id="selectDelayAlarmSingle" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	select
+	<include refid="Base_Column_List" />
+	from person_register
+	where 1=1
+	and is_deleted = 'N'
+	and person_status = '1'
+	and delay_hour = #{delayHour, jdbcType=INTEGER}
+	<![CDATA[
+	and DATE_ADD(in_time, INTERVAL delay_hour - 1  hour) < SYSDATE()
+	]]>
+  </select>
+<!--   最近7天入办案区人数统计，统计当天之前的7天 -->
+  <resultMap id="WeekCountResultMap" type="com.dsw.iot.vo.IndexChartVo" >
+    <result column="cnt" property="cnt" jdbcType="INTEGER" />
+    <result column="in_week" property="inWeek" jdbcType="INTEGER" />
+    <result column="in_time" property="inTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectOneWeekCount" resultMap="WeekCountResultMap" parameterType="com.dsw.iot.dto.IndexChartRequest">
+	SELECT count(*) as cnt, DATE_FORMAT(in_time, '%Y-%m-%d') as in_time, DATE_FORMAT(in_time, '%w') as in_week
+	FROM person_register
+	WHERE 1=1
+	AND is_deleted = 'N'
+	<![CDATA[
+	AND DATE_FORMAT(in_time, '%Y-%m-%d') > DATE_SUB(DATE_FORMAT(#{countDate,jdbcType=DATE}, '%Y-%m-%d'),INTERVAL 7 DAY)
+	AND DATE_FORMAT(in_time, '%Y-%m-%d') <= DATE_FORMAT(#{countDate,jdbcType=DATE}, '%Y-%m-%d')
+	GROUP BY DATE_FORMAT(in_time, '%Y-%m-%d')
+	ORDER BY in_time ASC
+	]]>
+  </select>
+
+<!-- 统计到案方式数量，周、月、年 -->
+  <resultMap id="InTypeCountResultMap" type="com.dsw.iot.vo.IndexChartVo" >
+    <result column="cnt" property="cnt" jdbcType="INTEGER" />
+    <result column="in_time" property="inTime" jdbcType="VARCHAR" />
+    <result column="in_type" property="inType" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="InTypeCountResultMap2" type="com.dsw.iot.vo.IndexChartVo" >
+    <result column="cnt" property="cnt" jdbcType="INTEGER" />
+    <result column="in_type" property="inType" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectInTypeDateBetweenCount" resultMap="InTypeCountResultMap2" parameterType="com.dsw.iot.dto.IndexChartRequest">
+	select count(*) as cnt, in_type
+	from person_register
+	where 1=1
+	and is_deleted = 'N'
+	<![CDATA[
+	and DATE_FORMAT(in_time, '%Y%m%d') >= DATE_FORMAT(#{startDate,jdbcType=VARCHAR},'%Y%m%d')
+	and DATE_FORMAT(in_time, '%Y%m%d') <= DATE_FORMAT(#{endDate,jdbcType=VARCHAR},'%Y%m%d')
+	group by in_type;
+	]]>
+  </select>
+  <select id="selectInTypeWeekCount" resultMap="InTypeCountResultMap" parameterType="com.dsw.iot.dto.IndexChartRequest">
+	select count(*) as cnt, in_type, DATE_FORMAT(in_time,'%Y%u') as in_time
+	from person_register
+	where 1=1
+	and is_deleted = 'N'
+	<![CDATA[
+	and DATE_FORMAT(in_time, '%Y%u') = #{inWeek,jdbcType=VARCHAR}
+	group by in_type;
+	]]>
+  </select>
+  <select id="selectInTypeMonthCount" resultMap="InTypeCountResultMap" parameterType="com.dsw.iot.dto.IndexChartRequest">
+	select count(*) as cnt, in_type, DATE_FORMAT(in_time,'%Y%m') as in_time
+	from person_register
+	where 1=1
+	and is_deleted = 'N'
+	<![CDATA[
+	and DATE_FORMAT(in_time, '%Y%m') = #{inMonth,jdbcType=VARCHAR}
+	group by in_type;
+	]]>
+  </select>
+  <select id="selectInTypeYearCount" resultMap="InTypeCountResultMap" parameterType="com.dsw.iot.dto.IndexChartRequest">
+	select count(*) as cnt, in_type, DATE_FORMAT(in_time,'%Y') as in_time
+	from person_register
+	where 1=1
+	and is_deleted = 'N'
+	<![CDATA[
+	and DATE_FORMAT(in_time, '%Y') = #{inYear,jdbcType=VARCHAR}
+	group by in_type;
+	]]>
+  </select>
+
+<!-- 统计人员身份类别，周、月、年 -->
+    <resultMap id="PersonTypeCountResultMap" type="com.dsw.iot.vo.IndexChartVo" >
+    <result column="cnt" property="cnt" jdbcType="INTEGER" />
+    <result column="in_time" property="inTime" jdbcType="VARCHAR" />
+    <result column="in_type" property="inType" jdbcType="VARCHAR" />
+  </resultMap>
+    <resultMap id="PersonTypeCountResultMap2" type="com.dsw.iot.vo.IndexChartVo" >
+    <result column="cnt" property="cnt" jdbcType="INTEGER" />
+    <result column="in_time" property="inTime" jdbcType="VARCHAR" />
+    <result column="in_type" property="inType" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectPersonTypeDateBetweenCount" resultMap="PersonTypeCountResultMap2" parameterType="com.dsw.iot.dto.IndexChartRequest">
+	select count(*) as cnt, in_type
+	from person_register
+	where 1=1
+	and is_deleted = 'N'
+	<![CDATA[
+	and DATE_FORMAT(in_time, '%Y%m%d') >= DATE_FORMAT(#{startDate,jdbcType=VARCHAR},'%Y%m%d')
+	and DATE_FORMAT(in_time, '%Y%m%d') <= DATE_FORMAT(#{endDate,jdbcType=VARCHAR},'%Y%m%d')
+	group by  person_type;
+	]]>
+  </select>
+  <select id="selectPersonTypeWeekCount" resultMap="PersonTypeCountResultMap" parameterType="com.dsw.iot.dto.IndexChartRequest">
+	select count(*) as cnt, in_type, DATE_FORMAT(in_time,'%Y%u') as in_time
+	from person_register
+	where 1=1
+	and is_deleted = 'N'
+	<![CDATA[
+	and DATE_FORMAT(in_time, '%Y%u') = #{inWeek,jdbcType=VARCHAR}
+	group by person_type;
+	]]>
+  </select>
+  <select id="selectPersonTypeMonthCount" resultMap="PersonTypeCountResultMap" parameterType="com.dsw.iot.dto.IndexChartRequest">
+	select count(*) as cnt, in_type, DATE_FORMAT(in_time,'%Y%m') as in_time
+	from person_register
+	where 1=1
+	and is_deleted = 'N'
+	<![CDATA[
+	and DATE_FORMAT(in_time, '%Y%m') = #{inMonth,jdbcType=VARCHAR}
+	group by person_type;
+	]]>
+  </select>
+  <select id="selectPersonTypeYearCount" resultMap="PersonTypeCountResultMap" parameterType="com.dsw.iot.dto.IndexChartRequest">
+	select count(*) as cnt, in_type, DATE_FORMAT(in_time,'%Y') as in_time
+	from person_register
+	where 1=1
+	and is_deleted = 'N'
+	<![CDATA[
+	and DATE_FORMAT(in_time, '%Y') = #{inYear,jdbcType=VARCHAR}
+	group by person_type;
+	]]>
+  </select>
+</mapper>

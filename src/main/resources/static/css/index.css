@@ -1,0 +1,484 @@
+#indexBox {
+    width: 100%;
+    height: 100%;
+
+    background: #032547;
+}
+
+#indexBox .indexConBox {
+    width: 100%;
+    height: 100%;
+}
+
+#indexBox .indexConBox .indexBgImg {
+    width: 100%;
+    height: 100%;
+}
+.cancellationImg {
+    top: 1.5%;
+    right: 3.5%;
+    z-index: 100;
+
+    width: 1.5%;
+    height: auto;
+
+    cursor: pointer;
+}
+.logoBox {
+    top: 1%;
+    left: 5%;
+
+    width: 28%;
+    height: 5%;
+}
+
+.logoBox img {
+    width: 8%;
+    height: auto;
+}
+
+.logoBox .descCon {
+    left: 10%;
+
+    width: 90%;
+    height: 100%;
+}
+
+.logoBox .descCon > span {
+    color: #01bae2;
+}
+
+.logoBox .descCon .zhcn {
+    font-size: 1.4em;
+
+    color: #01bae2;
+}
+
+.loginBox {
+    top: 3%;
+    right: 10%;
+
+    width: 22%;
+    height: 5%;
+}
+
+.loginBox .con {
+    position: relative;
+
+    float: left;
+    width: 50%;
+    height: 100%;
+
+    cursor: pointer;
+}
+
+.loginBox .con > img {
+    width: 10%;
+    height: auto;
+}
+
+.loginBox .con .downImg {
+    left: 11%;
+
+    width: 8%;
+}
+
+.loginBox .con .upImg {
+    left: 11%;
+
+    display: none;
+    width: 8%;
+}
+.loginBox .con .downBox {
+    top: 100%;
+    z-index: 200;
+
+    display: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.loginBox .con .downBox ul {
+    width: 95%;
+    height: 90%;
+    padding: 10px 0;
+    box-sizing: border-box;
+}
+
+.loginBox .con .downBox ul li {
+    height: 1.8em;
+
+    font-size: 1em;
+    line-height: 1.8em;
+
+    text-align: center;
+
+    color: #01bae2;
+}
+
+.loginBox .con .downBox ul li span {
+    width: 100%;
+    height: 1.8em;
+
+    font-size: 1em;
+    line-height: 1.8em;
+
+    text-align: center;
+
+    color: #01bae2;
+}
+
+.loginBox .con .downBox ul li img {
+    display: none;
+}
+
+.loginBox .con .downBox ul li:hover img {
+    display: block;
+}
+
+.loginBox .con > span {
+    right: 0;
+
+    width: 80%;
+    box-sizing: border-box;
+
+    font-size: 1.2em;
+
+    text-align: center;
+
+    color: #24d2db;
+    border-radius: 30px;
+    background: rgba(16, 44, 72, 1);
+}
+
+.menuBox {
+    top: 7%;
+    left: 2%;
+
+    width: 14%;
+    height: 90%;
+    /* Firefox 4 */
+
+    -webkit-transition: all .5s linear;
+       -moz-transition: all .5s linear;
+    /* Safari and Chrome */
+         -o-transition: all .5s linear;
+            transition: all .5s linear;
+
+    opacity: 1;
+    /* Opera */
+}
+
+.menuBox > div .bg {
+    width: 100%;
+    height: 100%;
+}
+
+.menuBox > div > ul {
+    top: 10%;
+
+    width: 100%;
+    height: 75%;
+}
+
+.menuBox > div > ul > li {
+    width: 100%;
+    height: 10%;
+
+    cursor: pointer;
+}
+
+.menuBox > div > ul > li .bg {
+    position: absolute;
+
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+.menuBox > div > ul > li .logoImg {
+    position: absolute;
+    left: 6%;
+
+   
+    height: auto;
+}
+
+.menuBox > div > ul > li span {
+    position: absolute;
+
+    width: 100%;
+
+    font-size: 1em;
+
+    text-align: center;
+
+    color: #01bae2;
+}
+
+.menuBox > div > ul > li .more {
+    position: absolute;
+    right: 5%;
+
+    display: none;
+    width: 1.4em;
+    height: auto;
+}
+
+.menuBox > div > ul > li .packUp {
+    position: absolute;
+    right: 5%;
+
+    display: none;
+    width: 1.4em;
+    height: auto;
+}
+
+.menuBox > div > ul > li .bottomImg {
+    bottom: 0;
+
+    width: 100%;
+    min-height: 1px;
+}
+
+.menuBox .erjiMenuBox {
+    position: absolute;
+    left: 100%;
+    z-index: 1;
+
+    display: none;
+    width: 80%;
+    box-sizing: border-box;
+
+    opacity: .9;
+}
+
+.menuBox .erjiMenuBox .erjiMenuBgImg {
+    width: 100%;
+    height: 100%;
+}
+
+.menuBox .erjiMenuBox ul {
+    width: 95%;
+    height: 100%;
+    padding: 50px 0 0 10%;
+    box-sizing: border-box;
+}
+
+.menuBox .erjiMenuBox ul li {
+    width: 100%;
+    height: 1.8em;
+
+    color: #01bae2;
+}
+
+.menuBox .erjiMenuBox ul li span {
+    font-size: 1em;
+
+    color: #01bae2;
+}
+
+.menuBox .erjiMenuBox ul li .erjiMenuBg {
+    display: none;
+}
+
+.menuBox .erjiMenuBox ul li:hover .erjiMenuBg {
+    display: block;
+}
+
+.menuBox > div .circleBox1 {
+    right: 10px;
+    bottom: 20px;
+
+    width: 60px;
+    height: 60px;
+}
+
+.menuBox > div .circleBox2 {
+    right: 80px;
+    bottom: 10px;
+
+    width: 30px;
+    height: 30px;
+}
+
+.menuBox > div .circleBox > div {
+    border-radius: 50%;
+}
+
+.menuBox > div .circleBox > div .imgS {
+    position: absolute;
+    top: 15%;
+    left: 15%;
+
+    width: 70%;
+    height: auto;
+
+    transition: all 500000000s linear;
+}
+
+.menuBox > div .circleBox > div .imgB {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: auto;
+
+    transition: all 1000000000s linear;
+}
+
+.menuBox > div .circleBox > div .rotateZ {
+    /* Firefox */
+    -webkit-transform: rotate(20800000000deg);
+    /* IE 9 */
+       -moz-transform: rotate(20800000000deg);
+        -ms-transform: rotate(20800000000deg);
+    /* Safari 鍜� Chrome */
+         -o-transform: rotate(20800000000deg);
+            transform: rotate(20800000000deg);
+    transform-origin: center, center;
+}
+
+.menuBox > div .circleBox > div .rotateF {
+    /* Firefox */
+    -webkit-transform: rotate(-10800000000deg);
+    /* IE 9 */
+       -moz-transform: rotate(-10800000000deg);
+        -ms-transform: rotate(-10800000000deg);
+    /* Safari 鍜� Chrome */
+         -o-transform: rotate(-10800000000deg);
+            transform: rotate(-10800000000deg);
+    transform-origin: center, center;
+}
+
+.tabHtmlBox {
+    top: 9%;
+    right: 2%;
+
+    width: 81%;
+    height: 85%;
+    /* Firefox 4 */
+
+    -webkit-transition: all .5s linear;
+       -moz-transition: all .5s linear;
+    /* Safari and Chrome */
+         -o-transition: all .5s linear;
+            transition: all .5s linear;
+    /* Opera */
+}
+
+.tabHtmlBox .tabBox {
+    width: 95%;
+    height: 5%;
+    margin: 0 auto;
+
+    background: #001d3d;
+}
+
+.tabHtmlBox .tabBox ul {
+    width: 100%;
+    height: 100%;
+}
+
+.tabHtmlBox .tabBox ul li {
+    float: left;
+    width: 10%;
+    height: 100%;
+    box-sizing: border-box;
+
+    cursor: pointer;
+
+    border-right: 1px solid #001d3d;
+    background: #01385e;
+    background: -webkit-linear-gradient(#01385e, #012547, #023a5b);
+    /* Safari 5.1 - 6.0 */
+    background:      -o-linear-gradient(#01385e, #012547, #023a5b);
+    /* Opera 11.1 - 12.0 */
+    background:    -moz-linear-gradient(#01385e, #012547, #023a5b);
+    /* Firefox 3.6 - 15 */
+    background:         linear-gradient(#01385e, #012547, #023a5b);
+    /* 鏍囧噯鐨勮娉� */
+}
+
+.tabHtmlBox .tabBox ul li .desc {
+    left: 5%;
+
+    font-size: 1em;
+
+    color: #01bae2;
+}
+
+.tabHtmlBox .tabBox ul li .closeImg {
+    right: 2%;
+    z-index: 100;
+
+    width: .8em;
+    height: auto;
+
+    cursor: pointer;
+
+    border-radius: 50%;
+}
+
+.tabHtmlBox .tabBox ul li .tabBgImg {
+    display: none;
+}
+
+.tabHtmlBox .tabBox ul .active .tabBgImg {
+    display: block;
+}
+
+.tabHtmlBox .tabBox ul li .warningBox {
+    top: 10%;
+    left: 15%;
+
+    width: 220px;
+}
+
+.tabHtmlBox .htmlBox {
+    width: 100%;
+    height: 91%;
+    margin-top: 2%;
+}
+
+.tabHtmlBox .htmlBox ul,
+.tabHtmlBox .htmlBox li,
+.tabHtmlBox .htmlBox iframe {
+    width: 100%;
+    height: 100%;
+}
+
+.showUpImg {
+    display: none;
+}
+
+.showUpImg,
+.packUpImg {
+    width: 3%;
+    height: auto;
+
+    cursor: pointer;
+}
+
+/* @media screen and (max-width:1280px) {}
+
+@media screen and (min-width:1280px) and (max-width:1500px) {}
+
+@media screen and (min-width:1500px) and (max-width:1800px) {
+    .menuBox>div>ul>li span {
+        font-size: 17px;
+    }
+    .menuBox .erjiMenuBox li span {
+        font-size: 17px;
+    }
+}
+
+@media screen and (min-width:1800px) {
+    .menuBox>div>ul>li span {
+        font-size: 20px;
+    }
+    .menuBox .erjiMenuBox li span {
+        font-size: 20px;
+    }
+} */

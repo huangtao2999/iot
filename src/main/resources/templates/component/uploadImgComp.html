@@ -1,69 +1,160 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
-<button th:fragment="uploadImgComp(id,name,model)" type="button" class="layui-btn layui-btn-normal" th:id="${id}">
+<!--图片上传插件：
+<div th:include="component/uploadImgComp(id='表单元素ID',name='表单元素名称',
+	model='1-单传；2-多传(默认)',taskId='所属业务id',taskBelong ='所属业务类型',isView = '1-是查看页面，不显示按钮')"></div>
+-->
+<div th:fragment="uploadImgComp(id,name,model,taskId,taskBelong,isView)" type="button"  th:id="${id}+1" style='margin:10px 0 0;'>
     <i class="layui-icon">&#xe67c;</i>上传图片
-</button>
-<input th:name="${name}" type="hidden"/>
+</div>
+<input th:id="${id}" th:name="${name}" type="hidden"/>
+<style>
+.showImg{
+ 	float:left;
+	width: 100px;
+	height: 100px;
+	background-size:100px 100px;
+}
+</style>
 <!-- model:值为1 则为单上传，再次上传会覆盖;值为2 则为多上传。-->
 <script th:inline="javascript">
-    /*<![CDATA[*/
-    $(function () {
+    var elemId = '#' + [[${id}]];	//表单元素id
+    var elemName = [[${name}]];	//表单元素名
+    var imgName = elemName + "img";//图片的公用名称
+    var model= [[${model}]];	//单选多选标志
+    var taskId = [[${taskId}]];	//业务id
+    var taskBelong = [[${taskBelong}]];	//业务所属类型
+    var isView = [[${isView}]];	//是否查看页面调用
+	if(isView == "1" || isView == 1){
+		$(elemId + 1).hide();	//查看页面隐藏上传按钮
+	}
+    //上传功能初始化
+    
+    if	(!WebUploader.Uploader.support()){
+    	alert('您的 flash 版本过低，请升级！！！');
+    }
+    
+    var uploader = new WebUploader.Uploader({
 
-    });
-    /*]]>*/
-    var elemId = '#' + [[${id}]];
-    var model=[[${model}]];
-    layui.use(['upload', 'layer'], function () {
-        var upload = layui.upload;
-        var layer = layui.layer;
-        var uploadInst = upload.render({
-            elem: elemId,//绑定元素
-            url: '/FileUpload/upload.json', //上传接口
-            multiple: true,
-            done: function (res) {
-                //上传完毕回调
-                if (res.success) {
-                    var path = res.content.path;
-                    var img = '<div id="'+res.content.id+'" class="showImg"  style="float:left;width: 150px;height: 180px;background-size:150px 180px;background-image:url(/FileUpload/showImg.json?path=' + path + ');"></div>'
-                    if(model=="1"){
-                    	if($(".showImg").length==1){
-                    		$(".showImg").css("background-image","url(/FileUpload/showImg.json?path=" + path + ")");
-                    		$(".showImg").attr("id",res.content.id);
-                    	}else if($(".showImg").length==0){
-                    		$(elemId).after(img);
-                        	$("#"+res.content.id).append('<i id="deleteIcon" class="layui-icon" style="display:none;font-size: 30px; color: red;">&#x1006;</i>');
-                    	}
-                    }
-                    if(model=="2"){
-                    	$(elemId).after(img);
-                    	$("#"+res.content.id).append('<i id="deleteIcon" class="layui-icon" style="display:none;font-size: 30px; color: red;">&#x1006;</i>');
-                    }
-                    $("#deleteIcon").click(function(){ //点击删除事件
-                    	var id=$(this).parent().attr("id");
-                    	var res=PublicAjax("/FileUpload/deleteAttachFalse",{"ids":id});
-                    	if(res.success){
-                    		$(this).parent().remove();
-                    	}
-                    	else{
-                    		layer.msg(res.content);
-                    	}
-                    })
-                    $(".showImg").mouseover(function(){
-                    	$(this).find("i").css("display","inline");
-                    })
-                    $(".showImg").mouseleave(function(){
-                    	$(this).find("i").css("display","none");
-                    })
-                    //input hidden name =useIcon;
-                    //input hidden name =useIcon;
-                } else {
-                    layer.msg(res.content);
-                }
-            }, error: function () {
-                //请求异常回调
+	    // 选完文件后，是否自动上传。
+	    auto: true,
+	
+	    // swf文件路径
+	    swf: '../vendor/webuploader/Uploader.swf',
+	
+	    // 文件接收服务端。
+	    server: '/FileUpload/upload.json',
+	
+	    // 选择文件的按钮。可选。
+	    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+	    pick: {
+	    	id:elemId + 1,
+	    	multiple:false
+	    },
+	    
+	    auto:true,
+	    duplicate:true,
+	
+	    // 只允许选择图片文件。
+	    accept: {
+	        title: 'Images',
+	        extensions: 'gif,jpg,jpeg,bmp,png',
+	        mimeTypes: 'image/*'
+	    }
+	});
+	
+	uploader.on( 'uploadSuccess', function( file,res ) {
+    //上传完毕回调
+        if (res.success) {
+            var img = '<div id="'+res.content.id+'" name="'+imgName+'" class="showImg"  style="background-image:url(/FileUpload/getAttach.json?id=' + res.content.id + ');"></div>';
+            //var img=$('<div></div>').addClass('showImg').attr('name',imgName).prop('id',res.content.id).css('background-image','url(/FileUpload/getAttach.json?id='+res.content.id+')');
+            if(model=="1"){
+            	//单张图片，有要覆盖的就把原来的执行一遍删除
+            	var imgs =  $("div[name='"+imgName+"']");
+            	if(imgs.length >= 1){
+            		imgs.remove();
+            	}
+           		$(elemId).after(img);
+           		$("#"+res.content.id).append('<i id="deleteIcon" class="layui-icon" style="display:none;font-size: 30px; color: red;">&#x1006;</i>');
+            }else {
+            	//多张图片
+            	$(elemId).after(img);
+            	$("#"+res.content.id).append('<i id="deleteIcon" class="layui-icon" style="display:none;font-size: 30px; color: red;">&#x1006;</i>');
             }
-        });
-    });
+        	//给隐藏input赋值文件id
+        	$(elemId).val(getImgIds());
+        	//绑定删除事件
+            $("#deleteIcon").click(function(){ //点击删除事件
+           		$(this).parent().remove();
+           		$(elemId).val(getImgIds());
+            })
+            $(".showImg").mouseover(function(){
+            	$(this).find("i").css("display","inline");
+            })
+            $(".showImg").mouseleave(function(){
+            	$(this).find("i").css("display","none");
+            })
+        } else {
+            layer.msg(res.content);
+        }
+        
+	});
+	
+	uploader.on( 'uploadError', function( file,res ) {
+	    layer.msg("请求异常");
+	});
+	
+    
+    
+    //如果是编辑页面，列表出已上传的内容
+    if(taskId != null && taskBelong != null){
+    	//查找所有该业务上传的图片
+    	var res = new PublicAjax('/FileUpload/listAttach.json', {'taskId': taskId, 'taskBelong':taskBelong});
+    	if(res.success){
+    		var resList = res.content;
+    		if(resList.length > 0){
+    			//有记录就循环展示
+				for(var i = 0; i < resList.length; i++){
+                    var img = '<div id="' + resList[i].id + '" name="'+imgName+'" class="showImg"  style="background-image:url(/FileUpload/getAttach.json?id=' + resList[i].id + ');"></div>'
+            		$(elemId).after(img);
+                    //查看页面不显示小红叉
+                	if(isView != "1" && isView != 1){
+	                	$("#" + resList[i].id).append('<i id="deleteIcon" class="layui-icon" style="display:none;font-size: 30px; color: red;">&#x1006;</i>');
+                	}
+				}
+    			//赋值隐藏input
+    			$(elemId).val(getImgIds());
+    			//绑定事件
+                $("#deleteIcon").click(function(){
+               		$(this).parent().remove();
+               		$(elemId).val(getImgIds());
+                })
+                $(".showImg").mouseover(function(){
+                	$(this).find("i").css("display","inline");
+                })
+                $(".showImg").mouseleave(function(){
+                	$(this).find("i").css("display","none");
+                })
+    		}
+    	} else {
+            layer.msg(res.content);
+        }
+    }
+
+    //获得图片的id列表
+    function getImgIds(){
+    	var ids = "";
+    	//var eles = document.getElementsByName(imgName);
+    	var eles = document.getElementsByClassName('showImg');
+    	for(var i = 0; i < eles.length; i ++){
+    		if(ids == ""){
+        		ids = eles[i].id;
+    		}else {
+    			ids += "," + eles[i].id;
+    		}
+    	}
+    	return ids;
+    }
 </script>
 </html>
 

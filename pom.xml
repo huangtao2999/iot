@@ -6,7 +6,7 @@
 
     <groupId>com.dsw</groupId>
     <artifactId>iot</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.032910-SNAPSHOT</version>
     <packaging>jar</packaging>
     <!--<packaging>war</packaging>-->
 
@@ -122,11 +122,32 @@
             <version>1.1.6</version>
         </dependency>
         <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
+        <dependency>
             <groupId>com.dm</groupId>
             <artifactId>Dm7JdbcDriver17</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.dm</groupId>
+            <artifactId>jamod</artifactId>
+            <version>1.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>huangt1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jna</groupId>
+            <artifactId>examples</artifactId>
+            <version>huangt1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
+
 
     <build>
         <plugins>

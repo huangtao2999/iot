@@ -60,6 +60,7 @@ public class LogServiceImpl implements LogService {
 		if (StringUtils.isNotBlank(param.getType())) {
 			lCriteria.andTypeEqualTo(param.getType());
 		}
+		logDoExample.setOrderByClause("create_time desc");
 		// 分页
 		int count = logDoMapperExt.countByExample(logDoExample);
 		PageDto pageDto = new PageDto(param.getPage(), param.getLimit(), count);

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>帮助文档</title>
+</head>
+<style>
+    .title {
+        font-weight: 600;
+    }
+</style>
+<body>
+<div>
+    <p>
+        <span class="title">运行物联网之前</span>
+    <p> 请确认：</p>
+    <p> a，客户端浏览器版本IE9+,且已安装FALSH插件。<a th:href="|${driverUrl}/EOIE9-WindowsXP-x86.exe|">IE9下载</a></p>
+    <p> b，物联网服务器网络，NVR网络，继电器网络，LED网络能够ping通</p>
+    <p> c，若是询问室电脑，请确认安装法度笔录系统</p>
+    <p> 常见问题:</p>
+    <span class="title">1,存物拍照，伤情拍照，若拍照时，视频预览异常</span>
+    <p> 方法1：服务器抓拍没有配置NVR抓拍驱动,<a th:href="|${driverUrl}/ClientDemo-NetBeansPro.zip|">请下载</a>,将该压缩包解压到 C:\</p>
+    <p> 方法2：客户端没有按照浏览器预览插件 <a th:href="|${driverUrl}/WebComponentsKit.exe|">请下载</a>，安装插件，重启浏览器 ，重新登录物联网</p>
+    <span class="title">2,3D定位&人员活动视频异常</span>
+    <p> 说明：该功能需要谷歌浏览器支持。IE9以上版本只能预览3D定位，无视频跟踪</p>
+
+    <p> 方法1：<a th:href="|${driverUrl}/Chrome_33.0.1750.146.zip|">请下载</a>，安装完成,通过该浏览器登录物联网</p>
+
+    <span class="title">3,亲情电话使用异常</span>
+    <p> 方法1：请检查电脑有无通过USB接入电话机和录音盒</p>
+    <p>方法2：安装驱动，<a th:href="|${driverUrl}/phone.zip|">请下载</a> </p>
+    <span class="title">4,亲情电话使用,录音文件上传异常</span>
+    <p> 方法1：请手动上传录音文件进行保存</p>
+    <p> 方法2：请确认浏览器是否安装FALSH插件 <a th:href="|${driverUrl}/FlashPlayer-v29.0.0.134Beta.exe|">请下载</a></p>
+    <span class="title">5,手写板签字异常</span>
+    <p> 方法1：检查是否通过USB连接了签字板</p>
+    <p> 方法2：检查是否安装了签字版驱动 <a th:href="|${driverUrl}/HWSetUp.exe|">请下载</a></p>
+    <span class="title">6,笔录系统唤醒异常</span>
+    <p> 方法1：检查客户端是否安装了法度笔录客户系统</p>
+    <p> 方法2：检查服务器是否正确启动了nginx.exe <a th:href="|${driverUrl}/nginx-1.13.9.zip|">请下载</a></p>
+    <p> 方法3：若唤醒过程中，法度提示账号异常，请确认物联网系统和法度笔录使用同一警号注册成功</p>
+    <span class="title">7,LED显示异常</span>
+    <p> 方法1：检查服务器C:\Windows\System32 是否存在 lv_led.dll文件 <a th:href="|${driverUrl}/lv_led.dll|">请下载</a></p>
+    <span class="title">8,人脸识别数据异常</span>
+    <p> 方法1：请确认人脸识别系统布控识别阈值合理，详情参考人脸识别系统说明</p>
+    <span class="title">9,身份证读卡器异常</span>
+    <p> 方法1：确认客户端安装了身份证读卡设备,USB连接</p>
+    <p> 方法2：检查客户端是否安装了读卡设备的驱动程序,<a th:href="|${driverUrl}/idCardReader.zip|">请下载</a></p>
+    </p>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,371 @@
+@charset "utf-8";
+*,*::before,*::after{
+  -webkit-box-sizing : border-box;
+  -moz-box-sizing    : border-box;
+  box-sizing         : border-box;
+}
+
+.fl{
+  float : left;
+}
+
+.fr{
+  float : right;
+}
+
+.clearfix{
+  *zoom:1;
+  overflow : hidden;
+}
+
+.clearfix::after,
+.clearfix::before{
+  content : '';
+  display : table;
+  clear : both;
+  visibility : hidden;
+  height : 0;
+  line-height : 0;
+}
+
+body.custom-photo{
+  min-height: 100%;
+  overflow : auto;
+}
+
+body.custom-photo .photo-container{
+  position: relative;
+  min-height: 100%;
+  background: url(../../images/photo/shipin-beijing.png) no-repeat scroll 0 0;
+  -webkit-background-size: 100% 100%;
+  background-size: 100% 100%;
+  background-color: #2c4c81;
+}
+
+body.custom-photo .photo-container .photo-title{
+  position: absolute;
+  color: #00d8fc;
+  font-size: 24px;
+  top: 10px;
+  left: 32px;
+}
+
+body.custom-photo .photo-container .photo-box{
+  padding: 50px 15px 0;
+}
+
+/*控制区 */
+body.custom-photo .photo-container .photo-control-box{
+  width : 300px;
+}
+
+body.custom-photo .photo-container .photo-ctl-dir{
+
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-box{
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  background : url("../../images/photo/xuanzejian-beijing.png") no-repeat scroll 0 0;
+  -webkit-background-size : 100% 100%;
+  background-size         : 100% 100%;
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn{
+  position : absolute;
+  left : 50%;
+  top : 50%;
+  width : 44px;
+  height : 74px;
+  line-height : 90px;
+  text-align : center;
+  font-size : 16px;
+  color: #00d8fc;
+  cursor : pointer;
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn:not(.photo-ctl-dir-btn-paizhao):hover{
+  background : url("../../images/photo/xuanzejian-dianji.png") no-repeat scroll 0 0;
+  -webkit-background-size : 100% 100%;
+  background-size         : 100% 100%;
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn-paizhao{
+  width : 80px;
+  height : 80px;
+  line-height : 80px;
+  background : url("../../images/photo/paizhao.png") no-repeat scroll 0 0;
+  -webkit-background-size : 100% 100%;
+  background-size         : 100% 100%;
+  -webkit-transform : translate(-50%,-50%);
+  -moz-transform    : translate(-50%,-50%);
+  -ms-transform     : translate(-50%,-50%);
+  -o-transform      : translate(-50%,-50%);
+  transform         : translate(-50%,-50%);
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn-paizhao.taking-photo{
+  background : url("../../images/photo/paizhao-ing.png") no-repeat scroll 0 0;
+  -webkit-background-size : 100% 100%;
+  background-size         : 100% 100%;
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn-t {
+  -webkit-transform : translate(-48%, -144%) rotate(90deg);
+  -moz-transform    : translate(-48%, -144%) rotate(90deg);
+  -ms-transform     : translate(-48%, -144%) rotate(90deg);
+  -o-transform      : translate(-48%, -144%) rotate(90deg);
+  transform         : translate(-48%, -144%) rotate(90deg);
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn-t .photo-ctl-dir-text{
+  -webkit-transform : rotate(-90deg);
+  -moz-transform    : rotate(-90deg);
+  -ms-transform     : rotate(-90deg);
+  -o-transform      : rotate(-90deg);
+  transform         : rotate(-90deg);
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn-rt{
+  -webkit-transform : translate(65%,-117%) rotate(135deg);
+  -moz-transform    : translate(65%,-117%) rotate(135deg);
+  -ms-transform     : translate(65%,-117%) rotate(135deg);
+  -o-transform      : translate(65%,-117%) rotate(135deg);
+  transform         : translate(65%,-117%) rotate(135deg);
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn-rt .photo-ctl-dir-text{
+  -webkit-transform : rotate(-135deg);
+  -moz-transform    : rotate(-135deg);
+  -ms-transform     : rotate(-135deg);
+  -o-transform      : rotate(-135deg);
+  transform         : rotate(-135deg);
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn-r{
+  -webkit-transform : translate(110%,-50%) rotate(180deg);
+  -moz-transform    : translate(110%,-50%) rotate(180deg);
+  -ms-transform     : translate(110%,-50%) rotate(180deg);
+  -o-transform      : translate(110%,-50%) rotate(180deg);
+  transform         : translate(110%,-50%) rotate(180deg);
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn-r .photo-ctl-dir-text{
+  -webkit-transform : rotate(-180deg);
+  -moz-transform    : rotate(-180deg);
+  -ms-transform     : rotate(-180deg);
+  -o-transform      : rotate(-180deg);
+  transform         : rotate(-180deg);
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn-rb{
+  -webkit-transform : translate(65%,17%) rotate(-135deg);
+  -moz-transform    : translate(65%,17%) rotate(-135deg);
+  -ms-transform     : translate(65%,17%) rotate(-135deg);
+  -o-transform      : translate(65%,17%) rotate(-135deg);
+  transform         : translate(65%,17%) rotate(-135deg);
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn-rb .photo-ctl-dir-text{
+  -webkit-transform : rotate(135deg);
+  -moz-transform    : rotate(135deg);
+  -ms-transform     : rotate(135deg);
+  -o-transform      : rotate(135deg);
+  transform         : rotate(135deg);
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn-b{
+  -webkit-transform : translate(-47%,45%) rotate(-90deg);
+  -moz-transform    : translate(-47%,45%) rotate(-90deg);
+  -ms-transform     : translate(-47%,45%) rotate(-90deg);
+  -o-transform      : translate(-47%,45%) rotate(-90deg);
+  transform         : translate(-47%,45%) rotate(-90deg);
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn-b .photo-ctl-dir-text{
+  -webkit-transform : rotate(90deg);
+  -moz-transform    : rotate(90deg);
+  -ms-transform     : rotate(90deg);
+  -o-transform      : rotate(90deg);
+  transform         : rotate(90deg);
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn-lb{
+  -webkit-transform : translate(-160%,18%) rotate(-45deg);
+  -moz-transform    : translate(-160%,18%) rotate(-45deg);
+  -ms-transform     : translate(-160%,18%) rotate(-45deg);
+  -o-transform      : translate(-160%,18%) rotate(-45deg);
+  transform         : translate(-160%,18%) rotate(-45deg);
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn-lb .photo-ctl-dir-text{
+  -webkit-transform : rotate(45deg);
+  -moz-transform    : rotate(45deg);
+  -ms-transform     : rotate(45deg);
+  -o-transform      : rotate(45deg);
+  transform         : rotate(45deg);
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn-l{
+  -webkit-transform : translate(-208%,-49%);
+  -moz-transform    : translate(-208%,-49%);
+  -ms-transform     : translate(-208%,-49%);
+  -o-transform      : translate(-208%,-49%);
+  transform         : translate(-208%,-49%);
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn-l .photo-ctl-dir-text{
+
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn-lt{
+  -webkit-transform : translate(-162%,-116%) rotate(45deg);
+  -moz-transform    : translate(-162%,-116%) rotate(45deg);
+  -ms-transform     : translate(-162%,-116%) rotate(45deg);
+  -o-transform      : translate(-162%,-116%) rotate(45deg);
+  transform: translate(-162%,-116%) rotate(45deg);
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn-lt .photo-ctl-dir-text{
+  -webkit-transform : rotate(-45deg);
+  -moz-transform    : rotate(-45deg);
+  -ms-transform     : rotate(-45deg);
+  -o-transform      : rotate(-45deg);
+  transform         : rotate(-45deg);
+}
+
+body.custom-photo .photo-container .photo-ctl-dir-btn .photo-ctl-dir-text{
+  display : inline-block;
+  width : 100%;
+  height : 100%;
+}
+
+body.custom-photo .photo-container .photo-ctl-change{
+  margin: 20px 0;
+}
+
+body.custom-photo .photo-container .photo-ctl-change-item{
+  text-align: center;
+  margin: 10px 0;
+}
+
+body.custom-photo .photo-container .photo-ctl-change-btn{
+  display : inline-block;
+  width : 100px;
+  height : 30px;
+  line-height : 30px;
+  text-align : center;
+  background : url("../../images/photo/anniu-changtai.png") no-repeat scroll 0 0;
+  -webkit-background-size : 100% 100%;
+  background-size         : 100% 100%;
+  color : #00D8FC;
+  font-size : 16px;
+  cursor : pointer;
+}
+
+body.custom-photo .photo-container .photo-ctl-change-btn:hover{
+  background : url("../../images/photo/anniu-xuanzhong.png") no-repeat scroll 0 0;
+  -webkit-background-size : 100% 100%;
+  background-size         : 100% 100%;
+}
+
+body.custom-photo .photo-container .photo-ctl-action{
+  text-align : center;
+  padding-bottom: 50px;
+}
+
+body.custom-photo .photo-container .photo-ctl-action-btn{
+  display : inline-block;
+  width : 100px;
+  height : 36px;
+  line-height : 36px;
+  text-align : center;
+  font-size : 18px;
+  cursor : pointer;
+}
+
+body.custom-photo .photo-container .photo-ctl-action-btn-chongpai{
+  color : #00D8FC;
+  background : url("../../images/photo/chongpai-changtai.png") no-repeat scroll 0 0;
+  -webkit-background-size : 100% 100%;
+  background-size         : 100% 100%;
+}
+
+body.custom-photo .photo-container .photo-ctl-action-btn-chongpai:hover{
+  background : url("../../images/photo/chongpai-dianji.png") no-repeat scroll 0 0;
+  -webkit-background-size : 100% 100%;
+  background-size         : 100% 100%;
+}
+
+body.custom-photo .photo-container .photo-ctl-action-btn-queding{
+  color : #fff;
+  background : url("../../images/photo/queding-changtai.png") no-repeat scroll 0 0;
+  -webkit-background-size : 100% 100%;
+  background-size         : 100% 100%;
+}
+
+body.custom-photo .photo-container .photo-ctl-action-btn-queding:hover{
+  background : url("../../images/photo/queding-dianji.png") no-repeat scroll 0 0;
+  -webkit-background-size : 100% 100%;
+  background-size         : 100% 100%;
+}
+
+/*视频区*/
+body.custom-photo .photo-container .photo-video-box{
+  margin-right : 320px;
+}
+
+body.custom-photo .photo-container .photo-video-content{
+  /*height : 500px;*/
+  /*background : url("../../images/photo/shipinchuangkou.png");*/
+}
+
+body.custom-photo .photo-container .photo-video-preview{
+  margin-top: 20px;
+}
+
+body.custom-photo .photo-container .photo-video-preview-box{
+  overflow : hidden;
+}
+
+body.custom-photo .photo-container .photo-video-preview-box .dsw-take-photo-img-box {
+  position: relative;
+
+  float: left;
+  margin-right: 5px;
+
+  line-height: 0;
+}
+
+body.custom-photo .photo-container .photo-video-preview-box .dsw-take-photo-img-main {
+  width: 96px;
+  height: 90px;
+}
+
+body.custom-photo .photo-container .photo-video-preview-box .dsw-take-photo-img-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  width: 10px;
+  height: 10px;
+
+  cursor: pointer;
+}
+
+body.custom-photo .photo-container .photo-video-preview-box .dsw-take-photo-img-btn {
+  display: inline-block;
+  width: 35px;
+  height: 25px;
+  cursor: pointer;
+  margin: 30px 20px;
+}
+
+/*前缀模板*/
+body.custom-photo .photo-container{
+
+}
+
+

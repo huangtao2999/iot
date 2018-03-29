@@ -1,0 +1,349 @@
+body {
+    background: #032547;
+}
+
+#leftBox {
+    width: 68%;
+    height: 100%;
+    float: left;
+}
+
+#rightBox {
+    width: 31%;
+    height: 100%;
+    float: right;
+}
+
+#rightBox .perInfoBox {
+    width: 98%;
+    height: 20%;
+    z-index: 1;
+    box-sizing: border-box;
+    top: 2%;
+}
+
+#rightBox .perInfoBox .leftBox {
+    width: 60%;
+    height: 100%;
+}
+
+#rightBox .perInfoBox .leftBox ul li {
+    width: 100%;
+    height: 16.66666%;
+}
+
+#rightBox .perInfoBox .leftBox ul li span {
+    font-size: 0.9em;
+    color: #01bae2;
+}
+
+#rightBox .perInfoBox .leftBox ul li .desc {
+    left: 5%;
+}
+
+#rightBox .perInfoBox .leftBox ul li .nameTxt {
+    left: 45%;
+}
+
+#rightBox .perInfoBox .rightBox {
+    width: 30%;
+    height: 100%;
+    right: 10%;
+}
+
+#rightBox .perInfoBox .rightBox .perHeadImg {
+    width: 60%;
+    height: 80%;
+    border: 1px solid #01bae2;
+    border-radius: 2px;
+}
+
+#rightBox .listBox {
+    width: 98%;
+    height: 15%;
+    z-index: 1;
+    box-sizing: border-box;
+    top: 22%;
+}
+
+#rightBox .listBox ul {
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+#rightBox .listBox ul li {
+    width: 20%;
+    height: 45%;
+    float: left;
+    margin: 1% 2%;
+    cursor: pointer;
+}
+
+#rightBox .listBox ul li .actImg {
+    display: none;
+}
+
+#rightBox .listBox ul .nvalid-btn .actImg {
+    display: block;
+}
+
+#rightBox .listBox ul .nvalid-btn .defImg {
+    display: none;
+}
+
+#rightBox .listBox ul .nvalid-btn span {
+    color: #f3a503;
+}
+
+#rightBox .listBox ul li span {
+    font-size: 0.8em;
+    color: #01bae2;
+    text-align: center;
+    width: 100%;
+}
+
+#rightBox .listBox ul li img {
+    display: none;
+}
+
+#rightBox .listBox ul li .fontDefImg {
+    z-index: 555;
+}
+
+#rightBox .listBox ul li .fontDefImg,
+#rightBox .listBox ul li .fontHoverImg,
+#rightBox .listBox ul li .fontSelImg {
+    left: 8%;
+}
+
+#rightBox .listBox ul li .defImg,
+#rightBox .listBox ul li .fontDefImg {
+    display: block;
+}
+
+#rightBox .listBox ul li:active .defImg,
+#rightBox .listBox ul li:active .fontDefImg,
+#rightBox .listBox ul li:active .fontHoverImg,
+#rightBox .listBox ul li:active .hoverImg {
+    display: none;
+}
+
+#rightBox .listBox ul li:active .fontSelImg,
+#rightBox .listBox ul li:active .selImg {
+    display: block;
+}
+
+#rightBox .listBox ul li:active span {
+    color: #f5a302;
+}
+
+#rightBox .listBox ul .nvalid-btn .fontDefImg,
+#rightBox .listBox ul .nvalid-btn .fontSelImg,
+#rightBox .listBox ul .nvalid-btn .defImg,
+#rightBox .listBox ul .nvalid-btn .selImg {
+    display: none;
+}
+
+#rightBox .listBox ul .nvalid-btn .fontHoverImg,
+#rightBox .listBox ul .nvalid-btn .hoverImg {
+    display: block;
+}
+
+#rightBox .listBox ul .nvalid-btn span {
+    color: gray;
+}
+
+#rightBox .timeLineBox {
+    width: 98%;
+    height: 63%;
+    bottom: 0;
+    z-index: 1;
+}
+
+#rightBox .timeLineBox .circleBox1 {
+    bottom: 160%;
+}
+
+#rightBox .timeLineBox .circleBox2 {
+    top: 160%;
+}
+
+#rightBox .timeLineBox .timeLineCon {
+    width: 80%;
+    height: 50%;
+}
+
+#rightBox .timeLineBox .timeLineCon li {
+    width: 100%;
+    height: 25%;
+}
+
+#rightBox .timeLineBox .timeLineCon li .leftBox {
+    width: 50%;
+    height: 50%;
+    float: left;
+}
+
+#rightBox .timeLineBox .timeLineCon li .leftBox img {
+    bottom: -3%;
+    left: -20px;
+}
+
+#rightBox .timeLineBox .timeLineCon li .leftBox span {
+    font-size: 0.9em;
+    color: #01bae2;
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+}
+
+#rightBox .timeLineBox .timeLineCon li .rightBox {
+    width: 50%;
+    height: 60%;
+    float: left;
+    cursor: pointer;
+}
+
+#rightBox .timeLineBox .timeLineCon li .rightBox .circleBox {
+    width: 3em;
+    height: 3em;
+}
+
+#rightBox .timeLineBox .timeLineCon li .rightBox .circleBox img {
+    border-radius: 50%;
+    transition: all 500000000s linear;
+}
+
+#rightBox .timeLineBox .timeLineCon li .rightBox .circleBox .rotate1 {
+    transform-origin: center;
+    transform: rotate(-10800000000deg);
+    -ms-transform: rotate(-10800000000deg);
+    -moz-transform: rotate(-10800000000deg);
+    -webkit-transform: rotate(-10800000000deg);
+    -o-transform: rotate(-10800000000deg);
+}
+
+#rightBox .timeLineBox .timeLineCon li .rightBox .defImg,
+#rightBox .timeLineBox .timeLineCon li .rightBox .selImg {
+    display: none;
+}
+
+#rightBox .timeLineBox .timeLineCon li .rightBox .defImg {
+    display: block;
+}
+
+#rightBox .timeLineBox .timeLineCon li .rightBox .xiala {
+    width: 5%;
+    height: auto;
+    right: 5%;
+}
+
+#rightBox .timeLineBox .timeLineCon li .rightBox .arrowImg {
+    width: 8%;
+    height: auto;
+    top: 105%;
+}
+
+#rightBox .timeLineBox .timeLineCon li .rightBox .arrowImg1 {
+    width: 8%;
+    height: auto;
+    bottom: 105%;
+}
+
+#rightBox .timeLineBox .timeLineCon li .rightBox span {
+    font-size: 0.8em;
+    width: 100%;
+    text-align: center;
+    z-index: 1;
+    color: #01bae2;
+}
+
+#rightBox .timeLineBox .timeLineCon li .rightBox .diaBox {
+    width: 80%;
+    left: 45%;
+    bottom: 95%;
+    z-index: 2;
+    display: none;
+}
+
+#rightBox .timeLineBox .timeLineCon li .rightBox .diaBox ul {
+    padding: 0.8em 0.2em;
+    box-sizing: border-box;
+    border: 1px solid #01bae2;
+    background: #03173a;
+    opacity: 0.8;
+}
+
+#rightBox .timeLineBox .timeLineCon li .rightBox .diaBox ul li {
+    width: 100%;
+    height: 1.4em;
+    text-align: center;
+    font-size: 0.8em;
+    line-height: 1.4em;
+    color: #01bae2;
+}
+
+#rightBox .timeLineBox .timeLineCon li .rightBox .diaBox ul li:hover {
+    color: #f5a302;
+}
+/*-----纯grid页面的样式[start]-----*/
+.fit-box{
+	width: 100% !important;
+}
+.table-body span{
+	overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+/*-----纯grid页面的样式[end]-----*/
+.select-limit{
+	position: relative;
+    top: -3px;
+}
+#leftBox .dataListBox .listBox#table-body-list-div{
+	height : 80%;
+	overflow: auto;
+	top:0;
+}
+.perHeadImg img{
+	width : 100%;
+	height : 100;
+}
+.nvalid-btn{
+
+}
+.untreated-task{
+
+}
+.selImg{
+	display: none;
+}
+.defImg{
+	display: block;
+}
+.body-data-list.active .selImg{
+	display: block;
+}
+.body-data-list.active .defImg{
+	display: none;
+}
+.table-head{
+	font-weight: 900;
+	font-size: 17px;
+}
+
+#rightBox .timeLineBox .timeLineCon li .untreated-task .defImg {
+    display: none;
+}
+
+#rightBox .timeLineBox .timeLineCon li .untreated-task .selImg {
+    display: block;
+}
+
+#rightBox .timeLineBox .timeLineCon li .untreated-task span {
+    font-size: 0.8em;
+    width: 100%;
+    text-align: center;
+    z-index: 1;
+    color: gray;
+}

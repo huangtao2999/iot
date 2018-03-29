@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+
+<head><meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/common.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{../css/dialogCss.css}" />
+	<div th:include="inc/common"></div>
+    <title>diologHtml</title>
+</head>
+
+<style>
+	.container-fluid.dsw-container{
+		background: url(../images/lawContro/beijing_dialog.png) no-repeat scroll 0 0;
+		background-size: 100% 100%;
+		background-color: #1b4067;
+	}
+	.container-fluid.dsw-container input,
+	.container-fluid.dsw-container input[disabled]{
+		border-radius: 0;
+		border: none;
+		border-bottom: 1px solid #333;
+		background-color:transparent;
+	}
+
+
+	.container-fluid.dsw-container input:focus{
+
+	}
+
+	.container-fluid.dsw-container .youAdd{
+		border : none;
+	}
+
+	.container-fluid.dsw-container #diologBox{
+		background-color : transparent;
+	}
+
+	.container-fluid.dsw-container  #diologBox .topBoxCon .formBox .selBox{
+		overflow : visible;
+	}
+
+	.container-fluid.dsw-container .layui-form-select{
+		top : -12px;
+	}
+	span{
+		display:inline-block;
+	}
+	.content div,.content{
+		height:auto;
+	}
+	
+	@media print {
+    	.print{
+    		display:none !important;
+    	}
+    }
+    ul.dsw-big-img{
+        overflow:hidden;
+        margin:30px 0 0;
+    }
+    ul.dsw-big-img li{
+        margin:5px;
+        width:45%
+    }
+
+    ul.dsw-big-img li:nth-child(2n-1){
+        float:left;
+    }
+
+    ul.dsw-big-img li:nth-child(2n){
+        float:right;
+    }
+    ul.dsw-big-img li img{
+        width:100%;
+    }
+</style>
+<body style="overflow-y: auto; overflow-x:hidden;background-color:#15385c;">
+<div class="content">
+    <div class="container-fluid dsw-container">
+        <br/>
+        <form action=""  class="layui-form">
+            <div class="youAdd">
+                <div id="diologBox">
+                    <div class="posRel wh100">
+                        <div class="mainConBox posAbs">
+                            <div class="conBox">
+                                <!-- 现 场 检 测 报 告 书 -->
+                                <div id="addPart1" class="well" style="width:100%; margin:0 auto;">
+                                    <h3 style="text-align:center; font-weight:normal;display:none;">下 陆 区 分 局 团 城 山 派 出 所</h3>
+                                    <h2 style="text-align:center; font-weight:normal; margin-top:0;">尿检照片</h2>
+                                    a瓶编号：<span th:text="${urineTestInfoDo.bottlea}"></span><br>
+                                    b瓶编号：<span th:text="${urineTestInfoDo.bottleb}"></span>
+                                    <h4 style="text-align:right; font-weight:normal;">
+                                        <p style="display:none;">下公（
+                                            <input type="text" name="tuan" value="团" class="input-mini">） 检字[
+                                            <input type="text" name="jianzi" id="jianzi" class="input-mini">]
+                                            <input type="text" name="no" class="input-mini"  readonly="true">
+                                         
+                                        </p>
+                                     </h4>
+                                    <ul class="align-center dsw-big-img">
+                                       <!--<img  th:each="attach:${attachDos}" th:src="|/FileUpload/getAttach.json?id=${attach.id}|" />-->
+                                           <li th:each="attach:${attachDos}" >
+                                               <img th:src="|/FileUpload/getAttach.json?id=${attach.id}|" >
+                                           </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="btn-youAdd print" style='padding: 0 0 30px;'>
+                    <a class="btn btn-primary" onclick="printBtn()"  id="print">打印</a>
+                    <a class="btn btn-primary"  id="back">返回</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</body>
+<script th:src="@{../js/jquery-3.2.1.min.js}"></script>
+<script th:src="@{../js/dialogJs.js}"></script>
+
+<script th:inline="javascript" >
+//返回事件绑定，关闭窗口
+$("#back").click(function () {
+    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+	parent.layer.close(index);//关闭弹窗
+});
+function printBtn(){
+	$("#print").hide();
+    $("#back").hide();
+	window.print();
+    $("#print").show();
+    $("#back").show();
+}
+</script>
+
+<style type="text/css"> 
+    .align-center{
+    margin:0 auto; /* 居中 这个是必须的，，其它的属性非必须 */
+    width:100%; /* 给个宽度 顶到浏览器的两边就看不出居中效果了 */
+}
+</style>
+
+</html>

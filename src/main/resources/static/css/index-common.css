@@ -1,0 +1,136 @@
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+section,
+div,
+header,
+footer,
+nav,
+article,
+aside,
+ul,
+li,
+ol,
+dl,
+dt,
+dd,
+form,
+table,
+td,
+tr,
+text,
+th,
+thead,
+textarea,
+input,
+a,
+span,
+i,
+img,
+b,
+em,
+strong,
+p,
+button {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family:"Microsoft YaHei";
+}
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+	overflow: hidden; 
+}
+
+a,
+img,
+span {
+	display: block;
+}
+
+a {
+	text-decoration: none;
+	color: #FFFFFF;
+}
+
+li {
+	list-style: none;
+}
+
+.clear:after {
+	display: block;
+	content: "";
+	clear: both;
+	overflow: hidden;
+	visibility: hidden;
+}
+
+.posRel {
+	position: relative;
+}
+
+.posAbs {
+	position: absolute;
+}
+
+.posFix {
+	position: fixed;
+}
+
+.cen {
+	left: 50%;
+	-ms-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
+
+.mid {
+	top: 50%;
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+.cenMid {
+	left: 50%;
+	top: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+input,
+textarea,
+tr,
+td,
+button,
+th,
+thead,
+tfoot {
+	border: none;
+	outline: none;
+	background: none;
+	resize: none;
+}
+
+.wh100 {
+	width: 100%;
+	height: 100%;
+}
+
+.wrapper {
+	margin: 0 auto;
+}

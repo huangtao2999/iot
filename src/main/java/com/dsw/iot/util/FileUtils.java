@@ -1,13 +1,9 @@
 package com.dsw.iot.util;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import org.apache.log4j.Logger;
+
+import java.io.*;
+import java.text.MessageFormat;
 
 /**
  * 文件操作工具类
@@ -50,6 +46,17 @@ public class FileUtils {
     }
 
     /**
+     * 获取文件名称[含后缀名]
+     *
+     * @param url
+     * @return
+     */
+    public static String getFileName(String url) {
+        int splitIndex = url.lastIndexOf("/");
+        return url.substring(splitIndex + 1);
+    }
+
+    /**
      * 获取文件名称[不含后缀名] 不去掉文件目录的空格
      *
      * @return String
@@ -87,18 +94,18 @@ public class FileUtils {
         }
     }
 
-	/**
-	 * 删除指定文件
-	 * 
-	 * @param filePath
-	 */
-	public static void deleteSpecificFile(String filePath) {
-		File file = new File(filePath);
-		if (!file.exists()) {
-			return;
-		}
-		file.delete();
-	}
+    /**
+     * 删除指定文件
+     *
+     * @param filePath
+     */
+    public static void deleteSpecificFile(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            return;
+        }
+        file.delete();
+    }
 
     /**
      * 删除指定文件夹下所有文件
@@ -183,5 +190,51 @@ public class FileUtils {
         out.write(file);
         out.flush();
         out.close();
+    }
+
+    /**
+     * 读文件
+     *
+     * @param filePath
+     * @return
+     */
+    public static String read(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            logger.error(MessageFormat.format("[FileUtil]: File:{0} not exists!", filePath));
+        }
+        StringBuilder sb = new StringBuilder();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+        } catch (Throwable e) {
+            logger.error(MessageFormat.format("[FileUtil]: File:{0} read error!", filePath));
+        } finally {
+            if (reader != null) {
+                try {
+                    //关闭文件
+                    reader.close();
+                } catch (Throwable e) {
+                    logger.error(MessageFormat.format("[FileUtil]: File:{0} close error!", filePath));
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 判断文件夹是否存在  不存在新建
+     *
+     * @param dirPath
+     */
+    public static void createDir(String dirPath) {
+        File dir = new File(dirPath);
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
     }
 }

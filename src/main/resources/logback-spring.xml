@@ -4,7 +4,7 @@
 
     <contextName>logback</contextName>
     <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
-    <property name="log.path" value="C:\\guankong\\log\\logback.log"/>
+    <property name="log.path" value="C:\\iot\\log\\logback.log"/>
 
     <!--输出到控制台-->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
@@ -18,7 +18,7 @@
             <pattern>控制台-%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger -
                 %msg%n
             </pattern>
-            <charset>UTF-8</charset>
+            <charset>GBK</charset>
         </encoder>
     </appender>
 

@@ -20,7 +20,25 @@ public class UserRequest extends BaseDto{
 
 	private String search;
 	private String distinct;
+	/**
+	 * 排序
+	 */
 	private String orderByClause;
-
+	/**
+	 * 分页
+	 */
 	PageDto pager;
+
+	/**
+	 * 旧密码
+	 */
+	private String oldPwd;
+	/**
+	 * 新密码
+	 */
+	private String newPwd;
+	/**
+	 * 新密码确认密码
+	 */
+	private String newPwdConfirm;
 }

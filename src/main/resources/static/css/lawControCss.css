@@ -1,0 +1,977 @@
+#lawControBox {
+    width: 100%;
+    background-color: #032547;
+    box-sizing: border-box;
+}
+
+.lawCtrTabBox {
+    width: 95%;
+    height: 3.8em;
+    margin: 0 auto 2em;
+    padding-top: 2em;
+}
+
+.lawCtrTabBox ul {
+    width: 50%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.lawCtrTabBox ul li {
+    width: 33.333333%;
+    height: 100%;
+    float: left;
+    cursor: pointer;
+}
+
+.lawCtrTabBox ul li img {
+    display: none;
+}
+
+.lawCtrTabBox ul li .defImg {
+    display: block;
+}
+
+.lawCtrTabBox ul li span {
+    font-size: 1em;
+    color: #00d8fc;
+    z-index: 1;
+}
+
+.lawCtrTabBox ul .active .defImg {
+    display: none;
+}
+
+.lawCtrTabBox ul .active .selImg {
+    display: block;
+}
+
+.lawCtrTabBox ul .active span {
+    color: #ffb400;
+}
+
+.lawCtrTabBox .lineImg {
+    width: 55%;
+    height: auto;
+    left: 50%;
+    bottom: 0;
+}
+
+.lawCtrTabBox .closeImg {
+    width: 2%;
+    height: auto;
+    right: 3%;
+}
+
+.lawConBox {
+    width: 95%;
+    margin: 0 auto;
+}
+
+.lawConBox .lawConTabBox {
+    width: 100%;
+    height: 5em;
+}
+
+.lawConBox .lawConTabBox>div {
+    float: left;
+}
+
+.lawConBox .lawConTabBox .imgBox {
+    width: 20%;
+    height: 100%;
+}
+
+.lawConBox .lawConTabBox .imgBox img {
+    width: 100%;
+    height: auto;
+}
+
+.lawConBox .lawConTabBox .tabCon {
+    width: 6.66666%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.lawConBox .lawConTabBox .tabCon img {
+    width: 80%;
+    height: auto;
+    display: none;
+}
+
+.lawConBox .lawConTabBox .tabCon .defImg {
+    display: block;
+}
+
+.lawConBox .lawConTabBox .tabCon span {
+    width: 100%;
+    bottom: -25%;
+    font-size: 0.8em;
+    color: #07608a;
+    text-align: center;
+}
+
+.lawConBox .lawConTabBox .active .defImg {
+    display: none;
+}
+
+.lawConBox .lawConTabBox .active .selImg {
+    display: block;
+}
+
+.lawConBox .lawConTabBox .active span {
+    color: #00d8fc;
+}
+
+.lawConBox .perMsgBox {
+    width: 100%;
+    margin-bottom: 3em;
+}
+
+.lawConBox .perMsgBox .IdentyBox {
+    width: 100%;
+    height: 3em;
+    margin-top: 2em;
+}
+
+.lawConBox .perMsgBox .IdentyBox .zhuangshiImg {
+    width: 5%;
+    height: auto;
+    bottom: 0;
+    left: 0;
+}
+
+.lawConBox .perMsgBox .IdentyBox .zhuangshiImg1 {
+    width: 60%;
+    height: auto;
+    bottom: 0;
+    right: 0;
+}
+
+.lawConBox .perMsgBox .IdentyBox ul {
+    width: 30%;
+    height: 100%;
+    left: 6%;
+}
+
+.lawConBox .perMsgBox .IdentyBox ul li {
+    width: 33.3333333%;
+    height: 100%;
+    float: left;
+    cursor: pointer;
+}
+
+.lawConBox .perMsgBox .IdentyBox ul li img {
+    display: none;
+    left: 15%;
+}
+
+.lawConBox .perMsgBox .IdentyBox ul li span {
+    font-size: 0.8em;
+    color: #00d8fc;
+    left: 35%;
+}
+
+.lawConBox .perMsgBox .IdentyBox ul li .defImg {
+    display: block;
+}
+
+.lawConBox .perMsgBox .IdentyBox ul .active .defImg {
+    display: none;
+}
+
+.lawConBox .perMsgBox .IdentyBox ul .active .selImg {
+    display: block;
+}
+
+.lawConBox .perMsgBox .inforBox {
+    width: 100%;
+    margin-top: 2em;
+}
+
+.lawConBox .perMsgBox .inforBox .inforBoxCon .mainConBox {
+    width: 75%;
+    float: left
+}
+
+.lawConBox .perMsgBox .inforBox .otherBox {
+    width: 25%;
+    height: 100%;
+    float: left;
+}
+
+.lawConBox .perMsgBox .inforBox .otherBox img {
+    margin: 0 auto;
+}
+
+.lawConBox .perMsgBox .inforBox .otherBox .otherUl {
+    width: 100%;
+    margin-top: 3em;
+}
+
+.lawConBox .perMsgBox .inforBox .otherBox .otherUl li {
+    height: 2.5em;
+    width: 100%;
+}
+
+.lawConBox .perMsgBox .inforBox .otherBox .otherUl li .mandatoryImg {
+    width: 3%;
+    height: auto;
+    left: 0;
+}
+
+.lawConBox .perMsgBox .inforBox .otherBox .otherUl li span {
+    font-size: 0.8em;
+    color: #00d8fc;
+    left: 6%;
+    width: 29%;
+}
+
+.lawConBox .perMsgBox .inforBox .otherBox .otherUl li .defImg {
+    height: 90%;
+    width: 65%;
+    right: 0;
+}
+
+.lawConBox .perMsgBox .inforBox .otherBox .otherUl li .yilouImg {
+    height: 90%;
+    width: 65%;
+    right: 0;
+    display: none;
+}
+
+.lawConBox .perMsgBox .inforBox .otherBox .otherUl li input {
+    width: 65%;
+    height: 90%;
+    right: 0;
+    z-index: 1;
+    color: #00d8fc;
+    font-size: 1em;
+    text-align: center;
+}
+
+.lawConBox .perMsgBox .inforBox .inforBoxCon>ul li .selBox {
+    width: 55%;
+    height: 90%;
+    right: 10%;
+    z-index: 666;
+    color: #00d8fc;
+    background: url('../images/lawContro/xiala.png') no-repeat right;
+    overflow: hidden;
+}
+
+.lawConBox .perMsgBox .inforBox .inforBoxCon>ul li .selBox select {
+    width: 118%;
+    height: 100%;
+    right: 0;
+    z-index: 666;
+    color: #00d8fc;
+    font-size: 1em;
+    text-align: center;
+}
+
+.infoExBox {
+    width: 100%;
+}
+
+.infoExBox .infoOne {
+    width: 30%;
+    height: 1.6em;
+    margin: 0 0.5em 0.5em 0;
+    float: left;
+}
+
+.infoExBox .infoOne .mandatoryImgBox {
+    float: left;
+    width: 1.5em;
+    height: 100%;
+}
+
+.infoExBox .infoOne .hideManda {
+    visibility: hidden;
+}
+
+.infoExBox .infoOne .mandatoryImgBox img {
+    width: 40%;
+    height: auto;
+}
+
+.infoExBox .infoOne>span {
+    font-size: 0.8em;
+    color: #00d8fc;
+    float: left;
+    line-height: 2em;
+    margin-right: 0.5em;
+}
+
+.infoExBox .infoOne .formBox {
+    float: left;
+    width: 50%;
+    height: 100%;
+}
+
+.infoExBox .infoOne .formBox .sexOneBox {
+    width: 2.7em;
+    margin-right: 0.5em;
+    height: 100%;
+    float: left;
+    cursor: pointer;
+}
+
+.infoExBox .infoOne .formBox .sexOneBox img {
+    display: none;
+    width: 30%;
+    height: auto;
+}
+
+.infoExBox .infoOne .formBox .sexOneBox .defImg {
+    display: block;
+}
+
+.infoExBox .infoOne .formBox .active .selImg {
+    display: block;
+}
+
+.infoExBox .infoOne .formBox .active .defImg {
+    display: none;
+}
+
+.infoExBox .infoOne .formBox .sexOneBox span {
+    font-size: 0.8em;
+    color: #00d8fc;
+    line-height: 2em;
+    left: 40%;
+}
+
+.infoExBox .infoOne .formBox .checkOneBox {
+    width: 3em;
+    margin-right: 0.5em;
+    height: 2em;
+    float: left;
+    cursor: pointer;
+}
+
+.infoExBox .infoOne .formBox .checkOneBox img {
+    display: none;
+    width: 25%;
+    height: auto;
+}
+
+.infoExBox .infoOne .formBox .checkOneBox .defImg {
+    display: block;
+}
+
+.infoExBox .infoOne .formBox .active .selImg {
+    display: block;
+}
+
+.infoExBox .infoOne .formBox .active .defImg {
+    display: none;
+}
+
+.infoExBox .infoOne .formBox .checkOneBox span {
+    font-size: 0.8em;
+    color: #00d8fc;
+    line-height: 2em;
+    left: 40%;
+}
+
+.infoExBox .infoOne .formBox .selBox {
+    width: 90%;
+    height: 90%;
+    right: 10%;
+    z-index: 666;
+    color: #00d8fc;
+    background: url(../images/lawContro/xiala.png) no-repeat right;
+    overflow: hidden;
+}
+
+.infoExBox .infoOne .formBox .selBox select {
+    width: 118%;
+    right: 0;
+    z-index: 666;
+    color: #00d8fc;
+    font-size: 0.8em;
+    text-align: center;
+    height: 98%;
+}
+
+.infoExBox .infoOne .formBox>div>img {
+    display: none;
+}
+
+.infoExBox .infoOne .formBox .defImg {
+    display: block;
+}
+
+.infoExBox .infoOne .formBox input {
+    z-index: 666;
+    color: #00d8fc;
+    font-size: 1em;
+    text-align: center;
+    height: 98%;
+}
+
+.infoExBox .txtAreaOne {
+    height: 4em;
+}
+
+.infoExBox .txtAreaOne>span {
+    line-height: 5em;
+}
+
+.infoExBox .txtAreaOne .formBox textarea {
+    z-index: 666;
+    color: #00d8fc;
+    font-size: 1em;
+    width: 98%;
+    height: 98%;
+}
+
+.infoExBox .boxesBox {
+    height: auto;
+}
+
+.lawConBox .workAreaBox {
+    width: 100%;
+    display: none;
+    margin-bottom: 3em;
+}
+
+.lawConBox .workAreaBox .infoBox {
+    width: 100%;
+    margin-top: 2em;
+}
+
+.lawConBox .workAreaBox .infoBox .infoOne {
+    width: 20%;
+    float: left;
+    height: 1.8em;
+    margin-bottom: 0.5em;
+}
+
+.lawConBox .workAreaBox .infoBox .infoOne>span {
+    float: left;
+    line-height: 2em;
+    font-size: 0.8em;
+    color: #00d8fc;
+    margin-right: 5%;
+    width: 30%;
+}
+
+.lawConBox .workAreaBox .infoBox .infoOne .formBox {
+    width: 60%;
+    float: left;
+    height: 90%;
+}
+
+.lawConBox .workAreaBox .infoBox .infoOne .formBox .selBox {
+    width: 90%;
+    height: 90%;
+    right: 10%;
+    z-index: 666;
+    color: #00d8fc;
+    background: url('../images/lawContro/xiala.png') no-repeat right;
+    overflow: hidden;
+}
+
+.lawConBox .workAreaBox .infoBox .infoOne .formBox .selBox select {
+    width: 118%;
+    height: 100%;
+    right: 0;
+    z-index: 666;
+    color: #00d8fc;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.lawConBox .workAreaBox .infoBox .infoOne .formBox input {
+    height: 98%;
+    float: left;
+    font-size: 0.8em;
+    color: #00d8fc;
+    line-height: 2em;
+    background: #163d66;
+    width: 99%;
+    z-index: 1;
+}
+
+.speOne {
+    width: 40%;
+    float: left;
+    height: 1.8em;
+    margin-bottom: 0.5em;
+}
+
+.speOne .speOneBox {
+    z-index: 1;
+}
+
+.speOne .speOneBox>span {
+    margin-right: 5%;
+    width: 15%;
+    float: left;
+    line-height: 2em;
+    color: #00d8fc;
+    font-size: 0.8em;
+}
+
+.speOne .speOneBox {
+    width: 80%;
+    height: 90%;
+    float: left;
+}
+
+.speOne .speOneBox .speOneBoxRight {
+    width: 98%;
+    height: 98%;
+}
+
+.speOne .speOneBox .speOneBoxRight>.selBox,
+.speOne .speOneBox .speOneBoxRight>span,
+.speOne .speOneBox .speOneBoxRight>div {
+    float: left;
+}
+
+.speOne .speOneBox .speOneBoxRight>span {
+    margin-right: 5%;
+    line-height: 2em;
+    color: #00d8fc;
+    font-size: 0.8em;
+}
+
+.speOne .speOneBox .speOneBoxRight .selBox {
+    width: 20%;
+    margin-right: 5%;
+    height: 98%;
+    right: 10%;
+    z-index: 666;
+    background: url(../images/lawContro/xiala.png) no-repeat right;
+    overflow: hidden;
+}
+
+.speOne .speOneBox .speOneBoxRight .selBox select {
+    width: 132%;
+    height: 100%;
+    right: 0;
+    z-index: 666;
+    color: #00d8fc;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.speOne .speOneBox .speOneBoxRight .switchBox {
+    width: 15%;
+    float: left;
+    height: 1.6em;
+    margin-top: 0em;
+    background: #143963;
+    margin-right: 0.5em;
+}
+
+.speOne .speOneBox .speOneBoxRight .switchBox img {
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+.speOne .speOneBox .speOneBoxRight .switchBox .guanImg {
+    display: block;
+}
+
+.lawConBox .workAreaBox .itemsInfoBox .titMainBox {
+    z-index: 222;
+    width: 100%;
+    height: 4em;
+}
+
+.lawConBox .workAreaBox .itemsInfoBox .titMainBox .titCon {
+    font-size: 1.2em;
+    color: #00fcff;
+    width: 100%;
+    text-align: center;
+}
+
+.lawConBox .workAreaBox .itemsInfoBox .titMainBox .addBtnBox {
+    width: 5em;
+    height: 1.8em;
+    right: 0;
+    top: -45%;
+    cursor: pointer;
+    z-index: 444;
+}
+
+.lawConBox .workAreaBox .itemsInfoBox .titMainBox .addBtnBox img {
+    display: none;
+}
+
+.lawConBox .workAreaBox .itemsInfoBox .titMainBox .addBtnBox .defImg {
+    display: block;
+}
+
+.lawConBox .workAreaBox .itemsInfoBox .titMainBox .addBtnBox span {
+    font-size: 0.8em;
+    color: #00d8fc;
+    width: 100%;
+    text-align: center;
+}
+
+.lawConBox .workAreaBox .itemsInfoBox .titMainBox .addBtnBox:active .defImg {
+    display: none;
+}
+
+.lawConBox .workAreaBox .itemsInfoBox .titMainBox .addBtnBox:active .selImg {
+    display: block;
+}
+
+.lawConBox .workAreaBox .itemsInfoBox .titMainBox .tabConBox {
+    width: 100%;
+    bottom: 25%;
+}
+
+.lawConBox .workAreaBox .itemsInfoBox .titMainBox .tabConBox span {
+    width: 50%;
+    font-size: 0.8em;
+    color: #00d8fc;
+    text-align: center;
+    float: left;
+}
+
+.lawConBox .workAreaBox .itemsInfoBox .itemsInfoMainBox {
+    width: 100%;
+}
+
+.lawConBox .workAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul {
+    width: 100%;
+    padding: 0 0%;
+    box-sizing: border-box;
+}
+
+.lawConBox .workAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li {
+    width: 100%;
+    height: 2.5em;
+}
+
+.lawConBox .workAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li>div {
+    width: 50%;
+    height: 100%;
+    float: left;
+}
+
+.lawConBox .workAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .itemsName input {
+    text-align: center;
+    height: 98%;
+    float: left;
+    font-size: 0.8em;
+    color: #00d8fc;
+    line-height: 2.5em;
+    background: #163d66;
+    width: 99%;
+    z-index: 1;
+}
+
+.goods-list .cameraImg,.injury-list .cameraImg {
+    width: 5%;
+    height: auto;
+    right: 10%;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.lawConBox .workAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .pics .delAll {
+    width: 5%;
+    height: auto;
+    right: 0%;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.lawConBox .workAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .pics .imgsBox {
+    z-index: 1;
+    overflow: hidden;
+    height: 90%;
+    width: 80%;
+}
+
+.lawConBox .workAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .pics .imgsBox .imgOne {
+    margin: 0 2px;
+    float: left;
+    z-index: 1;
+    cursor: pointer;
+    width: 15%;
+    height: 100%;
+}
+
+.lawConBox .workAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .pics .imgsBox .imgOne .closeImg {
+    width: 30%;
+    height: auto;
+    right: 0;
+    cursor: pointer;
+}
+
+.lawConBox .workAreaBox .textAreaBox {
+    width: 100%;
+    height: 6em;
+    margin-top: 1em;
+}
+
+.lawConBox .workAreaBox .textAreaBox .tarLeft {
+    float: left;
+}
+
+.lawConBox .workAreaBox .textAreaBox .tarRight {
+    float: right;
+}
+
+.lawConBox .workAreaBox .textAreaBox>div {
+    width: 49%;
+    height: 100%;
+}
+
+.lawConBox .workAreaBox .textAreaBox>div textarea {
+    z-index: 1;
+    font-size: 0.8em;
+    color: #00d8fc;
+    width: 98%;
+    height: 98%;
+    background: #163d66;
+}
+
+.lawConBox .workAreaBox .selectBox {
+    width: 100%;
+    margin-top: 1em;
+    height: 2em;
+    cursor: pointer;
+}
+
+.lawConBox .workAreaBox .selectBox .selImgBox,
+.lawConBox .workAreaBox .selectBox span {
+    float: left;
+}
+
+.lawConBox .workAreaBox .selectBox .selImgBox {
+    width: 1em;
+    height: 1em;
+    margin-top: 0.25em;
+    margin-right: 1em;
+}
+
+.lawConBox .workAreaBox .selectBox .selImgBox img {
+    display: none;
+}
+
+.lawConBox .workAreaBox .selectBox .selImgBox .defImg {
+    display: block;
+}
+
+.lawConBox .workAreaBox .selectBox span {
+    font-size: 0.9em;
+    color: #00d8fc;
+    line-height: 1.7em;
+}
+
+.lawConBox .otherConBox .cardBox {
+    width: 100%;
+    margin-top: 3em;
+}
+
+.lawConBox .otherConBox .cardBox .card {
+    width: 25%;
+    height: 20em;
+    margin: 0% 4.1666666%;
+    float: left;
+}
+
+.lawConBox .otherConBox .cardBox .card .tit {
+    font-size: 1em;
+    color: #00d8fc;
+    top: 1%;
+    z-index: 1;
+    left: 10%;
+}
+
+.lawConBox .otherConBox .cardBox .card .perInfoBox {
+    width: 90%;
+    height: 80%;
+    bottom: 5%;
+    z-index: 1;
+}
+
+.lawConBox .otherConBox .cardBox .card .perInfoBox li {
+    width: 100%;
+    height: 2em;
+    margin-bottom: 0.5em;
+}
+
+.lawConBox .otherConBox .cardBox .card .perInfoBox li span {
+    width: 30%;
+    float: left;
+    line-height: 2.5em;
+    font-size: 0.8em;
+    color: #00d8fc;
+    margin-right: 5%;
+}
+
+.lawConBox .otherConBox .cardBox .card .perInfoBox li .formBox {
+    width: 65%;
+    height: 1.8em;
+    margin-top: 0.35em;
+    float: left;
+    font-size: 0.8em;
+    color: #00d8fc;
+    line-height: 2em;
+    background: #07608a;
+}
+
+.lawConBox .otherConBox .cardBox .card .perInfoBox li .formBox .selBox {
+    width: 90%;
+    height: 100%;
+    right: 10%;
+    z-index: 666;
+    color: #00d8fc;
+    background: url(../images/lawContro/xiala.png) no-repeat right;
+    overflow: hidden;
+}
+
+.lawConBox .otherConBox .cardBox .card .perInfoBox li .formBox .selBox select {
+    width: 115%;
+    height: 100%;
+    right: 0;
+    z-index: 666;
+    color: #00d8fc;
+    font-size: 1em;
+    text-align: center;
+}
+
+.lawConBox .otherConBox .cardBox .card .perInfoBox li .formBox input {
+    height: 98%;
+    float: left;
+    font-size: 0.8em;
+    color: #00d8fc;
+    line-height: 2em;
+    background: #163d66;
+    width: 99%;
+    z-index: 1;
+}
+
+.lawConBox .otherConBox .cardBox .card .perInfoBox .sexBox .formBox {
+    background: none;
+}
+
+.lawConBox .otherConBox .cardBox .card .perInfoBox .sexBox .sexOneBox {
+    width: 30%;
+    margin-right: 3%;
+    height: 100%;
+    float: left;
+    cursor: pointer;
+}
+
+.lawConBox .otherConBox .cardBox .card .perInfoBox .sexBox .sexOneBox img {
+    display: none;
+    width: 20%;
+    height: auto;
+}
+
+.lawConBox .otherConBox .cardBox .card .perInfoBox .sexBox .sexOneBox .defImg {
+    display: block;
+}
+
+.lawConBox .otherConBox .cardBox .card .perInfoBox .sexBox .sexOneBox span {
+    font-size: 0.8em;
+    color: #00d8fc;
+    line-height: 2em;
+    left: 40%;
+}
+
+.lawConBox .otherConBox .cardBox .card .perInfoBox .sexBox .active .selImg {
+    display: block;
+}
+
+.lawConBox .btnBox {
+    width: 100%;
+    height: 2.8em;
+    margin-bottom: 1em;
+}
+
+.lawConBox .btnBox .btnConBox {
+    margin: 0 auto;
+    height: 100%;
+    width: 24em;
+}
+
+.lawConBox .btnBox .btnConBox .box {
+    width: 7em;
+    height: 100%;
+    cursor: pointer;
+    float: left;
+    margin-right: 1em;
+}
+
+.lawConBox .btnBox .btnConBox .nextBox {
+    float: right;
+}
+
+.lawConBox .btnBox .btnConBox .prevBox {
+    display: none;
+}
+
+.lawConBox .btnBox .btnConBox .box img {
+    display: none;
+}
+
+.lawConBox .btnBox .btnConBox .box .defImg {
+    display: block;
+}
+
+.lawConBox .btnBox .btnConBox .box span {
+    color: #00d8fc;
+    width: 100%;
+    text-align: center;
+}
+
+.lawConBox .btnBox .btnConBox .box:hover .defImg {
+    display: none;
+}
+
+.lawConBox .btnBox .btnConBox .box:hover .selImg {
+    display: block;
+}
+
+.lawConBox .btnBox .keepBox {
+    left: 35%;
+}
+
+.lawConBox .btnBox .nextBox {
+    right: 35%;
+}
+
+#maskBox {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 888;
+    background: black;
+    opacity: 0.5;
+    display: none;
+}
+
+/* //更改每行的个数 */
+
+.lawConBox .perMsgBox .inforBox .inforBoxCon>ul li {
+    /* 每行2个 */
+    width: 48%;
+    /* 每行3个 */
+    /* width: 32%; */
+    /* 每行4个 */
+    /* width: 23%; */
+}
+
+.visiHide {
+    visibility: hidden;
+}
+.collectProject-cls{
+	position: relative;
+    top: -3px;
+}

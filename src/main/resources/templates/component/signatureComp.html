@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<!--下拉框组件用规范
+<span th:include="component/signatureComp(id='表单元素ID',name='表单元素名称',defaultValue='默认值',
+	disabled='为1时不可编辑，其他的可以编辑')"/>
+-->
+<span th:fragment="signatureComp(id,name,disabled,defaultValue,disabled)">
+	<img th:id="${id}" th:name="${name}" style="width:100px;height:50px;background-color: blanchedalmond"  >
+</span>
+<script th:inline="javascript">
+    $(function () {
+        var id = [[${id}]];
+        var name = [[${name}]];
+        var defaultValue = [[${defaultValue}]];
+        var disabled = [[ ${disabled} ]];//是否可编辑，为1时不可编辑
+		if(defaultValue){
+            $("#" + id).attr("src","/FileUpload/getAttach.json?id="+defaultValue);
+            $("#" + id).css("background-color","transparent");
+		}
+		if(disabled == 1){
+			$("#" + id).attr("disabled", true);
+		}else{
+	        $("#" + id).click(function(){
+	            layer.open({
+	                type: 2 //此处以iframe举例
+	                //,title: '请按着鼠标写字签名'
+	                ,title: false
+	                ,area: ['75%', '75%']
+	                ,shade: 0
+					,scrollbar:false
+	                ,maxmin: false
+	                ,content: '/SignHtml/signBoard.html?name='+name
+	            });
+	        })
+		}
+    });
+</script>
+</html>
+
+

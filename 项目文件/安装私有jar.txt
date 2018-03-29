@@ -1,0 +1,8 @@
+--安装达梦数据库驱动
+mvn install:install-file -Dfile=Dm7JdbcDriver17.jar -DgroupId=com.dm -DartifactId=Dm7JdbcDriver17 -Dversion=1.0.0 -Dpackaging=jar
+--安装继电器驱动
+mvn install:install-file -Dfile=jamod-1.2-SNAPSHOT.jar -DgroupId=com.dm -DartifactId=jamod -Dversion=1.2-SNAPSHOT -Dpackaging=jar
+
+mvn install:install-file -Dfile=examples.jar -DgroupId=com.sun.jna -DartifactId=examples -Dversion=huangt1.0-SNAPSHOT -Dpackaging=jar
+
+mvn install:install-file -Dfile=jna.jar -DgroupId=com.sun.jna -DartifactId=jna -Dversion=huangt1.0-SNAPSHOT -Dpackaging=jar

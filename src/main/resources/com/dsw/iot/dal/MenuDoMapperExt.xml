@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.dsw.iot.dal.MenuDoMapperExt" >
+<!-- 通过用户id查找菜单，同时找出图标id -->
     <select id="findMenuByUserId" resultMap="BaseResultMap" parameterType="com.dsw.iot.dto.MenuRequest">
 		select
 		<include refid="Base_Column_List"/>
 		from(
-			select distinct t4.*
-			from user t1
+			SELECT DISTINCT
+				t4.id, t4.pid, t4.text, t4.action, t5.id as icon, t4.sort, t4.is_valid, t4.is_deleted, t4.create_time, t4.create_user,
+				t4.update_time, t4.update_user
+			FROM USER t1
 			LEFT JOIN user_role t2
-			on t1.id = t2.user_id
+			ON t1.id = t2.user_id
 			LEFT JOIN role_menu t3
-			on t2.role_id = t3.role_id
+			ON t2.role_id = t3.role_id
 			LEFT JOIN menu t4
-			on t3.menu_id = t4.id
+			ON t3.menu_id = t4.id
+			LEFT JOIN attach t5
+			ON t5.task_belong = 'MENU_ICON'
+			AND t4.id = t5.task_id
+			AND t5.is_deleted = 'N'
 			where t4.is_valid = '1' and t1.id = #{userId,jdbcType=INTEGER}
+			order by t4.sort
 		)T
     </select>
     <select id="findMenuByRoleId" resultMap="BaseResultMap" parameterType="com.dsw.iot.dto.MenuRequest">
@@ -29,4 +37,8 @@
 			where t3.is_valid = '1' and t1.id = #{roleId,jdbcType=INTEGER}
 		)T
     </select>
+    <delete id="deleteByPrimaryKeyReal" parameterType="Long" >
+    	delete from menu
+    	where ID = #{id,jdbcType=NUMERIC}
+  	</delete>
 </mapper>

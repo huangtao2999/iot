@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html>
+<head><meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+    <meta charset="UTF-8">
+    <title>人员轨迹</title>
+	<div th:include="inc/common-new"></div>
+	<div th:include="inc/common-table"></div>
+</head>
+<body>
+	<input id="roleIds"  type="hidden"  th:value="${roleIds}"/>
+    <div id="leftBox" style="width:100%;height:100%">
+        <div class="posRel wh100">
+            <div class="searchBox posAbs cen">
+                <div class="posRel wh100">
+                    <div class="editBox posAbs">
+                        <!--<ul class="wh100">-->
+                            <!--<li>-->
+                                <!--<div class="posRel wh100" id="testBtn">-->
+                                    <!--<img src="../images/perRegis/renyuandengji_bg1.png" alt="" class="bg posAbs wh100">-->
+                                    <!--<img src="../images/perRegis/renyuandengji_tubiao_bianji.png" alt="" class="typeImg posAbs mid">-->
+                                    <!--<span class="posAbs mid">测试</span>-->
+                                <!--</div>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    </div>
+ <!--                     通用高级查询html -->
+					<div th:include="inc/table-query"></div>
+                </div>
+            </div>
+<!--        table公用数据html -->
+			<div id="personRegis-table" th:include="inc/table-dataField"></div>
+            <img src="../images/perRegis/renyuandengji_biankaungzuo.jpg" alt="" class="bgImg posAbs wh100">
+        </div>
+    </div>
+</body>
+<script th:inline="javascript">
+	var registerId = [[${registerId}]];
+	if(!registerId){
+		layer.msg("未找到人员信息");
+	}else{
+
+	    var table = new iotTable({
+	        dataUrl : '/PersonTrace/queryPage.json?registerId='+registerId,
+	        renderTo : '#personRegis-table',
+	        select : false,
+	        heads : [{
+	            text : '人员姓名',
+	            width : 20,
+	            name : 'personName'
+	        },{
+	            text : '内容',
+	            width : 25,
+	            name : 'content'
+	        },{
+	            text : '备注',
+	            width : 15,
+	            name : 'remark'
+	        },{
+	            text : '进入时间',
+	            width : 30,
+	            name : 'createTime',
+	            dateFormat : 'yyyy-MM-dd hh:mm:ss'
+	        }],
+	        queryFields : [{
+	            text : '进入时间',
+	            name : 'startTime',
+	            type : 'date'
+	        },{
+	            text : '至',
+	            name : 'endTime',
+	            type : 'date'
+	        }]
+	    });
+	    table.init();
+	}
+
+	//测试按钮
+	$("#testBtn").click(function(){
+		var startTime = '2018-03-23 00:00:01';
+		var endTime = '2018-03-23 05:00:01';
+		var res = PublicAjax("/PersonTrace/queryPage.json?registerId=" + registerId, {
+			'startTime' : startTime,
+			'endTime' : endTime
+		});
+	})
+</script>
+</html>

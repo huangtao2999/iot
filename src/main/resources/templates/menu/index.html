@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
-<head>
+<head><meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
 	<meta charset="UTF-8">
 	<title>菜单管理</title>
 	<div th:include="inc/common"></div>
@@ -13,6 +17,12 @@
 }
 .layui-select-disabled .layui-disabled{
 	border: 1px solid #cccccc !important;
+}
+.showImg{
+ 	float:left;
+	width: 100px;
+	height: 100px;
+	background-size:100px 100px;
 }
 </style>
 <body>
@@ -28,7 +38,7 @@
 		<ul id="tree" class="ztree" style="width:95%; overflow:auto;"></ul>
 	</div>
 <!-- 右边编辑详情 -->
-	<div class="block span8" style="height:400px;overflow:auto">
+	<div class="block span7" style="height:400px;overflow:auto">
 		<p class="block-heading">菜单详情</p>
 		<form class="layui-form" action="" id="mainForm" >
 	            <div class="layui-form-item" >
@@ -46,7 +56,7 @@
 	            <div class="layui-form-item" >
                 	<label class="layui-form-label" >图标</label>
                     <div class="layui-input-block" >
-
+						<input type="hidden" id="menuIcon">
                     </div>
                 </div>
 	            <div class="layui-form-item" >
@@ -80,6 +90,25 @@ function menuClickFun(id){
     	$("#action").val(data.action);
     	$("#sort").val(data.sort);
     	$("#isValid").val(data.isValid);
+
+    	//查找所有该业务上传的图片
+    	var res = new PublicAjax('/FileUpload/listAttach.json', {'taskId': data.id, 'taskBelong': 'MENU_ICON'});
+    	if(res.success){
+    		$(".showImg").remove();
+    		var resList = res.content;
+    		if(resList.length > 0){
+    			//有记录就循环展示
+				for(var i = 0; i < resList.length; i++){
+                    var path = resList[i].path;
+                    var id = resList[i].id;
+                    var img = '<div id="' + resList[i].id + '" class="showImg"  style="background-image:url(/FileUpload/getAttach.json?id=' + id + ');"></div>'
+            		$("#menuIcon").after(img);
+				}
+    		}
+    	} else {
+            layer.msg(res.content);
+        }
+
     	layui.form.render();
 	}else{
 		layer.msg('查询菜单详情失败');
@@ -93,24 +122,26 @@ function refreshWholeTree(){
 	dictionaryTree = res.content;
 	var t = $("#tree");
 	t = $.fn.zTree.init(t, setting, dictionaryTree);
+	t.expandAll(true);
 }
 
-//刷新当前节点
-function refreshTreeNode(id){
-  var treeObj = $.fn.zTree.getZTreeObj("tree"),
-  reloadType = "refresh",
-  isSilent = false;
-  if(id == 0){
-  	//传进来的节点id是0，没有该节点，刷新整个树
-  	refreshWholeTree();
-  }else{
-  	//不是根节点就刷新父节点
-	var nodes = treeObj.getNodeByParam("id", id, null);
-  	//为true时才会刷新
-  	nodes.isParent = true;
-	treeObj.reAsyncChildNodes(nodes, reloadType, isSilent);
-  }
-}
+// //刷新当前节点
+// function refreshTreeNode(id){
+//   var treeObj = $.fn.zTree.getZTreeObj("tree"),
+//   reloadType = "refresh",
+//   isSilent = false;
+//   alert(id);
+//   if(id == 0){
+//   	//传进来的节点id是0，没有该节点，刷新整个树
+//   	refreshWholeTree();
+//   }else{
+//   	//不是根节点就刷新父节点
+// 	var nodes = treeObj.getNodeByParam("id", id, null);
+//   	//为true时才会刷新
+//   	nodes.isParent = true;
+// 	treeObj.reAsyncChildNodes(nodes, reloadType, isSilent);
+//   }
+// }
 
 //树上小按钮--删除节点
 function delNode(treeNode){
@@ -129,9 +160,8 @@ function delNode(treeNode){
 function addTreeBro(treeNode){
   layer.open({
       type: 2,
-      title: '新增同级菜单',
-      maxmin: true,
-      area: ['400px', '380px'],
+      title: "添加同级菜单",
+      area: ['60%', '80%'],
       content: '/MenuHtml/toAddTreeMenuNode.html?pid='+treeNode.pid
   });
 }
@@ -139,9 +169,8 @@ function addTreeBro(treeNode){
 function addTreeChild(treeNode){
   layer.open({
       type: 2,
-      title: '新增子菜单',
-      maxmin: true,
-      area: ['400px', '380px'],
+      title: "添加子菜单",
+      area: ['60%', '80%'],
       content: '/MenuHtml/toAddTreeMenuNode.html?pid='+treeNode.id
   });
 }
@@ -149,9 +178,8 @@ function addTreeChild(treeNode){
 function editNode(treeNode){
   layer.open({
       type: 2,
-      title: '编辑',
-      maxmin: true,
-      area: ['400px', '380px'],
+      title: "编辑菜单",
+      area: ['60%', '80%'],
       content: '/MenuHtml/editMenuNode.html?id='+treeNode.id
   });
 }
@@ -162,7 +190,7 @@ function addHoverDom(treeId, treeNode) {
   if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
   var htmlStr = "<span class='button add' id='addBtn1_" + treeNode.tId
 					+ "'  title='添加同级' onfocus='this.blur();'></span>";
-  htmlStr += "<span class='button add' id='addBtn_" + treeNode.tId
+  htmlStr += "<span class='button list' id='addBtn_" + treeNode.tId
 					+ "'  title='添加子集' onfocus='this.blur();'></span>";
   htmlStr += "<span class='button edit' id='editBtn_" + treeNode.tId
 					+ "'  title='编辑当前节点' onfocus='this.blur();'></span>";
@@ -196,23 +224,23 @@ function removeHoverDom(treeId, treeNode) {
   $("#delBtn_"+treeNode.tId).unbind().remove();
 };
 
-//异步加载树的格式化
-function ajaxDataFilter(treeId, parentNode, responseData) {
-	//获得返回的树内容
- 	responseData = responseData.content;
-  if (responseData.length > 0) {
-	    return responseData;
-  }
-};
-//异步加载结束后的回调方法，如果是叶子就把节点更新图标
-function zTreeOnAsyncSuccess(event, treeId, treeNode, msg) {
-	var treeObj = $.fn.zTree.getZTreeObj(treeId);
-	if(treeNode.children.length == 0)
-		//没有子节点，就把图标变成文件图标
-		treeNode.isParent=false;
-		treeObj.updateNode(treeNode);
-		return;
-};
+// //异步加载树的格式化
+// function ajaxDataFilter(treeId, parentNode, responseData) {
+// 	//获得返回的树内容
+//  	responseData = responseData.content;
+//   if (responseData.length > 0) {
+// 	    return responseData;
+//   }
+// };
+// //异步加载结束后的回调方法，如果是叶子就把节点更新图标
+// function zTreeOnAsyncSuccess(event, treeId, treeNode, msg) {
+// 	var treeObj = $.fn.zTree.getZTreeObj(treeId);
+// 	if(treeNode.children.length == 0)
+// 		//没有子节点，就把图标变成文件图标
+// 		treeNode.isParent=false;
+// 		treeObj.updateNode(treeNode);
+// 		return;
+// };
 
 //获得跳转页面传过来的树json
 var menuList = [[ ${menuTree} ]];
@@ -226,19 +254,19 @@ var setting = {
 	    addHoverDom: addHoverDom,//设置鼠标悬停的按钮
 	    removeHoverDom: removeHoverDom
 	},
-	async:{
-	    enable:true,
-	    url:"/Dictionary/queryByPid.json",
-	    autoParam:["id=pid","code"],
-	    dataType:"json",
-	    dataFilter: ajaxDataFilter
-	},
+// 	async:{
+// 	    enable: false,
+// 	    url:"/Menu/.json",
+// 	    autoParam:["id=pid","code"],
+// 	    dataType:"json",
+// 	    dataFilter: ajaxDataFilter
+// 	},
 	data: {
 		simpleData: {
-		    enable:false,
+		    enable: true,
 		    idKey: "id",
 		    pIdKey: "pid",
-		    rootPId: "",
+		    rootPId: 0,
 		},
 		key: {
 			checked: "checked",
@@ -256,9 +284,10 @@ var setting = {
 		},
         //双击刷新当前节点下的子节点
         onDblClick: function(event, treeId, treeNode) {
-        	refreshTreeNode(treeNode.id);
+        	refreshWholeTree();
+//         	refreshTreeNode(treeNode.id);
         },
-    	onAsyncSuccess: zTreeOnAsyncSuccess
+//     	onAsyncSuccess: zTreeOnAsyncSuccess
 	}
 };
 
@@ -266,6 +295,7 @@ $(document).ready(function(){
 	//初始化树
     var t = $("#tree");
     t = $.fn.zTree.init(t, setting, menuList);
+    t.expandAll(true);
     //下拉框不可编辑
 	$("#isValid").attr("disabled","disabled");
     //把所有input框的背景变成灰色

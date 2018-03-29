@@ -1,1 +1,0 @@
-mvn install:install-file -Dfile=Dm7JdbcDriver17.jar -DgroupId=com.dm -DartifactId=Dm7JdbcDriver17 -Dversion=1.0.0 -Dpackaging=jar

@@ -83,9 +83,17 @@ public interface DictionaryService {
 
 	/**
 	 * 判断编码是否有重复（新增根节点时，code和type是一样的，新增子节点时，code和type不一样）
-	 * 
+	 *
 	 * @param dictionaryRequest
 	 * @return
 	 */
 	ActionResult<String> checkDicCode(DictionaryRequest dictionaryRequest);
+
+	/**
+	 * 通过pid查询下级节点
+	 *
+	 * @param example
+	 * @return
+	 */
+	List<DictionaryTreeVo> selectDictionaryByPidIsParent(Long pid);
 }

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head >
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+  <meta http-equiv="Expires" content="0" />
+  <span th:include="inc/common-new"></span>
+  <link rel='stylesheet' type='text/css' th:href="@{../../css/photo/take-photo.css}"/>
+</head >
+<body class="custom-photo" >
+
+<div class="container photo-container">
+  <div class="photo-title">视频预览</div>
+  <div class="photo-box clearfix">
+    <!--控制区域-->
+    <div class="photo-control-box fr">
+      <div class="photo-ctl-dir">
+        <div class="photo-ctl-dir-box">
+          <span class="photo-ctl-dir-btn photo-ctl-dir-btn-paizhao" id='take-photo'>拍照</span>
+          <span class="photo-ctl-dir-btn photo-ctl-dir-btn-t" onmousedown="mouseDownPTZControl(1);" onmouseup="mouseUpPTZControl();"><span class="photo-ctl-dir-text">上</span></span>
+          <span class="photo-ctl-dir-btn photo-ctl-dir-btn-rt" onmousedown="mouseDownPTZControl(7);" onmouseup="mouseUpPTZControl();"><span class="photo-ctl-dir-text">右上</span></span>
+          <span class="photo-ctl-dir-btn photo-ctl-dir-btn-r" onmousedown="mouseDownPTZControl(4);" onmouseup="mouseUpPTZControl();"><span class="photo-ctl-dir-text">右</span></span>
+          <span class="photo-ctl-dir-btn photo-ctl-dir-btn-rb" onmousedown="mouseDownPTZControl(8);" onmouseup="mouseUpPTZControl();"><span class="photo-ctl-dir-text">右下</span></span>
+          <span class="photo-ctl-dir-btn photo-ctl-dir-btn-b" onmousedown="mouseDownPTZControl(2);" onmouseup="mouseUpPTZControl();"><span class="photo-ctl-dir-text">下</span></span>
+          <span class="photo-ctl-dir-btn photo-ctl-dir-btn-lb" onmousedown="mouseDownPTZControl(6);" onmouseup="mouseUpPTZControl();"><span class="photo-ctl-dir-text">左下</span></span>
+          <span class="photo-ctl-dir-btn photo-ctl-dir-btn-l" onmousedown="mouseDownPTZControl(3);" onmouseup="mouseUpPTZControl();"><span class="photo-ctl-dir-text">左</span></span>
+          <span class="photo-ctl-dir-btn photo-ctl-dir-btn-lt" onmousedown="mouseDownPTZControl(5);" onmouseup="mouseUpPTZControl();"><span class="photo-ctl-dir-text">左上</span></span>
+        </div>
+      </div>
+      <div class="photo-ctl-change">
+        <div class="photo-ctl-change-item">
+          <span class="photo-ctl-change-btn photo-ctl-change-btn-bei" onmousedown="PTZZoomIn()" onmouseup="PTZZoomStop()">变倍 +</span>
+          <span class="photo-ctl-change-btn photo-ctl-change-btn-bei" onmousedown="PTZZoomout()" onmouseup="PTZZoomStop()">变倍 -</span>
+        </div>
+        <div class="photo-ctl-change-item">
+          <span class="photo-ctl-change-btn photo-ctl-change-btn-jiao" onmousedown="PTZFocusIn()" onmouseup="PTZFoucusStop()">变焦 +</span>
+          <span class="photo-ctl-change-btn photo-ctl-change-btn-jiao" onmousedown="PTZFoucusOut()" onmouseup="PTZFoucusStop()">变焦 -</span>
+        </div>
+        <div class="photo-ctl-change-item">
+          <span class="photo-ctl-change-btn photo-ctl-change-btn-quan" onmousedown="PTZIrisIn()" onmouseup="PTZIrisStop()">变圈 +</span>
+          <span class="photo-ctl-change-btn photo-ctl-change-btn-quan" onmousedown="PTZIrisOut()" onmouseup="PTZIrisStop()">变圈 -</span>
+        </div>
+      </div>
+      <div class="photo-ctl-action">
+        <span class="photo-ctl-action-btn photo-ctl-action-btn-chongpai" id='chongpai'>重拍</span>
+        <span class="photo-ctl-action-btn photo-ctl-action-btn-queding" id='queding'>确定</span>
+      </div>
+    </div>
+    <!--视频区域-->
+    <div class="photo-video-box">
+      <div class="photo-video-content">
+        <div id="divPlugin" class="plugin"></div>
+      </div>
+      <div class="photo-video-preview">
+        <div class="photo-video-preview-box clearfix" id="photo-video-preview-box" ></div>
+      </div>
+    </div>
+  </div>
+</div>
+<input type="hidden" th:value="${ip}" id="szIP">
+<input type="hidden" th:value="${port}" id="szPort">
+<input type="hidden" th:value="${userName}" id="szUsername">
+<input type="hidden" th:value="${password}" id="szPassword">
+<input type="hidden" th:value="${channel}" id="iChannelID">
+
+
+<script th:src="@{../../js/jquery-3.2.1.min.js}"></script>
+<script id="videonode" th:src="@{../../js/webVideoCtrl.js}"></script>
+<script th:src="@{../../js/video.js}"></script>
+<script th:src="@{../../js/custom/take-photo.js}"></script>
+<script th:inline='javascript'>
+  var type=[[${type}]];
+
+    	// 拍照功能 start
+    	var is_taking=false;
+    	$('#take-photo').click(function(e){
+    		var self=this;
+    	
+    		// 拍照 数量已达上限
+    		if($(this).hasClass('no-take')){
+    			layer.msg('拍照数量达到上限',{offset:'t'});
+    			return;
+    		}
+    		
+    		// 上一张拍照结果未获取时 禁止再次拍照
+    		if(!is_taking){
+    			is_taking=true;
+    			$(this).addClass('taking-photo');
+    			$.ajax({
+	    			url:'/Video/captureByChannel.json',
+                    data:{"type":type},
+                    type:'get',
+                    dataType:'json',
+                    cache:false
+	    		}).then(function(result){
+
+	    			$('#photo-video-preview-box').dsw_take_photo('insertTakePhotoImg','/FileUpload/getAttach.json?id='+result.content.id);
+	    			
+	    			layer.msg('拍照成功',{offset:'t'});
+	    		},function(reason){
+	    			layer.msg('拍照失败',{offset:'t'});
+	    		}).always(function(){
+	    			is_taking=false;
+    				$(self).removeClass('taking-photo');
+	    		});
+    		}else{
+    			layer.msg('正在拍照，请等待',{offset:'t'});
+    		}
+    	
+    	});
+    	
+    	// 确定 带回本次拍照结果给父页面
+    	$('#queding').click(function(e){
+    		var currentFrameIndex=parent.layer.getFrameIndex(window.name);
+    		
+    		// 获取父页面 先前存储的值
+    		var imgs=parent.$('input[type="hidden"][data-dsw-take-photo-temp]').data('dsw-take-photo-temp');
+    		
+    		// 修改为 最新值
+    		imgs.splice(0);
+    		$('#photo-video-preview-box').data('dsw-take-photo').imgs.forEach(function(v,k){
+    			imgs.push(v);
+    		});
+    		
+    		// 新值 回传父页面
+    		parent.$('input[type="hidden"][data-dsw-take-photo-temp]').data('dsw-take-photo-temp',imgs).data('dsw-take-photo-temp-updated',true);
+    		
+    		// 关闭本页面
+    		parent.layer.close(currentFrameIndex);
+    	});
+    	
+    	// 重拍 销毁之前所有拍照
+    	$('#chongpai').click(function(e){
+    		$('#photo-video-preview-box').dsw_take_photo('rebuild',[]);
+    		$('#take-photo').css('color','#00d8fc').removeClass('no-take').text('拍照');
+    	});
+    	
+    	
+    	function take_photo(options){
+    		$('#photo-video-preview-box').dsw_take_photo($.extend({},options,{
+		        //maxCount: 5, //最多显示的图片数量 Number
+		        //initImages: [], //初始化时，要显示的图片数组 Array<String> Array<Object>
+		
+		        imgWrapperClass: 'dsw-take-photo-img-box', // String
+		        imgMainClass: 'dsw-take-photo-img-main', // String
+		        imgMainCallback:null, // 点击图片时 的 回调函数
+		        imgCloseClass: 'dsw-take-photo-img-close', // String
+		        imgCloseUrl: '../../images/custom/close.png', // String
+		
+		        imgTakePhotoClass: 'dsw-take-photo-img-btn', // String
+		        imgTakePhotoUrl: '../../images/custom/take-photo.png', // String
+		        isShowTakePhotoBtn:false, // 是否显示 拍照按钮 Boolean
+		        //takePhotoCallback: takePhotoCallback,  // 点击拍照按钮时 的 回调函数
+		
+		        renderedCallback:function(self){
+	           		if(self.settings.maxCount>self.imgs.length){
+						$('#take-photo').css('color','#00d8fc').removeClass('no-take').text('拍照');
+	           		}else{
+	           			$('#take-photo').css('color','transparent').addClass('no-take').text('');
+	           		}
+		        }, //渲染完成之后的 回调函数
+		        insertedCallback:function(self){
+	           		if(self.settings.maxCount>self.imgs.length){
+						$('#take-photo').css('color','#00d8fc').removeClass('no-take').text('拍照');
+	           		}else{
+	           			$('#take-photo').css('color','transparent').addClass('no-take').text('');
+	           		}
+		        }, //动态插入完成之后的 回调函数
+		        deletedCallback:function(e,_this,self){
+               		if(self.settings.maxCount>self.imgs.length){
+						$('#take-photo').css('color','#00d8fc').removeClass('no-take').text('拍照');
+               		}else{
+               			$('#take-photo').css('color','transparent').addClass('no-take').text('');
+               		}
+                }, //动态删除完成之后的 回调函数
+
+                                               }));
+    	}
+    	
+    	// 拍照功能 end
+    	
+</script>
+</body >
+</html >

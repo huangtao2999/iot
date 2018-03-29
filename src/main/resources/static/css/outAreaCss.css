@@ -1,0 +1,570 @@
+#outAreaBox {
+    width: 100%;
+    background-color: #032547;
+    box-sizing: border-box;
+}
+
+#outAreaBox .outAreaBox {
+    width: 100%;
+    min-height:100%;
+    background: #0b2a4d;
+    top: 2em;
+    z-index: 666;
+}
+
+#outAreaBox .outAreaBox>h4 {
+    width: 90%;
+    font-size: 1.4em;
+    color: #02d5dc;
+    margin: 0 auto;
+}
+
+#outAreaBox .outAreaBox .perItemsBox {
+    width: 90%;
+    margin: 1em auto 0em;
+}
+
+#outAreaBox .outAreaBox .perItemsBox .leftBox {
+    width: 75%;
+    float: left;
+}
+
+#outAreaBox .outAreaBox .perItemsBox .rightBox {
+    width: 25%;
+    float: left;
+    height: 100%;
+}
+
+#outAreaBox .outAreaBox .perItemsBox .rightBox img {
+    width: 50%;
+    height: auto;
+}
+
+.infoExBox {
+    width: 100%;
+}
+
+.infoExBox .infoOne {
+    width: 30%;
+    height: 1.6em;
+    margin: 0 0.5em 0.5em 0;
+    float: left;
+}
+
+.infoExBox .infoOne .mandatoryImgBox {
+    float: left;
+    width: 1.5em;
+    height: 100%;
+}
+
+.infoExBox .infoOne .hideManda {
+    visibility: hidden;
+}
+
+.infoExBox .infoOne .mandatoryImgBox img {
+    width: 40%;
+    height: auto;
+}
+
+.infoExBox .infoOne>span {
+    font-size: 0.8em;
+    color: #00d8fc;
+    float: left;
+    line-height: 2em;
+    margin-right: 0.5em;
+}
+
+.infoExBox .infoOne .formBox {
+    float: left;
+    width: 50%;
+    height: 100%;
+}
+
+.infoExBox .infoOne .formBox .sexOneBox {
+    width: 2.7em;
+    margin-right: 0.5em;
+    height: 100%;
+    float: left;
+    cursor: pointer;
+}
+
+.infoExBox .infoOne .formBox .sexOneBox img {
+    display: none;
+    width: 30%;
+    height: auto;
+}
+
+.infoExBox .infoOne .formBox .sexOneBox .defImg {
+    display: block;
+}
+
+.infoExBox .infoOne .formBox .active .selImg {
+    display: block;
+}
+
+.infoExBox .infoOne .formBox .active .defImg {
+    display: none;
+}
+
+.infoExBox .infoOne .formBox .sexOneBox span {
+    font-size: 0.8em;
+    color: #00d8fc;
+    line-height: 2em;
+    left: 40%;
+}
+
+.infoExBox .infoOne .formBox .checkOneBox {
+    width: 3em;
+    margin-right: 0.5em;
+    height: 2em;
+    float: left;
+    cursor: pointer;
+}
+
+.infoExBox .infoOne .formBox .checkOneBox img {
+    display: none;
+    width: 25%;
+    height: auto;
+}
+
+.infoExBox .infoOne .formBox .checkOneBox .defImg {
+    display: block;
+}
+
+.infoExBox .infoOne .formBox .active .selImg {
+    display: block;
+}
+
+.infoExBox .infoOne .formBox .active .defImg {
+    display: none;
+}
+
+.infoExBox .infoOne .formBox .checkOneBox span {
+    font-size: 0.8em;
+    color: #00d8fc;
+    line-height: 2em;
+    left: 40%;
+}
+
+.infoExBox .infoOne .formBox .selBox {
+    width: 90%;
+    height: 90%;
+    right: 10%;
+    z-index: 666;
+    color: #00d8fc;
+    background: url(../images/lawContro/xiala.png) no-repeat right;
+    overflow: hidden;
+}
+
+.infoExBox .infoOne .formBox .selBox select {
+    width: 118%;
+    right: 0;
+    z-index: 666;
+    color: #00d8fc;
+    font-size: 0.8em;
+    text-align: center;
+    height: 98%;
+}
+
+.infoExBox .infoOne .formBox>div>img {
+    display: none;
+}
+
+.infoExBox .infoOne .formBox .defImg {
+    display: block;
+}
+
+.infoExBox .infoOne .formBox input {
+    z-index: 666;
+    color: #00d8fc;
+    font-size: 1em;
+    text-align: center;
+    height: 98%;
+}
+
+.infoExBox .txtAreaOne {
+    height: 4em;
+}
+
+.infoExBox .txtAreaOne>span {
+    line-height: 5em;
+}
+
+.infoExBox .txtAreaOne .formBox textarea {
+    z-index: 666;
+    color: #00d8fc;
+    font-size: 1em;
+    width: 98%;
+    height: 98%;
+}
+
+.infoExBox .boxesBox {
+    height: auto;
+}
+
+.infoExBox .speOne {
+    width: 40%;
+    float: left;
+    height: 1.8em;
+    margin-bottom: 0.5em;
+}
+
+.infoExBox .speOne .mandatoryImgBox {
+    float: left;
+    width: 1.5em;
+    height: 100%;
+}
+
+.infoExBox .speOne .speOneBox {
+    z-index: 1;
+}
+
+.infoExBox .speOne>div>span {
+    margin-right: 5%;
+    width: 18%;
+    float: left;
+    line-height: 2em;
+    color: #00d8fc;
+    font-size: 0.8em;
+}
+
+.infoExBox .speOne .speOneBox {
+    width: 70%;
+    height: 90%;
+    float: left;
+}
+
+.infoExBox .speOne .speOneBox .speOneBoxRight {
+    width: 98%;
+    height: 98%;
+}
+
+.infoExBox .speOne .speOneBox .speOneBoxRight>.selBox,
+.infoExBox .speOne .speOneBox .speOneBoxRight>span,
+.infoExBox .speOne .speOneBox .speOneBoxRight>div {
+    float: left;
+}
+
+.infoExBox .speOne .speOneBox .speOneBoxRight>span {
+    margin-right: 5%;
+    line-height: 2em;
+    color: #00d8fc;
+    font-size: 0.8em;
+}
+
+.infoExBox .speOne .speOneBox .speOneBoxRight .selBox {
+    width: 20%;
+    margin-right: 5%;
+    height: 98%;
+    right: 10%;
+    z-index: 666;
+    background: url(../images/lawContro/xiala.png) no-repeat right;
+    overflow: hidden;
+}
+
+.infoExBox .speOne .speOneBox .speOneBoxRight .selBox select {
+    width: 132%;
+    height: 100%;
+    right: 0;
+    z-index: 666;
+    color: #00d8fc;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.infoExBox .speOne .speOneBox .speOneBoxRight .switchBox {
+    width: 15%;
+    float: left;
+    height: 1.6em;
+    margin-top: 0em;
+    background: #143963;
+    margin-right: 0.5em;
+}
+
+.infoExBox .speOne .speOneBox .speOneBoxRight .switchBox img {
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+.infoExBox .speOne .speOneBox .speOneBoxRight .switchBox .guanImg {
+    display: block;
+}
+
+.outAreaBox .itemsInfoBox {
+    width: 90%;
+    margin: 2em auto 0em;
+}
+
+.outAreaBox .itemsInfoBox .titMainBox {
+    z-index: 222;
+    width: 100%;
+    height: 4em;
+}
+
+.outAreaBox .itemsInfoBox .titMainBox .titCon {
+    font-size: 1.2em;
+    color: #00fcff;
+    width: 100%;
+    text-align: center;
+}
+
+.outAreaBox .itemsInfoBox .titMainBox .addBtnBox {
+    width: 5em;
+    height: 1.8em;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    z-index: 444;
+}
+
+.outAreaBox .itemsInfoBox .titMainBox .addBtnBox img {
+    display: none;
+}
+
+.outAreaBox .itemsInfoBox .titMainBox .addBtnBox .defImg {
+    display: block;
+}
+
+.outAreaBox .itemsInfoBox .titMainBox .addBtnBox span {
+    font-size: 0.8em;
+    color: #00d8fc;
+    width: 100%;
+    text-align: center;
+}
+
+.outAreaBox .itemsInfoBox .titMainBox .addBtnBox:active .defImg {
+    display: none;
+}
+
+.outAreaBox .itemsInfoBox .titMainBox .addBtnBox:active .selImg {
+    display: block;
+}
+
+.outAreaBox .itemsInfoBox .titMainBox .tabConBox {
+    width: 100%;
+    bottom: 1em;
+}
+
+.outAreaBox .itemsInfoBox .titMainBox .tabConBox span {
+    width: 25%;
+    font-size: 0.8em;
+    color: #00d8fc;
+    text-align: center;
+    float: left;
+}
+
+.outAreaBox .itemsInfoBox .itemsInfoMainBox {
+    width: 100%;
+}
+
+.outAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul {
+    width: 100%;
+    padding: 0 0%;
+    box-sizing: border-box;
+}
+
+.outAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li {
+    width: 100%;
+    height: 2.5em;
+}
+
+.outAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li>div {
+    width: 25%;
+    height: 100%;
+    float: left;
+}
+
+.outAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .itemsName span {
+    text-align: center;
+    font-size: 0.8em;
+    color: #00d8fc;
+    line-height: 2.8em;
+    z-index: 1;
+    width: 98%;
+    height: 98%;
+}
+
+.outAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .inpics .cameraImg {
+    width: 5%;
+    height: auto;
+    right: 5%;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.outAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .inpics .imgsBox {
+    z-index: 1;
+    height: 90%;
+    overflow: hidden;
+}
+
+.outAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .inpics .imgsBox img {
+    margin: 0em 0.8em;
+    float: left;
+    z-index: 1;
+    cursor: pointer;
+    width: 15%;
+    height: 100%;
+}
+
+.outAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .outpics .cameraImg {
+    width: 5%;
+    height: auto;
+    right: 5%;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.outAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .outpics .imgsBox {
+    z-index: 1;
+    height: 90%;
+    overflow: hidden;
+    width: 90%;
+}
+
+.outAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .outpics .imgsBox .imgOne {
+    margin: 0em 0.8em;
+    float: left;
+    z-index: 1;
+    cursor: pointer;
+    width: 15%;
+    height: 100%;
+}
+
+.outAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .outpics .imgsBox .imgOne .closeImg {
+    width: 30%;
+    height: auto;
+    right: 0;
+    cursor: pointer;
+}
+
+.outAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .isKeep .chooseBox {
+    width: 98%;
+    height: 98%;
+    z-index: 235;
+    background: #032547;
+}
+
+.outAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .isKeep .chooseBox>div {
+    width: 50%;
+    height: 100%;
+    float: left;
+}
+
+.outAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .isKeep .chooseBox>div img {
+    width: 50%;
+    height: auto;
+    display: none;
+}
+
+.outAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .isKeep .chooseBox>div .defImg {
+    display: block;
+}
+
+.outAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .keep .chooseBox .choose .defIimg {
+    display: none;
+}
+
+.outAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .keep .chooseBox .choose .selImg {
+    display: block;
+}
+
+.outAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .noKeep .chooseBox .noChoose .defIimg {
+    display: none;
+}
+
+.outAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul li .noKeep .chooseBox .noChoose .selImg {
+    display: block;
+}
+
+.outAreaBox .selectBox {
+    width: 90%;
+    margin: 1em auto 0em;
+    height: 2em;
+    cursor: pointer;
+}
+
+.outAreaBox .selectBox .selImgBox,
+.outAreaBox .selectBox span {
+    float: left;
+}
+
+.outAreaBox .selectBox .selImgBox {
+    width: 1.5em;
+    height: 1.5em;
+    margin-top: 0.25em;
+    margin-right: 1em;
+}
+
+.outAreaBox .selectBox .selImgBox img {
+    display: none;
+}
+
+.outAreaBox .selectBox .selImgBox .defImg {
+    display: block;
+}
+
+.outAreaBox .selectBox span {
+    font-size: 1em;
+    color: #00d8fc;
+    line-height: 2em;
+}
+
+.outAreaBox .btnBox {
+    width: 100%;
+    height: 2.8em;
+    margin-bottom: 1em;
+}
+
+.outAreaBox .btnBox .btnConBox {
+    margin: 0 auto;
+    height: 100%;
+    width: 24em;
+}
+
+.outAreaBox .btnBox .btnConBox .box {
+    width: 7em;
+    height: 100%;
+    cursor: pointer;
+    float: left;
+    margin-right: 1em;
+}
+
+.outAreaBox .btnBox .btnConBox .nextBox {
+    float: right;
+}
+
+.outAreaBox .btnBox .btnConBox .prevBox {
+    display: block;
+}
+
+.outAreaBox .btnBox .btnConBox .box img {
+    display: none;
+}
+
+.outAreaBox .btnBox .btnConBox .box .defImg {
+    display: block;
+}
+
+.outAreaBox .btnBox .btnConBox .box span {
+    color: #00d8fc;
+    width: 100%;
+    text-align: center;
+}
+
+.outAreaBox .btnBox .btnConBox .box:hover .defImg {
+    display: none;
+}
+
+.outAreaBox .btnBox .btnConBox .box:hover .selImg {
+    display: block;
+}
+
+.outAreaBox .btnBox .keepBox {
+    left: 35%;
+}
+
+.outAreaBox .btnBox .nextBox {
+    right: 35%;
+}

@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head><meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <div th:include="inc/common-new"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{../css/outAreaCss.css}" />
+    <script th:src="@{../js/module.js}"></script>
+    <title></title>
+
+    <style>
+
+		table.mtable{ text-align:center;margin:0 auto; margin-bottom:10px;border-spacing: 0;border-collapse: collapse;width:100%;table-layout:auto;}
+		table.mtable td {border: #333 1px solid;padding:3px 3px; line-height:19px; font-size:12px;}
+		table.mtable .text-left{ text-align:left;}
+		table.mtable .text-right{ text-align:right;}
+		table.mtable .xhx{width: 300px; display: inline-block; border-bottom: 1px solid #333;}
+
+.btn:hover,.btnmin:hover{ text-decoration: none;background-color:#E6E6E6; border-color:#ADADAD;color:#333333;}
+        .fenye{
+            page-break-after: always;
+        }
+
+
+        .container{
+        	background: url(../images/lawContro/beijing_dialog.png) no-repeat scroll 0 0;
+    		background-size: 100% 100%;
+    		background-color: #1b4067;
+    		padding: 140px 10px 65px 14px;
+        }
+
+        .content-box{
+        	background-color:#fff;
+        	padding:10px;
+        }
+
+        @media print {
+        	.print{
+        		display:none !important;
+        	}
+			.container{
+				padding:0 !important;
+			}
+        }
+        span{
+        	display:inline-block;
+        }
+    </style>
+</head>
+
+<body style="overflow-y: auto; overflow-x:hidden; min-height:100;">
+	<div class='container'>
+		<div class='content-box'>
+			<h1 style="text-align:center; font-size:1.76em; margin-bottom: 5px;">办案区使用情况登记表 </h1>
+			<form method="post">
+				<table id="mytable" class="mtable fenye">
+				  <tbody>
+				  <tr>
+				    <td width="100" class="text-left" style="border:0" >填表单位：</td><td colspan="5" class="text-left" style="border:0" load-html="form.org" id="org" name="org"></td>
+				    <td width="50" colspan="2" class="text-right" style="border:0">编号：</td><td colspan="1" class="text-right" style="border:0" load-html="form.formNo" name="formNo"></td>
+				  </tr>
+				  <tr>
+				    <td rowspan="5" width='30'>人<br/>员<br/>基<br/>本<br/>情<br/>况</td>
+				    <td width='140'>姓 名</td>
+				    <td name="name" load-html="form.name" width='120'></td>
+				    <td>性 别</td>
+				    <td load-html="form.sex">sex</td>
+				    <td>出生<br/>日期</td>
+				    <td width='110' load-html="form.birthDate" name="birthDate"></td>
+				    <td>联系<br/>方式</td>
+				    <td width='150' load-html="form.phone" name="phone"></td>
+				  </tr>
+				  <tr>
+				    <td>证件种类</td>
+				    <td load-html="form.cardType" name="cardType"></td>
+				    <td>证件号码</td>
+				    <td colspan="3" load-html="form.cardNo" name="cardNo"></td>
+				    <td>到案<br/>方式</td>
+				    <td load-html="form.inType" name="inType"></td>
+				  </tr>
+				  <tr>
+				    <td>户籍地</td>
+				    <td colspan="7" load-html="form.domicilePlace" name="domicilePlace"></td>
+				  </tr>
+				  <tr>
+				    <td>现住址</td>
+				    <td colspan="7" load-html="form.livingPlace" name="livingPlace"></td>
+				  </tr>
+				  <tr>
+				    <td>入区原由</td>
+				    <td colspan="4" class="text-left">
+				    	警情编号: <u class="xhx" load-html="form.alarmNumber" name="alarmNumber"></u>
+				    	<br/>
+				    	 案由: &nbsp; &nbsp;&nbsp; &nbsp; <span load-html="form.inReason" name="inReason"></span>
+				    	<br/>
+				    	 文书编号: <u class="xhx" load-html="form.wordNumber" name="wordNumber"></u>
+				    </td>
+
+				    <!--td colspan="3"> 办案民警签名:
+				    	<span th:include="component/signatureComp(id='formHostPoliceSign',name='formHostPoliceSign',defaultValue=${form.formHostPoliceSign},disabled=1)"></span>
+				    </td-->
+
+				    <td>入区时间</td>
+				    <td colspan="2" load-html="form.inTime" name="inTime">inTime</td>
+				  </tr>
+				  <!--tr>
+				    <td>入区时间</td>
+				    <td colspan="3" load-html="form.inTime" name="inTime">inTime</td>
+				    <td>管 理 员<br/>（签名）</td>
+				    <td colspan="3">
+				    	<span th:include="component/signatureComp(id='formAdminSign',name='formAdminSign',defaultValue=${form.formAdminSign},disabled=1)"></span>
+				    </td>
+				  </tr-->
+				  <tr>
+				    <td rowspan="3">安<br/>全<br/>检<br/>查<br/>情<br/>况</td>
+				    <td rowspan="2">人<br/>身<br/>检<br/>查<br/>记<br/>录</td>
+				    <td colspan="4" class="text-left" valign="top">自述症状:（既往病史、是否饮酒、是<br/>否患有传染性等疾病）
+				    	<br/>
+				    	<span load-html="form.medicalHistory" name="medicalHistory"></span>
+				    </td>
+				    <td id="sm_img_injury" colspan="3" rowspan="2" align='left' >
+				    </td>
+				  </tr>
+				  <tr>
+				    <td colspan="4" class="text-left" valign="top">检查情况:（体表是否有伤痕、是否饮<br/>酒以及全身检查情况）
+  				    	<br/>
+				    	<span load-html="form.checkBodyResult" name="checkBodyResult"></span>
+				    </td>
+				  </tr>
+				  <!--tr>
+				    <td>检查民警<br/>（签字）</td>
+				    <td>
+					    <span th:include="component/signatureComp(id='formCheckPoliceSign',name='formCheckPoliceSign',defaultValue=${form.formCheckPoliceSign},disabled=1)"></span>
+				    </td>
+				    <td>见证人<br/>（签字）</td>
+				    <td>
+					    <span th:include="component/signatureComp(id='formWitnessSign',name='formWitnessSign',defaultValue=${form.formWitnessSign},disabled=1)"></span>
+				    </td>
+				    <td>被检查人<br/>(签字捺印)</td>
+				    <td colspan="2">
+					    <span th:include="component/signatureComp(id='formSuspectSign',name='formSuspectSign',defaultValue=${form.formSuspectSign},disabled=1)"></span>
+				    </td>
+				  </tr-->
+				  <tr>
+				    <td rowspan="1">随<br/>身<br/>财<br/>物<br/>照<br/>片</td>
+				    <td>存物照片</td>
+				     <td id="sm_img_goods" colspan="3" align='left'>
+				     </td>
+				     <td>取物照片</td>
+				     <td id="sm_img_goods_receive" colspan="2" align='left'>
+				     </td>
+				  </tr>
+				  <!--tr>
+				    <td>办案人员<br/>（签字）</td>
+				    <td>
+					    <span th:include="component/signatureComp(id='formGoodsHostPoliceSign',name='formGoodsHostPoliceSign',defaultValue=${form.formGoodsHostPoliceSign},disabled=1)"></span>
+				    </td>
+				    <td>随身财物<br/>管理员<br/>（签字）</td>
+				    <td>
+					    <span th:include="component/signatureComp(id='formGoodsAdminSign',name='formGoodsAdminSign',defaultValue=${form.formGoodsAdminSign},disabled=1)"></span>
+				    </td>
+				    <td>涉案人员<br/>(签字捺印)</td>
+				    <td>
+					    <span th:include="component/signatureComp(id='formGoodsSuspectSign',name='formGoodsSuspectSign',defaultValue=${form.formGoodsSuspectSign},disabled=1)"></span>
+				    </td>
+				    <td>本人自愿将以上个人随身物<br/>品存放进(电子)保管柜。</td>
+				  </tr-->
+
+				    </tbody></table>
+
+				    <table id="mytable1" class="mtable fenye">
+				  <tbody>
+
+				  <tr>
+				    <td rowspan="3">采集<br/>信息</td>
+				    <td>信息采集 </td>
+				    <td colspan="3">
+			    		<label><input name="doInfoCollect" type="radio" value="是">是</label>&nbsp;
+				        <label><input name="doInfoCollect" type="radio" value="否" checked>否</label>
+					</td>
+				    <td>采集项目</td>
+				    <td colspan="4">
+					    <label><input name="collectProject" type="checkbox" value="指纹" disabled="">指纹</label>&nbsp;
+					    <label><input name="collectProject" type="checkbox" value="血液" disabled="">血液</label>&nbsp;
+					    <label><input name="collectProject" type="checkbox" value="尿液" disabled="">尿液</label>&nbsp;
+					    <label><input name="collectProject" type="checkbox" value="其他" disabled="">其他</label>&nbsp;
+				    </td>
+				  </tr>
+				  <tr>
+				    <td>信息入库</td>
+				    <td colspan="3">
+   				    	  <label><input name="doInfoInbase" type="radio" value="是">是</label>&nbsp;
+				          <label><input name="doInfoInbase" type="radio" value="否" checked>否</label>
+				    </td>
+				    <td>核查比对</td>
+				    <td colspan="4">
+				    	<label><input name="doCheck" type="radio" value="是">是</label>&nbsp;
+			            <label><input name="doCheck" type="radio" value="否" checked>否</label>
+				  </tr>
+				  <tr>
+				    <td>是否同步录音录像</td>
+				    <td colspan="3">
+				    	  <label><input name="doRadioSync" type="radio" value="是">是</label>&nbsp;
+				          <label><input name="doRadioSync" type="radio" value="否" checked>否</label>
+				     </td>
+				    <td>光盘编号</td>
+				    <td colspan="4" ><input readonly type="text" load-html="form.diskNo" id="diskNo" name="diskNo"/></td>
+				  </tr>
+				  <tr id="traceTitle">
+				    <td colspan="3">时 间 </td>
+				    <td colspan='2'>房间名称</td>
+				    <td colspan="2">活动内容</td>
+				    <td colspan="1">备注</td>
+				  </tr>
+				  <tr>
+				    <td rowspan="9">离<br/>
+				      开<br/>
+				      办<br/>
+				      案<br/>
+				    区</td>
+				    <td rowspan="2">中途离开</td>
+				    <td>离开时间</td>
+				    <td colspan="2" load-html="temp.c.outTime"></td>
+				    <td>返回时间</td>
+				    <td colspan="2" load-html="temp.c.backTime"></td>
+				  </tr>
+				  <tr>
+				    <td>提押人</td>
+				    <td load-html="temp.c.escortPolice"></td>
+				    <td>审批人</td>
+				    <td load-html="temp.c.auditUser"></td>
+				    <td>离开原因</td>
+				    <td load-html="temp.c.auditContent"></td>
+				  </tr>
+				  <tr>
+				    <td rowspan="2">中途离开</td>
+				    <td>离开时间</td>
+				    <td colspan="2" load-html="temp.b.outTime"></td>
+				    <td>返回时间</td>
+				    <td colspan="2" load-html="temp.b.backTime"></td>
+				  </tr>
+				  <tr>
+				    <td>提押人</td>
+				    <td load-html="temp.b.escortPolice"></td>
+				    <td>审批人</td>
+				    <td load-html="temp.b.auditUser"></td>
+				    <td>离开原因</td>
+				    <td load-html="temp.b.auditContent"></td>
+				  </tr>
+				  <tr>
+				    <td rowspan="2">中途离开</td>
+				    <td>离开时间</td>
+				    <td colspan="2" load-html="temp.a.outTime"></td>
+				    <td>返回时间</td>
+				    <td colspan="2" load-html="temp.a.backTime"></td>
+				  </tr>
+				  <tr>
+				    <td>提押人</td>
+				    <td load-html="temp.a.escortPolice"></td>
+				    <td>审批人</td>
+				    <td load-html="temp.a.auditUser"></td>
+				    <td>离开原因</td>
+				    <td load-html="temp.a.auditContent"></td>
+				  </tr>
+				  <tr>
+				    <td>最后离开<br/> 时间</td>
+				    <td colspan="3"  load-html="last.outTime"></td>
+				    <td>审批人</td>
+				    <td colspan="2" load-html="last.auditUser"></td>
+				  </tr>
+				  <tr>
+				    <td>离开原因</td>
+				    <td colspan="6" load-html="last.auditContent"></td>
+				  </tr>
+				  <tr>
+				    <td>随身<br/>
+				      物品<br/>
+				      处理<br/>
+				    情况</td>
+				    <td colspan="6" class="text-left">
+				            <p>随身物品处理情况： <span id="goods_status">部分返还</span> </p>
+<!-- 				            数量分别为：(件) -->
+				      <p>未返还物品情况记载：物品名称：	</p>
+				      <br/>
+				      <span id="goods_names"></span>
+				      <p style="text-align:right;">领取人（签名捺印）：
+				      	<span th:include="component/signatureComp(id='formReceiveSign',name='formReceiveSign',defaultValue=${form.formReceiveSign},disabled=1)"></span>
+				      </p>
+				      <span id="sm_img_goods_lock" style="float:left;">
+				      </span>
+				      <p style="text-align:right;">
+				      	身份证号码：
+				      <u >
+				      	<input readonly type="text" load-html="form.receiveCardNo" id="receiveCardNo" name="receiveCardNo"/>
+				      </u></p>
+				      <p style="text-align:right;" id="receiveDate" name="receiveDate">    年      月      日</p></td>
+				  </tr>
+				  <tr>
+				    <td colspan="2">管理员签名</td>
+				    <td colspan="2">
+				    	<span th:include="component/signatureComp(id='formGoodsHoldAdminSign',name='formGoodsHoldAdminSign',defaultValue=${form.formGoodsHoldAdminSign},disabled=1)"></span>
+				    </td>
+
+				    <td colspan="2">涉案人员<br/>(签字捺印)</td>
+				    <td colspan="2">
+					    <span th:include="component/signatureComp(id='formGoodsSuspectSign',name='formGoodsSuspectSign',defaultValue=${form.formGoodsSuspectSign},disabled=1)"></span>
+				    </td>
+				  </tr>
+				</tbody></table>
+
+				<!--大图区 start-->
+
+				<style>
+					dl.big-img{
+						overflow:hidden;
+						margin:30px 0;
+					}
+					dl.big-img dt{
+						text-align:center;
+						margin-bottom:10px;
+					}
+					dl.big-img dd{
+						float:left;
+						margin:5px;
+					}
+					dl.big-img dd img{
+						width:200px;
+						height:200px;
+					}
+
+				</style>
+
+				<dl id="img_injury" class='big-img big-img-check fenye'>
+					<dt>人身检查记录</dt>
+				</dl>
+
+				<dl id="img_goods" class='big-img big-img-store fenye'>
+					<dt>存物照片</dt>
+				</dl>
+
+				<dl id="img_goods_receive" class='big-img big-img-fetch fenye'>
+					<dt>取物照片</dt>
+				</dl>
+
+				<!--大图区 end-->
+
+				<p style="text-align:center;" class='print'>
+					<input class="btn btn-primary" id="btn" type="button" onclick="toprint()" value="打印" style="width:80px;height: 30px;background: #0071BC;border: 0px;color: white;">&nbsp;&nbsp;&nbsp;&nbsp;
+					<a class="btn" id="gb" onclick="back()" style="width:80px;height:28px; line-height:28px; border: 1px solid #ccc;display:inline-block;color:#333; text-decoration:none;">返回</a>
+				</p>
+
+			</form>
+		</div>
+	</div>
+	<input type="hidden" name="registerId" th:value="${form.registerId}" >
+	<input type="hidden" name="id" th:value="${form.id}" >
+</body>
+<script th:inline="javascript">
+	var dataAll = [[${item}]];
+	var form = [[${form}]];
+	var personInfo = dataAll.personInfo;
+	var goodsInfo = dataAll.goodsInfo;//物品信息
+	var injuryInfo = dataAll.injuryInfo;//伤情信息
+	var outInfo = dataAll.outInfo;//审批单
+	var traceInfo = dataAll.traceInfo;//人员轨迹
+
+	/**为html页面加载值  start*/
+	function htmlLoadData(el,data){
+		//根据name获取value
+		function getDataValueByName(name){
+			var names = name.split(".");
+			var value = "";
+			for(var i = 0 ; i < names.length ; i++){
+				if(i == 0){
+					if(names[0] && data[names[0]]){
+						value = data[names[0]];
+					}
+				}else{
+					if(value && names[i] && value[names[i]]){
+						value = value[names[i]];
+					}
+				}
+
+			}
+			return value;
+		}
+
+		//加载html内容
+		$(el).find("[load-html]").each(function(){
+			var name = $(this).attr("load-html");
+			var value = getDataValueByName(name);
+			if(value){
+				$(this).html(value);
+			}
+		});
+
+		//加载属性
+		$(el).find("[load-attr]").each(function(){
+			var name = $(this).attr("load-attr");
+			var names = name.split(":");
+			var value = getDataValueByName(names[1]);
+			if(value){
+				$(this).attr(names[0],value);
+			}
+		});
+
+		//赋值
+		$("#receiveCardNo").val(form.receiveCardNo);//领取人默认嫌疑人
+		$("#receiveDate").text(form.receiveDate);//领取时间默认当天
+		$("#diskNo").val(form.diskNo);//光盘编号
+	}
+	/**为html页面加载值  end*/
+
+	/**多选单选框加载  start */
+	if(form.collectProject){
+		var pro = personInfo.collectProject.split(",");
+		for(var i = 0; i<pro.length; i++){
+			$("input[name=collectProject]:checkbox[value='"+ pro[i] +"']").prop("checked", true);
+		}
+	}
+	if(form.doInfoCollect){
+		$("input[name='doInfoCollect'][value='"+form.doInfoCollect+"']").attr("checked",true);
+	}
+	if(form.doInfoInbase){
+		$("input[name='doInfoInbase'][value='"+form.doInfoInbase+"']").attr("checked",true);
+	}
+	if(form.doRadioSync){
+		$("input[name='doRadioSync'][value='"+form.doRadioSync+"']").attr("checked",true);
+	}
+	if(form.doCheck){
+		$("input[name='doCheck'][value='"+form.doCheck+"']").attr("checked",true);
+	}
+	/**多选单选框加载  end */
+
+	/**图片加载  start*/
+	if(injuryInfo){
+		var html = "";
+		var html2 = "";
+		for(var i = 0; i<injuryInfo.length; i++){
+			var part = injuryInfo[i].part;
+			var sourceIds = injuryInfo[i].sourceIds;
+			if(sourceIds){
+				html += '<dd><span style="width:10px">'+ part +'</span></dd>'
+				var ids = sourceIds.split(',');
+				for(var j = 0; j<ids.length; j++){
+					html += '<dd><img src="/FileUpload/getAttach.json?id='+ids[j]+'" ></dd>'
+					html2 += '<img src="/FileUpload/getAttach.json?id='+ids[j]+'" height="64" width="64" style="display:inline;margin:2px;" />';
+				}
+			}
+		}
+		$("#img_injury").append(html);
+		$("#sm_img_injury").append(html2);
+	}
+	if(goodsInfo){
+		var html = "";//入区照片
+		var html2 = "";//取物照片
+		var html3 = "";//入区照片
+		var html4 = "";//取物照片
+		var html5 = "";//扣押的
+		var lock_names = "";//扣押物品名称
+		for(var i = 0; i<goodsInfo.length; i++){
+			var goodsName = goodsInfo[i].goodsName;
+			var sourceIds = goodsInfo[i].sourceIds;
+			var receiveIds = goodsInfo[i].receiveIds;
+			if(sourceIds){
+				html += '<dd><span style="width:10px">'+ goodsName +'</span></dd>'
+				var ids = sourceIds.split(',');
+				for(var j = 0; j<ids.length; j++){
+					html += '<dd><img src="/FileUpload/getAttach.json?id='+ids[j]+'" ></dd>'
+					html3 += '<img src="/FileUpload/getAttach.json?id='+ids[j]+'" height="64" width="64" style="display:inline;margin:2px;" />';
+				}
+			}
+			if(receiveIds){
+				html2 += '<dd><span style="width:10px">'+ goodsName +'</span></dd>'
+				var ids = receiveIds.split(',');
+				for(var j = 0; j<ids.length; j++){
+					html2 += '<dd><img src="/FileUpload/getAttach.json?id='+ids[j]+'" ></dd>'
+					html4 += '<img src="/FileUpload/getAttach.json?id='+ids[j]+'" height="64" width="64" style="display:inline;margin:2px;" />';
+				}
+			}
+
+			if(goodsInfo[i].status == "2"){
+				//扣押物品
+				lock_names += goodsName + "    ";
+				var ids = sourceIds.split(',');
+				for(var j = 0; j<ids.length; j++){
+					html5 += '<img src="/FileUpload/getAttach.json?id='+ids[j]+'" height="64" width="64" style="display:inline;margin:2px;" />';
+				}
+			}
+		}
+		$("#img_goods").append(html);
+		$("#img_goods_receive").append(html2);
+		$("#sm_img_goods").append(html3);
+		$("#sm_img_goods_receive").append(html4);
+		$("#sm_img_goods_lock").append(html5);
+		if(lock_names){
+			$("#goods_names").text(lock_names);
+		}else{
+			$("#goods_names").text("无");
+		}
+		if(html5){
+			//有扣押
+			if(html2){
+				//有返还
+				$("#goods_status").text("部分返还");
+			}else{
+				//全部扣押
+				$("#goods_status").text("全部扣押");
+			}
+		}else{
+			if(html2){
+				//全返还
+				$("#goods_status").text("全部返还");
+			}else{
+				//没有物品
+				$("#goods_status").text("无");
+			}
+		}
+	}
+	/**图片加载  end*/
+
+	/**出区信息加载  start*/
+	var temp = {};
+	var last = {};
+	if(outInfo){
+		var count = outInfo.length;
+		if(count > 4){
+			count = 4;//只取四条
+		}
+		for(var n=0; n<count; n++){
+			if(outInfo[n].outType == "1"){//正式出所
+				if(outInfo[n].outTime){
+					last.outTime = formatTime(outInfo[n].outTime);
+				}
+				last.auditUser = outInfo[n].auditUser;
+				outInfo[n].apply_reason = getGridDict(outInfo[n].apply_reason, 'OUT_APPLY_TYPE');//出所申请类型
+				last.auditContent = outInfo[n].apply_reason + "    " + outInfo[n].auditContent;
+			}else{
+				var tempp = {};
+				if(outInfo[n].outTime){
+					tempp.outTime = formatTime(outInfo[n].outTime);
+				}
+				if(outInfo[n].backTime){
+					tempp.backTime = formatTime(outInfo[n].backTime);
+				}
+				tempp.auditUser = outInfo[n].auditUser;
+				tempp.escortPolice = outInfo[n].escortPolice;
+				outInfo[n].apply_reason = getGridDict(outInfo[n].apply_reason, 'OUT_APPLY_TYPE');//出所申请类型
+				tempp.auditContent = outInfo[n].apply_reason + "    " + outInfo[n].auditContent;
+				if(n == 1){
+					temp.a = tempp;
+				}else if(n == 2){
+					temp.b = tempp;
+				}else if(n == 3){
+					temp.c = tempp;
+				}
+			}
+		}
+	}
+	/**出区信息加载  end*/
+
+	/** 人员轨迹信息台账生成  start*/
+	//倒序排列
+	if(traceInfo){
+		var dateTemp = "";
+		var _html = "";
+		var resHtml = "";
+		for(var m=0; m<traceInfo.length; m++){
+			var trace = traceInfo[m];
+			var thisTime = formatTime(trace.createTime);
+			_html = '<tr><td>' + thisTime + '</td><td>至</td><td>' + dateTemp + '</td>'+
+					'<td colspan="2">' + trace.content + '</td><td colspan="2"></td><td></td></tr>'
+			dateTemp = thisTime;
+			resHtml = _html + resHtml;
+		}
+		$("#traceTitle").after(resHtml);
+	}
+	/** 人员轨迹信息台账生成  end*/
+
+	//加载属性
+	htmlLoadData(".container",{
+		goodsInfo : goodsInfo,
+		form : form,
+		injuryInfo : injuryInfo,
+		temp : temp,
+		last : last
+	})
+
+	//打印
+	function toprint(){
+		//打印
+	    window.print();
+	}
+	//返回
+	function back(){
+	    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+	    parent.layer.close(index);//关闭弹窗
+	}
+
+</script>
+</html>

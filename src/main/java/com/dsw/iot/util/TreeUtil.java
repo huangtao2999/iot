@@ -20,7 +20,7 @@ public class TreeUtil {
 		List<MenuDo> rootList = new ArrayList<>();
 		List<MenuDo> resList = new ArrayList<>();
 		for(MenuDo map : list){
-			if(map.getId() == rootId){
+			if (map.getId().longValue() == rootId.longValue()) {
 				rootList.add(map);
 			}
 		}
@@ -33,7 +33,7 @@ public class TreeUtil {
 
 	/**
 	 * 通过id，找到子集，单层拼接
-	 * 
+	 *
 	 * @param root
 	 * @param list
 	 * @param resList
@@ -41,7 +41,7 @@ public class TreeUtil {
 	private static void addChildMenuNode(MenuDo root, List<MenuDo> list, List<MenuDo> resList) {
 		List<MenuDo> childList = new ArrayList<MenuDo>();
 		for (MenuDo map : list) {
-			if (root.getId() == map.getPid()) {
+			if (root.getId().longValue() == map.getPid().longValue()) {
 				childList.add(map);
 			}
 		}
@@ -78,7 +78,7 @@ public class TreeUtil {
 	private static void addChildNote(MenuTreeVo root, List<MenuTreeVo> list){
 		List<MenuTreeVo> childList = new ArrayList<MenuTreeVo>();
 		for (MenuTreeVo map : list) {
-			if(root.getId() == map.getPid()){
+			if (root.getId().longValue() == map.getPid().longValue()) {
 				map.setName(map.getText());
 				childList.add(map);
 			}
@@ -100,7 +100,7 @@ public class TreeUtil {
 	private static List<MenuTreeVo> getRootNote(List<MenuTreeVo> list, Long rootId) {
 		List<MenuTreeVo> rootList = new ArrayList<MenuTreeVo>();
 		for (MenuTreeVo map : list) {
-			if (map.getPid() == rootId) {
+			if (map.getPid().longValue() == rootId.longValue()) {
 				map.setName(map.getText());
 				rootList.add(map);
 			}
@@ -132,7 +132,7 @@ public class TreeUtil {
 	private static List<DictionaryTreeVo> getRootDictionary(List<DictionaryTreeVo> list) {
 		List<DictionaryTreeVo> rootList = new ArrayList<DictionaryTreeVo>();
 		for (DictionaryTreeVo map : list) {
-			if (map.getPid() == 0 || null == map.getPid()) {
+			if (map.getPid().longValue() == 0 || null == map.getPid()) {
 				rootList.add(map);
 			}
 		}
@@ -149,7 +149,7 @@ public class TreeUtil {
 	private static void addDictionaryChildNote(DictionaryTreeVo root, List<DictionaryTreeVo> list) {
 		List<DictionaryTreeVo> childList = new ArrayList<DictionaryTreeVo>();
 		for (DictionaryTreeVo map : list) {
-			if (root.getId() == map.getPid()) {
+			if (root.getId().longValue() == map.getPid().longValue()) {
 				childList.add(map);
 			}
 		}
@@ -192,7 +192,7 @@ public class TreeUtil {
 	private static void addChildNoteByCodeAndLay(DictionaryTreeVo root, List<DictionaryTreeVo> list, int lay, int m) {
 		List<DictionaryTreeVo> childList = new ArrayList<DictionaryTreeVo>();
 		for (DictionaryTreeVo map : list) {
-			if (root.getId() == map.getPid()) {
+			if (root.getId().longValue() == map.getPid().longValue()) {
 				childList.add(map);
 			}
 		}
@@ -250,7 +250,7 @@ public class TreeUtil {
 		List<DictionaryDo> rootList = new ArrayList<DictionaryDo>();
 		List<DictionaryDo> resList = new ArrayList<DictionaryDo>();
 		for (DictionaryDo map : list) {
-			if (map.getId() == rootId) {
+			if (rootId.longValue() == map.getId().longValue()) {
 				rootList.add(map);
 			}
 		}
@@ -271,7 +271,7 @@ public class TreeUtil {
 	private static void addDictionaryChildNote(DictionaryDo root, List<DictionaryDo> list, List<DictionaryDo> resList) {
 		List<DictionaryDo> childList = new ArrayList<DictionaryDo>();
 		for (DictionaryDo map : list) {
-			if (root.getId() == map.getPid()) {
+			if (root.getId().longValue() == map.getPid().longValue()) {
 				childList.add(map);
 			}
 		}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html>
+<head><meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+    <meta charset="UTF-8">
+    <div th:include="inc/common"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{../css/index-common.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/dialog/tableBoxCss-new.css}"/>
+    <script th:src="@{../js/tableBoxJs.js}"></script>
+</head>
+
+
+<body class="custom">
+<input id="registerId"  type="hidden" th:value="${personRegisterDo.id}"/>
+ <input id="roomId"  type="hidden" value="${roomId}"/>
+<div class="container-fluid you-bg">
+    <object style="display:none;" classid="clsid:F44CFA19-6B43-45EE-90A3-29AA08000510" id="qnviccub" data="DATA:application/x-oleobject;BASE64,GfpM9ENr7kWQoymqCAAFEAADAAD7FAAADhEAAA==
+" width="33" height="33"></object>
+    <div class="btn-toolbar">
+        <table class="youAdd" style="width:100%">
+           	<tr>
+				<td colspan="4">人员信息</td>
+			</tr>
+			<tr>
+				<td class="TDleft" width="100">人员姓名</td>
+				<td th:text='${personRegisterDo.name}'></td>
+				<td class="TDleft" width="100">性别</td>
+				<td th:text='${personRegisterDo.sex}'></td>
+			</tr>
+			<tr>
+				<td class="TDleft">人员状态</td>
+				<td th:text='${personRegisterDo.personStatus}'></td>
+				<td class="TDleft">民族</td>
+				<td th:text='${personRegisterDo.minority}'></td>
+			</tr>
+			<tr>
+				<td class="TDleft">户籍地详址</td>
+				<td th:text='${personRegisterDo.domicilePlace}'></td>
+				<td class="TDleft">当前关押位置</td>
+				<td><font color="red"><span th:text='${roomName}'></span></font></td>
+			</tr>
+        </table>
+        <br/>
+        <div id="leftBox">
+            <div id="personRegis-table" th:include="inc/dialog-table-dataField"></div>
+        </div>
+    </div>
+
+</div>
+</body>
+<script type="text/javascript">
+    var table = new iotTable({
+        dataUrl: '/Room/queryPageInquiry.json',
+        renderTo: '#personRegis-table',
+        heads: [{
+            text: '询/讯问室编号',
+            width: 15,
+            name: 'roomNo'
+            //dicCode : ''需要数据字典转换的，这里填数据字典的code
+            //dateFormat : 'yyyy-MM-dd'需要进行时间类型转换的，这里填时间的format
+        }, {
+            text: '询/讯问室名称',
+            width: 20,
+            name: 'roomName'
+        }, {
+            text: '询/讯问室状态',
+            width: 10,
+            name: 'roomStatus',
+            dicCode:'ROOM_STATUS',
+            renderHtml:function(val,num){
+            	var color="";
+            	if(num=="0"){
+            		color="color:#3ADF00;";
+            	}else if(num=="1"){
+            		color="color:#FE2E2E;";
+            	}
+            	return '<label style="'+color+'">'+val+'</label>';
+            }
+        }, {
+            text: '关押人',
+            width: 15,
+            name: 'lockPersonName'
+
+        }, {
+            text: '操作',
+            width: 20,
+            name: 'roomStatus',
+            renderHtml:function(val){
+            	if(val=="0"){
+            		return '<a href="#" class="btn btnLB btn-success fp-wait-room" lay-event="分配">分配</a>';
+            	}else{
+            		return " ";
+            	}
+            }
+        }]
+    });
+    table.init();
+    layui.use(['layer'], function () {
+        var layer = layui.layer;
+        $(".table-body").on("click",".fp-wait-room",function(){
+            var loading =wait("分配中……");
+            var roomId = $(this).parents("li").data('id');
+			var registerId=$("#registerId").val();
+            $.ajax({
+                type:'get',
+                dataType:'json',
+                url:"/Room/getRoomDistribution?id="+roomId+"&registerId="+registerId,
+                cache:false
+            }).done(function (res) {//成功
+                if(res.success){
+                    layer.msg("分配成功");
+                    window.location.reload();
+                }else{
+                    layer.msg(res.errorMsg);
+                }
+            }).fail(function (reason) {//失败
+                layer.msg(reason.errorMsg);
+            }).always(function (res) {//无论成功失败
+                waitOver(loading);
+            });
+    	});
+    });
+</script>
+
+

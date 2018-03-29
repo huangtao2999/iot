@@ -10,5 +10,6 @@ import lombok.Data;
  **/
 @Data
 public class PrivilegeInfo {
+	private Long userId;
     private String account;
 }

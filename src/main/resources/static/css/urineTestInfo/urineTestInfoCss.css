@@ -1,0 +1,414 @@
+#urineTest {
+    width: 100%;
+    /* background: #032547; */
+    background: url("../../images/lawContro/beijing.png");
+    background-size: cover;
+}
+
+.mainBox {
+    width: 100%;
+}
+
+.mainBox .topBoxCon {
+    width: 100%;
+    height: 1.8em;
+    z-index: 333;
+    margin-top: 0.5em;
+    padding-left: 2em;
+    box-sizing: border-box;
+}
+
+.mainBox .topBoxCon .formBox {
+    width: 18%;
+    height: 100%;
+    float: left;
+    margin-right: 0.5em;
+}
+
+.mainBox .topBoxCon .formBox .selBox {
+    width: 90%;
+    height: 90%;
+    right: 10%;
+    z-index: 666;
+    color: #00d8fc;
+    background: url(../../images/lawContro/xiala.png) no-repeat right;
+    overflow: hidden;
+}
+
+.mainBox .topBoxCon .formBox .selBox select {
+    width: 120%;
+    height: 100%;
+    right: 0;
+    z-index: 666;
+    color: #00d8fc;
+    font-size: 1em;
+    text-align: center;
+    cursor: pointer;
+	appearance: none;
+	-moz-appearance: none;
+    -webkit-appearance: none;
+    border: none;
+	outline: none;
+	background: none;
+	resize: none;
+	overflow: hidden;
+}
+
+.mainBox .topBoxCon .iptBox {
+    width: 25%;
+    height: 100%;
+    float: left;
+    margin-right: 0.5em;
+}
+
+.mainBox .topBoxCon .iptBox span {
+    width: 45%;
+    font-size: 0.8em;
+    color: #00d8fc;
+}
+
+.mainBox .topBoxCon .iptBox img {
+    height: 90%;
+    width: 55%;
+    right: 0;
+    display: none;
+}
+
+.mainBox .topBoxCon .iptBox .defImg {
+    display: block;
+}
+
+.mainBox .topBoxCon .iptBox input {
+    width: 55%;
+    height: 90%;
+    right: 0;
+    z-index: 666;
+    color: #00d8fc;
+    font-size: 0.8em;
+    text-align: center;
+    border: none;
+	outline: none;
+	background: none;
+	resize: none;
+	overflow: hidden;
+}
+
+.mainBox .topBoxCon .paizhaoBox {
+    width: 12%;
+    height: 100%;
+    float: left;
+    margin-right: 0.5em;
+    cursor: pointer;
+}
+
+.mainBox .topBoxCon .paizhaoBox img {
+    display: none;
+}
+
+.mainBox .topBoxCon .paizhaoBox .defImg {
+    display: block;
+}
+
+.mainBox .topBoxCon .paizhaoBox:active .defImg {
+    display: none;
+}
+
+.mainBox .topBoxCon .paizhaoBox:active .selImg {
+    display: block;
+}
+
+.mainBox .topBoxCon .paizhaoBox span {
+    font-size: 0.8em;
+    color: #00d8fc;
+}
+
+.mainBox .topBoxCon .searchBox {
+    width: 20%;
+    height: 100%;
+    float: left;
+    margin-right: 0.5em;
+    cursor: pointer;
+}
+
+.mainBox .topBoxCon .searchBox img {
+    display: none;
+}
+
+.mainBox .topBoxCon .searchBox .defImg {
+    display: block;
+}
+
+.mainBox .topBoxCon .searchBox:active .defImg {
+    display: none;
+}
+
+.mainBox .topBoxCon .searchBox:active .selImg {
+    display: block;
+}
+
+.mainBox .topBoxCon .searchBox span {
+    font-size: 0.8em;
+    color: #00d8fc;
+    width: 100%;
+    text-align: center;
+}
+
+.mainBox .conBox {
+    width: 80%;
+    z-index: 333;
+    margin: 2em auto 2em;
+    box-sizing: border-box;
+    background: #ffffff;
+    border: 1px solid gray;
+}
+
+.mainBox .conBox p,
+.mainBox .conBox .wordBox,
+.mainBox .conBox .infoExBox {
+    margin-bottom: 1em;
+}
+
+.mainBox .conBox h2 {
+    font-size: 2em;
+    color: #000000;
+    width: 100%;
+    text-align: center;
+    line-height: 4em;
+    font-weight: 400;
+}
+
+.mainBox .conBox p {
+    font-size: 0.8em;
+    color: #000000;
+    line-height: 1.4em;
+    width: 100%;
+    text-align: center;
+    text-indent: 2em;
+    font-family: Microsoft YaHei, '微软雅黑', Tahoma, Helvetica, Arial, sans-serif;
+}
+
+.mainBox .conBox .wordBox {
+    width: 100%;
+}
+
+.mainBox .conBox .wordBox span,
+.mainBox .conBox .wordBox .infoExBox {
+    float: left;
+    margin-right: 0.5em;
+}
+
+.mainBox .conBox .wordBox span {
+    color: #000000;
+    font-size: 0.8em;
+    line-height: 1.6em;
+    font-family: Microsoft YaHei, '微软雅黑', Tahoma, Helvetica, Arial, sans-serif;
+}
+
+.infoExBox {
+    width: 100%;
+}
+
+.infoExBox .infoOne {
+    width: 30%;
+    height: 1.6em;
+    margin: 0 0.5em 0.5em 0;
+    float: left;
+}
+
+.infoExBox .infoOne .mandatoryImgBox {
+    float: left;
+    width: 1.5em;
+    height: 100%;
+}
+
+.infoExBox .infoOne .mandatoryImgBox span {
+    color: red;
+}
+
+.infoExBox .infoOne .hideManda {
+    visibility: hidden;
+}
+
+.infoExBox .infoOne .mandatoryImgBox img {
+    width: 40%;
+    height: auto;
+}
+
+.infoExBox .infoOne>span {
+    font-size: 0.8em;
+    color: #000000;
+    float: left;
+    line-height: 2em;
+    margin-right: 0.5em;
+    width: 30%;
+    font-family: Microsoft YaHei, '微软雅黑', Tahoma, Helvetica, Arial, sans-serif;
+}
+
+.infoExBox .infoOne .formBox {
+    float: left;
+    width: 50%;
+    height: 100%;
+}
+
+.infoExBox .infoOne .formBox .sexOneBox {
+    width: 2.7em;
+    margin-right: 0.5em;
+    height: 100%;
+    float: left;
+    cursor: pointer;
+}
+
+.infoExBox .infoOne .formBox .sexOneBox img {
+    display: none;
+    width: 30%;
+    height: auto;
+}
+
+.infoExBox .infoOne .formBox .sexOneBox .defImg {
+    display: block;
+}
+
+.infoExBox .infoOne .formBox .active .selImg {
+    display: block;
+}
+
+.infoExBox .infoOne .formBox .active .defImg {
+    display: none;
+}
+
+.infoExBox .infoOne .formBox .sexOneBox span {
+    font-size: 0.8em;
+    color: #00d8fc;
+    line-height: 2em;
+    left: 40%;
+}
+
+.infoExBox .infoOne .formBox .checkOneBox {
+    width: 3em;
+    margin-right: 0.5em;
+    height: 2em;
+    float: left;
+    cursor: pointer;
+}
+
+.infoExBox .infoOne .formBox .checkOneBox img {
+    display: none;
+    width: 25%;
+    height: auto;
+}
+
+.infoExBox .infoOne .formBox .checkOneBox .defImg {
+    display: block;
+}
+
+.infoExBox .infoOne .formBox .active .selImg {
+    display: block;
+}
+
+.infoExBox .infoOne .formBox .active .defImg {
+    display: none;
+}
+
+.infoExBox .infoOne .formBox .checkOneBox span {
+    font-size: 0.8em;
+    line-height: 2em;
+    left: 40%;
+}
+
+.infoExBox .infoOne .formBox .selBox {
+    width: 90%;
+    height: 90%;
+    right: 10%;
+    z-index: 666;
+}
+
+.infoExBox .infoOne .formBox .selBox select {
+    width: 100%;
+    right: 0;
+    z-index: 666;
+    font-size: 0.8em;
+    text-align: center;
+    height: 98%;
+}
+
+.infoExBox .infoOne .formBox>div>img {
+    display: none;
+}
+
+.infoExBox .infoOne .formBox .defImg {
+    display: block;
+}
+
+.infoExBox .infoOne .formBox input {
+    z-index: 666;
+    font-size: 1em;
+    text-align: center;
+    height: 98%;
+}
+
+.infoExBox .txtAreaOne {
+    height: 4em;
+}
+
+.infoExBox .txtAreaOne>span {
+    line-height: 5em;
+}
+
+.infoExBox .txtAreaOne .formBox textarea {
+    z-index: 666;
+    font-size: 1em;
+    width: 98%;
+    height: 100%;
+    resize: none;
+}
+
+.infoExBox .boxesBox {
+    height: auto;
+}
+
+.infoExBox .boxesBox .formBox .checkOneBox span {
+    font-size: 0.8em;
+    color: #000000;
+    font-family: Microsoft YaHei, '微软雅黑', Tahoma, Helvetica, Arial, sans-serif;
+}
+
+.mainBox .btnBox {
+    height: 2.8em;
+    z-index: 333;
+    margin-bottom: 2em;
+}
+
+.mainBox .btnBox .btnConBox {
+    margin: 0 auto;
+    height: 100%;
+    width: 16em;
+}
+
+.mainBox .btnBox .btnConBox .box {
+    width: 7em;
+    height: 100%;
+    cursor: pointer;
+    float: left;
+    margin-right: 1em;
+}
+
+.mainBox .btnBox .btnConBox .box img {
+    display: none;
+}
+
+.mainBox .btnBox .btnConBox .box .defImg {
+    display: block;
+}
+
+.mainBox .btnBox .btnConBox .box:hover .defImg {
+    display: none;
+}
+
+.mainBox .btnBox .btnConBox .box:hover .selImg {
+    display: block;
+}
+
+.mainBox .btnBox .btnConBox .box span {
+    color: #00d8fc;
+    font-size: 1em;
+}

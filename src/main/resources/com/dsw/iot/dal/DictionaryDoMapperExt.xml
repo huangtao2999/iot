@@ -1,5 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.dsw.iot.dal.DictionaryDoMapperExt" >
+<!-- 树map -->
+  <resultMap id="TreeMap" type="com.dsw.iot.vo.DictionaryTreeVo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="is_system" property="isSystem" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+    <result column="is_parent" property="isParent" jdbcType="VARCHAR" />
+  </resultMap>
 
+  <sql id="Tree_Column_List" >
+    id, pid, code, type, name, is_system, sort, remark, is_deleted, create_time, create_user,
+    update_time, update_user, is_parent
+  </sql>
+
+<!--   查询单层树节点，主要判断isparent -->
+  <select id="selectByPidWithIsParent" resultMap="TreeMap" parameterType="Long" >
+  	select
+  	<include refid="Tree_Column_List" />
+  	from(
+		select case when t2.pid is null then 'false' else 'true' end as is_parent, t1.*
+		from dictionary t1
+		LEFT JOIN(
+				select DISTINCT pid
+			    from dictionary
+			    where pid in (
+							select id
+							from dictionary
+							where pid = #{pid,jdbcType=INTEGER}
+							and is_deleted = 'N'
+				)
+		)t2
+		on t1.id = t2.pid
+		where t1.pid = #{pid,jdbcType=INTEGER}
+		and t1.is_deleted = 'N'
+	)tt
+  </select>
 </mapper>

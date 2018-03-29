@@ -3,13 +3,7 @@ package com.dsw.iot.util;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 
 /**
  * BAESE64常用工具方法
@@ -28,6 +22,21 @@ public class BASE64Util {
             s = new BASE64Encoder().encode(b);
         }
         return s;
+    }
+
+    /**
+     * 根据文件路径获取base64编码
+     *
+     * @param path
+     * @return
+     */
+    public static String getBase64ByPath(String path) {
+        String base64 = null;
+        byte[] b = FileUtils.getBytes(path);
+        if (b != null) {
+            base64 = new BASE64Encoder().encode(b);
+        }
+        return base64;
     }
 
     public static String base64ToString(String base64) {

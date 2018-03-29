@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+    <meta charset="UTF-8">
+    <div th:include="inc/common"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{../css/index-common.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/dialog/layer-custom.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/dialog/tableBoxCss-new.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/dialog/table-height.css}" />
+    <script th:src="@{../js/custom/tableBoxJs-new.js}"></script>
+    <script th:src="@{../js/custom/take-photo.js}"></script>
+</head>
+<body  class="custom">
+<div class="container-fluid">
+    <br/>
+    <form action=""  class="layui-form">
+        <input type="hidden" id="registerId" name="registerId" th:value="${personRegisterDo.id}">
+        <input type="hidden" name="applyName" th:value="${personRegisterDo.name}">
+        <input type="hidden" id="goodIds" name="goodIds">
+        <table class="youAdd" width="100%">
+            <tr>
+                <td class="TDleft" width="6%">姓名：</td>
+                <td th:text='${personRegisterDo.name}'></td>
+                <td class="TDleft no-star" rowspan="9" width="136" colspan="2">
+                    <img style='width:260px;height:260px;' th:if="${personRegisterDo.personImgIds == ''}" src="../images/lawContro/face_msrpot.png"/>
+                    <img style='width:260px;height:260px;' th:if="${personRegisterDo.personImgIds != ''}" th:src="|/FileUpload/getAttach.json?id=${personRegisterDo.personImgIds}|"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="TDleft">性别：</td>
+                <td><span th:include="component/selectCombo(id='sex',name='sex',dictType='SEX',defaultValue=${personRegisterDo.sex},verify='',disabled='1')"/></td>
+            </tr>
+            <tr>
+                <td class="TDleft">证件类型：</td>
+                <!-- <td th:text='${personRegisterDo.cardType}'></td> -->
+                <td><span th:include="component/selectCombo(id='cardType',name='cardType',dictType='PER_CARD_TYPE',defaultValue=${personRegisterDo.cardType},verify='',disabled='1')"/></td>
+            </tr>
+            <tr>
+                <td class="TDleft">证件号码：</td>
+                <td th:text='${personRegisterDo.cardNo}'></td>
+            </tr>
+            <tr>
+                <td class="TDleft" width="100">出生日期：</td>
+                <td th:if="${personRegisterDo.birthDate}" th:text="${#dates.format(personRegisterDo.birthDate, 'yyyy-MM-dd')}"></td>
+            </tr>
+            <tr>
+                <td class="TDleft">联系电话：</td>
+                <td th:text='${personRegisterDo.phone}'></td>
+            </tr>
+            <tr>
+                <td class="TDleft">人员类别：</td>
+                <td><span th:include="component/selectCombo(id='peopleType',name='peopleType',dictType='PEOPLE_TYPE',defaultValue=${personRegisterDo.peopleType},verify='',disabled='1')"/></td>
+            </tr>
+            <tr>
+                <td class="TDleft">工作单位：</td>
+                <td th:text='${personRegisterDo.workUnit}'></td>
+            </tr>
+            <tr>
+                <td class="TDleft no-star">户籍地址：</td>
+                <td colspan="4" th:text='${personRegisterDo.domicilePlace}'></td>
+            </tr>
+            <tr>
+                <td class="THtitle" colspan="5">人员入办案区信息</td>
+            </tr>
+            <tr>
+                <td class="TDleft">入办案区时间：</td>
+                <td th:if="${personRegisterDo.inTime}" th:text= "${#dates.format(personRegisterDo.inTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td class="TDleft">到案方式：</td>
+                <td colspan="2">
+                <span th:include="component/selectCombo(id='inType',name='inType',dictType='IN_TYPE',defaultValue=${personRegisterDo.inType},verify='',disabled='1')"/>
+               	</td>
+            </tr>
+            <tr>
+                <td class="TDleft">入办案区原因：</td>
+                <td>
+                	<span th:include="component/selectCombo(id='inReason',name='inReason',dictType='PER_IN_REASON',defaultValue=${personRegisterDo.inReason},verify='',disabled='1')"/>
+                </td>
+                <td class="TDleft">特殊群体：</td>
+                <td colspan="2">
+                	<span th:include="component/selectCombo(id='specialGroup',name='specialGroup',dictType='PER_SPECIAL_GROUP',defaultValue=${personRegisterDo.specialGroup},verify='',disabled='1')"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="TDleft">自述有无疾病、<br/>伤情及受伤原因：</td>
+                <td colspan="4" th:text='${personRegisterDo.checkBodyResult}'>
+                </td>
+            </tr>
+            <tr>
+                <td class="TDleft">检查处理情况</td>
+                <td colspan="4" th:text='${personRegisterDo.medicalHistory}'>
+                </td>
+            </tr>
+            <tr>
+                <td class="THtitle" colspan="5">人员出办案区信息</td>
+            </tr>
+
+			<tr>
+                <td class="TDleft">出所类型：</td>
+                <td>
+                	<span  class="wh100" th:include="component/selectCombo(id='outType',name='outType',dictType='OUT_TYPE',defaultValue='',verify='required')"/>
+                </td>
+                <td class="TDleft">出所申请类型：</td>
+                <td colspan="2">
+                	<span  class="wh100" th:include="component/selectCombo(id='applyType',name='applyType',dictType='OUT_APPLY_TYPE',defaultValue='',verify='required')"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="TDleft">审核角色：</td>
+                <td colspan="4">
+                	<span class="wh100">
+                		<select style="display: block;" th:id="roleId" th:name="roleId" lay-verify="required" lay-search lay-ignore >
+						</select>
+					</span>
+				</td>
+            </tr>
+            <tr>
+                <td class="TDleft">申请原因：</td>
+                <td colspan="4">
+                	<textarea id="applyReason" name="applyReason"></textarea><span id="yuanyin" style="color: red;display:none;">请填写原因</span>
+				</td>
+            </tr>
+
+            <tr>
+                <td colspan="5" valign="top">
+                    <div id="leftBox" >
+                        <div id="personRegis-table" >
+                            <div class="dataListBox posAbs cen" >
+
+                                <div class="titBox posAbs" >
+                                    <div class="posRel" >
+                                        <div class="con posAbs wh100 table-head" >
+                                            <!--<img src="__PUBLIC__/images/custom/renyuandengji_biankuangxiao1.png" alt="" class="posAbs wh100" >-->
+                                        </div >
+                                    </div >
+                                </div >
+                                <div class="listBox posAbs" id="table-body-list-div" >
+                                    <ul class="table-body" >
+                                        <!-- //动态生成数据 -->
+                                    </ul >
+                                </div >
+                                <div class="pagBox posAbs pageTool" id="box" >
+
+                                </div >
+
+                            </div >
+                        </div >
+                    </div >
+                </td>
+            </tr>
+
+        </table>
+        <br/>
+        <div class="btn-youAdd">
+            <button class="btn btn-primary" lay-submit lay-filter="formDemo">保存</button>
+            <button class="btn btn-primary" id="returnIndex">返回</button>
+        </div>
+    </form>
+
+    <input type='hidden' id='dsw-temp-id' value=''>
+
+</div>
+</body>
+<script type="text/javascript">
+	var registerId = $("#registerId").val();
+	var inImgIds = [];//扣押物品照片
+	var holdGoods = "";//扣押的物品ids
+
+	//正式临时出所类型change事件
+	$("#outType").change(function(){
+		var type = $(this).val();
+		if(type == "1"){
+			$(".custom-choose-ok").prop("checked",false);
+			$(".custom-choose-no").prop("checked",true);
+			$(".custom-choose-ok").show();
+			$(".custom-choose-no").show();
+		}else{
+			$(".custom-choose-ok").prop("checked",false);
+			$(".custom-choose-no").prop("checked",false);
+			$(".custom-choose-ok").hide();
+			$(".custom-choose-no").hide();
+		}
+	})
+
+
+	/* 获得需要扣押物品ids */
+	 function getHoldImgs(){
+		$('#personRegis-table .table-body .body-data-list[data-id]').each(function(index,thisDom){
+			var id=$(this).data('id');
+			var g_inImgIds="";
+
+			//判断物品是否扣押
+			var isHold = $(this).find('.custom-choose')[0].checked;
+			if(isHold){
+				//拼接图片id
+				$(this).find('.custom-img-column .dsw-take-photo-img-main').each(function(v,k){
+					var imgId = $(this).attr('id');
+					g_inImgIds += imgId + ",";
+				});
+				inImgIds.push({id:id, sourceIds: g_inImgIds});
+				holdGoods += id + ',';//扣押的物品ids
+			}
+
+		});
+	}
+	/* 获得需要扣押的物品ids end */
+
+	function createTable(){
+	    var table = new iotTable({
+	        dataUrl       : '/GoodsRegister/queryPhotoPage.json?registerId='+registerId,
+	        limit: 100,
+	        showNumber    : false,
+	        showSelect    : false,
+	        tableHeadClass: 'demo',
+	        tableBodyClass: 'demo',
+	        callback: function(datas) {
+
+		        datas.data.forEach(function(v, k) {
+		            var _wrapper = $('.table-body').find('[data-id="' + v.id + '"] .custom-img-column > span');
+		            var _wrapperTakePhoto = $('.table-body').find('[data-id="' + v.id + '"] .custom-img-column-take-photo > span');
+
+		            var _settings = {
+		                imgCloseUrl: '../../images/custom/close.png',
+		                imgTakePhotoUrl: '../../images/custom/take-photo.png',
+		            };
+
+		            _wrapper.dsw_take_photo($.extend({},
+		            _settings, {
+		                isShowTakePhotoBtn: false
+		            }));
+		            _wrapperTakePhoto.dsw_take_photo(_settings);
+		        });
+
+		    },
+	        renderTo      : '#personRegis-table',
+	        heads         : [ {
+	            text : '物品名称',
+	            width: 10,
+	            name : 'goodsName'
+	        }, {
+	            text : '是否扣押',
+	            width: 20,
+	            name : 'status',
+	            renderHtml : function ( text,rowData ) {
+	                var _html='<input type="radio" name="'+rowData['id']+'" value="1" class="custom-choose custom-choose-ok" lay-ignore><span></span><input type="radio" name="'+rowData['id']+'" value="0" class="custom-choose custom-choose-no" lay-ignore checked><span></span>';
+	                var _cellClass='demo';
+
+	                return {html:_html,cellClass:_cellClass};
+	            }
+	        }, {
+	            text : '存物照片',
+	            width: 70,
+	            name : 'sourceIds',
+	            renderHtml : function ( text,data ) {
+	                var _html='';
+		            if (text != '') {
+		                var aid = (text + '').split(",");
+		                for (var i = 0; i < aid.length; i++) {
+		                    if (aid[i] != "") {
+		                        _html += '<div class="dsw-take-photo-img-box"><img id="' + aid[i] + '" class="dsw-take-photo-img-main" src="/FileUpload/getAttach.json?id=' + aid[i] + '"/></div>';
+		                    }
+		                }
+		            }
+	                return {html:_html,cellClass:'custom-img-column'};
+	            }
+	        }]
+	    } );
+	    table.init();
+	}
+
+	//加载角色下拉选
+	$(function () {
+	    var res = new PublicAjax('/Role/listRoles.json');
+	    if (res.success) {
+	        var data = res.content;
+	        if(!data){
+	        	return;
+	        }
+	        if (data.length > 0) {
+	            $.each(data, function (i, obj) {
+	                $('#roleId').append('<option selected="selected" value=' + obj.id + '>' + obj.roleName + '</option>');
+	            });
+	        }
+	    }
+
+	    createTable();//加载表格
+	});
+
+	//返回按钮，关闭窗口
+    $("#returnIndex").click(function(){
+    	var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+    	parent.window.location= parent.window.location;//刷新父页面
+        parent.layer.close(index);//关闭弹窗
+    })
+
+    layui.use(['layer','form'], function () {
+        var layer = layui.layer;
+        var form = layui.form;
+        form.on('submit(formDemo)', function(data){
+
+        	getHoldImgs();//获取扣押的物品ids
+        	data.field.holdGoods = holdGoods;
+            var res = new PublicAjax('/OutConfirm/saveOutConfirm.json', data.field);
+            if(res.success){
+                layer.msg("保存成功!");
+                $("#returnIndex").click();
+            }else{
+                layer.msg("数据保存错误!");
+            }
+        });
+    });
+
+</script>
+</html>

@@ -3,16 +3,38 @@
 <span th:fragment="common">
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" type="text/css" th:href="@{../../css/common.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/common-old.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{../../css/theme.css}"/>
+    
+    <link rel="stylesheet" type="text/css" th:href="@{../../vendor/webuploader/webuploader.css}"/>
 
     <link rel="shortcut icon" th:href="@{../../images/frame/logo.png}"
           type="image/x-icon">
-    <script th:src="@{../../js/jquery.min.js}"></script>
+    <script th:src="@{../../js/jquery-3.2.1.min.js}"></script>
+    
+    <script th:src="@{../vendor/webuploader/webuploader.min.js}"></script>
+    
     <script th:src="@{../../js/sys-common.js}"></script>
     <link th:href="@{../vendor/layui/css/layui.css}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/dialog/custom.css}"/>
+    <script th:src="@{../../vendor/layer/layer.js}"></script>
     <script th:src="@{../vendor/layui/layui.js}"></script>
     <link th:href="@{../css/main.css}" rel="stylesheet"/>
     <script th:src="@{../js/main.js}"></script>
+    <script th:src="@{../js/module.js}"></script>
+    
+    <script th:src="@{../js/placeholder/jquery.placeholder.js}"></script>
+    
+    <script>
+    	$(function(){
+    		$('input,textarea').placeholder({});
+    	});
+    </script>
+    <style>
+    	input.placeholder[placeholder],
+    	textarea.placeholder[placeholder]{
+    		color:#b5983c !important;
+    	}
+    </style>
 </span>
 </html>

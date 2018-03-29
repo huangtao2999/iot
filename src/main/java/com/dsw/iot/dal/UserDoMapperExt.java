@@ -22,4 +22,5 @@ public interface UserDoMapperExt extends UserDoMapper {
      * @return
      */
     int countByParam(UserRequest param);
+
 }

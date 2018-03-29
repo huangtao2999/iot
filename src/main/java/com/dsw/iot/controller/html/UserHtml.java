@@ -1,19 +1,22 @@
 package com.dsw.iot.controller.html;
 
-import com.dsw.iot.model.RoleDo;
-import com.dsw.iot.model.UserDo;
-import com.dsw.iot.service.RoleService;
-import com.dsw.iot.service.UserRoleService;
-import com.dsw.iot.service.UserService;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
+import com.dsw.iot.model.RoleDo;
+import com.dsw.iot.model.UserDo;
+import com.dsw.iot.service.RoleService;
+import com.dsw.iot.service.UserRoleService;
+import com.dsw.iot.service.UserService;
 
+//这里的url名、方法名、html文件名保持一致
 @Controller
 @RequestMapping("/UserHtml")
 public class UserHtml {
@@ -32,7 +35,7 @@ public class UserHtml {
      * @return
      */
     @RequestMapping("/index")
-    public String login(Model model) {
+	public String index(Model model) {
         return "user/index";
     }
 
@@ -42,13 +45,13 @@ public class UserHtml {
      * @param model
      * @return
      */
-    @RequestMapping("/addUser")
-    public String addUser(Model model, HttpServletRequest request,
+	@RequestMapping("/add")
+	public String add(Model model, HttpServletRequest request,
                           HttpServletResponse response) {
         //查询角色
-        List<RoleDo> roleList = roleService.selectAllRole();
+		List<RoleDo> roleList = roleService.listAllRole();
         model.addAttribute("roleList", roleList);
-        return "user/addUser";
+		return "user/add";
     }
 
     /**
@@ -57,22 +60,22 @@ public class UserHtml {
      * @param model
      * @return
      */
-    @RequestMapping("/editPage")
-    public String editPage(Model model, Long id) {
+	@RequestMapping("/edit")
+	public String edit(Model model, Long id) {
         UserDo userEntity = new UserDo();
         if (null != id) {
             //有id，是更新记录
-            userEntity = userService.selectByPrimaryKey(id);
+			userEntity = userService.getUser(id);
         }
         //查询所有角色
-        List<RoleDo> roleList = roleService.selectAllRole();
+		List<RoleDo> roleList = roleService.listAllRole();
         //查询当前用户的角色id
         String roleIds = userRoleService.selectRolesByUserId(id);
         //数据放attribute，页面去取值
         model.addAttribute("roleIds", roleIds);
         model.addAttribute("roleList", roleList);
         model.addAttribute("item", userEntity);
-        return "user/editUser";
+		return "user/edit";
     }
 
     /**
@@ -81,15 +84,15 @@ public class UserHtml {
      * @param model
      * @return
      */
-    @RequestMapping("/detailDialog")
-    public String detailDialog(Model model, Long id) {
+	@RequestMapping("/detail")
+	public String detail(Model model, Long id) {
         UserDo userEntity = new UserDo();
         if (null != id) {
             //有id，是更新记录
-            userEntity = userService.selectByPrimaryKey(id);
+			userEntity = userService.getUser(id);
         }
         //查询所有角色
-        List<RoleDo> roleList = roleService.selectAllRole();
+		List<RoleDo> roleList = roleService.listAllRole();
         //查询当前用户的角色
         String roleIds = userRoleService.selectRolesByUserId(id);
         //数据放attribute，页面去取值

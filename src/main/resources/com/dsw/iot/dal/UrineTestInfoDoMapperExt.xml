@@ -1,3 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.dsw.iot.dal.UrineTestInfoDoMapperExt" />
+<mapper namespace="com.dsw.iot.dal.UrineTestInfoDoMapperExt" >
+<!-- 条件查询语句 -->
+  <select id="getByExample" parameterType="com.dsw.iot.dto.UrineTestInfoRequest" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from urine_test_info where
+    	is_deleted = 'N'
+    <if test="name != null and name != ''" >
+      and name like '%${name}%'
+    </if>
+<if test="bottleb != null and bottleb != ''" >
+      and  bottleb like '%${bottleb}%'
+    </if>
+    order by create_time desc
+  </select>
+
+
+
+
+
+
+  <select id="countsByExample" parameterType="com.dsw.iot.dto.UrineTestInfoRequest" resultType="java.lang.Integer" >
+    select count(*)
+    from urine_test_info where
+    	is_deleted = 'N'
+    <if test="name != null and name != ''" >
+      and name like '%${name}%'
+    </if>
+<if test="bottleb != null and bottleb != ''" >
+      and  bottleb like '%${bottleb}%'
+    </if>
+       order by create_time desc
+  </select>
+
+
+    <select id="getOverDeadtimeB" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from urine_test_info where
+    	is_deleted = 'N'
+    	and  is_dealed = 'N'
+        and SYSDATE() > bottle_deadtimeB
+  </select>
+
+
+  <update id="updateDeadtimeBStatus" parameterType="com.dsw.iot.dto.UrineTestInfoRequest" >
+		update urine_test_info set
+			is_dealed = 'Y',
+			update_user='${updateUser}',
+			update_time=sysdate()
+		where ID = ${id}
+	</update>
+</mapper>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head><meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+	<meta charset="UTF-8">
+	<title>编辑用户</title>
+	<div th:include="inc/common"></div>
+</head>
+<body>
+<!--主体开始-->
+    <ul class="breadcrumb">
+        <li class="active">用户管理>编辑用户</li>
+    </ul>
+<div class="container-fluid">
+<form class="layui-form" action="">
+	<table class="youAdd">
+		<tbody>
+			<tr>
+				<td class="TDleft">
+					<div class="layui-inline">
+						<label class="layui-form-label">登录账号</label>
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline">
+						<input readonly type="text" name="account" autocomplete="off" class="layui-input" th:value='${item.account}'>
+					</div>
+				</td>
+				<td class="TDleft">
+					<div class="layui-inline">
+						<label class="layui-form-label" >真实姓名</label>
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline">
+					    <input type="text" name="realName" autocomplete="off" class="layui-input" th:value='${item.realName}'>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="TDleft">
+					<div class="layui-inline">
+						<label class="layui-form-label">身份证号</label>
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline">
+						<input type="text" name="idcard" lay-verify="identity" autocomplete="off" class="layui-input" th:value='${item.idcard}'>
+					</div>
+				</td>
+				<td class="TDleft">
+					<div class="layui-inline">
+						<label class="layui-form-label" >组织机构</label>
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline">
+					    <select name="org">
+							<option value=""></option>
+							<option th:selected='${item.org=="下陆区分局团城山派出所"}'>下陆区分局团城山派出所</option>
+							<option th:selected='${item.org=="箭楼下社区"}'>箭楼下社区</option>
+							<option th:selected='${item.org=="皇姑岭社区"}'>皇姑岭社区</option>
+							<option th:selected='${item.org=="柯尔山社区"}'>柯尔山社区</option>
+							<option th:selected='${item.org=="袁家畈社区"}'>袁家畈社区</option>
+							<option th:selected='${item.org=="陈伯臻社区"}'>陈伯臻社区</option>
+							<option th:selected='${item.org=="青龙山社区"}'>青龙山社区</option>
+					    </select>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="TDleft">
+					<div class="layui-inline">
+						<label class="layui-form-label">手机号码</label>
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline">
+						<input type="text" name="phone" lay-verify="phone" autocomplete="off" class="layui-input" th:value='${item.phone}'>
+					</div>
+				</td>
+				<td class="TDleft">
+					<div class="layui-inline">
+						<label class="layui-form-label" >办公电话</label>
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline">
+					    <input type="text" name="tel" autocomplete="off" class="layui-input" th:value='${item.tel}'>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="TDleft">
+					<div class="layui-inline">
+						<label class="layui-form-label">常用邮箱</label>
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline">
+						<input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input" th:value='${item.email}'>
+					</div>
+				</td>
+				<td class="TDleft">
+					<div class="layui-inline">
+						<label class="layui-form-label" >状态</label>
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline">
+					    <select name="status">
+							<option value=""></option>
+							<option value="0" th:selected='${item.status=="0"}'>禁用</option>
+							<option value="1" th:selected='${item.status=="1"}'>激活</option>
+					    </select>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="TDleft">
+					<div class="layui-inline">
+						<label class="layui-form-label">头像</label>
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline">
+						<input type="file" name="headImg" autocomplete="off" class="layui-input">
+					</div>
+				</td>
+				<td class="TDleft">
+					<div class="layui-inline">
+						<label class="layui-form-label" >部门</label>
+					</div>
+				</td>
+				<td>
+					<div class="layui-input-inline">
+						<input type="text" name="dept" autocomplete="off" class="layui-input" th:value='${item.dept}'>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="TDleft">
+					<div class="layui-inline">
+						<label class="layui-form-label">角色</label>
+					</div>
+				</td>
+				<td colspan="3">
+					<div class="layui-input-inline" th:each="role:${roleList}">
+						<input type='checkbox' name="role"  th:value="${role.id}" th:text="${role.roleName}">
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="btn-youAdd">
+		<button class="layui-btn" lay-submit="" lay-filter="submit">提交</button>
+		<a class="layui-btn layui-btn-primary" href="javascript:window.location.href='/UserHtml/index.html'">返回</a>
+	</div>
+	<input type="hidden"  name="id" th:value="${item.id}">
+	<input type="hidden"  id="roleIds" name="roleIds" >
+</form>
+</div>
+</body>
+<script th:inline="javascript">
+$(function(){
+	var ids = [[ ${roleIds} ]];
+	ids = ids.split(",");
+	for(var i=0; i<ids.length; i++){
+		$("input[name=role]:checkbox[value='"+ids[i]+"']").prop("checked",true);
+	};
+})
+layui.use(['form'], function(){
+	var form = layui.form
+	,layer = layui.layer
+	,layedit = layui.layedit
+
+	//监听提交
+	form.on('submit(submit)', function(data){
+		//获取选中的角色，逗号拼接到后台
+		var roleIds = "";
+		$("input[name=role]:checkbox:checked").each(function(){
+			roleIds = roleIds + $(this).val() + ",";
+		});
+		roleIds = roleIds.substring(0, roleIds.length -1);
+		data.field.roleIds = roleIds;
+		//////////////////////
+		//ajax提交
+		var res = PublicAjax('/User/addEdit.json',data.field);
+		if(res.success){
+			layer.msg('保存成功');
+			window.location.href="/UserHtml/index.html";
+		}else{
+			layer.msg('保存失败');
+		}
+		return false;
+	});
+
+
+});
+</script>
+</html>

@@ -22,4 +22,11 @@ public interface MenuDoMapperExt extends MenuDoMapper {
      * @return
      */
     public List<MenuDo> findMenuByRoleId(MenuRequest param);
+
+	/**
+	 * 删除菜单（删除记录）
+	 *
+	 * @param id
+	 */
+	public int deleteByPrimaryKeyReal(Long id);
 }

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html>
+<head><meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+    <meta charset="UTF-8">
+    <title>家属通知</title>
+	<div th:include="inc/common-new"></div>
+	<div th:include="inc/common-table"></div>
+</head>
+<body>
+    <div id="leftBox" style="width:100%;height:100%">
+        <div class="posRel wh100">
+            <div class="searchBox posAbs cen">
+                <div class="posRel wh100">
+                    <div class="editBox posAbs">
+                        <ul class="wh100">
+                        </ul>
+                    </div>
+ <!--                     通用高级查询html -->
+					<div th:include="inc/table-query"></div>
+                </div>
+            </div>
+<!--        table公用数据html -->
+			<div id="personRegis-table" th:include="inc/table-dataField"></div>
+            <img src="../images/perRegis/renyuandengji_biankaungzuo.jpg" alt="" class="bgImg posAbs wh100">
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+	var registerId = 27;
+    var table = new iotTable({
+        dataUrl : '/RelatedPhoneConfirm/queryPage.json',
+        renderTo : '#personRegis-table',
+        heads : [{
+            text : '申请人姓名',
+            width : 10,
+            name : 'applyName'
+        },{
+            text : '申请时间',
+            width : 20,
+            name : 'applyTime',
+            dateFormat : 'yyyy-MM-dd hh:mm:ss'
+        },{
+            text : '联系人姓名',
+            width : 10,
+            name : 'callName'
+        },{
+            text : '联系人电话',
+            width : 20,
+            name : 'tel'
+        },{
+            text : '申请通话时间',
+            width : 10,
+            name : 'talkTime'
+        },{
+            text : '历史记录',
+            width : 10,
+            name : '历史记录',
+            html : '<a href="#" class="btn btnLB btn-success" onclick="showhistory(this)" lay-event="查看家属通知">查看家属通知</a>'
+
+        },{
+        	text : '录音文件',
+            width : 10,
+            name : 'recordId',
+            renderHtml:function(val){
+            	if(val){
+            		return "<a download='录音文件.wav' title='下载' href='/FileUpload/getAttach.json?id="+val+"'>录音文件</a>";
+            	}else {
+            		return "";
+            	}
+            }
+        }],
+        queryFields : [{
+            text : '申请时间',
+            name : 'alarmStartTime',
+            type : 'date'
+        },{
+            text : '至',
+            name : 'alarmEndTime',
+            type : 'date'
+        },{
+            text : '申请人',
+            name : 'applyName'
+        },{
+            text : '申请原因',
+            name : 'applyReason'
+        },{
+            text : '审批民警',
+            name : 'auditUser'
+        }]
+    });
+    table.init();
+    layui.use(['layer'], function () {
+        var layer = layui.layer;
+        //新增
+        $("#addBtn").click(function () {
+            layer.open({
+                type: 2,
+                title: false,
+                anim: -1,
+                area: ['70%', '70%'],
+                content: "/RelatedPhoneConfirmHtml/add.html?registerId="+registerId
+            });
+        });
+    });
+    function showhistory(me){
+    	var id = $(me).parents(".body-data-list").data("id");
+    	  layer.open({
+              type: 2,
+              title:false,
+              area: ['70%', '70%'],
+              content: '/RelatedPhoneConfirmHtml/detail.html?id='+id
+          });
+    }
+</script>
+</html>

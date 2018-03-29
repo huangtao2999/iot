@@ -6,11 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.dsw.iot.dto.RoleRequest;
 import com.dsw.iot.model.RoleDo;
+import com.dsw.iot.util.BizException;
 import com.dsw.iot.util.PageResult;
 
 public interface RoleService {
-    public void print();
-
     /**
      * 分页查询角色
      *
@@ -25,7 +24,7 @@ public interface RoleService {
      * @param id
      * @return
      */
-    RoleDo selectByPrimaryKey(Long id);
+	RoleDo getRole(Long id);
 
     /**
      * 新增/编辑角色
@@ -37,24 +36,31 @@ public interface RoleService {
 	void saveRole(HttpServletRequest request, RoleDo record);
 
     /**
-     * 删除角色
-     *
-     * @param param
-     * @return
-     */
-	void delRole(RoleRequest param);
+	 * 删除角色
+	 *
+	 * @param param
+	 * @return
+	 * @throws BizException
+	 */
+	void removeRole(RoleRequest param) throws BizException;
 
     /**
      * 用户选择角色，查询所有角色
      *
      * @return
      */
-    List<RoleDo> selectAllRole();
+	List<RoleDo> listAllRole();
 
     /**
      * 登录时，查询登录人拥有的所有角色
      *
      * @return
      */
-    List<RoleDo> selectRoleDoListByUserId(Long userId);
+	List<RoleDo> listRoleByUserId(Long userId);
+
+	/**
+	 * 查询所有有效角色
+	 * @return
+	 */
+	List<RoleDo> listRoles(RoleRequest param);
 }

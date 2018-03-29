@@ -24,7 +24,7 @@ public class PageDto {
         if (currentPage == 1) {
             this.offset = 0;
         } else {
-            this.offset = (currentPage - 1) * pageSize + 1;
+            this.offset = (currentPage - 1) * pageSize;
         }
     }
 }

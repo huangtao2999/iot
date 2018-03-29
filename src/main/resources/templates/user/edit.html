@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html>
+<head><meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+    <meta charset="UTF-8">
+    <div th:include="inc/common"></div>
+</head>
+<body class="custom">
+	<div class="content">
+	    <div class="container-fluid">
+	        <br/>
+	        <form class="layui-form" method="post">
+				<table class="youAdd">
+					<tr>
+						<td class="TDleft">
+							<label>警号：</label><font color="red">*</font></td>
+						<td>
+							<input readonly type="text" lay-verify="required" class="input-large"
+								th:value="${item.account}" id="account" name="account" onblur="checkAccount();">
+							<span class="muted">警号(范围在2~10位字符)，初始密码为数字 1 </span></td>
+					</tr>
+					<tr>
+						<td class="TDleft">
+							<label>真实姓名：</label><font color="red">*</font></td>
+						<td>
+							<input type="text" lay-verify="required" class="input-large" name="realName" th:value='${item.realName}'>
+							<span class="muted">填写个人真实姓名</span></td>
+					</tr>
+					<tr>
+						<td class="TDleft">
+							<label>身份证号：</label></td>
+						<td>
+							<input type="text" value="" class="input-large" name="idcard" th:value='${item.idcard}'>
+							<span class="muted">填写个人真实身份证号</span></td>
+					</tr>
+					<tr>
+						<td class="TDleft">
+							<label>组织机构：</label></td>
+						<td>
+							<span th:include="component/selectCombo(id='org',name='org',dictType='420222000000',defaultValue=${item.org},verify='')" />
+							<span class="muted">请选择组织机构</span></td>
+					</tr>
+					<tr>
+						<td class="TDleft">
+							<label>手机号码：</label></td>
+						<td>
+							<input type="text" name="phone" th:value='${item.phone}' class="input-large">
+							<span class="muted">手机号码</span></td>
+					</tr>
+					<tr>
+						<td class="TDleft">
+							<label>办公电话：</label></td>
+						<td>
+							<input type="text" name="tel" th:value='${item.tel}' class="input-large">
+							<span class="muted">办公电话</span></td>
+					</tr>
+					<tr>
+						<td class="TDleft">
+							<label>常用邮箱：</label></td>
+						<td>
+							<input type="text" name="email" th:value='${item.email}' class="input-large">
+							<span class="muted">请输入个人邮箱</span></td>
+					</tr>
+					<tr>
+						<td class="TDleft">
+							<label>状态：</label><font color="red">*</font></td>
+						<td>
+							<span th:include="component/selectCombo(id='status',name='status',dictType='STATUS',defaultValue=${item.status},verify='require')" /></td>
+					</tr>
+					<tr>
+						<td class="TDleft">
+							<label>角色：</label></td>
+						<td>
+							<div th:each="role:${roleList}">
+								<input type='checkbox' name="role" th:value="${role.id}" th:text="${role.roleName}"></div>
+					</tr>
+				</table>
+	            <br/>
+	            <div class="btn-youAdd">
+	                <button class="btn btn-primary" lay-submit="" lay-filter="submit">保存</button>
+	                <button class="btn btn-primary" id="back">返回</button>
+	            </div>
+		        <input type="hidden" name="id" th:value="${item.id}">
+		        <input type="hidden" name="roleIds">
+	        </form>
+	    </div>
+	</div>
+</body>
+<script th:inline="javascript">
+	//返回按钮
+	$("#back").click(function () {
+	    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+	    parent.table.loadBody();//刷新列表
+	    parent.layer.close(index);//关闭弹窗
+	});
+
+
+	$(function () {
+		var ids = [[ ${roleIds} ]];
+		ids = ids.split(",");
+		for(var i=0; i<ids.length; i++){
+			$("input[name=role]:checkbox[value='"+ids[i]+"']").prop("checked",true);
+		}
+		layui.form.render();
+	})
+
+    layui.use(['form'], function () {
+        var form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        //监听提交
+        form.on('submit(submit)', function (data) {
+            var roleIds = "";
+            //获取选中的角色，逗号拼接到后台
+            $("input[name=role]:checkbox:checked").each(function () {
+                if (roleIds == "") {
+                    roleIds = $(this).val();
+                } else {
+                    roleIds += "," + $(this).val();
+                }
+            });
+            //放到form提交的集合中
+            data.field.roleIds = roleIds;
+            //ajax提交
+            var res = PublicAjax('/User/saveUser.json', data.field);
+            if (res.success) {
+                layer.msg(res.content);
+                $("#back").click();
+            } else {
+                layer.msg(res.content);
+            }
+        });
+    });
+</script>

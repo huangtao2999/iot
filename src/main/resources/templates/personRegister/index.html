@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+    <title>人员登记管理</title>
+	<div th:include="inc/common-new"></div>
+	<div th:include="inc/common-table"></div>
+</head>
+<body>
+    <div id="leftBox">
+        <div class="posRel wh100">
+            <div class="searchBox posAbs cen">
+                <div class="posRel wh100">
+                    <div class="editBox posAbs" style="width:15%;">
+                        <ul class="wh100">
+                            <li style='width:100%;'>
+                                <div class="posRel wh100" id="addBtn">
+                                    <img src="../images/perRegis/renyuandengji_bg1.png" alt="" class="bg posAbs wh100">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_xinzeng.png" alt="" class="typeImg posAbs mid">
+                                    <span class="posAbs mid">登记</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="radioBox posAbs" style="width:80%">
+                        <ul class="wh100" name="outer">
+                            <li value="0" onclick="changeType(0)" class="active" style="width:20%; margin:0;">
+                                <div class="posRel wh100">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_sel.png" alt="" class="selImg posAbs mid">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_def.png" alt="" class="defImg posAbs mid">
+                                    <span class="allSel posAbs mid">全部</span>
+                                </div>
+                            </li>
+                            <li value="1" onclick="changeType(1)" style="width:20%; margin:0;">
+                                <div class="posRel wh100">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_sel.png" alt="" class="selImg posAbs mid">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_def.png" alt="" class="defImg posAbs mid">
+                                    <span class="inIng posAbs mid">在办案区</span>
+                                </div>
+                            </li>
+                            <li value="2" onclick="changeType(2)" style="width:20%; margin:0;">
+                                <div class="posRel wh100">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_sel.png" alt="" class="selImg posAbs mid">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_def.png" alt="" class="defImg posAbs mid">
+                                    <span class="outIng posAbs mid">申请出办案区</span>
+                                </div>
+                            </li>
+                            <li value="3" onclick="changeType(3)" style="width:20%; margin:0;">
+                                <div class="posRel wh100">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_sel.png" alt="" class="selImg posAbs mid">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_def.png" alt="" class="defImg posAbs mid">
+                                    <span class="outIng posAbs mid">待出办案区</span>
+                                </div>
+                            </li>
+                            <li value="4" onclick="changeType(4)" style="width:20%; margin:0;">
+                                <div class="posRel wh100">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_sel.png" alt="" class="selImg posAbs mid">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_def.png" alt="" class="defImg posAbs mid">
+                                    <span class="outed posAbs mid">临时出办案区</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+<!--                     通用高级查询html -->
+					<div th:include="inc/table-query"></div>
+                </div>
+            </div>
+<!--        table公用数据html -->
+			<div id="personRegis-table" th:include="inc/table-dataField"></div>
+            <img src="../images/perRegis/renyuandengji_biankaungzuo.jpg" alt="" class="bgImg posAbs wh100">
+        </div>
+    </div>
+    <div id="rightBox">
+        <div class="posRel wh100">
+            <div class="perInfoBox posAbs cen">
+                <div class="posRel wh100">
+                    <div class="leftBox posAbs mid">
+                        <ul class="wh100 right-user-data">
+
+                        </ul>
+                    </div>
+                    <div class="rightBox posAbs mid">
+                        <div class="posRel wh100">
+                            <div class="perHeadImg posAbs cenMid">
+                                <img width='100%' height='100%' src="../images/lawContro/face_msrpot.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="listBox posAbs cen">
+                <div class="posRel wh100">
+                    <ul class="wh100 right-top-btn">
+                        <li class="btn-delayButton" data-id="yqsq">
+                            <div class="posRel wh100">
+                                 <img src="../images/perRegis/renyuandengji_bg6.png" alt="" class="defImg posAbs wh100">
+                                <img src="../images/perRegis/renyuandengji_bg7.png" alt="" class="hoverImg posAbs wh100">
+                                <img src="../images/perRegis/renyuandengji_bg2.png" alt="" class="selImg posAbs wh100">
+                                <span class="posAbs cenMid">延期申请</span>
+                            </div>
+                        </li>
+                        <li class="btn-outConfirmButton" data-id="cssq">
+                            <div class="posRel wh100">
+                                <img src="../images/perRegis/renyuandengji_bg6.png" alt="" class="defImg posAbs wh100">
+                                <img src="../images/perRegis/renyuandengji_bg7.png" alt="" class="hoverImg posAbs wh100">
+                                <img src="../images/perRegis/renyuandengji_bg2.png" alt="" class="selImg posAbs wh100">
+                                <span class="posAbs cenMid">出所申请</span>
+                            </div>
+                        </li>
+                        <li class="btn-personInfoButton" data-id="rydjb">
+                            <div class="posRel wh100">
+                                <img src="../images/perRegis/renyuandengji_bg6.png" alt="" class="defImg posAbs wh100">
+                                <img src="../images/perRegis/renyuandengji_bg7.png" alt="" class="hoverImg posAbs wh100">
+                                <img src="../images/perRegis/renyuandengji_bg2.png" alt="" class="selImg posAbs wh100">
+                                <span class="posAbs cenMid">人员登记表</span>
+                            </div>
+                        </li>
+                        <li class="btn-phoneButton" data-id="dhsy">
+                            <div class="posRel wh100">
+                                <img src="../images/perRegis/renyuandengji_bg6.png" alt="" class="defImg posAbs wh100">
+                                <img src="../images/perRegis/renyuandengji_bg7.png" alt="" class="hoverImg posAbs wh100">
+                                <img src="../images/perRegis/renyuandengji_bg2.png" alt="" class="selImg posAbs wh100">
+                                <span class="posAbs cenMid">电话使用</span>
+                            </div>
+                        </li>
+                        <li class="btn-personTraceButton" data-id="rygj">
+                            <div class="posRel wh100">
+                                <img src="../images/perRegis/renyuandengji_bg6.png" alt="" class="defImg posAbs wh100">
+                                <img src="../images/perRegis/renyuandengji_bg7.png" alt="" class="hoverImg posAbs wh100">
+                                <img src="../images/perRegis/renyuandengji_bg2.png" alt="" class="selImg posAbs wh100">
+                                <span class="posAbs cenMid">人员轨迹</span>
+                            </div>
+                        </li>
+                        <li class="btn-diskButton" data-id="gpbl">
+                            <div class="posRel wh100">
+                                <img src="../images/perRegis/renyuandengji_bg6.png" alt="" class="defImg posAbs wh100">
+                                <img src="../images/perRegis/renyuandengji_bg7.png" alt="" class="hoverImg posAbs wh100">
+                                <img src="../images/perRegis/renyuandengji_bg2.png" alt="" class="selImg posAbs wh100">
+                                <span class="posAbs cenMid">光盘补录</span>
+                            </div>
+                        </li>
+                        <li class="btn-drugButton" data-id="dpxx">
+                            <div class="posRel wh100">
+                                <img src="../images/perRegis/renyuandengji_bg6.png" alt="" class="defImg posAbs wh100">
+                                <img src="../images/perRegis/renyuandengji_bg7.png" alt="" class="hoverImg posAbs wh100">
+                                <img src="../images/perRegis/renyuandengji_bg2.png" alt="" class="selImg posAbs wh100">
+                                <span class="posAbs cenMid">毒品信息</span>
+                            </div>
+                        </li>
+                        <li class="btn-urineTestButton" data-id="njxx">
+                            <div class="posRel wh100">
+                                <img src="../images/perRegis/renyuandengji_bg6.png" alt="" class="defImg posAbs wh100">
+                                <img src="../images/perRegis/renyuandengji_bg7.png" alt="" class="hoverImg posAbs wh100">
+                                <img src="../images/perRegis/renyuandengji_bg2.png" alt="" class="selImg posAbs wh100">
+                                <span class="posAbs cenMid">尿检信息</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="timeLineBox posAbs cen">
+                <div class="posRel wh100">
+                    <ul class="timeLineCon posAbs cenMid">
+                        <li class="task-01">
+                            <div class="leftBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/perRegis/renyuandengji_bg5.png" alt="" class="posAbs wh100">
+                                    <span class="posAbs mid"></span>
+                                </div>
+                            </div>
+                            <div class="rightBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/perRegis/renyuandengji_bg6.png" alt="" class="posAbs wh100 defImg">
+                                    <img src="../images/perRegis/renyuandengji_bg7.png" alt="" class="posAbs wh100 selImg">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_xiala.png" alt="" class="posAbs xiala mid">
+                                    <span class="posAbs mid">入办案区</span>
+                                    <img src="../images/perRegis/renyuandengji_tubiao_jiantou.png" alt="" class="arrowImg posAbs cen">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_jiantou.png" alt="" class="arrowImg1 posAbs cen">
+                                    <div class="diaBox posAbs">
+                                        <div class="posRel wh100">
+                                            <ul class="">
+                                                <li data-id="ryxx">人员信息</li>
+                                                <li data-id="sqjc">伤情检测</li>
+                                                <li data-id="aqjc">安全检查</li>
+                                                <li data-id="fpdhs">分配等候室</li>
+                                                <li data-id="fpxws">分配询问室</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="circleBox1 circleBox posAbs cen">
+                                        <div class="posRel wh100">
+                                            <img src="../images/perRegis/renyuandengji_yuanquan.png" alt="" class="posAbs wh100">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="task-02">
+                            <div class="leftBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/perRegis/renyuandengji_bg5.png" alt="" class="posAbs wh100">
+                                    <span class="posAbs mid"></span>
+                                </div>
+                            </div>
+                            <div class="rightBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/perRegis/renyuandengji_bg6.png" alt="" class="posAbs wh100 defImg">
+                                    <img src="../images/perRegis/renyuandengji_bg7.png" alt="" class="posAbs wh100 selImg">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_xiala.png" alt="" class="posAbs xiala mid">
+                                    <span class="posAbs mid flow-name">等候室</span>
+                                    <img src="../images/perRegis/renyuandengji_tubiao_jiantou.png" alt="" class="arrowImg posAbs cen">
+                                    <div class="diaBox posAbs">
+                                        <div class="posRel wh100">
+                                            <ul class="">
+                                                <li data-id="jstz">家属通知</li>
+                                                <li data-id="fpdhs">分配等候室</li>
+                                                <li data-id="fpxws">分配询问室</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="task-03">
+                            <div class="leftBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/perRegis/renyuandengji_bg5.png" alt="" class="posAbs wh100">
+                                    <span class="posAbs mid"></span>
+                                </div>
+                            </div>
+                            <div class="rightBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/perRegis/renyuandengji_bg6.png" alt="" class="posAbs wh100 defImg">
+                                    <img src="../images/perRegis/renyuandengji_bg7.png" alt="" class="posAbs wh100 selImg">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_xiala.png" alt="" class="posAbs xiala mid">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_jiantou.png" alt="" class="arrowImg posAbs cen">
+                                    <span class="posAbs mid flow-name">询问室</span>
+                                    <div class="diaBox posAbs">
+                                        <div class="posRel wh100">
+                                            <ul class="">
+                                                <li data-id="fpdhs">分配等候室</li>
+                                                <li data-id="fpxws">分配询问室</li>
+                                                <li data-id="zzbl">制作笔录</li>
+                                                <li data-id="gpkl">光盘刻录</li>
+                                                <li data-id="syjs">使用结束</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="task-04">
+                            <div class="leftBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/perRegis/renyuandengji_bg5.png" alt="" class="posAbs wh100">
+                                    <span class="posAbs mid"></span>
+                                </div>
+                            </div>
+                            <div class="rightBox">
+                                <div class="posRel wh100">
+                                    <img src="../images/perRegis/renyuandengji_bg6.png" alt="" class="posAbs wh100 defImg">
+                                    <img src="../images/perRegis/renyuandengji_bg7.png" alt="" class="posAbs wh100 selImg">
+                                    <img src="../images/perRegis/renyuandengji_tubiao_xiala.png" alt="" class="posAbs xiala mid">
+                                    <span class="posAbs mid">出办案区</span>
+                                    <img src="../images/perRegis/renyuandengji_tubiao_jiantou.png" alt="" class="arrowImg posAbs cen">
+                                    <div class="diaBox posAbs">
+                                        <div class="posRel wh100">
+                                            <ul class="">
+                                                <li data-id="qrhs" onclick="backTo()">确认回办案区</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="circleBox2 circleBox posAbs cen">
+                                        <div class="posRel wh100">
+                                            <img src="../images/perRegis/renyuandengji_yuanquan.png" alt="" class="posAbs wh100">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <img src="../images/perRegis/renyuandengji_biankuangyou.png" alt="" class="bgImg posAbs wh100">
+        </div>
+        <input type="hidden" id="registerId" />
+        <input type="hidden" id="personStatus">
+    </div>
+</body>
+<script>
+
+	// 新增 图片 预览 start
+	$(function(){
+		$(".perHeadImg img").click(function(e){
+			layer.photos({
+				photos:{index:0,data:[{src:$(this).prop('src')}]}
+			});
+		});
+	});
+	// 新增 图片 预览 end
+
+	var tempHead = [{
+			text : '姓名',
+			width : 20,
+			name : 'name'
+		},{
+			text : '性别',
+			width : 7,
+			name : 'sex',
+			dicCode : 'SEX'
+		},{
+			text : '入办案区原因',
+			width : 15,
+			name : 'inReason',
+			dicCode: 'PER_IN_REASON'
+		},{
+			text : '人员状态',
+			width : 15,
+			name : 'personStatus',
+			dicCode: 'PERSON_STATUS'
+		},{
+			text : '入办案区时间',
+			width : 20,
+			name : 'inTime',
+			dateFormat : 'yyyy-MM-dd hh:mm:ss'
+		},{
+			text : '操作',
+			width : 10,
+			name : 'personStatus',
+			html : '<a class="" lay-event="detail" onclick="getDetail(this)" style="color:#f5a302;">点此办案>></a>'
+	}];
+
+	var table = new iotTable({
+		heads : tempHead,
+		select : false,
+	 	clickFirst : true,//默认选中第一个
+		queryFields : [{
+			text : '姓名',
+			name : 'name'
+		},{
+			text : '性别',
+			name : 'sex',
+			type : 'select',
+			dicCode : 'SEX'
+		},{
+            text : '证件类型',
+            name : 'cardType',
+            type : 'select',
+            dicCode : 'PER_CARD_TYPE'
+        },{
+            text : '证件号码',
+            name : 'cardNo'
+        },{
+            text : '入区原因',
+            name : 'inReason',
+            type : 'select',
+            dicCode : 'PER_IN_REASON'
+        },{
+			text : '人员状态',
+			name : 'personStatus',
+			type : 'select',
+			dicCode : 'PERSON_STATUS'
+		},{
+            text : '入区时间',
+			type : 'date',
+            name : 'inStartTime',
+        },{
+            text : '至',
+            type : 'date',
+            name : 'inEndTime',
+        }],
+		dataUrl : '/PersonRegister/queryPage.json',
+		renderTo : '#personRegis-table'
+	});
+	table.init();
+
+	//新增
+	$("#addBtn").click(function () {
+	    layer.open({
+	        type: 2,
+	        title: false,
+	        area: ['98%', '95%'],
+	        content: "/PersonRegisterHtml/add.html",
+            cancel: function(index, layero){
+            	layer.confirm("是否确认关闭",function(){
+                    window.location= window.location;
+            	})
+                return false;
+            }
+	    });
+	});
+
+	//右下角的字菜单的点击事件
+	layui.use(['layer'], function () {
+	    var layer = layui.layer;
+	    var flowUrlMap= new Map();
+	    //一,按钮链接
+	    flowUrlMap.set("yqsq",{"url":"/DelayConfirmHtml/add.html","area":["70%","90%"]});
+	    flowUrlMap.set("cssq",{"url":"/OutConfirmHtml/add.html","area":["70%","90%"]});
+	    flowUrlMap.set("rydjb",{"url":"/PersonRegisterHtml/registerForm.html","area":["98%","98%"]});
+	    flowUrlMap.set("dhsy",{"url":"/RelatedPhoneConfirmHtml/usePhone.html","area":["70%","90%"]});
+	    //二,按钮链接
+	    flowUrlMap.set("rygj",{"url":"/PersonTraceHtml/index.html","area":["70%","90%"]});
+	    flowUrlMap.set("gpbl",{"url":"/RelatedPhoneConfirmHtml/add.html","area":["70%","90%"]});
+	    flowUrlMap.set("dpxx",{"url":"/UrineTestInfoHtml/index.html","area":["70%","90%"]});
+	    flowUrlMap.set("njxx",{"url":"/UrineTestInfoHtml/index.html","area":["70%","90%"]});
+	    //流程节点链接
+	    flowUrlMap.set("jstz",{"url":"/RelatedPhoneConfirmHtml/add.html","area":["80%","70%"]});
+	    flowUrlMap.set("fpdhs",{"url":"/RoomHtml/roomwaitassign.html","area":["70%","90%"]});
+	    flowUrlMap.set("fpxws",{"url":"/RoomHtml/roominquiryassign.html","area":["70%","90%"]});
+        flowUrlMap.set("ryxx",{"url":"/PersonRegisterHtml/stepTo.html?step=1","area":["98%","95%"]});
+	    flowUrlMap.set("sqjc",{"url":"/PersonRegisterHtml/stepTo.html?step=2","area":["98%","95%"]});
+	    flowUrlMap.set("aqjc",{"url":"/PersonRegisterHtml/stepTo.html?step=2","area":["98%","95%"]});
+	    flowUrlMap.set("zzbl",{"url":"/FdblRpc/syncFadu.json","area":["98%","95%"]});
+	    flowUrlMap.set("gpkl","");
+        flowUrlMap.set("syjs",{"url":"/Room/releaseRoom.json","area":["98%","95%"]});
+
+	    /**右侧下方流程图点击  start*/
+	    $("#rightBox .timeLineBox .timeLineCon li .rightBox .diaBox ul li").on("click",function(){
+            if($(this).hasClass("nvalid-btn")){
+                return;
+            }
+	        var dataId = $(this).data("id");
+	        var id = $("#registerId").val();//取右侧区域内的id
+            var pStatus = $("#personStatus").val();
+            if(pStatus == '5'){
+                layer.msg("该人员已正式出办案区，流程内功能禁止使用");
+                return;
+            }
+	        if(!id){
+	            layer.msg("请在列表选中需要查看的人员!");
+	            return;
+	        }
+	        if(dataId=="sqjc" || dataId=="aqjc"|| dataId=="ryxx"){
+	            layer.open({
+	                type: 2,
+	                title: false,
+	                anim: -1,
+	                area: flowUrlMap.get(dataId).area,
+	                content: flowUrlMap.get(dataId).url+"&registerId="+id,
+                    cancel: function(index, layero){
+//                    	layer.confirm("是否确认关闭",function(){
+//                            window.location= window.location;
+                            getDetail();
+//                        })
+//                        return false;
+                    }
+                });
+	        }else if(dataId=="zzbl"){
+                zzblSelect(id);
+            }else if(dataId=="syjs"){
+                var roomId = $(this).closest(".diaBox").siblings(".flow-name").data("room-id");
+                layer.confirm("确认使用结束房间吗?",function(){
+                    var res = PublicAjax(flowUrlMap.get(dataId).url, {'roomId': roomId});//获取数据
+                    if(res.success){
+                        layer.msg("房间使用结束!")
+                        window.location= window.location;
+                        getDetail();
+                    }else{
+                        layer.msg("房间释放失败,请重试！");
+                    }
+                })
+            } else{
+	            layer.open({
+	                type: 2,
+	                title: false,
+	                anim: -1,
+	                area: flowUrlMap.get(dataId).area,
+	                content: flowUrlMap.get(dataId).url+"?registerId="+id,
+                    cancel: function(index, layero){
+//                    	layer.confirm("是否确认关闭",function(){
+//                            window.location= window.location;
+                            getDetail();
+//                    	})
+//                        return false;
+                    }
+	            });
+	        }
+	    });
+	    /**右侧下方流程图点击  end*/
+
+	    /**右侧8个按钮点击事件  start*/
+	    $("#rightBox .listBox ul li").on("click",function(){
+            if($(this).hasClass("nvalid-btn")){
+                return;
+            }
+	        var dataId = $(this).data("id");
+	        var title = $(this).text();
+	        var id = $("#registerId").val();//取右侧区域内的id
+	        if(!id){
+	            layer.msg("请在列表选中需要查看的人员!");
+	            return;
+	        }
+	        if(dataId=="yqsq" || dataId=="cssq"||dataId=="dhsy" || dataId == "rydjb" || dataId == "rygj"){
+	            layer.open({
+	                type: 2,
+	                title: false,
+	                anim: -1,
+	                area: flowUrlMap.get(dataId).area,
+	                content: flowUrlMap.get(dataId).url+"?registerId="+id
+	            });
+	        }else{
+	            parent.addMenuTab(title,flowUrlMap.get(dataId).url);
+	        }
+	    });
+	    /**右侧8个按钮点击事件  end*/
+	});
+
+	//获得右侧人员信息，同时把id给右边
+	function getDetail(me){
+		var loading = wait();
+		var id = $(me).parents(".body-data-list").data("id");
+        id = id||$("#registerId").val();
+        var res = PublicAjax('/PersonRegister/getPersonListClickVo.json', {'id': id});//获取数据
+		if(res.success){
+			var content = res.content;
+			var data = {
+				userData : content.showInfo,
+				//照片地址
+				photoUrl : '/FileUpload/getAttach.json?id=' + content.photoUrl,
+				//可点击的按钮code
+				btns : content.btns,
+				//已经走过的流程
+				doTask : content.doTask
+			};
+			//首先创建用户信息
+			if(data.userData && data.userData.length > 0){
+				var html = '';
+				for(var i = 0 ; i < data.userData.length ; i++){
+					if(i >= 5){
+						break;
+					}
+					html += '<li>';
+					html += '    <div class="posRel wh100">';
+					html += '        <span class="posAbs mid desc">'+data.userData[i].name+':</span>';
+					html += '        <span class="nameTxt posAbs mid">'+data.userData[i].value+'</span>';
+					html += '    </div>';
+					html += '</li>';
+				}
+				$(".right-user-data").html(html);
+			}
+
+            //添加图片
+            if(content.photoUrl){
+                $(".perHeadImg img").prop("src",data.photoUrl);
+            }else{
+                $(".perHeadImg img").prop("src","../images/lawContro/face_msrpot.png");
+            }
+
+			//设置哪些按钮可以点击，哪些不能
+			$(".right-top-btn>li").addClass("nvalid-btn");
+			if(data.btns && data.btns.length > 0){
+				for(var i = 0 ; i < data.btns.length ; i++){
+					$(".right-top-btn").find(".btn-"+data.btns[i]).removeClass("nvalid-btn");
+				}
+			}
+			//为所有按钮设置data-id属性
+			$(".right-top-btn span").attr("data-id",id);
+
+			//设置未走过的节点变灰
+			$(".timeLineCon .rightBox").addClass("untreated-task");
+			$(".timeLineCon").find(".leftBox span").html("")//设置时间为空
+            $(".timeLineCon").find(".task-02").find('.flow-name').text("等候室");
+            $(".timeLineCon").find(".task-03").find('.flow-name').text("询问室");
+			if(data.doTask && data.doTask.length > 0){
+				for(var i = 0 ; i < data.doTask.length ; i++){
+				    if(!!data.doTask[i].roomName){
+                        $(".timeLineCon").find(".task-"+data.doTask[i].name).find('.flow-name').data("room-id",data.doTask[i].roomId).text(data.doTask[i].roomName);
+                    }
+					$(".timeLineCon").find(".task-"+data.doTask[i].name).find(".leftBox span").html(data.doTask[i].value);
+					$(".timeLineCon").find(".task-"+data.doTask[i].name).find(".rightBox").removeClass("untreated-task");
+				}
+			}
+
+			//给右侧赋值人员id
+			$("#registerId").val(id);
+            $("#personStatus").val(content.personStatus);
+			waitOver(loading);
+		}else{
+			waitOver(loading);
+			layer.msg("访问人员数据错误");
+		}
+	}
+
+	//点击上方radio，刷新表格数据
+    function changeType(index){
+		if(index != 0){
+	   		table.queryParams["personStatus"]=index;
+		}else{
+			table.queryParams = {};
+		}
+    	table.page = 1;
+        table.loadBody();
+    }
+
+	//确认归办案区
+	function backTo(){
+        var pStatus = $("#personStatus").val();
+        if(pStatus == '5'){
+            layer.msg("该人员已正式出办案区，流程内功能禁止使用");
+            return;
+        }
+		var registerId = $("#registerId").val();
+		if(registerId){
+			var confirmDialog = layer.confirm("是否确认该人员返回办案区", function(){
+				//确认归办案区了，就更新状态为在办案区
+				var res = new PublicAjax('/PersonRegister/personBack.json', {'id': registerId});
+				if(res.success){
+					//人员状态更新成功，手环激活成功，打开编辑页面第二页
+		            layer.open({
+		                type: 2,
+		                title: false,
+		                anim: -1,
+		                area: ['98%', '95%'],
+		                content: "/PersonRegisterHtml/stepTo.html?step=2&registerId="+registerId,
+	                    cancel: function(index, layero){
+	                    	layer.confirm("是否确认关闭",function(){
+	                            window.location= window.location;
+	                    	})
+	                        return false;
+	                    }
+	                });
+					layer.close(confirmDialog);
+				}else{
+					//人员状态更新失败
+					layer.alert(res.errorMsg, function(index){
+						layer.close(index);
+					})
+				}
+			})
+		}else{
+			layer.msg("未找到人员信息");
+		}
+	}
+    //制作笔录按钮被点击时
+    function zzblSelect(id) {
+        layer.open({
+            type:1,
+            title:'请选择笔录类型',
+            skin:'layui-layer-rim',
+            btn:['提交','取消'],
+            content:"<div id='addwin'><table align='center'style='margin-top: 5px;'>"
+            +"<tr>"
+            +"<td>"
+            +"<select id='bllx' name='bllx'>"
+            +"<option value ='010101'>行政询问笔录</option>"
+            +"<option value ='010102'>行政辨认笔录</option>"
+            +"<option value ='010103'>行政检查笔录</option>"
+            +"<option value ='010104'>行政勘验笔录</option>"
+            +"<option value ='010105'>行政现场笔录</option>"
+            +"<option value ='010106'>行政听证笔录</option>"
+            +"<option value ='010107'>治安调解笔录</option>"
+            +"<option value ='010201'>刑事询问笔录</option>"
+            +"<option value ='010202'>刑事讯问笔录</option>"
+            +"<option value ='010203'>刑事辨认笔录</option>"
+            +"<option value ='010204'>现场辨认笔录</option>"
+            +"<option value ='010205'>刑事检查笔录</option>"
+            +"<option value ='010206'>刑事查封笔录</option>"
+            +"<option value ='010207'>刑事扣押笔录</option>"
+            +"<option value ='010208'>刑事搜查笔录</option>"
+            +"<option value ='010209'>刑事提取笔录</option>"
+            +"<option value ='010210'>刑事复验复查笔录</option>"
+            +"<option value ='010211'>刑事侦查实验笔录</option>"
+            +"<option value ='010301'>交通事故询问笔录</option>"
+            +"<option value ='010302'>交通事故讯问笔录</option>"
+            +"<option value ='010303'>交通事故调解笔录</option>"
+            +"<option value ='010401'>督察笔录</option>"
+            +"<option value ='010501'>当场盘问笔录</option>"
+            +"<option value ='010502'>继续盘问笔录</option>"
+            +"<option value ='020101'>林业询问笔录</option>"
+            +"<option value ='020102'>林业勘验检查笔录</option>"
+            +"<option value ='020103'>林业听证笔录</option>"
+            +"<option value ='020104'>林业调解笔录</option>"
+            +"<option value ='020201'>林业当场盘问笔录</option>"
+            +"<option value ='020202'>林业继续盘问笔录</option>"
+            +"<option value ='030101'>纪检谈话笔录</option>"
+            +"<option value ='030102'>纪检调查笔录</option>"
+            +"<option value ='010601'>海关查问笔录</option>"
+            +"<option value ='010602'>海关询问笔录</option>"
+            +"<option value ='010603'>海关扣留笔录</option>"
+            +"<option value ='010604'>海关听证笔录</option>"
+            +"</select>"
+            +"</td>"
+            +"</tr>"
+            +"</table></div>",
+            yes:function (index,layero) {
+                var bllx = $('#bllx').val();
+                if(bllx== '000000'){
+                    alert('请选择笔录类型！');
+                    return;
+                }
+                layer.close(index);
+                var res =  PublicAjax('/FdblRpc/syncFadu.json',{'registerId':id,'bllx':bllx});
+                if(res.success==true){
+                    window.location.href = res.content;
+                }else{
+                    alert(res.errorMsg);
+                    return;
+                }
+            }
+        });
+
+    }
+</script>
+</html>
