@@ -100,17 +100,17 @@
             </tr>
 
 			<tr>
-                <td class="TDleft">出所类型：</td>
+                <td class="TDleft require">出所类型：</td>
                 <td>
                 	<span  class="wh100" th:include="component/selectCombo(id='outType',name='outType',dictType='OUT_TYPE',defaultValue='',verify='required')"/>
                 </td>
-                <td class="TDleft">出所申请类型：</td>
+                <td class="TDleft require">出所申请类型：</td>
                 <td colspan="2">
                 	<span  class="wh100" th:include="component/selectCombo(id='applyType',name='applyType',dictType='OUT_APPLY_TYPE',defaultValue='',verify='required')"/>
                 </td>
             </tr>
             <tr>
-                <td class="TDleft">审核角色：</td>
+                <td class="TDleft require">审核角色：</td>
                 <td colspan="4">
                 	<span class="wh100">
                 		<select style="display: block;" th:id="roleId" th:name="roleId" lay-verify="required" lay-search lay-ignore >

@@ -91,12 +91,17 @@
         var zTree = $.fn.zTree.getZTreeObj(treeId),
             nodes = zTree.getSelectedNodes(),
             v = "";
+            code = "";
         nodes.sort(function compare(a, b) { return a.id - b.id; });
         for (var i = 0, l = nodes.length; i < l; i++) {
             v += nodes[i].name + ",";
+            code += nodes[i].code + ",";
         }
         if (v.length > 0) v = v.substring(0, v.length - 1);
+        if (code.length > 0) code = code.substring(0, code.length - 1);
         var cityObj = $('#' + treeId).data('dsw-select-menu').$el;
+        //填写选中的code
+        cityObj.attr("data-code",code);
         cityObj.attr("value", v);
     }
 

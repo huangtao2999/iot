@@ -554,9 +554,8 @@ $("#braceletNo").keydown(function(e) {
 	        var res = new PublicAjax("/OutFetch/getPersonRegister.json", {"braceletNo": braceletNo});
 	        if (res.success) {
 	            var content = res.content;
-	            if (content != null) {
-
-	                var personInfo = content.personInfo;
+                var personInfo = content.personInfo;
+	            if (personInfo != null) {
 	                //判断是否是待出所状态  1-在办案区；2-申请出办案区；3-待出办案区；4-临时出办案区；5-正式出办案区；
 	                var registerId = personInfo.id;
 	                if(!getConfirmData(registerId)){

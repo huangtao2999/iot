@@ -92,15 +92,15 @@ public class RoleServiceImpl implements RoleService {
             DomainUtil.setCommonValueForCreate(record, currentUserService.getPvgInfo());
 			roleDoMapperExt.insertSelective(record);
 			// 写日志
-			logService.insertLog(request, CommConfig.LOG_MODULE.ROLE.getModule(), CommConfig.LOG_TYPE.ADD.getType(),
-					"新增了一个角色：" + record.getRoleName());
+			logService.insertLog(CommConfig.LOG_MODULE.ROLE.getModule(), CommConfig.LOG_TYPE.ADD.getType(),
+					currentUserService.getPvgInfo().getName() + "  新增了角色：" + record.getRoleName());
         } else {
             //编辑
 			DomainUtil.setCommonValueForUpdate(record, currentUserService.getPvgInfo());
 			roleDoMapperExt.updateByPrimaryKeySelective(record);
 			// 写日志
-			logService.insertLog(request, CommConfig.LOG_MODULE.ROLE.getModule(), CommConfig.LOG_TYPE.UPDATE.getType(),
-					"编辑了一个角色：" + record.getRoleName());
+			logService.insertLog(CommConfig.LOG_MODULE.ROLE.getModule(), CommConfig.LOG_TYPE.UPDATE.getType(),
+					currentUserService.getPvgInfo().getName() + "  编辑了角色：" + record.getRoleName());
         }
 
         //删除角色下的菜单
@@ -108,10 +108,6 @@ public class RoleServiceImpl implements RoleService {
         if (roleId != 0) {
             //执行删除
 			roleMenuDoMapperExt.deleteByRoleId(roleId);
-			// 写日志
-			logService.insertLog(request, CommConfig.LOG_MODULE.ROLE.getModule(),
-					CommConfig.LOG_TYPE.DELETE.getType(),
-					"删除了【" + record.getRoleName() + "】下的所有菜单");
         }
         String menuIds[] = request.getParameter("menuIds").split(",");
         //添加角色新绑定的菜单
@@ -126,15 +122,12 @@ public class RoleServiceImpl implements RoleService {
                     roleMenuDoMapperExt.insertSelective(entity);
                 }
             }
-			// 写日志
-			logService.insertLog(request, CommConfig.LOG_MODULE.ROLE.getModule(),
-					CommConfig.LOG_TYPE.ADD.getType(), "给【" + record.getRoleName() + "】绑定了新的菜单");
         }
     }
 
     /**
 	 * 删除
-	 * 
+	 *
 	 * @throws BizException
 	 */
     @Override
@@ -148,6 +141,8 @@ public class RoleServiceImpl implements RoleService {
 			// 执行删除角色下的菜单
 			roleMenuDoMapperExt.deleteByRoleId(param.getId());
 			roleDoMapperExt.deleteByPrimaryKeyReal(param.getId());
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.ROLE.getModule(),CommConfig.LOG_TYPE.DELETE.getType(),currentUserService.getPvgInfo().getName() + "  删除了角色");
         } else if (StringUtils.isNotEmpty(param.getIds())) {
             String ids[] = param.getIds().split(",");
             for (int j = 0; j < ids.length; j++) {
@@ -158,6 +153,8 @@ public class RoleServiceImpl implements RoleService {
 				roleMenuDoMapperExt.deleteByRoleId(Long.parseLong(ids[j]));
 				roleDoMapperExt.deleteByPrimaryKeyReal(Long.parseLong(ids[j]));
             }
+            // 写日志
+         	logService.insertLog(CommConfig.LOG_MODULE.ROLE.getModule(),CommConfig.LOG_TYPE.DELETE.getType(),currentUserService.getPvgInfo().getName() + "  删除了角色");
         }
     }
 
@@ -195,6 +192,9 @@ public class RoleServiceImpl implements RoleService {
         example.setOrderByClause("sort asc, create_time desc");
         //查询数据集合
         List<RoleDo> list = roleDoMapperExt.selectByExample(example);
+        // 写日志
+		logService.insertLog(CommConfig.LOG_MODULE.ROLE.getModule(),CommConfig.LOG_TYPE.QUERY.getType(),
+				currentUserService.getPvgInfo().getName() + "  查询了所有未删除的角色");
 		return list;
 	}
 

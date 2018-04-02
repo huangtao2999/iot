@@ -16,6 +16,7 @@ import com.dsw.iot.model.LockerDo;
 import com.dsw.iot.model.LockerDoExample;
 import com.dsw.iot.service.CurrentUserService;
 import com.dsw.iot.service.LockerService;
+import com.dsw.iot.service.LogService;
 import com.dsw.iot.util.ActionResult;
 import com.dsw.iot.util.BizException;
 import com.dsw.iot.util.DomainUtil;
@@ -38,6 +39,8 @@ public class LockerServiceImpl implements LockerService {
     private CurrentUserService currentUserService;
     @Autowired
     private RelayManager relayManager;
+    @Autowired
+	private LogService logService;
 
     @Override
     public PageResult<LockerDo> queryPage(LockerResquest request) {
@@ -77,10 +80,16 @@ public class LockerServiceImpl implements LockerService {
             // 新增
             DomainUtil.setCommonValueForCreate(lockerDo, currentUserService.getPvgInfo());
             lockerDoMapperExt.insertSelective(lockerDo);
+            // 写日志
+    		logService.insertLog(CommConfig.LOG_MODULE.LOCKER.getModule(),CommConfig.LOG_TYPE.ADD.getType(),
+    				currentUserService.getPvgInfo().getName() + "  新增了储物柜,编号："+lockerDo.getLockerNo());
         } else {
             // 编辑
             DomainUtil.setCommonValueForUpdate(lockerDo, currentUserService.getPvgInfo());
             lockerDoMapperExt.updateByPrimaryKeySelective(lockerDo);
+            // 写日志
+    		logService.insertLog(CommConfig.LOG_MODULE.LOCKER.getModule(),CommConfig.LOG_TYPE.UPDATE.getType(),
+    				currentUserService.getPvgInfo().getName() + "  编辑了储物柜,编号："+lockerDo.getLockerNo());
         }
     }
 
@@ -109,6 +118,9 @@ public class LockerServiceImpl implements LockerService {
                 }
             }
         }
+        // 写日志
+		logService.insertLog(CommConfig.LOG_MODULE.LOCKER.getModule(),CommConfig.LOG_TYPE.ADD.getType(),
+				currentUserService.getPvgInfo().getName() + "  删除了储物柜");
     }
 
     /**
@@ -170,6 +182,9 @@ public class LockerServiceImpl implements LockerService {
                 }
                 relayManager.openV2(locker.getInIp(), locker.getInPort(), locker.getInRoad());
                 relayManager.closeV2(locker.getInIp(), locker.getInPort(), locker.getInRoad());//关闭
+                // 写日志
+        		logService.insertLog(CommConfig.LOG_MODULE.LOCKER.getModule(),CommConfig.LOG_TYPE.ADD.getType(),
+        				currentUserService.getPvgInfo().getName() + "  打开了入所柜门,编号："+locker.getLockerNo());
                 actionResult.setContent("入所开柜成功");
                 return actionResult;
             } else if (type.equals("out")) {
@@ -179,6 +194,9 @@ public class LockerServiceImpl implements LockerService {
                 }
                 relayManager.openV2(locker.getOutIp(), locker.getOutPort(), locker.getOutRoad());
                 relayManager.closeV2(locker.getOutIp(), locker.getOutPort(), locker.getOutRoad());//关闭
+                // 写日志
+        		logService.insertLog(CommConfig.LOG_MODULE.LOCKER.getModule(),CommConfig.LOG_TYPE.ADD.getType(),
+        				currentUserService.getPvgInfo().getName() + "  打开了出所柜门,编号："+locker.getLockerNo());
                 actionResult.setContent("出所开柜成功");
                 return actionResult;
             }
@@ -203,6 +221,9 @@ public class LockerServiceImpl implements LockerService {
         result = relayManager.openV2(locker.getInIp(), locker.getInPort(), locker.getInRoad());// 打开
         if (result.isSuccess()) {
             relayManager.close(locker.getInIp(), locker.getInPort(), locker.getInRoad());// 关闭
+            // 写日志
+    		logService.insertLog(CommConfig.LOG_MODULE.LOCKER.getModule(),CommConfig.LOG_TYPE.ADD.getType(),
+    				currentUserService.getPvgInfo().getName() + "  打开入所柜门,编号："+locker.getLockerNo());
         } else {
             throw new BizException(result.getContent());
         }
@@ -210,5 +231,22 @@ public class LockerServiceImpl implements LockerService {
         result.setContent("入所开柜成功");
         return result;
     }
+
+	/**
+	 * 更新储物柜状态，空闲/占用
+	 */
+	@Override
+	@Transactional
+	public void updateLockerStatus(Long lockerId, String status) {
+		if (null == lockerId || StringUtils.isBlank(status)) {
+			return;
+		}
+		// 编辑
+		LockerDo lockerDo = new LockerDo();
+		lockerDo.setId(lockerId);
+		lockerDo.setUseStatus(status);// 1-使用中；0-空闲
+		DomainUtil.setCommonValueForUpdate(lockerDo, currentUserService.getPvgInfo());
+		lockerDoMapperExt.updateByPrimaryKeySelective(lockerDo);
+	}
 
 }

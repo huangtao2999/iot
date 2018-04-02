@@ -52,7 +52,7 @@
 							<label>组织机构：</label></td>
 						<td>
 							<!--<span th:include="component/selectTreeComp(id='org',name='org',dictType='ORG',verify='')" />-->
-							<input placeholder="请选择" readonly type="text" value="" id="org" data-enable='true' data-url='/Dictionary/queryByPidIsParent.json?code=ORG'>
+							<input placeholder="请选择" readonly type="text" id="org" name="org" data-enable='true' data-url='/Dictionary/queryByPidIsParent.json?code=ORG'>
 							<span class="muted">请选择组织机构</span></td>
 					</tr>
 					<tr>
@@ -162,6 +162,7 @@
             });
             //放到form提交的集合中
             data.field.roleIds = roleIds;
+            data.field.org = $("#org").data("code");
             //提交前判断
             if (!checkAccount()) {
                 layer.msg("登录账号重复");

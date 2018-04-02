@@ -1,25 +1,30 @@
 package com.dsw.iot.service.impl;
 
-import com.dsw.iot.constant.CommConfig;
-import com.dsw.iot.dal.UrineTestInfoDoMapperExt;
-import com.dsw.iot.dto.UrineTestInfoRequest;
-import com.dsw.iot.model.AttachDo;
-import com.dsw.iot.model.UrineTestInfoDo;
-import com.dsw.iot.model.UrineTestInfoDoExample;
-import com.dsw.iot.service.*;
-import com.dsw.iot.util.DomainUtil;
-import com.dsw.iot.util.PageDto;
-import com.dsw.iot.util.PageResult;
-import com.dsw.iot.vo.UrineTestInfoVo;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import com.dsw.iot.constant.CommConfig;
+import com.dsw.iot.dal.UrineTestInfoDoMapperExt;
+import com.dsw.iot.dto.UrineTestInfoRequest;
+import com.dsw.iot.model.AttachDo;
+import com.dsw.iot.model.UrineTestInfoDo;
+import com.dsw.iot.model.UrineTestInfoDoExample;
+import com.dsw.iot.service.CurrentUserService;
+import com.dsw.iot.service.DictionaryService;
+import com.dsw.iot.service.FileUploadService;
+import com.dsw.iot.service.LogService;
+import com.dsw.iot.service.UrineTestInfoService;
+import com.dsw.iot.util.DomainUtil;
+import com.dsw.iot.util.PageDto;
+import com.dsw.iot.util.PageResult;
+import com.dsw.iot.vo.UrineTestInfoVo;
 
 @Service
 public class UrineTestInfoServiceImpl implements UrineTestInfoService {
@@ -80,6 +85,11 @@ public class UrineTestInfoServiceImpl implements UrineTestInfoService {
             }
             DomainUtil.setCommonValueForCreate(urineTestDo, currentUserService.getPvgInfo());
             urineTestInfoDoMapperExt.insertSelective(urineTestDo);
+
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.URINE_TEST.getModule(), CommConfig.LOG_TYPE.ADD.getType(),
+					currentUserService.getPvgInfo().getName() + "  新增了人员尿检信息：" + urineTestDo.getName());
+
             //保存被检测人
             fileUploadService.updateAttach(urineTestInfoRequest.getIdentified(), urineTestDo.getId(), CommConfig.ATTACH_TYPE.URINE_TEST_INFO_SIGN_IDENTIFIED.getType(), CommConfig.ATTACH_TYPE.URINE_TEST_INFO_SIGN_IDENTIFIED.getName());
             fileUploadService.updateAttach(urineTestInfoRequest.getCognizant1(), urineTestDo.getId(), CommConfig.ATTACH_TYPE.URINE_TEST_INFO_SIGN_COGNIZANT_1.getType(), CommConfig.ATTACH_TYPE.URINE_TEST_INFO_SIGN_COGNIZANT_1.getName());
@@ -113,6 +123,10 @@ public class UrineTestInfoServiceImpl implements UrineTestInfoService {
             fileUploadService.updateAttach(urineTestInfoRequest.getPhotoFileIds(), urineTestDo.getId(), CommConfig.ATTACH_TYPE.URINE_TEST_INFO_SIGN_IMG.getType(), CommConfig.ATTACH_TYPE.URINE_TEST_INFO_SIGN_IMG.getName());
             DomainUtil.setCommonValueForUpdate(urineTestDo, currentUserService.getPvgInfo());
             urineTestInfoDoMapperExt.updateByPrimaryKey(urineTestDo);
+
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.URINE_TEST.getModule(), CommConfig.LOG_TYPE.ADD.getType(),
+					currentUserService.getPvgInfo().getName() + "  编辑了人员尿检信息：" + urineTestDo.getName());
         }
     }
 
@@ -150,12 +164,19 @@ public class UrineTestInfoServiceImpl implements UrineTestInfoService {
         List<UrineTestInfoDo> list = urineTestInfoDoMapperExt.getOverDeadtimeB();
         pageResult.setData(list);
         pageResult.setCount(list.size());
+
+		// 写日志
+		logService.insertLog(CommConfig.LOG_MODULE.URINE_TEST.getModule(), CommConfig.LOG_TYPE.QUERY.getType(),
+				currentUserService.getPvgInfo().getName() + "  查询了尿检 B 瓶超期数据");
         return pageResult;
     }
 
     @Override
     public int updateDeadtimeBStatus(UrineTestInfoRequest parms) {
         int result = urineTestInfoDoMapperExt.updateDeadtimeBStatus(parms);
+		// 写日志
+		logService.insertLog(CommConfig.LOG_MODULE.URINE_TEST.getModule(), CommConfig.LOG_TYPE.ADD.getType(),
+				currentUserService.getPvgInfo().getName() + "  处理了过期的 B 瓶数据");
         return result;
     }
 

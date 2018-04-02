@@ -218,6 +218,7 @@ public class HttpClientUtil {
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             // 设置doOutput属性为true表示将使用此urlConnection写入数据
             urlConnection.setDoOutput(true);
+            urlConnection.setConnectTimeout(3 * 1000);
             // 定义待写入数据的内容类型，我们设置为application/x-www-form-urlencoded类型
             urlConnection.setRequestProperty("content-type", "application/json;charset=UTF-8");
             urlConnection.setRequestProperty("Accept-Charset", "UTF-8");

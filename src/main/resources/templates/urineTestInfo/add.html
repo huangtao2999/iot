@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{../css/common.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{../css/dialogCss.css}"/>
     <div th:include="inc/common"></div>
-    <title>查看尿检照片</title>
+    <title>尿检录入</title>
 </head>
 
 <style>
@@ -447,12 +447,17 @@
         }
         //取数据
         var braceletNo = $("#braceletNo").val();
+        if(braceletNo == ""){
+        	layer.msg("请刷手环");
+        	return;
+        }
         //存放数据
         var res = new PublicAjax('/UrineTestInfo/PersonRegister.json', {braceletNo: braceletNo});
-        if (res.content == null) {
+        var personInfo  = res.content.personInfo;
+        if (personInfo == null) {
             layer.msg("未查询到人员信息!");
         } else {
-            registerId = res.content.personInfo.id;
+            registerId = personInfo.id;
             if (reportTypeSelect == "1") {
                 var birthDate = res.content.personInfo.birthDate;
                 $("input[name=name]").val(res.content.personInfo.name);

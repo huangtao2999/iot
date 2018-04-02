@@ -90,7 +90,7 @@ public class CatchInfoServiceImpl implements CatchInfoService {
 	}
 
 	/**
-	 * 新增编辑陪同人信息
+	 * 新增编辑抓获信息
 	 *
 	 * @param request
 	 * @param record

@@ -41,474 +41,534 @@
         </javaClientGenerator>
 
 
-        <table tableName="ALARM_MANAGE" domainObjectName="AlarmManageDo" enableDeleteByExample="false" >
-            <columnOverride column="id" property="id"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="register_id" property="registerId"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-	        <columnOverride column="alarm_time" property="alarmTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="create_time" property="createTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="update_time" property="updateTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-        </table>
-        <table tableName="ATTACH" domainObjectName="AttachDo" enableDeleteByExample="false" >
-            <columnOverride column="id" property="id"
-            				javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="task_id" property="taskId"
-            				javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="create_time" property="createTime"
-            				javaType="java.util.Date" jdbcType="TIMESTAMP">
-           	</columnOverride>
-            <columnOverride column="update_time" property="updateTime"
-            				javaType="java.util.Date" jdbcType="TIMESTAMP">
-           	</columnOverride>
-            <columnOverride column="size" property="size"
-            				javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-        </table>
-        <table tableName="CARD_LOCATE" domainObjectName="CardLocateDo" enableDeleteByExample="false" >
-            <columnOverride column="id" property="id"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="register_id" property="registerId"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="localX" property="localX"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="localY" property="localY"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="localZ" property="localZ"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-	        <columnOverride column="addTime" property="addTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="create_time" property="createTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="update_time" property="updateTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-        </table>
-        <table tableName="CARD_MANAGE" domainObjectName="CardManageDo" enableDeleteByExample="false" >
-            <columnOverride column="id" property="id"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-	        <columnOverride column="create_time" property="createTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="update_time" property="updateTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-        </table>
-        <table tableName="CATCH_INFO" domainObjectName="CatchInfoDo" enableDeleteByExample="false" >
-            <columnOverride column="id" property="id"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="register_id" property="registerId"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-	        <columnOverride column="catch_time" property="catchTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="create_time" property="createTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="update_time" property="updateTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-        </table>
-        <table tableName="DELAY_CONFIRM" domainObjectName="DelayConfirmDo" enableDeleteByExample="false" >
-            <columnOverride column="id" property="id"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="register_id" property="registerId"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-	        <columnOverride column="apply_time" property="applyTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="audit_time" property="auditTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="create_time" property="createTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="update_time" property="updateTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-        </table>
-        <table tableName="DICTIONARY" domainObjectName="DictionaryDo" enableDeleteByExample="false" >
-        	<columnOverride column="id" property="id"
-        					javaType="Long" jdbcType="INTEGER">
-        	</columnOverride>
-        	<columnOverride column="pid" property="pid"
-        					javaType="Long" jdbcType="INTEGER">
-        	</columnOverride>
-        	<columnOverride column="sort" property="sort"
-        					javaType="Long" jdbcType="INTEGER">
-        	</columnOverride>
-        	<columnOverride column="create_time" property="createTime"
-        					javaType="java.util.Date" jdbcType="TIMESTAMP">
-        	</columnOverride>
-        	<columnOverride column="update_time" property="updateTime"
-        					javaType="java.util.Date" jdbcType="TIMESTAMP">
-        	</columnOverride>
-        </table>
-        <table tableName="GOODS_REGISTER" domainObjectName="GoodsRegisterDo" enableDeleteByExample="false" >
-        	<columnOverride column="id" property="id"
-        					javaType="Long" jdbcType="INTEGER">
-        	</columnOverride>
-            <columnOverride column="register_id" property="registerId"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-        	<columnOverride column="out_id" property="outId"
-        					javaType="Long" jdbcType="INTEGER">
-        	</columnOverride>
-        	<columnOverride column="create_time" property="createTime"
-        					javaType="java.util.Date" jdbcType="TIMESTAMP">
-        	</columnOverride>
-        	<columnOverride column="update_time" property="updateTime"
-        					javaType="java.util.Date" jdbcType="TIMESTAMP">
-        	</columnOverride>
-        </table>
-        <table tableName="LOCKER" domainObjectName="LockerDo" enableDeleteByExample="false" >
-        	<columnOverride column="id" property="id"
-        					javaType="Long" jdbcType="INTEGER">
-        	</columnOverride>
-        	<columnOverride column="create_time" property="createTime"
-        					javaType="java.util.Date" jdbcType="TIMESTAMP">
-        	</columnOverride>
-        	<columnOverride column="update_time" property="updateTime"
-        					javaType="java.util.Date" jdbcType="TIMESTAMP">
-        	</columnOverride>
-        </table>
-        <table tableName="LOG" domainObjectName="LogDo" enableDeleteByExample="false" >
-        	<columnOverride column="id" property="id"
-        					javaType="Long" jdbcType="INTEGER">
-        	</columnOverride>
-        	<columnOverride column="create_time" property="createTime"
-        					javaType="java.util.Date" jdbcType="TIMESTAMP">
-        	</columnOverride>
-        	<columnOverride column="update_time" property="updateTime"
-        					javaType="java.util.Date" jdbcType="TIMESTAMP">
-        	</columnOverride>
-        </table>
-        <table tableName="MENU" domainObjectName="MenuDo" enableDeleteByExample="false">
-        	<columnOverride column="id" property="id"
-        					javaType="Long" jdbcType="INTEGER">
-        	</columnOverride>
-        	<columnOverride column="pid" property="pid"
-        					javaType="Long" jdbcType="INTEGER">
-        	</columnOverride>
-        	<columnOverride column="sort" property="sort"
-        					javaType="Long" jdbcType="INTEGER">
-        	</columnOverride>
-        	<columnOverride column="create_time" property="createTime"
-        					javaType="java.util.Date" jdbcType="TIMESTAMP">
-        	</columnOverride>
-        	<columnOverride column="update_time" property="updateTime"
-        					javaType="java.util.Date" jdbcType="TIMESTAMP">
-        	</columnOverride>
-        </table>
-        <table tableName="ORG" domainObjectName="OrgDo" enableDeleteByExample="false">
-        	<columnOverride column="id" property="id"
-        					javaType="Long" jdbcType="INTEGER">
-        	</columnOverride>
-        	<columnOverride column="pid" property="pid"
-        					javaType="Long" jdbcType="INTEGER">
-        	</columnOverride>
-        	<columnOverride column="create_time" property="createTime"
-        					javaType="java.util.Date" jdbcType="TIMESTAMP">
-        	</columnOverride>
-        	<columnOverride column="update_time" property="updateTime"
-        					javaType="java.util.Date" jdbcType="TIMESTAMP">
-        	</columnOverride>
-        </table>
-        <table tableName="OUT_CONFIRM" domainObjectName="OutConfirmDo" enableDeleteByExample="false">
-            <columnOverride column="id" property="id"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="register_id" property="registerId"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-	        <columnOverride column="apply_time" property="applyTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="audit_time" property="auditTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="out_time" property="outTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="back_time" property="backTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="create_time" property="createTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="update_time" property="updateTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-        </table>
-        <table tableName="PERSON_REGISTER" domainObjectName="PersonRegisterDo" enableDeleteByExample="false">
-            <columnOverride column="id" property="id"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="locker_id" property="lockerId"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-	        <columnOverride column="birth_date" property="birthDate"
-	        				javaType="java.util.Date" jdbcType="DATE">
-	        </columnOverride>
-	        <columnOverride column="in_time" property="inTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="out_time" property="outTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="create_time" property="createTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="update_time" property="updateTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-        </table>
-        <table tableName="PERSON_RELATED" domainObjectName="PersonRelatedDo" enableDeleteByExample="false">
-            <columnOverride column="id" property="id"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="register_id" property="registerId"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-	        <columnOverride column="create_time" property="createTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="update_time" property="updateTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-        </table>
-        <table tableName="PERSON_TRACE" domainObjectName="PersonTraceDo" enableDeleteByExample="false">
-            <columnOverride column="id" property="id"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="register_id" property="registerId"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-	        <columnOverride column="create_time" property="createTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="update_time" property="updateTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-        </table>
-        <table tableName="RELATED_PHONE_CONFIRM" domainObjectName="RelatedPhoneConfirmDo" enableDeleteByExample="false">
-            <columnOverride column="id" property="id"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="register_id" property="registerId"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-	        <columnOverride column="apply_time" property="applyTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="audit_time" property="auditTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="create_time" property="createTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="update_time" property="updateTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-        </table>
-        <table tableName="REMIND" domainObjectName="RemindDo" enableDeleteByExample="false">
-            <columnOverride column="id" property="id"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="user_id" property="userId"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="role_id" property="roleId"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-	        <columnOverride column="create_time" property="createTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="update_time" property="updateTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-        </table>
-        <table tableName="ROLE" domainObjectName="RoleDo" enableDeleteByExample="false">
-            <columnOverride column="id" property="id"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="sort" property="sort"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-	        <columnOverride column="create_time" property="createTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="update_time" property="updateTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-        </table>
-        <table tableName="ROLE_MENU" domainObjectName="RoleMenuDo" enableDeleteByExample="false">
-            <columnOverride column="id" property="id"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="role_id" property="roleId"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="menu_id" property="menuId"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-	        <columnOverride column="create_time" property="createTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="update_time" property="updateTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-        </table>
-        <table tableName="ROOM_AREA" domainObjectName="RoomAreaDo" enableDeleteByExample="false">
-            <columnOverride column="id" property="id"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="beginX" property="beginX"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="endX" property="endX"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="beginY" property="beginY"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="endY" property="endY"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="beginZ" property="beginZ"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="endZ" property="endZ"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-	        <columnOverride column="create_time" property="createTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="update_time" property="updateTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-        </table>
-        <table tableName="ROOM_PROPERTY" domainObjectName="RoomPropertyDo" enableDeleteByExample="false">
-            <columnOverride column="id" property="id"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-	        <columnOverride column="create_time" property="createTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="update_time" property="updateTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-        </table>
-        <table tableName="ROOM_RECORD" domainObjectName="RoomRecordDo" enableDeleteByExample="false">
-            <columnOverride column="id" property="id"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="room_id" property="roomId"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="register_id" property="registerId"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-	        <columnOverride column="create_time" property="createTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="update_time" property="updateTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-        </table>
-        <table tableName="TP_BLRECORD" domainObjectName="TpBlrecordDo" enableDeleteByExample="false">
-            <columnOverride column="id" property="id"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="ry_id" property="ryId"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-	        <columnOverride column="gmt_create" property="gmtCreate"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="create_time" property="createTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="update_time" property="updateTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-        </table>
-        <table tableName="URINE_TEST_INFO" domainObjectName="UrineTestInfoDo" enableDeleteByExample="false">
-            <columnOverride column="id" property="id"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="register_id" property="registerId"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-	        <columnOverride column="check_date" property="checkDate"
-	        				javaType="java.util.Date" jdbcType="DATE">
-	        </columnOverride>
-	        <columnOverride column="birth_date" property="birthDate"
-	        				javaType="java.util.Date" jdbcType="DATE">
-	        </columnOverride>
-	        <columnOverride column="bottle_deadtimeB" property="bottleDeadtimeB"
-	        				javaType="java.util.Date" jdbcType="DATE">
-	        </columnOverride>
-	        <columnOverride column="bottle_deadtimeA" property="bottleDeadtimeA"
-	        				javaType="java.util.Date" jdbcType="DATE">
-	        </columnOverride>
-	        <columnOverride column="create_time" property="createTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="update_time" property="updateTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-        </table>
-        <table tableName="USER" domainObjectName="UserDo" enableDeleteByExample="false">
-            <columnOverride column="id" property="id"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-	        <columnOverride column="create_time" property="createTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="update_time" property="updateTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-        </table>
-        <table tableName="USER_ROLE" domainObjectName="UserRoleDo" enableDeleteByExample="false">
-            <columnOverride column="id" property="id"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="user_id" property="userId"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-            <columnOverride column="role_id" property="roleId"
-                            javaType="Long" jdbcType="INTEGER">
-            </columnOverride>
-	        <columnOverride column="create_time" property="createTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-	        <columnOverride column="update_time" property="updateTime"
-	        				javaType="java.util.Date" jdbcType="TIMESTAMP">
-	        </columnOverride>
-        </table>
+
+<!--         <table tableName="PERSON_FORM" domainObjectName="PersonFormDo" enableDeleteByExample="false" > -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="register_id" property="registerId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="FACE_BASE" domainObjectName="FaceBaseDo" enableDeleteByExample="false" > -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="catch_id" property="catchId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="FACE_CATCH" domainObjectName="FaceCatchDo" enableDeleteByExample="false" > -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="time" property="time" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="ALARM_MANAGE" domainObjectName="AlarmManageDo" enableDeleteByExample="false" > -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="register_id" property="registerId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="alarm_time" property="alarmTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="ATTACH" domainObjectName="AttachDo" enableDeleteByExample="false" > -->
+<!--             <columnOverride column="id" property="id" -->
+<!--             				javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="task_id" property="taskId" -->
+<!--             				javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="create_time" property="createTime" -->
+<!--             				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!--            	</columnOverride> -->
+<!--             <columnOverride column="update_time" property="updateTime" -->
+<!--             				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!--            	</columnOverride> -->
+<!--             <columnOverride column="size" property="size" -->
+<!--             				javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="CARD_LOCATE" domainObjectName="CardLocateDo" enableDeleteByExample="false" > -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="register_id" property="registerId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="localX" property="localX" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="localY" property="localY" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="localZ" property="localZ" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="addTime" property="addTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="CARD_MANAGE" domainObjectName="CardManageDo" enableDeleteByExample="false" > -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="CATCH_INFO" domainObjectName="CatchInfoDo" enableDeleteByExample="false" > -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="register_id" property="registerId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="catch_time" property="catchTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="DELAY_CONFIRM" domainObjectName="DelayConfirmDo" enableDeleteByExample="false" > -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="register_id" property="registerId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="apply_time" property="applyTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="audit_time" property="auditTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="DICTIONARY" domainObjectName="DictionaryDo" enableDeleteByExample="false" > -->
+<!--         	<columnOverride column="id" property="id" -->
+<!--         					javaType="Long" jdbcType="INTEGER"> -->
+<!--         	</columnOverride> -->
+<!--         	<columnOverride column="pid" property="pid" -->
+<!--         					javaType="Long" jdbcType="INTEGER"> -->
+<!--         	</columnOverride> -->
+<!--         	<columnOverride column="sort" property="sort" -->
+<!--         					javaType="Long" jdbcType="INTEGER"> -->
+<!--         	</columnOverride> -->
+<!--         	<columnOverride column="create_time" property="createTime" -->
+<!--         					javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!--         	</columnOverride> -->
+<!--         	<columnOverride column="update_time" property="updateTime" -->
+<!--         					javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!--         	</columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="GOODS_REGISTER" domainObjectName="GoodsRegisterDo" enableDeleteByExample="false" > -->
+<!--         	<columnOverride column="id" property="id" -->
+<!--         					javaType="Long" jdbcType="INTEGER"> -->
+<!--         	</columnOverride> -->
+<!--             <columnOverride column="register_id" property="registerId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--         	<columnOverride column="out_id" property="outId" -->
+<!--         					javaType="Long" jdbcType="INTEGER"> -->
+<!--         	</columnOverride> -->
+<!--         	<columnOverride column="create_time" property="createTime" -->
+<!--         					javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!--         	</columnOverride> -->
+<!--         	<columnOverride column="update_time" property="updateTime" -->
+<!--         					javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!--         	</columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="INJURY_REGISTER" domainObjectName="InjuryRegisterDo" enableDeleteByExample="false" > -->
+<!--         	<columnOverride column="id" property="id" -->
+<!--         					javaType="Long" jdbcType="INTEGER"> -->
+<!--         	</columnOverride> -->
+<!--             <columnOverride column="register_id" property="registerId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--         	<columnOverride column="create_time" property="createTime" -->
+<!--         					javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!--         	</columnOverride> -->
+<!--         	<columnOverride column="update_time" property="updateTime" -->
+<!--         					javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!--         	</columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="LOCKER" domainObjectName="LockerDo" enableDeleteByExample="false" > -->
+<!--         	<columnOverride column="id" property="id" -->
+<!--         					javaType="Long" jdbcType="INTEGER"> -->
+<!--         	</columnOverride> -->
+<!--         	<columnOverride column="create_time" property="createTime" -->
+<!--         					javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!--         	</columnOverride> -->
+<!--         	<columnOverride column="update_time" property="updateTime" -->
+<!--         					javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!--         	</columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="LOG" domainObjectName="LogDo" enableDeleteByExample="false" > -->
+<!--         	<columnOverride column="id" property="id" -->
+<!--         					javaType="Long" jdbcType="INTEGER"> -->
+<!--         	</columnOverride> -->
+<!--         	<columnOverride column="create_time" property="createTime" -->
+<!--         					javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!--         	</columnOverride> -->
+<!--         	<columnOverride column="update_time" property="updateTime" -->
+<!--         					javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!--         	</columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="MENU" domainObjectName="MenuDo" enableDeleteByExample="false"> -->
+<!--         	<columnOverride column="id" property="id" -->
+<!--         					javaType="Long" jdbcType="INTEGER"> -->
+<!--         	</columnOverride> -->
+<!--         	<columnOverride column="pid" property="pid" -->
+<!--         					javaType="Long" jdbcType="INTEGER"> -->
+<!--         	</columnOverride> -->
+<!--         	<columnOverride column="sort" property="sort" -->
+<!--         					javaType="Long" jdbcType="INTEGER"> -->
+<!--         	</columnOverride> -->
+<!--         	<columnOverride column="create_time" property="createTime" -->
+<!--         					javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!--         	</columnOverride> -->
+<!--         	<columnOverride column="update_time" property="updateTime" -->
+<!--         					javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!--         	</columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="ORG" domainObjectName="OrgDo" enableDeleteByExample="false"> -->
+<!--         	<columnOverride column="id" property="id" -->
+<!--         					javaType="Long" jdbcType="INTEGER"> -->
+<!--         	</columnOverride> -->
+<!--         	<columnOverride column="pid" property="pid" -->
+<!--         					javaType="Long" jdbcType="INTEGER"> -->
+<!--         	</columnOverride> -->
+<!--         	<columnOverride column="create_time" property="createTime" -->
+<!--         					javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!--         	</columnOverride> -->
+<!--         	<columnOverride column="update_time" property="updateTime" -->
+<!--         					javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!--         	</columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="OUT_CONFIRM" domainObjectName="OutConfirmDo" enableDeleteByExample="false"> -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="register_id" property="registerId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="apply_time" property="applyTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="audit_time" property="auditTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="out_time" property="outTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="back_time" property="backTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="PERSON_REGISTER" domainObjectName="PersonRegisterDo" enableDeleteByExample="false"> -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="locker_id" property="lockerId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="birth_date" property="birthDate" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="DATE"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="in_time" property="inTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="out_time" property="outTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="PERSON_RELATED" domainObjectName="PersonRelatedDo" enableDeleteByExample="false"> -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="register_id" property="registerId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="PERSON_TRACE" domainObjectName="PersonTraceDo" enableDeleteByExample="false"> -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="register_id" property="registerId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="RELATED_PHONE_CONFIRM" domainObjectName="RelatedPhoneConfirmDo" enableDeleteByExample="false"> -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="register_id" property="registerId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="apply_time" property="applyTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="audit_time" property="auditTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="REMIND" domainObjectName="RemindDo" enableDeleteByExample="false"> -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="task_id" property="taskId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="user_id" property="userId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="role_id" property="roleId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="ROLE" domainObjectName="RoleDo" enableDeleteByExample="false"> -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="sort" property="sort" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="ROLE_MENU" domainObjectName="RoleMenuDo" enableDeleteByExample="false"> -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="role_id" property="roleId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="menu_id" property="menuId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="ROOM_AREA" domainObjectName="RoomAreaDo" enableDeleteByExample="false"> -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="beginX" property="beginX" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="endX" property="endX" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="beginY" property="beginY" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="endY" property="endY" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="beginZ" property="beginZ" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="endZ" property="endZ" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="ROOM_PROPERTY" domainObjectName="RoomPropertyDo" enableDeleteByExample="false"> -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="ROOM_RECORD" domainObjectName="RoomRecordDo" enableDeleteByExample="false"> -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="room_id" property="roomId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="register_id" property="registerId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="TP_BLRECORD" domainObjectName="TpBlrecordDo" enableDeleteByExample="false"> -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="ry_id" property="ryId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="gmt_create" property="gmtCreate" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="URINE_TEST_INFO" domainObjectName="UrineTestInfoDo" enableDeleteByExample="false"> -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="register_id" property="registerId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="check_date" property="checkDate" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="DATE"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="birth_date" property="birthDate" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="DATE"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="bottle_deadtimeB" property="bottleDeadtimeB" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="DATE"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="bottle_deadtimeA" property="bottleDeadtimeA" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="DATE"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="USER" domainObjectName="UserDo" enableDeleteByExample="false"> -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
+<!--         <table tableName="USER_ROLE" domainObjectName="UserRoleDo" enableDeleteByExample="false"> -->
+<!--             <columnOverride column="id" property="id" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="user_id" property="userId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!--             <columnOverride column="role_id" property="roleId" -->
+<!--                             javaType="Long" jdbcType="INTEGER"> -->
+<!--             </columnOverride> -->
+<!-- 	        <columnOverride column="create_time" property="createTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!-- 	        <columnOverride column="update_time" property="updateTime" -->
+<!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
+<!-- 	        </columnOverride> -->
+<!--         </table> -->
 
     </context>
 </generatorConfiguration>

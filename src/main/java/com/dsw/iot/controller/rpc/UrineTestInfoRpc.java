@@ -48,10 +48,10 @@ public class UrineTestInfoRpc {
     }
 
     /**
-     * 新增编辑人员信息
-     *
-     * @param urineTestInfoRequest
-     */
+	 * 新增编辑尿检信息
+	 *
+	 * @param urineTestInfoRequest
+	 */
     @RequestMapping(value = "/savePerson", method = RequestMethod.POST)
     public void savePerson(UrineTestInfoRequest urineTestInfoRequest) throws Exception {
         urineTestInfoService.savePerson(urineTestInfoRequest);
@@ -81,10 +81,10 @@ public class UrineTestInfoRpc {
         return pageResult;
     }
 
-    /*
-     * 处理B瓶过期数据
-     *
-     */
+	/**
+	 * 处理B瓶过期数据
+	 *
+	 */
     @RequestMapping("/updateDeadtimeBStatus")
     public int updateDeadtimeBStatus(UrineTestInfoRequest parms) {
         int pageResult = urineTestInfoService.updateDeadtimeBStatus(parms);

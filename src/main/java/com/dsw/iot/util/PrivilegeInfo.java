@@ -12,4 +12,9 @@ import lombok.Data;
 public class PrivilegeInfo {
 	private Long userId;
     private String account;
+
+    private String name;//登录人姓名
+
+    private String ip;//登录人ip
+    private String roleIds;//登录人的角色ids
 }

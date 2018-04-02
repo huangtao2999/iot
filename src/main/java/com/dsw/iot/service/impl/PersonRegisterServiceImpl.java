@@ -1,19 +1,10 @@
 package com.dsw.iot.service.impl;
 
-import com.dsw.iot.constant.CommConfig;
-import com.dsw.iot.dal.PersonRegisterDoMapperExt;
-import com.dsw.iot.dal.RoomRecordDoMapperExt;
-import com.dsw.iot.dto.DictionaryRequest;
-import com.dsw.iot.dto.GoodsRegisterRequest;
-import com.dsw.iot.dto.InjuryRegisterRequest;
-import com.dsw.iot.dto.PersonRegisterRequest;
-import com.dsw.iot.manager.LedManager;
-import com.dsw.iot.model.*;
-import com.dsw.iot.service.*;
-import com.dsw.iot.util.*;
-import com.dsw.iot.vo.PersonListBaseShowVo;
-import com.dsw.iot.vo.PersonListClickVo;
-import com.dsw.iot.vo.PersonRegisterVo;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -23,10 +14,51 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import com.dsw.iot.constant.CommConfig;
+import com.dsw.iot.dal.PersonRegisterDoMapperExt;
+import com.dsw.iot.dal.RoomRecordDoMapperExt;
+import com.dsw.iot.dto.DictionaryRequest;
+import com.dsw.iot.dto.GoodsRegisterRequest;
+import com.dsw.iot.dto.InjuryRegisterRequest;
+import com.dsw.iot.dto.PersonRegisterRequest;
+import com.dsw.iot.manager.LedManager;
+import com.dsw.iot.model.AttachDo;
+import com.dsw.iot.model.CardManageDo;
+import com.dsw.iot.model.CatchInfoDo;
+import com.dsw.iot.model.DictionaryDo;
+import com.dsw.iot.model.OutConfirmDo;
+import com.dsw.iot.model.PersonRegisterDo;
+import com.dsw.iot.model.PersonRegisterDoExample;
+import com.dsw.iot.model.PersonRelatedDo;
+import com.dsw.iot.model.RoomPropertyDo;
+import com.dsw.iot.model.RoomRecordDo;
+import com.dsw.iot.model.RoomRecordDoExample;
+import com.dsw.iot.service.CardManageService;
+import com.dsw.iot.service.CatchInfoService;
+import com.dsw.iot.service.CurrentUserService;
+import com.dsw.iot.service.DictionaryService;
+import com.dsw.iot.service.FileUploadService;
+import com.dsw.iot.service.GoodsRegisterService;
+import com.dsw.iot.service.InjuryRegisterService;
+import com.dsw.iot.service.LockerService;
+import com.dsw.iot.service.LogService;
+import com.dsw.iot.service.OutConfirmService;
+import com.dsw.iot.service.PersonRegisterService;
+import com.dsw.iot.service.PersonRelatedService;
+import com.dsw.iot.service.PersonTraceService;
+import com.dsw.iot.service.RoomPropertyService;
+import com.dsw.iot.service.RoomRecordService;
+import com.dsw.iot.util.ActionResult;
+import com.dsw.iot.util.BizException;
+import com.dsw.iot.util.DateUtil;
+import com.dsw.iot.util.DomainUtil;
+import com.dsw.iot.util.FileUtils;
+import com.dsw.iot.util.HttpClientUtil;
+import com.dsw.iot.util.PageDto;
+import com.dsw.iot.util.PageResult;
+import com.dsw.iot.vo.PersonListBaseShowVo;
+import com.dsw.iot.vo.PersonListClickVo;
+import com.dsw.iot.vo.PersonRegisterVo;
 
 @Service
 public class PersonRegisterServiceImpl implements PersonRegisterService {
@@ -63,6 +95,8 @@ public class PersonRegisterServiceImpl implements PersonRegisterService {
     private LedManager ledManager;
     @Autowired
     private PersonTraceService personTraceService;
+	@Autowired
+	private LockerService lockerService;
 
     @Value("${capture.file.path}")
     private String tempPath;
@@ -130,6 +164,10 @@ public class PersonRegisterServiceImpl implements PersonRegisterService {
         if (StringUtils.isNotEmpty(param.getCardNo())) {
             criteria.andCardNoLike("%" + param.getCardNo() + "%");
         }
+        //手环编号
+        if (StringUtils.isNotEmpty(param.getBraceletNo())) {
+            criteria.andBraceletNoEqualTo(param.getBraceletNo());
+        }
         // 排序
         if (StringUtils.isBlank(param.getOrderByClause())) {
             example.setOrderByClause("update_time desc,create_time desc");
@@ -162,11 +200,20 @@ public class PersonRegisterServiceImpl implements PersonRegisterService {
             // 插入新数据
             DomainUtil.setCommonValueForCreate(personRegisterDo, currentUserService.getPvgInfo());
             personRegisterDoMapperExt.insertSelective(personRegisterDo);
+
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.PERSON_REGISTER.getModule(), CommConfig.LOG_TYPE.ADD.getType(),
+					currentUserService.getPvgInfo().getName() + "  新增了人员基本信息：" + personRegisterDo.getName());
         } else {
             // 同样是停留在第一阶段，再次保存
             // 编辑
             DomainUtil.setCommonValueForUpdate(personRegisterDo, currentUserService.getPvgInfo());
             personRegisterDoMapperExt.updateByPrimaryKeySelective(personRegisterDo);
+
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.PERSON_REGISTER.getModule(),
+					CommConfig.LOG_TYPE.UPDATE.getType(),
+					currentUserService.getPvgInfo().getName() + "  编辑了人员基本信息：" + personRegisterDo.getName());
         }
         // 更新附件信息
         fileUploadService.updateAttach(personRegisterRequest.getPersonImgIds(), personRegisterDo.getId(),
@@ -234,8 +281,12 @@ public class PersonRegisterServiceImpl implements PersonRegisterService {
     @Override
     @Transactional
     public PersonRegisterVo updatePerson(PersonRegisterRequest personRegisterRequest) throws BizException {
+		// 获取老数据
         PersonRegisterDo personRegisterDo = personRegisterDoMapperExt.selectByPrimaryKey(personRegisterRequest.getId());
         String status = personRegisterDo.getPersonStatus();
+		Long oldLockerId = personRegisterDo.getLockerId();// 老储物柜的id
+		Long newLockerId = personRegisterRequest.getLockerId();// 新储物柜的id
+
         //手环需要判断是否有在所人员   和  在card_manager中 存在 才能保保存  否则抛异常  huangto TODO;
         String oldBraceletNo = personRegisterDo.getBraceletNo();
         String newBraceletNo = personRegisterRequest.getBraceletNo();
@@ -246,7 +297,7 @@ public class PersonRegisterServiceImpl implements PersonRegisterService {
                 throw new BizException("该手环不存在!");
             }
             PersonRegisterVo personRegisterVo = getPersonRegister(newBraceletNo);
-            if (null != personRegisterVo) {
+			if (null != personRegisterVo && null != personRegisterVo.getPersonInfo()) {
                 throw new BizException("该手环已被使用!");
             }
             //手环编号，手环ID  紊乱 huangt  TODO；
@@ -257,6 +308,7 @@ public class PersonRegisterServiceImpl implements PersonRegisterService {
                 cardManageService.deactivateCard(oldCardManageDo.getId());
             }
         }
+
         //更新人员数据
         BeanUtils.copyProperties(personRegisterRequest, personRegisterDo);
         // 判断人员状态，不用更新
@@ -265,12 +317,23 @@ public class PersonRegisterServiceImpl implements PersonRegisterService {
         }
         DomainUtil.setCommonValueForUpdate(personRegisterDo, currentUserService.getPvgInfo());
         personRegisterDoMapperExt.updateByPrimaryKeySelective(personRegisterDo);
+
         //更新伤情数据
         List<InjuryRegisterRequest> injuryList = injuryRegisterService
                 .saveInjuryInfo(personRegisterRequest.getInjuryInfo(), personRegisterRequest.getId());
         //更新物品数据
         List<GoodsRegisterRequest> goodsList = goodsRegisterService
                 .saveGoodsInfo(personRegisterRequest.getGoodsInfo(), personRegisterRequest.getId());
+
+		// 换了储物柜，更新老储物柜为空闲0
+		if (null != oldLockerId && !oldLockerId.equals(newLockerId)) {
+			lockerService.updateLockerStatus(oldLockerId, CommConfig.BUSY_FREE_STATUS.FREE.getName());
+		}
+		// 更新新储物柜为占用1-使用中；0-空闲
+		if (null != newLockerId) {
+			lockerService.updateLockerStatus(newLockerId, CommConfig.BUSY_FREE_STATUS.BUSY.getName());
+        }
+
         // 返回实体对象
         PersonRegisterVo personRegisterVo = new PersonRegisterVo();
         BeanUtils.copyProperties(personRegisterDoMapperExt.selectByPrimaryKey(personRegisterDo.getId()),
@@ -278,6 +341,10 @@ public class PersonRegisterServiceImpl implements PersonRegisterService {
         personRegisterVo.setPersonInfo(personRegisterRequest);
         personRegisterVo.setInjuryInfo(injuryList);
         personRegisterVo.setGoodsInfo(goodsList);
+
+		// 写日志
+		logService.insertLog(CommConfig.LOG_MODULE.PERSON_REGISTER.getModule(), CommConfig.LOG_TYPE.UPDATE.getType(),
+				currentUserService.getPvgInfo().getName() + "  更新了人员登记第二步入办案区信息：" + personRegisterRequest.getName());
         return personRegisterVo;
     }
 
@@ -297,6 +364,10 @@ public class PersonRegisterServiceImpl implements PersonRegisterService {
                     personRegisterDo.setId(Long.parseLong(id));
                     DomainUtil.setCommonValueForDelete(personRegisterDo, currentUserService.getPvgInfo());
                     personRegisterDoMapperExt.deleteByPrimaryKey(personRegisterDo);
+					// 写日志
+					logService.insertLog(CommConfig.LOG_MODULE.PERSON_REGISTER.getModule(),
+							CommConfig.LOG_TYPE.DELETE.getType(),
+							currentUserService.getPvgInfo().getName() + "  删除了人员信息：" + personRegisterDo.getName());
                 }
             }
         }
@@ -327,6 +398,10 @@ public class PersonRegisterServiceImpl implements PersonRegisterService {
         // 查询陪同人信息
         personRegisterVo.setRelatedInfo(personRelatedService.getRelatedListByRid(id));
 
+		// 写日志
+		logService.insertLog(CommConfig.LOG_MODULE.ELSE.getModule(), CommConfig.LOG_TYPE.QUERY.getType(),
+				currentUserService.getPvgInfo().getName() + "  查询了人员所有信息："
+						+ personRegisterVo.getPersonInfo().getName());
         return personRegisterVo;
     }
 
@@ -335,7 +410,10 @@ public class PersonRegisterServiceImpl implements PersonRegisterService {
      */
     @Override
     public PersonRegisterVo getPersonRegister(String braceletNo) {
-        PersonRegisterVo personRegisterVo = null;// 总的返回参数
+        PersonRegisterVo personRegisterVo = new PersonRegisterVo();// 总的返回参数
+        if (StringUtils.isBlank(braceletNo)) {
+            return personRegisterVo;
+        }
         // 查询条件的容器
         PersonRegisterDoExample example = new PersonRegisterDoExample();
         // 新建查询条件
@@ -351,7 +429,6 @@ public class PersonRegisterServiceImpl implements PersonRegisterService {
         example.setOrderByClause("create_time desc, update_time desc");
         List<PersonRegisterDo> list = personRegisterDoMapperExt.selectByExample(example);
         if (CollectionUtils.isNotEmpty(list)) {
-            personRegisterVo = new PersonRegisterVo();
             Long id = list.get(0).getId();
             // 查询人员
             personRegisterVo.setPersonInfo(getPersonInfo(list.get(0)));
@@ -359,7 +436,12 @@ public class PersonRegisterServiceImpl implements PersonRegisterService {
             personRegisterVo.setInjuryInfo(injuryRegisterService.getInjuryInfoByRid(id));
             // 查询物品
             personRegisterVo.setGoodsInfo(goodsRegisterService.getGoodsInfoByRid(id));
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.PERSON_REGISTER.getModule(),
+					CommConfig.LOG_TYPE.UPDATE.getType(), currentUserService.getPvgInfo().getName() + "  通过手环查询了人员："
+							+ personRegisterVo.getPersonInfo().getName());
         }
+
         return personRegisterVo;
     }
 
@@ -393,6 +475,10 @@ public class PersonRegisterServiceImpl implements PersonRegisterService {
         if (null != catchInfo) {
             catchInfo.setRegisterId(registerId); // 绑定该人员
             catchInfoService.saveCatchInfo(catchInfo);
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.PERSON_REGISTER.getModule(),
+					CommConfig.LOG_TYPE.UPDATE.getType(),
+					currentUserService.getPvgInfo().getName() + "  编辑了人员抓获信息：");
         }
         // 保存陪同人信息
         List<PersonRelatedDo> relatedInfo = personRegisterRequest.getRelatedInfo();
@@ -403,6 +489,10 @@ public class PersonRegisterServiceImpl implements PersonRegisterService {
                 personRelatedService.saveRelated(personRelatedDo);
                 resRelatedList.add(personRelatedDo);
             }
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.PERSON_REGISTER.getModule(),
+					CommConfig.LOG_TYPE.UPDATE.getType(),
+					currentUserService.getPvgInfo().getName() + "  编辑了人员陪同人信息：");
         }
         // 返回信息
         personRegisterVo.setPersonInfo(
@@ -467,6 +557,9 @@ public class PersonRegisterServiceImpl implements PersonRegisterService {
         // 获得流程时间
         res.setDoTask(getDoTask(pRequest));
 
+		// 写日志
+		logService.insertLog(CommConfig.LOG_MODULE.PERSON_REGISTER.getModule(), CommConfig.LOG_TYPE.QUERY.getType(),
+				currentUserService.getPvgInfo().getName() + "  查询了人员流程信息：" + personRegisterDo.getName());
         return res;
     }
 
@@ -632,33 +725,46 @@ public class PersonRegisterServiceImpl implements PersonRegisterService {
                 pShow.setRoomName(roomPropertyDo.getRoomName());
                 res.add(pShow);
 
-                roomFlag = "2";// 其他类型房间标志
+				roomFlag = "other";// 其他类型房间标志
             } else {
                 // 是其他房间
                 pShow = new PersonListBaseShowVo();
                 pShow.setName("03");
                 pShow.setValue(f.format(list.get(0).getCreateTime()));
                 pShow.setCanClick(true);
-                pShow.setRoomId(list.get(0).getId());
+                pShow.setRoomId(list.get(0).getRoomId());
                 pShow.setRoomName(roomPropertyDo.getRoomName());
                 res.add(pShow);
 
-                roomFlag = "1";// 等候室标志
+				roomFlag = "wait";// 等候室标志
             }
         }
         // 绑定去过的历史房间
         if (CollectionUtils.isNotEmpty(list_his)) {
             for (RoomRecordDo recordDo : list_his) {
                 RoomPropertyDo roomPropertyDo = roomPropertyService.getRoomProperty(recordDo.getRoomId());
-                if (roomPropertyDo.getRoomType().equals(roomFlag)) {
-                    pShow = new PersonListBaseShowVo();
-                    pShow.setName(roomFlag == "1" ? "02" : "03");
-                    pShow.setValue(f.format(recordDo.getCreateTime()));
-                    pShow.setCanClick(false);
-                    pShow.setRoomId(recordDo.getId());
-                    pShow.setRoomName(roomPropertyDo.getRoomName());
-                    res.add(pShow);
-                    break;
+				if ("wait".equals(roomFlag)) {
+					if (roomPropertyDo.getRoomType().equals(CommConfig.ROOM_TYPE.WAIT_ROOM.getType())) {
+						pShow = new PersonListBaseShowVo();
+						pShow.setName("02");
+						pShow.setValue(f.format(recordDo.getCreateTime()));
+						pShow.setCanClick(false);
+						pShow.setRoomId(recordDo.getId());
+						pShow.setRoomName(roomPropertyDo.getRoomName());
+						res.add(pShow);
+						break;
+					}
+				} else {
+					if (!roomPropertyDo.getRoomType().equals(CommConfig.ROOM_TYPE.WAIT_ROOM.getType())) {
+						pShow = new PersonListBaseShowVo();
+						pShow.setName("03");
+						pShow.setValue(f.format(recordDo.getCreateTime()));
+						pShow.setCanClick(false);
+						pShow.setRoomId(recordDo.getId());
+						pShow.setRoomName(roomPropertyDo.getRoomName());
+						res.add(pShow);
+						break;
+					}
                 }
             }
         }
@@ -735,6 +841,10 @@ public class PersonRegisterServiceImpl implements PersonRegisterService {
             if (CollectionUtils.isNotEmpty(oList)) {
                 outConfirmService.updateConfirmBackTime(oList.get(0).getId());
             }
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.PERSON_REGISTER.getModule(),
+					CommConfig.LOG_TYPE.UPDATE.getType(),
+					currentUserService.getPvgInfo().getName() + "  操作了临时出所人员返回办案区：" + personRegisterDo.getName());
         }
         result.setSuccess(true);
         result.setContent("人员状态更新完毕，请完善民警胸牌信息");
@@ -806,6 +916,9 @@ public class PersonRegisterServiceImpl implements PersonRegisterService {
                 String content = roomPropertyService.corridorLedShow(id, roomId);// 更新走廊led
                 result.setSuccess(true);
                 result.setContent(content);
+				// 写日志
+				logService.insertLog(CommConfig.LOG_MODULE.PERSON_REGISTER.getModule(),
+						CommConfig.LOG_TYPE.UPDATE.getType(), "自动给人员分配等候室：" + content);
             }
         }
         return result;

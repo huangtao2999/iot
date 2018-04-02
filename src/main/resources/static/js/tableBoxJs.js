@@ -7,6 +7,9 @@ $(document).ready(function () {
     	if($(this).hasClass("untreated-task")){
     		return;
     	}
+    	if($(this).hasClass("only-watch-task")){
+    		return;
+    	}
         var type = $(this).find(".diaBox").css("display");
         if (type == 'none') {
             $(this).find(".diaBox").show();
@@ -347,6 +350,14 @@ function iotTable(params){
 					me.page = 1;
 					me.loadBody();
 				});
+				//查询按钮中的input元素绑定 enter事件  huangt TODO；
+                $(".adSearchBox").on("keydown","input",function(e){
+                    var eCode = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+                    if (eCode == 13){
+                        $(".searchBtnBox > div").triggerHandler('click');
+                    }
+                });
+
 			}else{
 				$(".selectImgBox").hide();
 			}

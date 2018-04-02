@@ -235,6 +235,7 @@
 					var euid = position_data.tagEuid;
                     localX = position_data.localX * 0.01662+4;
                     localY = position_data.localY * 0.01662+6;
+                    console.log(localX+","+localY);
                     if (curveDatas.get(euid)) {
 						curveDatas.get(euid).localX = localX;
 						curveDatas.get(euid).localY = localY;

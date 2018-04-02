@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -98,11 +97,11 @@ public class DelayConfirmServiceImpl implements DelayConfirmService {
 	@Override
 	@Transactional
 	public DelayConfirmDo saveDelayConfirm(DelayConfirmVo delayConfirmVo,HttpServletRequest request) {
-		
+
 		System.out.println("延期置留id"+delayConfirmVo.getId());
 		DelayConfirmDo delayConfirmDo = new DelayConfirmDo();
 		//BeanUtils.copyProperties(delayConfirmDo, delayConfirmVo);
-		
+
 		delayConfirmDo.setApplyName(delayConfirmVo.getApplyName());
 		delayConfirmDo.setApplyReason(delayConfirmVo.getApplyReason());
 		delayConfirmDo.setApplyTime(delayConfirmVo.getApplyTime());
@@ -120,7 +119,7 @@ public class DelayConfirmServiceImpl implements DelayConfirmService {
 		delayConfirmDo.setStatus(delayConfirmVo.getStatus());
 		delayConfirmDo.setUpdateTime(delayConfirmVo.getUpdateTime());
 		delayConfirmDo.setUpdateUser(delayConfirmVo.getUpdateUser());
-		
+
 		RemindDo remindDo = new RemindDo();
 
 		if (null == delayConfirmDo.getId()) {
@@ -134,7 +133,9 @@ public class DelayConfirmServiceImpl implements DelayConfirmService {
 			remindDo.setRoleId(delayConfirmVo.getRoleId());
 			//待办内容
 			String remindContent = "";
-			remindContent = delayConfirmDo.getApplyName() + "的" +	 BusinessBizConfig.RemindTaskBelong.getName(BusinessBizConfig.RemindTaskBelong.DELAY_CONFIRM) + "申请";	
+			remindContent = delayConfirmDo.getApplyName() + "的"
+					+ BusinessBizConfig.RemindTaskBelong.getName(BusinessBizConfig.RemindTaskBelong.DELAY_CONFIRM)
+					+ "申请";
 
 			remindDo.setContent(remindContent);
 			remindDo.setTitle(remindContent);
@@ -145,6 +146,10 @@ public class DelayConfirmServiceImpl implements DelayConfirmService {
 			remindDo.setCreateUser(delayConfirmDo.getCreateUser());
 			remindDo.setCreateTime(new Date());
 			remindService.saveRemind(remindDo);
+
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.DELAY_CONFIRM.getModule(), CommConfig.LOG_TYPE.ADD.getType(),
+					currentUserService.getPvgInfo().getName() + "  新增了一条延期申请，人员：" + delayConfirmDo.getApplyName());
 		} else {
 			// 审核编辑，更新审核信息
 			DomainUtil.setCommonValueForUpdate(delayConfirmDo, currentUserService.getPvgInfo());
@@ -154,7 +159,7 @@ public class DelayConfirmServiceImpl implements DelayConfirmService {
 			List<RemindDo> resultList = remindService.getRemindByTaskId(delayConfirmDo.getId(), BusinessBizConfig.RemindTaskBelong.DELAY_CONFIRM);
 			if (resultList.size() > 0) {
 				for (int i = 0 ; i < resultList.size() ; i++) {
-					remindDo = (RemindDo)resultList.get(i);
+					remindDo = resultList.get(i);
 					remindDo.setStatus(BusinessBizConfig.RemindStatus.PROCESSED);
 					remindService.saveRemind(remindDo);
 				}
@@ -175,6 +180,10 @@ public class DelayConfirmServiceImpl implements DelayConfirmService {
 				}
 				personRegisterDoMapperExt.updateByPrimaryKey(personRegisterDo);
 			}
+
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.DELAY_CONFIRM.getModule(), CommConfig.LOG_TYPE.ADD.getType(),
+					currentUserService.getPvgInfo().getName() + "  审核了一条延期申请");
 		}
 		return delayConfirmDo;
 	}
@@ -188,13 +197,17 @@ public class DelayConfirmServiceImpl implements DelayConfirmService {
 			DomainUtil.setCommonValueForUpdate(delayConfirmDo, currentUserService.getPvgInfo());
 			delayConfirmDo.setAuditTime(new Date());
 			delayConfirmDoMapperExt.updateByPrimaryKeySelective(delayConfirmDo);
-			
+
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.DELAY_CONFIRM.getModule(), CommConfig.LOG_TYPE.ADD.getType(),
+					currentUserService.getPvgInfo().getName() + "  审核了一条延期申请，人员：" + delayConfirmDo.getApplyName());
+
 			RemindDo remindDo = new RemindDo();
 			//业务审核完后将待办数据更新为已处理
 			List<RemindDo> resultList = remindService.getRemindByTaskId(delayConfirmDo.getId(), BusinessBizConfig.RemindTaskBelong.DELAY_CONFIRM);
 			if (resultList.size() > 0) {
 				for (int i = 0 ; i < resultList.size() ; i++) {
-					remindDo = (RemindDo)resultList.get(i);
+					remindDo = resultList.get(i);
 					DomainUtil.setCommonValueForUpdate(remindDo, currentUserService.getPvgInfo());
 					remindDo.setStatus(BusinessBizConfig.RemindStatus.PROCESSED);
 					remindService.saveRemind(remindDo);

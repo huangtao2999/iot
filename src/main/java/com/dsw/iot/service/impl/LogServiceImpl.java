@@ -101,5 +101,20 @@ public class LogServiceImpl implements LogService {
 		logDoMapperExt.insertSelective(logDo);
 	}
 
+	/**
+	 * 通用日志插入接口 module 常量中定义模块 type 操作类型（常量中定义） content 操作内容
+	 */
+	@Override
+	@Transactional
+	public void insertLog(String module, String type, String content) {
+		LogDo logDo = new LogDo();
+		logDo.setModule(module);
+		logDo.setType(type);
+		logDo.setContent(content);
+		// 获得本机ip
+		logDo.setIp(currentUserService.getPvgInfo().getIp());
+		DomainUtil.setCommonValueForCreate(logDo, currentUserService.getPvgInfo());
+		logDoMapperExt.insertSelective(logDo);
+	}
 
 }

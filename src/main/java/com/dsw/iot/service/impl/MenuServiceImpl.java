@@ -17,6 +17,7 @@ import com.dsw.iot.model.MenuDo;
 import com.dsw.iot.model.MenuDoExample;
 import com.dsw.iot.service.CurrentUserService;
 import com.dsw.iot.service.FileUploadService;
+import com.dsw.iot.service.LogService;
 import com.dsw.iot.service.MenuSerivce;
 import com.dsw.iot.util.BizException;
 import com.dsw.iot.util.DomainUtil;
@@ -37,6 +38,8 @@ public class MenuServiceImpl implements MenuSerivce {
     CurrentUserService currentUserService;
 	@Autowired
 	private FileUploadService fileUploadService;
+	@Autowired
+	private LogService logService;
 
     /**
 	 * 查找当前用户的菜单，平级返回，没有树形结构
@@ -58,6 +61,9 @@ public class MenuServiceImpl implements MenuSerivce {
 		param.setUserId(userId);
 		// 查询所有的菜单
 		List<MenuDo> list = menuDoMapperExt.findMenuByUserId(param);
+		// 写日志
+		logService.insertLog(CommConfig.LOG_MODULE.MENU.getModule(),CommConfig.LOG_TYPE.QUERY.getType(),
+				currentUserService.getPvgInfo().getName() + "  通过用户ID查出了菜单树");
 		// 定义菜单树实体
 		List<MenuTreeVo> menuTreeVos = new ArrayList<MenuTreeVo>();
 		// 把数据给菜单树
@@ -106,6 +112,9 @@ public class MenuServiceImpl implements MenuSerivce {
      */
     @Override
     public MenuDo selectByPrimaryKey(Long id) {
+    	// 写日志
+		logService.insertLog(CommConfig.LOG_MODULE.MENU.getModule(),CommConfig.LOG_TYPE.QUERY.getType(),
+				currentUserService.getPvgInfo().getName() + "  通过ID查询了菜单表的一条记录");
         return menuDoMapperExt.selectByPrimaryKey(id);
     }
 
@@ -154,10 +163,16 @@ public class MenuServiceImpl implements MenuSerivce {
             //新增
             DomainUtil.setCommonValueForCreate(menuDo, currentUserService.getPvgInfo());
 			menuDoMapperExt.insertSelective(menuDo);
+			// 写日志
+    		logService.insertLog(CommConfig.LOG_MODULE.MENU.getModule(),CommConfig.LOG_TYPE.ADD.getType(),
+    				currentUserService.getPvgInfo().getName() + "  新增了菜单："+menuDo.getText());
         } else {
             //编辑
             DomainUtil.setCommonValueForUpdate(menuDo, currentUserService.getPvgInfo());
 			menuDoMapperExt.updateByPrimaryKeySelective(menuDo);
+			// 写日志
+    		logService.insertLog(CommConfig.LOG_MODULE.MENU.getModule(),CommConfig.LOG_TYPE.UPDATE.getType(),
+    				currentUserService.getPvgInfo().getName() + "  更改了菜单："+menuDo.getText());
         }
 		// 更新头像信息
 		String menuIconIds = menuDo.getIcon();
@@ -192,7 +207,9 @@ public class MenuServiceImpl implements MenuSerivce {
                 }
             }
         }
-
+        // 写日志
+		logService.insertLog(CommConfig.LOG_MODULE.MENU.getModule(),CommConfig.LOG_TYPE.DELETE.getType(),
+				currentUserService.getPvgInfo().getName() + "  删除了菜单");
         return i;
     }
 }

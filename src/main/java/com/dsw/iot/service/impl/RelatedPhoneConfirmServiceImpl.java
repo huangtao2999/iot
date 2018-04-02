@@ -120,7 +120,10 @@ public class RelatedPhoneConfirmServiceImpl implements RelatedPhoneConfirmServic
 			relatedPhoneConfirmDo.setAuditTime(new Date());
 			relatedPhoneConfirmDo.setStatus(BusinessBizConfig.AuditStatus.PASS);//默认审批通过
 			relatedPhoneConfirmDoMapperExt.insertSelective(relatedPhoneConfirmDo);
-		
+
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.PERSON_RELATED.getModule(), CommConfig.LOG_TYPE.ADD.getType(),
+					currentUserService.getPvgInfo().getName() + "  新增了一条家属通知");
 		} else {
 			// edit
 			//家属通知审核默认审核通过
@@ -128,6 +131,10 @@ public class RelatedPhoneConfirmServiceImpl implements RelatedPhoneConfirmServic
 			relatedPhoneConfirmDo.setAuditTime(new Date());
 			relatedPhoneConfirmDo.setStatus(BusinessBizConfig.AuditStatus.PASS);//默认审批通过
 			relatedPhoneConfirmDoMapperExt.updateByPrimaryKeySelective(relatedPhoneConfirmDo);
+
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.PERSON_RELATED.getModule(), CommConfig.LOG_TYPE.UPDATE.getType(),
+					currentUserService.getPvgInfo().getName() + "  编辑了一条家属通知");
 		}
 	}
 }

@@ -1,5 +1,16 @@
 package com.dsw.iot.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.dsw.iot.constant.CommConfig;
 import com.dsw.iot.dal.RoomPropertyDoMapperExt;
 import com.dsw.iot.dto.RoomPropertyRequest;
@@ -10,23 +21,19 @@ import com.dsw.iot.model.RoomPropertyDo;
 import com.dsw.iot.model.RoomPropertyDoExample;
 import com.dsw.iot.model.RoomRecordDo;
 import com.dsw.iot.service.CurrentUserService;
+import com.dsw.iot.service.LogService;
 import com.dsw.iot.service.PersonRegisterService;
 import com.dsw.iot.service.RoomPropertyService;
 import com.dsw.iot.service.RoomRecordService;
-import com.dsw.iot.util.*;
+import com.dsw.iot.util.ActionResult;
+import com.dsw.iot.util.BizException;
+import com.dsw.iot.util.DomainUtil;
+import com.dsw.iot.util.PageDto;
+import com.dsw.iot.util.PageResult;
 import com.dsw.iot.vo.RoomInquiryVo;
 import com.dsw.iot.vo.RoomPropertyVo;
-import dm.jdbc.util.StringUtil;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import dm.jdbc.util.StringUtil;
 
 /**
  * 讯询问室服务
@@ -46,6 +53,9 @@ public class RoomPropertyServiceImpl implements RoomPropertyService {
     private RelayManager relayManager;
     @Autowired
     private LedManager ledManager;
+	@Autowired
+	private LogService logService;
+
     @Value("${led.relay.ip}")
     private String ip;
 
@@ -128,7 +138,7 @@ public class RoomPropertyServiceImpl implements RoomPropertyService {
                     roomPropertyVo.setHeldCount(0);
                     roomPropertyVo.setRoomSex("");
                 }
-                roomPropertyVo.setHeldCountAndRoomMax(roomPropertyVo.getHeldCount()+","+roomPropertyVo.getRoomMax());
+                roomPropertyVo.setHeldCountAndRoomMax(roomPropertyVo.getHeldCount() + "," + roomPropertyVo.getRoomMax());
                 list_vo.add(roomPropertyVo);
             }
 
@@ -195,11 +205,19 @@ public class RoomPropertyServiceImpl implements RoomPropertyService {
             // 新增
             DomainUtil.setCommonValueForCreate(roomPropertyDo, currentUserService.getPvgInfo());
             roomPropertyDoMapperExt.insertSelective(roomPropertyDo);
+
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.ROOM.getModule(), CommConfig.LOG_TYPE.ADD.getType(),
+					currentUserService.getPvgInfo().getName() + "  新增了一个房间信息：" + roomPropertyDo.getRoomName());
         } else {
             validate(roomPropertyDo, "update");
             // 编辑
             DomainUtil.setCommonValueForUpdate(roomPropertyDo, currentUserService.getPvgInfo());
             roomPropertyDoMapperExt.updateByPrimaryKeySelective(roomPropertyDo);
+
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.ROOM.getModule(), CommConfig.LOG_TYPE.UPDATE.getType(),
+					currentUserService.getPvgInfo().getName() + "  编辑了一个房间信息：" + roomPropertyDo.getRoomName());
         }
     }
 
@@ -237,6 +255,9 @@ public class RoomPropertyServiceImpl implements RoomPropertyService {
                 }
             }
         }
+		// 写日志
+		logService.insertLog(CommConfig.LOG_MODULE.ROOM.getModule(), CommConfig.LOG_TYPE.DELETE.getType(),
+				currentUserService.getPvgInfo().getName() + "  删除了房间数据");
     }
 
 
@@ -298,6 +319,10 @@ public class RoomPropertyServiceImpl implements RoomPropertyService {
                 relayManager.openV2(roomPropertyDo.getWindIp(), Integer.parseInt(roomPropertyDo.getWindPort()), roomPropertyDo.getWindRoad());
                 res.setSuccess(true);
                 res.setContent("房间分配成功");
+
+				// 写日志
+				logService.insertLog(CommConfig.LOG_MODULE.ROOM.getModule(), CommConfig.LOG_TYPE.UPDATE.getType(),
+						currentUserService.getPvgInfo().getName() + "  手动分配了" + roomPropertyDo.getRoomName());
             } else {
                 res.setSuccess(false);
                 res.setContent("房间状态为占用,不可再分配");
@@ -324,32 +349,50 @@ public class RoomPropertyServiceImpl implements RoomPropertyService {
             String sex = personRegisterDo.getSex();//性别
             String alarmNumber = personRegisterDo.getAlarmNumber();//警情编号
             String isWarned = personRegisterDo.getIsWarned();//同案预警 0否 1是
-            if (isWarned.equals("0")) {//非同案预警
+            if (isWarned.equals("0")) {// 非同案预警，分配时只区别性别
                 //获取所有的等候室
                 List<RoomPropertyDo> list = getRoomPropertylist("1", "");
                 if (CollectionUtils.isNotEmpty(list)) {
                     for (RoomPropertyDo roomPropertyDo : list) {
                         Long roomId = roomPropertyDo.getId();//房间id
                         int roomMax = roomPropertyDo.getRoomMax();
-                        int count = roomRecordService.getPersonCount(roomId);
-                        if (roomMax > count) {
-                            //直接分配
-                            getRoomWaitDistribution(registerId, roomId);
-                            dis_roomId = String.valueOf(roomId);
-                            break;
+
+                        boolean rule = true;// true代表满足规则
+                        // 获取等候室所有关押人员信息
+                        List<PersonRegisterDo> list_person = roomRecordService.getPersonRegisterByrid(roomId, "0");
+                        if (CollectionUtils.isNotEmpty(list_person)) {
+                            for (PersonRegisterDo personRegisterDo_ : list_person) {
+                                String sex_ = personRegisterDo_.getSex();// 性别
+                                if (!sex_.equals(sex)) {
+                                    rule = false;
+                                    break;
+                                }
+                            }
                         }
+
+                        if (rule) {
+                            // 目前房间关押人员
+                            int count = roomRecordService.getPersonCount(roomId);
+                            if (roomMax > count) {
+                                // 直接分配
+                                getRoomWaitDistribution(registerId, roomId);
+                                dis_roomId = String.valueOf(roomId);
+                                break;
+                            }
+                        }
+
                     }
                 }
 
                 if (StringUtil.isEmpty(dis_roomId)) {
                     res.setSuccess(false);
-                    res.setContent("所有等候室已满员");
+                    res.setContent("系统未找到合适等候室");
                 } else {
                     res.setSuccess(true);
                     res.setContent(dis_roomId);
                 }
 
-            } else {
+            } else {// 同案预警，区别性别和警情编号
                 //获取所有的等候室
                 List<RoomPropertyDo> list = getRoomPropertylist("1", "");
                 if (CollectionUtils.isNotEmpty(list)) {
@@ -363,9 +406,16 @@ public class RoomPropertyServiceImpl implements RoomPropertyService {
                             for (PersonRegisterDo personRegisterDo_ : list_person) {
                                 String sex_ = personRegisterDo_.getSex();// 性别
                                 String alarmNumber_ = personRegisterDo_.getAlarmNumber();// 警情编号
-                                if (!sex_.equals(sex) || alarmNumber.equals(alarmNumber_)) {
-                                    rule = false;
-                                    break;
+                                if (!"".equals(alarmNumber)) {
+                                    if (!sex_.equals(sex) || alarmNumber.equals(alarmNumber_)) {
+                                        rule = false;
+                                        break;
+                                    }
+                                } else {
+                                    if (!sex_.equals(sex)) {
+                                        rule = false;
+                                        break;
+                                    }
                                 }
                             }
                         }
@@ -425,6 +475,10 @@ public class RoomPropertyServiceImpl implements RoomPropertyService {
         roomRecordDo.setRoomId(roomId);
         try {
             roomRecordService.saveRoomRecord(roomRecordDo);
+			RoomPropertyDo roomPropertyDo = roomPropertyDoMapperExt.selectByPrimaryKey(roomId);
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.ROOM.getModule(), CommConfig.LOG_TYPE.UPDATE.getType(),
+					currentUserService.getPvgInfo().getName() + "  分配了等候室：" + roomPropertyDo.getRoomName());
             distributeRoomLedShow(registerId, roomId);// 新分配的房间跟新LED展示
             corridorLedShow(registerId, roomId); // 走廊展示屏显示最新消息
         } catch (BizException e) {
@@ -443,6 +497,9 @@ public class RoomPropertyServiceImpl implements RoomPropertyService {
             roomPropertyDo.setRoomStatus(roomStatus);
             try {
                 saveRoomProperty(roomPropertyDo);
+				// 写日志
+				logService.insertLog(CommConfig.LOG_MODULE.ROOM.getModule(), CommConfig.LOG_TYPE.UPDATE.getType(),
+						currentUserService.getPvgInfo().getName() + "  修改了房间使用状态");
             } catch (BizException e) {
                 // TODO Auto-generated catch block
                 logger.error("保存异常", e);
@@ -474,6 +531,11 @@ public class RoomPropertyServiceImpl implements RoomPropertyService {
                         DomainUtil.setCommonValueForUpdate(record, currentUserService.getPvgInfo());
                         roomPropertyDoMapperExt.updateByPrimaryKeySelective(record);
                         actionResult.setContent("关闭房间电源成功");
+
+						// 写日志
+						logService.insertLog(CommConfig.LOG_MODULE.ROOM.getModule(),
+								CommConfig.LOG_TYPE.UPDATE.getType(),
+								currentUserService.getPvgInfo().getName() + "  关闭房间电源成功");
                         return actionResult;
                     }
                 } else if ("0".equals(roomPropertyDo.getLightStatus())) {//状态为"0",代表状态为"关"
@@ -485,6 +547,11 @@ public class RoomPropertyServiceImpl implements RoomPropertyService {
                         DomainUtil.setCommonValueForUpdate(record, currentUserService.getPvgInfo());
                         roomPropertyDoMapperExt.updateByPrimaryKeySelective(record);
                         actionResult.setContent("打开房间电源成功");
+
+						// 写日志
+						logService.insertLog(CommConfig.LOG_MODULE.ROOM.getModule(),
+								CommConfig.LOG_TYPE.UPDATE.getType(),
+								currentUserService.getPvgInfo().getName() + "  打开房间电源成功");
                         return actionResult;
                     }
                 }
@@ -503,6 +570,11 @@ public class RoomPropertyServiceImpl implements RoomPropertyService {
                         DomainUtil.setCommonValueForUpdate(record, currentUserService.getPvgInfo());
                         roomPropertyDoMapperExt.updateByPrimaryKeySelective(record);
                         actionResult.setContent("关换气扇成功");
+
+						// 写日志
+						logService.insertLog(CommConfig.LOG_MODULE.ROOM.getModule(),
+								CommConfig.LOG_TYPE.UPDATE.getType(),
+								currentUserService.getPvgInfo().getName() + "  关换气扇成功");
                         return actionResult;
                     }
                 } else if ("0".equals(roomPropertyDo.getWindStatus())) {//状态为"0",代表状态为"关"
@@ -514,6 +586,11 @@ public class RoomPropertyServiceImpl implements RoomPropertyService {
                         DomainUtil.setCommonValueForUpdate(record, currentUserService.getPvgInfo());
                         roomPropertyDoMapperExt.updateByPrimaryKeySelective(record);
                         actionResult.setContent("开换气扇成功");
+
+						// 写日志
+						logService.insertLog(CommConfig.LOG_MODULE.ROOM.getModule(),
+								CommConfig.LOG_TYPE.UPDATE.getType(),
+								currentUserService.getPvgInfo().getName() + "  开换气扇成功");
                         return actionResult;
                     }
                 }
@@ -527,6 +604,10 @@ public class RoomPropertyServiceImpl implements RoomPropertyService {
                         roomPropertyDo.getWallRoad())) {
                     relayManager.close(roomPropertyDo.getWallIp(), Integer.parseInt(roomPropertyDo.getWallPort()), roomPropertyDo.getWallRoad());//关闭
                     actionResult.setContent("打开智能墙体成功");
+
+					// 写日志
+					logService.insertLog(CommConfig.LOG_MODULE.ROOM.getModule(), CommConfig.LOG_TYPE.UPDATE.getType(),
+							currentUserService.getPvgInfo().getName() + "  打开智能墙体成功");
                     return actionResult;
                 }
             }
@@ -623,27 +704,36 @@ public class RoomPropertyServiceImpl implements RoomPropertyService {
         }
     }
 
-	/**
-	 * 清空房间（清除嫌疑人，作历史状态）
-	 */
-	@Override
-	public void releaseRoom(Long roomId) {
-		List<RoomRecordDo> list = roomRecordService.getRoomRecordByrid(roomId, "0");//找到所有在该房间的非历史状态记录数据
-		if(CollectionUtils.isNotEmpty(list)){
-			for(RoomRecordDo roomRecordDo:list){
-				roomRecordService.updateRoomRecordHistory(roomRecordDo.getRoomId(), roomRecordDo.getRegisterId());//将该房间所有在关人员置为历史状态
-			}
-		}
-		RoomPropertyDo record = new RoomPropertyDo();
-		record.setId(roomId);
-		record.setRoomStatus("0");// 空闲状态
-		DomainUtil.setCommonValueForUpdate(record, currentUserService.getPvgInfo());
-		roomPropertyDoMapperExt.updateByPrimaryKeySelective(record);
-		RoomPropertyDo roomPropertyDo = roomPropertyDoMapperExt.selectByPrimaryKey(roomId);
-		if(!CommConfig.ROOM_TYPE.WAIT_ROOM.getType().equals(roomPropertyDo.getRoomType())){
-			relayManager.closeV2(roomPropertyDo.getLightIp(), Integer.parseInt(roomPropertyDo.getLightPort()), roomPropertyDo.getLightIndex());//关灯
-			relayManager.closeV2(roomPropertyDo.getWindIp(), Integer.parseInt(roomPropertyDo.getWindPort()), roomPropertyDo.getWindRoad());//关风扇
-		}
-		ledManager.showContent(roomPropertyDo.getLedIp(), roomPropertyDo.getRoomName(), "空闲");
-	}
+    /**
+     * 清空房间（清除嫌疑人，作历史状态）
+     */
+    @Override
+    public void releaseRoom(Long roomId) {
+        List<RoomRecordDo> list = roomRecordService.getRoomRecordByrid(roomId, "0");//找到所有在该房间的非历史状态记录数据
+        if (CollectionUtils.isNotEmpty(list)) {
+            for (RoomRecordDo roomRecordDo : list) {
+                roomRecordService.updateRoomRecordHistory(roomRecordDo.getRoomId(), roomRecordDo.getRegisterId());//将该房间所有在关人员置为历史状态
+            }
+        }
+        RoomPropertyDo record = new RoomPropertyDo();
+        record.setId(roomId);
+        record.setRoomStatus("0");// 空闲状态
+        DomainUtil.setCommonValueForUpdate(record, currentUserService.getPvgInfo());
+        roomPropertyDoMapperExt.updateByPrimaryKeySelective(record);
+        RoomPropertyDo roomPropertyDo = roomPropertyDoMapperExt.selectByPrimaryKey(roomId);
+
+		// 写日志
+		logService.insertLog(CommConfig.LOG_MODULE.ROOM.getModule(), CommConfig.LOG_TYPE.UPDATE.getType(),
+				currentUserService.getPvgInfo().getName() + "  释放了房间" + roomPropertyDo.getRoomName());
+        try {
+            if (!CommConfig.ROOM_TYPE.WAIT_ROOM.getType().equals(roomPropertyDo.getRoomType())) {
+                relayManager.closeV2(roomPropertyDo.getLightIp(), Integer.parseInt(roomPropertyDo.getLightPort()), roomPropertyDo.getLightIndex());//关灯
+                relayManager.closeV2(roomPropertyDo.getWindIp(), Integer.parseInt(roomPropertyDo.getWindPort()), roomPropertyDo.getWindRoad());//关风扇
+            }
+            ledManager.showContent(roomPropertyDo.getLedIp(), roomPropertyDo.getRoomName(), "空闲");
+        } catch (Exception e) {
+            logger.warn("释放房间设备控制异常", e);
+        }
+
+    }
 }

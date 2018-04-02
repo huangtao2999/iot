@@ -14,6 +14,7 @@ import com.dsw.iot.dto.RemindRequest;
 import com.dsw.iot.model.RemindDo;
 import com.dsw.iot.model.RemindDoExample;
 import com.dsw.iot.service.CurrentUserService;
+import com.dsw.iot.service.LogService;
 import com.dsw.iot.service.RemindService;
 import com.dsw.iot.util.DomainUtil;
 import com.dsw.iot.util.PageDto;
@@ -26,6 +27,8 @@ public class RemindServiceImpl implements RemindService {
 	private RemindDoMapperExt remindDoMapperExt;
 	@Autowired
 	CurrentUserService currentUserService;
+	@Autowired
+	private LogService logService;
 
 	/**
 	 * 根据主键id查询待办信息
@@ -70,6 +73,10 @@ public class RemindServiceImpl implements RemindService {
 		example.setOrderByClause("create_time desc");
 
 		resultList = remindDoMapperExt.selectByExample(example);
+
+		// 写日志
+		logService.insertLog(CommConfig.LOG_MODULE.PERSON_REGISTER.getModule(), CommConfig.LOG_TYPE.QUERY.getType(),
+				currentUserService.getPvgInfo().getName() + "  查询了自己的待办任务");
 		return resultList;
 	}
 
@@ -104,6 +111,9 @@ public class RemindServiceImpl implements RemindService {
 			for (int i = 0; i < ids.length; i++) {
 				resList.addAll(listRemind(Long.parseLong(ids[i])));
 			}
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.PERSON_REGISTER.getModule(), CommConfig.LOG_TYPE.QUERY.getType(),
+					currentUserService.getPvgInfo().getName() + "  查询了自己的待办任务");
 		}
 		return resList;
 	}

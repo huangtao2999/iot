@@ -6,7 +6,7 @@
 
     <groupId>com.dsw</groupId>
     <artifactId>iot</artifactId>
-    <version>1.0.032910-SNAPSHOT</version>
+    <version>1.0.aliy-SNAPSHOT</version>
     <packaging>jar</packaging>
     <!--<packaging>war</packaging>-->
 

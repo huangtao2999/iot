@@ -20,6 +20,7 @@ import com.dsw.iot.model.RoomPropertyDo;
 import com.dsw.iot.model.RoomRecordDo;
 import com.dsw.iot.model.RoomRecordDoExample;
 import com.dsw.iot.service.CurrentUserService;
+import com.dsw.iot.service.LogService;
 import com.dsw.iot.service.RoomRecordService;
 import com.dsw.iot.util.BizException;
 import com.dsw.iot.util.DomainUtil;
@@ -46,6 +47,8 @@ public class RoomRecordServiceImpl implements RoomRecordService {
 	private RoomPropertyDoMapperExt roomPropertyDoMapperExt;
 	@Autowired
 	private CurrentUserService currentUserService;
+	@Autowired
+	private LogService logService;
 
 	/**
 	 * 根据房间id查询关联人员 分页查询 roomid 房间id
@@ -78,6 +81,7 @@ public class RoomRecordServiceImpl implements RoomRecordService {
 		example.setPageDto(pageDto);
 		pageResult.setData(list);
 		pageResult.setCount(count);
+
 		return pageResult;
 	}
 
@@ -298,6 +302,9 @@ public class RoomRecordServiceImpl implements RoomRecordService {
 					logger.error("保存异常", e);
 				}
 			}
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.ROOM.getModule(), CommConfig.LOG_TYPE.UPDATE.getType(),
+					currentUserService.getPvgInfo().getName() + "  释放了房间");
 		}
 	}
 

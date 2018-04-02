@@ -1,5 +1,14 @@
 package com.dsw.iot.service.impl;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.dsw.iot.constant.CommConfig;
 import com.dsw.iot.dal.UserDoMapperExt;
 import com.dsw.iot.dal.UserRoleDoMapperExt;
@@ -9,15 +18,14 @@ import com.dsw.iot.model.UserDoExample;
 import com.dsw.iot.model.UserRoleDo;
 import com.dsw.iot.service.CurrentUserService;
 import com.dsw.iot.service.FileUploadService;
+import com.dsw.iot.service.LogService;
 import com.dsw.iot.service.UserService;
-import com.dsw.iot.util.*;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import com.dsw.iot.util.ActionResult;
+import com.dsw.iot.util.BizException;
+import com.dsw.iot.util.DomainUtil;
+import com.dsw.iot.util.MD5Util;
+import com.dsw.iot.util.PageDto;
+import com.dsw.iot.util.PageResult;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,6 +38,8 @@ public class UserServiceImpl implements UserService {
     private CurrentUserService currentUserService;
     @Autowired
     private FileUploadService fileUploadService;
+	@Autowired
+	private LogService logService;
 
     /**
      * 分页查询数据
@@ -89,6 +99,9 @@ public class UserServiceImpl implements UserService {
             //默认密码为1
             userDo.setPassword(MD5Util.MD5("1"));
             userDoMapperExt.insertSelective(userDo);
+            // 写日志
+    		logService.insertLog(CommConfig.LOG_MODULE.USER.getModule(),CommConfig.LOG_TYPE.ADD.getType(),
+    				currentUserService.getPvgInfo().getName() + "  新增了用户："+userDo.getRealName());
         } else {
             //编辑
             if (!StringUtils.isBlank(userDo.getPassword())) {
@@ -97,6 +110,9 @@ public class UserServiceImpl implements UserService {
             }
             DomainUtil.setCommonValueForUpdate(userDo, currentUserService.getPvgInfo());
             userDoMapperExt.updateByPrimaryKeySelective(userDo);
+            // 写日志
+    		logService.insertLog(CommConfig.LOG_MODULE.USER.getModule(),CommConfig.LOG_TYPE.UPDATE.getType(),
+    				currentUserService.getPvgInfo().getName() + "  编辑了用户："+userDo.getRealName());
         }
         // 更新头像信息
         String headImgId = userDo.getHeadImg();
@@ -138,6 +154,9 @@ public class UserServiceImpl implements UserService {
             userDo.setId(param.getId());
             DomainUtil.setCommonValueForDelete(userDo, currentUserService.getPvgInfo());
             userDoMapperExt.deleteByPrimaryKey(userDo);
+            // 写日志
+    		logService.insertLog(CommConfig.LOG_MODULE.USER.getModule(),CommConfig.LOG_TYPE.DELETE.getType(),
+    				currentUserService.getPvgInfo().getName() + "  删除了用户："+userDo.getRealName());
         } else if (param.getIds() != null) {
             String ids[] = param.getIds().split(",");
             for (int j = 0; j < ids.length; j++) {
@@ -148,6 +167,9 @@ public class UserServiceImpl implements UserService {
                 DomainUtil.setCommonValueForDelete(userDo, currentUserService.getPvgInfo());
                 userDoMapperExt.deleteByPrimaryKey(userDo);
             }
+            // 写日志
+    		logService.insertLog(CommConfig.LOG_MODULE.USER.getModule(),CommConfig.LOG_TYPE.DELETE.getType(),
+    				currentUserService.getPvgInfo().getName() + "  删除了用户");
         }
     }
 
@@ -192,6 +214,9 @@ public class UserServiceImpl implements UserService {
                         userDo2.setId(userDo.getId());
                         userDo2.setPassword(MD5Util.MD5(newPwd));
                         userDoMapperExt.updateByPrimaryKeySelective(userDo2);
+                        // 写日志
+                		logService.insertLog(CommConfig.LOG_MODULE.USER.getModule(),CommConfig.LOG_TYPE.UPDATE.getType(),
+                				currentUserService.getPvgInfo().getName() + "  更改了用户密码");
                     } else {
                         throw new BizException("原密码输入错误");
                     }

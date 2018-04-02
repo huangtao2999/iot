@@ -362,3 +362,21 @@ body {
     z-index: 1;
     color: gray;
 }
+/* 新增样式--亮的但是不能点击 */
+#rightBox .timeLineBox .timeLineCon li .only-watch-task .defImg {
+    display: block;
+}
+
+#rightBox .timeLineBox .timeLineCon li .only-watch-task .selImg {
+    display: none;
+}
+#rightBox .timeLineBox .timeLineCon li .only-watch-task .xiala {
+    display: none;
+}
+#rightBox .timeLineBox .timeLineCon li .only-watch-task span {
+    font-size: 0.8em;
+    width: 100%;
+    text-align: center;
+    z-index: 1;
+    color: #01bae2;
+}

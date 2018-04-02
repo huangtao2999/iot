@@ -372,6 +372,9 @@
             text : '至',
             type : 'date',
             name : 'inEndTime',
+        },{
+            text : '手环编号',
+            name : 'braceletNo',
         }],
 		dataUrl : '/PersonRegister/queryPage.json',
 		renderTo : '#personRegis-table'
@@ -531,7 +534,7 @@
 			if(data.userData && data.userData.length > 0){
 				var html = '';
 				for(var i = 0 ; i < data.userData.length ; i++){
-					if(i >= 5){
+					if(i > 5){
 						break;
 					}
 					html += '<li>';
@@ -562,6 +565,8 @@
 			$(".right-top-btn span").attr("data-id",id);
 
 			//设置未走过的节点变灰
+			$(".timeLineCon .rightBox").removeClass("untreated-task");
+			$(".timeLineCon .rightBox").removeClass("only-watch-task");//这是只能看不能点的样式
 			$(".timeLineCon .rightBox").addClass("untreated-task");
 			$(".timeLineCon").find(".leftBox span").html("")//设置时间为空
             $(".timeLineCon").find(".task-02").find('.flow-name').text("等候室");
@@ -572,7 +577,13 @@
                         $(".timeLineCon").find(".task-"+data.doTask[i].name).find('.flow-name').data("room-id",data.doTask[i].roomId).text(data.doTask[i].roomName);
                     }
 					$(".timeLineCon").find(".task-"+data.doTask[i].name).find(".leftBox span").html(data.doTask[i].value);
-					$(".timeLineCon").find(".task-"+data.doTask[i].name).find(".rightBox").removeClass("untreated-task");
+					//判断该流程按钮是否可以点击
+					if(data.doTask[i].canClick){
+						$(".timeLineCon").find(".task-"+data.doTask[i].name).find(".rightBox").removeClass("untreated-task");
+					}else{
+						$(".timeLineCon").find(".task-"+data.doTask[i].name).find(".rightBox").removeClass("untreated-task");
+						$(".timeLineCon").find(".task-"+data.doTask[i].name).find(".rightBox").addClass('only-watch-task');
+					}
 				}
 			}
 

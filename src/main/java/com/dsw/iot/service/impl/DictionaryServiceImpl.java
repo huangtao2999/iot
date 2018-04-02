@@ -17,6 +17,7 @@ import com.dsw.iot.model.DictionaryDo;
 import com.dsw.iot.model.DictionaryDoExample;
 import com.dsw.iot.service.CurrentUserService;
 import com.dsw.iot.service.DictionaryService;
+import com.dsw.iot.service.LogService;
 import com.dsw.iot.util.ActionResult;
 import com.dsw.iot.util.BizException;
 import com.dsw.iot.util.DomainUtil;
@@ -30,6 +31,8 @@ public class DictionaryServiceImpl implements DictionaryService {
 	DictionaryDoMapperExt dictionaryDoMapperExt;
 	@Autowired
 	CurrentUserService currentUserService;
+	@Autowired
+	private LogService logService;
 
 	/**
 	 * 通过主键查询
@@ -103,10 +106,16 @@ public class DictionaryServiceImpl implements DictionaryService {
 			// 新增
 			DomainUtil.setCommonValueForCreate(dictionaryDo, currentUserService.getPvgInfo());
 			i = dictionaryDoMapperExt.insertSelective(dictionaryDo);
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.DICTIONARY.getModule(),CommConfig.LOG_TYPE.ADD.getType(), 
+					currentUserService.getPvgInfo().getName() + "  新增了字典："+dictionaryDo.getName());
 		} else {
 			// 编辑
 			DomainUtil.setCommonValueForUpdate(dictionaryDo, currentUserService.getPvgInfo());
 			i = dictionaryDoMapperExt.updateByPrimaryKeySelective(dictionaryDo);
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.DICTIONARY.getModule(),CommConfig.LOG_TYPE.UPDATE.getType(), 
+					currentUserService.getPvgInfo().getName() + "  编辑了字典："+dictionaryDo.getName());
 		}
 		return i;
 	}
@@ -163,6 +172,10 @@ public class DictionaryServiceImpl implements DictionaryService {
 				}
 			}
 		}
+		// 写日志
+		logService.insertLog(CommConfig.LOG_MODULE.DICTIONARY.getModule(),
+				CommConfig.LOG_TYPE.DELETE.getType(), currentUserService
+						.getPvgInfo().getName() + "  删除了字典");
 
 	}
 

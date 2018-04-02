@@ -86,6 +86,10 @@ function toPage(page, registerId){
 				addPresonGoods(injuryInfo[i],".injury-list");//加载第二步---伤情信息
 			}
 		}
+		//自动分配等候室勾勾去掉
+		$(".selectBox").find(".defImg").show();
+		$(".selectBox").find(".selImg").hide();
+
 	    loadOtherData(data);//加载第三步
 
 	}else{
@@ -315,7 +319,7 @@ function submitStepOne(){
 		//赋值基础信息
 		loadPerMsg(pInfo);
 		layer.msg("信息保存完成");
-		return true;
+		return "信息保存完成";
 	}else{
 		layer.msg(res.errorMsg);
 		return false;

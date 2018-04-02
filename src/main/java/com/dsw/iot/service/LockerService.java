@@ -59,10 +59,18 @@ public interface LockerService {
 
 	/**
 	 * 开柜关柜操作
-	 * 
+	 *
 	 * @param id
 	 * @return
 	 * @throws BizException
 	 */
 	ActionResult<String> openLockerByid(Long id) throws BizException;
+
+	/**
+	 * 更新储物柜使用状态（占用；空闲）
+	 *
+	 * @param lockerId
+	 * @param status
+	 */
+	void updateLockerStatus(Long lockerId, String status);
 }

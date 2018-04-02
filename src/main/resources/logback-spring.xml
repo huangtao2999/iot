@@ -18,7 +18,7 @@
             <pattern>控制台-%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger -
                 %msg%n
             </pattern>
-            <charset>GBK</charset>
+            <charset>UTF-8</charset>
         </encoder>
     </appender>
 

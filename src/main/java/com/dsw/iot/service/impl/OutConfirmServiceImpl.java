@@ -146,6 +146,10 @@ public class OutConfirmServiceImpl implements OutConfirmService {
 
 			// 更新人员状态为申请出办案区。1-在办案区；2-申请出办案区；3-待出办案区；4-临时出办案区；5-正式出办案区；
 			personRegisterService.updatePersonStatus(outConfirmRequest.getRegisterId(), "2");
+
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.OUT_CONFIRM.getModule(), CommConfig.LOG_TYPE.ADD.getType(),
+					currentUserService.getPvgInfo().getName() + "  新增了一条出所申请，申请人员：" + outConfirmDo.getApplyName());
 		} else {
 			String status = outConfirmDo.getStatus();
 			if (!status.equals(BusinessBizConfig.AuditStatus.PASS)) {
@@ -182,6 +186,9 @@ public class OutConfirmServiceImpl implements OutConfirmService {
 						outConfirmDo.getId());
 			}
 
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.OUT_CONFIRM.getModule(), CommConfig.LOG_TYPE.ADD.getType(),
+					currentUserService.getPvgInfo().getName() + "  审核了一条出所申请");
 		}
 		return outConfirmDo;
 	}

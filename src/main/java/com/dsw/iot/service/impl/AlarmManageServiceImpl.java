@@ -1,5 +1,14 @@
 package com.dsw.iot.service.impl;
 
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.dsw.iot.constant.CommConfig;
 import com.dsw.iot.dal.AlarmManageDoMapperExt;
 import com.dsw.iot.dto.AlarmManageRequest;
@@ -13,14 +22,6 @@ import com.dsw.iot.util.ActionResult;
 import com.dsw.iot.util.DomainUtil;
 import com.dsw.iot.util.PageDto;
 import com.dsw.iot.util.PageResult;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
-import java.util.List;
 
 @Service
 public class AlarmManageServiceImpl implements AlarmManageService {
@@ -88,9 +89,9 @@ public class AlarmManageServiceImpl implements AlarmManageService {
         return alarmManageDoMapperExt.selectByPrimaryKey(id);
     }
 
-    /*
-     * 保存预警信息
-     */
+	/**
+	 * 保存预警信息
+	 */
     @Override
     public void saveAlarmManage(AlarmManageDo alarmManageDo) {
         if (null == alarmManageDo.getId()) {
@@ -98,10 +99,16 @@ public class AlarmManageServiceImpl implements AlarmManageService {
             alarmManageDo.setAlarmTime(new Date());
             DomainUtil.setCommonValueForCreate(alarmManageDo, currentUserService.getPvgInfo());
             alarmManageDoMapperExt.insertSelective(alarmManageDo);
+
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.ALARM.getModule(), CommConfig.LOG_TYPE.ADD.getType(), "新增了预警信息");
         } else {
             // edit
             DomainUtil.setCommonValueForUpdate(alarmManageDo, currentUserService.getPvgInfo());
             alarmManageDoMapperExt.updateByPrimaryKeySelective(alarmManageDo);
+			// 写日志
+			logService.insertLog(CommConfig.LOG_MODULE.ALARM.getModule(), CommConfig.LOG_TYPE.UPDATE.getType(),
+					"编辑了预警信息");
         }
     }
 
@@ -116,6 +123,9 @@ public class AlarmManageServiceImpl implements AlarmManageService {
                     alarmManageDo.setId(Long.parseLong(id));
                     DomainUtil.setCommonValueForDelete(alarmManageDo, currentUserService.getPvgInfo());
                     alarmManageDoMapperExt.deleteByPrimaryKey(alarmManageDo);
+					// 写日志
+					logService.insertLog(CommConfig.LOG_MODULE.ALARM.getModule(), CommConfig.LOG_TYPE.ADD.getType(),
+							"删除了预警信息");
                 }
             }
         }
@@ -127,12 +137,16 @@ public class AlarmManageServiceImpl implements AlarmManageService {
     @Override
     public ActionResult<String> closeAlarmManage() {
         ActionResult<String> result = relayManager.closeV2(ip, port, index);
+		// 写日志
+		logService.insertLog(CommConfig.LOG_MODULE.ALARM.getModule(), CommConfig.LOG_TYPE.UPDATE.getType(), "关闭了预警信息");
         return result;
     }
 
     @Override
     public ActionResult<String> openAlarmManage() {
         ActionResult<String> result = relayManager.openV2(ip, port, index);
+		// 写日志
+		logService.insertLog(CommConfig.LOG_MODULE.ALARM.getModule(), CommConfig.LOG_TYPE.UPDATE.getType(), "打开了预警信息");
         return result;
     }
 

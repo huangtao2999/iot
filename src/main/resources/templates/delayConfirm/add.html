@@ -31,7 +31,7 @@
             <tr>
                 <td class="TDleft">性别：</td>
                 <td><span th:include="component/selectCombo(id='sex',name='sex',dictType='SEX',defaultValue=${personRegisterDo.sex},verify='',disabled='1')"/></td>
-                
+
             </tr>
             <tr>
                 <td class="TDleft">证件号码：</td>
@@ -61,7 +61,7 @@
                 <td class="TDleft">人员类别：</td>
                 <td><span th:include="component/selectCombo(id='peopleType',name='peopleType',dictType='PEOPLE_TYPE',defaultValue=${personRegisterDo.peopleType},verify='',disabled='1')"/></td>
             </tr>
-            
+
             <tr>
                 <td class="THtitle" colspan="4">人员入办案区信息</td>
             </tr>
@@ -98,11 +98,11 @@
             </tr>
             <input type="hidden" name="user_id" th:value="${personRegisterDo.id}"/>
             <tr>
-                <td class="TDleft">延期留置时限：</td>
+                <td class="TDleft require">延期留置时限：</td>
                 <td colspan="3"><span  class="wh100" th:include="component/selectCombo(id='delayHour',name='delayHour',dictType='DELAY_HOUR',defaultValue='',verify='required')"/></td>
             </tr>
             <tr>
-                <td class="TDleft">审核角色：</td>
+                <td class="TDleft require">审核角色：</td>
                 <td colspan="3">
                 	<span style="width: 100%; height: 100%;">
                 		<select style="display: block;" th:id="roleId" th:name="roleId" lay-verify="" lay-search lay-ignore required="true">
@@ -111,7 +111,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="TDleft">延期留置原因：</td>
+                <td class="TDleft require">延期留置原因：</td>
                 <td colspan="3"><textarea rows="5" style="width:90%" name="applyReason" lay-verify="required"></textarea>
                 </td>
             </tr>
