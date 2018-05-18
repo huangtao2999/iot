@@ -1,19 +1,19 @@
 package com.dsw.iot.controller.html;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.dsw.iot.model.PersonRegisterDo;
 import com.dsw.iot.model.RelatedPhoneConfirmDo;
 import com.dsw.iot.model.UserDo;
 import com.dsw.iot.service.PersonRegisterService;
 import com.dsw.iot.service.RelatedPhoneConfirmService;
 import com.dsw.iot.util.CookieUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 @Controller
@@ -24,6 +24,8 @@ public class RelatedPhoneConfirmHtml {
     RelatedPhoneConfirmService relatedPhoneConfirmService;
     @Autowired
     PersonRegisterService personRegisterService;
+    @Value("${user.phone.url}")
+    private String userPhoneUrl;
 
     /**
      * 家属通知首页
@@ -57,17 +59,6 @@ public class RelatedPhoneConfirmHtml {
         return "relatedPhoneConfirm/add";
     }
 
-//    /**
-//     * 新增界面
-//     *
-//     * @param model
-//     * @return
-//     */
-//    @RequestMapping("/add")
-//    public String add(Model model) {
-//        return "relatedPhoneConfirm/add";
-//    }
-
     /**
      * 电话使用
      *
@@ -83,6 +74,7 @@ public class RelatedPhoneConfirmHtml {
 			personRegisterDo = personRegisterService
 					.getPersonRegister(registerId);
 		}
+		model.addAttribute("userPhoneUrl",userPhoneUrl);
 		model.addAttribute("personRegisterDo", personRegisterDo);
 		return "relatedPhoneConfirm/usePhone";
     }

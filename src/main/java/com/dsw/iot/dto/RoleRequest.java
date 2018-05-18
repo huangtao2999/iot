@@ -1,8 +1,8 @@
 package com.dsw.iot.dto;
 
-import com.dsw.iot.util.BaseDto;
-
 import lombok.Data;
+
+import com.dsw.iot.util.BaseDto;
 
 @Data
 public class RoleRequest extends BaseDto{
@@ -23,7 +23,10 @@ public class RoleRequest extends BaseDto{
 	 * 角色名
 	 */
 	private String roleName;
-
+	/**
+	 * 超级角色
+	 */
+	private Integer isSuper;
 	/**
 	 * 模糊查询参数
 	 */

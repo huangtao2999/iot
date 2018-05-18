@@ -96,4 +96,12 @@ public interface DictionaryService {
 	 * @return
 	 */
 	List<DictionaryTreeVo> selectDictionaryByPidIsParent(Long pid);
+	
+	/**
+	 * 通过type和code查询
+	 * @param type
+	 * @param code
+	 * @return
+	 */
+	DictionaryDo queryByTypeAndCode(String type, String code);
 }

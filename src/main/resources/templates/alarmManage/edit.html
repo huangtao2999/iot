@@ -44,21 +44,21 @@
                 </tr>
                 <tr>
                     <td class="TDleft"><label>处理人员：</label></td>
-                    <td><input name="handlePerson" type="text" class="input-large" th:value="${alarmManageDo.handlePerson}" disabled></td>
+                    <td><input name="handlePerson" type="text" class="input-large" th:value="${alarmManageDo.handlePerson}" ></td>
                     <td class="TDleft"><label>处理状态：</label></td>
                     <td><span th:include="component/selectCombo(id='status',name='status',dictType='HANDLE_STATUS',defaultValue=${alarmManageDo.status},verify='')"/></td>
                 </tr>
                 <tr>
                     <td class="TDleft"><label>处理方式：</label></td>
-                    <td colspan="3"><span th:include="component/selectCombo(id='handleMethod',name='handleMethod',dictType='HANDLE_METHOD',defaultValue=${alarmManageDo.handleMethod},verify='',disabled='1')"/></td>
+                    <td colspan="3"><span th:include="component/selectCombo(id='handleMethod',name='handleMethod',dictType='HANDLE_METHOD',defaultValue=${alarmManageDo.handleMethod},verify='')"/></td>
                 </tr>
                 <tr>
                     <td class="TDleft"><label>处理内容：</label></td>
-                    <td colspan="3"><input type="text" th:value="${alarmManageDo.handleContent}" class="input-xxlarge" name="handleContent" disabled></td>
+                    <td colspan="3"><input type="text" th:value="${alarmManageDo.handleContent}" class="input-xxlarge" name="handleContent" ></td>
                 </tr>
                 <tr>
                     <td class="TDleft"><label>备注：</label></td>
-                    <td colspan="3"><input type="text" th:value="${alarmManageDo.remark}" class="input-xxlarge" name="remark" disabled></td>
+                    <td colspan="3"><input type="text" th:value="${alarmManageDo.remark}" class="input-xxlarge" name="remark" ></td>
                 </tr>
             </table>
 

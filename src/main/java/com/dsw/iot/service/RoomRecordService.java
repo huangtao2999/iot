@@ -2,12 +2,16 @@ package com.dsw.iot.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.dsw.iot.dto.RoomRecordRequest;
 import com.dsw.iot.model.PersonRegisterDo;
 import com.dsw.iot.model.RoomPropertyDo;
 import com.dsw.iot.model.RoomRecordDo;
 import com.dsw.iot.util.BizException;
 import com.dsw.iot.util.PageResult;
+import com.dsw.iot.vo.BlPersonRegisterVo;
 
 /**
  * 人员房间关联记录
@@ -104,5 +108,10 @@ public interface RoomRecordService {
 	 * @return
 	 */
 	public List<RoomRecordDo> getRoomRecordByrid(Long roomId, String isHistory);
+	
+	/**
+	 * @return
+	 */
+	public BlPersonRegisterVo authRoom(HttpServletRequest request, HttpServletResponse response) throws BizException;
 
 }

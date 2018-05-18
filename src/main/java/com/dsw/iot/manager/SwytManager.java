@@ -1,5 +1,7 @@
 package com.dsw.iot.manager;
 
+import com.dsw.iot.util.BizException;
+
 /**
  * 警综对接服务类
  *
@@ -8,8 +10,13 @@ package com.dsw.iot.manager;
  * TODO;
  **/
 public interface SwytManager {
-    //根据身份证号 获取常驻人员信息
-    public Object getXxxByIdCard(String cardNo);
+    /**
+     * 根据身份证号 获取常驻人员信息
+     * @param cardNo
+     * @param policeNo
+     * @return
+     */
+    public Object getPeopleByCardNo(String cardNo,String policeNo) throws BizException;
 
     //获取警情编号
 

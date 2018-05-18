@@ -70,7 +70,7 @@ public class OutConfirmServiceImpl implements OutConfirmService {
 		}
 		//申请原因
 		if(StringUtils.isNotBlank(outConfirmRequest.getApplyReason())){
-			criteria.andApplyReasonEqualTo(outConfirmRequest.getApplyReason());
+			criteria.andApplyReasonLike("%" + outConfirmRequest.getApplyReason() + "%");
 		}
 		//审批民警
 		if(StringUtils.isNotBlank(outConfirmRequest.getAuditUser())){
@@ -132,7 +132,8 @@ public class OutConfirmServiceImpl implements OutConfirmService {
 
 			remindDo.setContent(remindContent);
 			remindDo.setTitle(remindContent);
-			remindDo.setPath(BusinessBizConfig.RemindTaskBelong.getPath(outConfirmDo.getOutType()));
+			remindDo.setPath(
+					BusinessBizConfig.RemindTaskBelong.getPath(BusinessBizConfig.RemindTaskBelong.OUT_CONFIRM));
 			remindDo.setTaskId(Long.valueOf(outConfirmDo.getId()));
 			remindDo.setTaskBelong(BusinessBizConfig.RemindTaskBelong.OUT_CONFIRM);
 			remindDo.setStatus(BusinessBizConfig.RemindStatus.NOTPROCESSED);//0-未读；1-已读

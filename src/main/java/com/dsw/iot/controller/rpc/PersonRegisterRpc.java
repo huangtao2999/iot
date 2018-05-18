@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dsw.iot.dto.PersonRegisterRequest;
+import com.dsw.iot.manager.SwytManager;
 import com.dsw.iot.model.PersonRegisterDo;
 import com.dsw.iot.service.PersonRegisterService;
 import com.dsw.iot.util.ActionResult;
@@ -20,6 +21,9 @@ public class PersonRegisterRpc {
 
     @Autowired
     PersonRegisterService personRegisterService;
+    
+    @Autowired
+    SwytManager swytManager;
 
     /**
      * 分页查询人员信息
@@ -117,5 +121,17 @@ public class PersonRegisterRpc {
     @RequestMapping("/autoSetWaitingRoom")
     public ActionResult<String> autoSetWaitingRoom(Long id) throws BizException {
         return personRegisterService.autoSetWaitingRoom(id);
+    }
+    
+    /**
+     * 根据身份证号 获取常驻人员信息
+     * @param cardNo
+     * @param policeNo
+     * @return
+     * @throws BizException
+     */
+    @RequestMapping("/getIDCardInfo")
+    public Object getPeopleByCardNo(String cardNo, String policeNo) throws BizException {
+    	return swytManager.getPeopleByCardNo(cardNo, policeNo);
     }
 }

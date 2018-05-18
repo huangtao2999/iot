@@ -71,7 +71,7 @@ public class VideoManagerImpl implements VideoManager {
                 } else {
                     //抓拍
                     HCNetSDK.NET_DVR_JPEGPARA lpJpegPara = new HCNetSDK.NET_DVR_JPEGPARA();
-                    lpJpegPara.wPicSize = 0;
+                    lpJpegPara.wPicSize = 2;
                     lpJpegPara.wPicQuality = 0;
                     FileUtils.createDir(tempPath);
                     String filePath = tempPath + "/" + fileName;

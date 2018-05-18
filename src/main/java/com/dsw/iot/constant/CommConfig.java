@@ -9,8 +9,8 @@ public interface CommConfig {
     public static final int COOKIE_AGE = 8 * 60 * 60;
     //guankong系统加密key
     public static final String GUANGKONG_KEY = "3c56602233254dd4be6db5d9b7f9a23a";
-    //is_deleted N 常量
-    public static final String NOT_DELETED = "N";
+    //LED显示空闲文本 常量
+    public static final String LED_SHOW_FREE = "        空闲        ";
 
     /**
      * is_deleted 状态枚举
@@ -122,62 +122,62 @@ public interface CommConfig {
         /**
          * 操作了角色菜单表role_menu
          */
-		USER("用户管理", "2"),
+        USER("用户管理", "2"),
 
-		/**
-		 * 登录登出
-		 */
-		LOGIN_LOGOUT("登录登出", "3"),
+        /**
+         * 登录登出
+         */
+        LOGIN_LOGOUT("登录登出", "3"),
 
-		/**
-		 * 菜单管理
-		 */
-		MENU("菜单管理", "4"),
-		/**
-		 * 字典管理
-		 */
-		DICTIONARY("字典管理", "5"),
-		/**
-		 * 讯询问室管理
-		 */
-		ROOM("讯询问室管理", "6"),
-		/**
-		 * 储物柜管理
-		 */
-		LOCKER("储物柜管理", "7"),
+        /**
+         * 菜单管理
+         */
+        MENU("菜单管理", "4"),
+        /**
+         * 字典管理
+         */
+        DICTIONARY("字典管理", "5"),
+        /**
+         * 讯询问室管理
+         */
+        ROOM("讯询问室管理", "6"),
+        /**
+         * 储物柜管理
+         */
+        LOCKER("储物柜管理", "7"),
 
-		/**
-		 * 登记管理
-		 */
-		PERSON_REGISTER("登记管理", "8"),
-		/**
-		 * 家属通知
-		 */
-		PERSON_RELATED("家属通知", "9"),
-		/**
-		 * 尿检管理
-		 */
-		URINE_TEST("尿检管理", "10"),
-		/**
-		 * 预警管理
-		 */
-		ALARM("预警管理", "11"),
-		/**
-		 * 延期审核
-		 */
-		DELAY_CONFIRM("延期审核", "12"),
-		/**
-		 * 出所审核
-		 */
-		OUT_CONFIRM("出所审核", "13"),
-		/**
-		 * 出所取物
-		 */
-		OUT_FETCH("出所取物", "14"),
-		/**
-		 * 其他
-		 */
-		ELSE("其他", "15");
+        /**
+         * 登记管理
+         */
+        PERSON_REGISTER("登记管理", "8"),
+        /**
+         * 家属通知
+         */
+        PERSON_RELATED("家属通知", "9"),
+        /**
+         * 尿检管理
+         */
+        URINE_TEST("尿检管理", "10"),
+        /**
+         * 预警管理
+         */
+        ALARM("预警管理", "11"),
+        /**
+         * 延期审核
+         */
+        DELAY_CONFIRM("延期审核", "12"),
+        /**
+         * 出所审核
+         */
+        OUT_CONFIRM("出所审核", "13"),
+        /**
+         * 出所取物
+         */
+        OUT_FETCH("出所取物", "14"),
+        /**
+         * 其他
+         */
+        ELSE("其他", "15");
 
         // 成员变量
         String name;
@@ -336,25 +336,26 @@ public interface CommConfig {
     }
 
 
-	/**
-	 * 启用；空闲状态--储物柜
-	 *
-	 * @author zhang
-	 */
-	enum BUSY_FREE_STATUS {
-		BUSY("1"), FREE("0");
-		String name;
+    /**
+     * 启用；空闲状态--储物柜
+     *
+     * @author zhang
+     */
+    enum BUSY_FREE_STATUS {
+        BUSY("1"), FREE("0");
+        String name;
 
-		private BUSY_FREE_STATUS(String name) {
-			this.name = name;
-		}
+        private BUSY_FREE_STATUS(String name) {
+            this.name = name;
+        }
 
-		public String getName() {
-			return name;
-		}
+        public String getName() {
+            return name;
+        }
 
-		public void setName(String name) {
-			this.name = name;
-		}
-	}
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
 }

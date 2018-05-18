@@ -68,4 +68,26 @@ public interface PersonRegisterDoMapperExt extends PersonRegisterDoMapper {
 	 * 年人员类型person_type统计
 	 */
 	List<IndexChartVo> selectPersonTypeYearCount(IndexChartRequest request);
+
+	
+	
+	/**
+	 * 日期区间人员类型统计
+	 */
+	List<IndexChartVo> selectPersonTypeDateBetweenCountTwo(IndexChartRequest request);
+
+	/**
+	 * 周人员类型person_type统计
+	 */
+	List<IndexChartVo> selectPersonTypeWeekCountTwo(IndexChartRequest request);
+
+	/**
+	 * 月人员类型person_type统计
+	 */
+	List<IndexChartVo> selectPersonTypeMonthCountTwo(IndexChartRequest request);
+
+	/**
+	 * 年人员类型person_type统计
+	 */
+	List<IndexChartVo> selectPersonTypeYearCountTwo(IndexChartRequest request);
 }

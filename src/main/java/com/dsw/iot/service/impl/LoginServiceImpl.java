@@ -21,15 +21,16 @@ import com.dsw.iot.util.ActionResult;
 import com.dsw.iot.util.BizException;
 import com.dsw.iot.util.CookieUtil;
 import com.dsw.iot.util.MD5Util;
+import com.dsw.iot.util.PrivilegeInfo;
 
 @Service
 public class LoginServiceImpl implements LoginService {
     @Autowired(required = false)
     private UserDoMapperExt userDoMapperExt;
-	@Autowired
-	private LogService logService;
-	@Autowired
-	private CurrentUserService currentUserService;
+    @Autowired
+    private LogService logService;
+    @Autowired
+    private CurrentUserService currentUserService;
 
     @Override
     public UserDo login(String userName, String passWord, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -48,19 +49,32 @@ public class LoginServiceImpl implements LoginService {
             throw new BizException("用户名或密码错误!");
         }
         UserDo userDo = list.get(0);
-		CookieUtil.addUserToCookie(request, response, userDo);
-		// 写日志
-		logService.insertLog(CommConfig.LOG_MODULE.LOGIN_LOGOUT.getModule(), CommConfig.LOG_TYPE.LOGIN.getType(),
-				userDo.getRealName() + "  登录了系统");
+        CookieUtil.addUserToCookie(request, response, userDo);
+        //初始化 用户第一次登陆  无cookie ，需要在这里初始化写日志
+        PrivilegeInfo privilegeInfo = new PrivilegeInfo();
+        if (null != userDo) {
+            privilegeInfo.setAccount(userDo.getAccount());
+            privilegeInfo.setUserId(userDo.getId());
+            // 获得ip
+            String hostContent = request.getHeader("Host");
+            String localIp = hostContent.substring(0, hostContent.indexOf(":"));
+            privilegeInfo.setIp(localIp);
+            privilegeInfo.setName(userDo.getRealName());
+			privilegeInfo.setRealName(userDo.getRealName());
+            currentUserService.setPvginfo(privilegeInfo);
+        }
+        // 写日志
+        logService.insertLog(CommConfig.LOG_MODULE.LOGIN_LOGOUT.getModule(), CommConfig.LOG_TYPE.LOGIN.getType(),
+                userDo.getRealName() + "  登录了系统");
         return userDo;
     }
 
     @Override
     public ActionResult logout(HttpServletRequest request, HttpServletResponse response) {
         ActionResult actionResult = new ActionResult();
-		// 写日志
-		logService.insertLog(CommConfig.LOG_MODULE.LOGIN_LOGOUT.getModule(), CommConfig.LOG_TYPE.LAYOUT.getType(),
-				currentUserService.getPvgInfo().getName() + "  退出了系统");
+        // 写日志
+        logService.insertLog(CommConfig.LOG_MODULE.LOGIN_LOGOUT.getModule(), CommConfig.LOG_TYPE.LAYOUT.getType(),
+                currentUserService.getPvgInfo().getName() + "  退出了系统");
         CookieUtil.removeCookie(CommConfig.GUANKONG_USER, request, response);
         return actionResult;
     }

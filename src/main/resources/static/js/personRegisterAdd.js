@@ -1,6 +1,16 @@
 //页面的下一步上一步的页面切换方法
 var indexPage = 1; //默认是第一个页面显示;
 
+//当前功能只能选择嫌疑人，不能选证人和受害人，顶部tab单击click事件
+$(".lawCtrTabBox ul li").on('click', function () {
+	var val = $(this).find("span").attr("value");
+	if(val != "1"){
+		layer.msg("功能暂未开放");
+		$($(".lawCtrTabBox ul").find('li')[0]).addClass("active").siblings().removeClass("active");
+		$("#peopleType").val("1");//默认嫌疑人
+	}
+})
+
 /**
  * 下一步
  */
@@ -76,14 +86,14 @@ function toPage(page, registerId){
 			var goodsInfo = data.goodsInfo;
 			$(".goods-list li").remove();//清空现有表格
 			for(var i = 0; i<goodsInfo.length; i++){
-				addPresonGoods(goodsInfo[i],".goods-list");//加载第二步---物品存放信息
+				addPresonGoods(goodsInfo[i],".goods-list","inGoods");//加载第二步---物品存放信息
 			}
 		}
 		if(data.injuryInfo){
 			var injuryInfo = data.injuryInfo;
 			$(".injury-list li").remove();//清空现有表格
 			for(var i = 0; i<injuryInfo.length; i++){
-				addPresonGoods(injuryInfo[i],".injury-list");//加载第二步---伤情信息
+				addPresonGoods(injuryInfo[i],".injury-list","injury");//加载第二步---伤情信息
 			}
 		}
 		//自动分配等候室勾勾去掉
@@ -225,7 +235,8 @@ function loadPerMsg(data){
  * 获取人员类型
  */
 function getPersonType(){
-	$("#peopleType").val($(".person-type li.active").find("span").attr("value"));
+	// $("#peopleType").val($(".person-type li.active").find("span").attr("value"));
+    $("#peopleType").val("1");//默认嫌疑人
 }
 
 /**
@@ -290,11 +301,13 @@ function stepOnePreCheck(){
 		//该标签没有必填，但是需要必填
 		if(!$(this).hasClass("hideManda") && !$(this).hasClass("needHideManda") ){
 			var elemSpan = $(this).parent().find("span").text().substring(0,8);
+			var elem = $(this).parent().find("input") || $(this).parent().find("select");
 			var elemVal = $(this).parent().find("input").val() || $(this).parent().find("select").val();
 			if(!elemVal){
 				flag = false;
 				layer.closeAll('loading');
 				layer.msg("请补充必填项：" + elemSpan);
+				$(elem).focus();
 				return false;
 			}
 		}
@@ -438,10 +451,12 @@ function stepTwoPreCheck(){
 		if(!$(this).hasClass("hideManda") && !$(this).hasClass("needHideManda") ){
 			var elemSpan = $(this).parent().find("span").text().substring(0,8);
 			var elemVal = $(this).parent().find("input").val() || $(this).parent().find("select").val();
+			var elem = $(this).parent().find("input") || $(this).parent().find("select");
 			if(!elemVal){
 				flag = false;
 				layer.closeAll('loading');
 				layer.msg("请补充必填项：" + elemSpan);
+				$(elem).focus();
 				return false;
 			}
 		}
@@ -483,6 +498,18 @@ function submitStepTwo(){
     var data = getWorkAreaBoxData();
     data.injuryInfo = injuryInfo;
     data.goodsInfo = goodsInfo;
+
+    /* 判断案件类型，确定延期留置时间：行政-8小时；刑事-12小时 start */
+    var caseTypeVal = $("#caseType").val();
+    if(caseTypeVal.indexOf("XINGSHI") >= 0){
+    	// 刑事案件
+    	data.delayHour = 12;
+    }else{
+    	// 行政案件
+    	data.delayHour = 8;
+    }
+    /* 判断案件类型，确定延期留置时间：行政-8小时；刑事-12小时 end */
+
 	var res = PublicAjaxToJson('/PersonRegister/updatePerson.json', data);//提交数据
 	if(res.success){
 		//判断是否打勾了自动分配等候室
@@ -499,14 +526,14 @@ function submitStepTwo(){
 				var goodsInfo = content.goodsInfo;
 				$(".goods-list .itemsInfoMainBox li").remove();//清空现有表格
 				for(var i = 0; i<goodsInfo.length; i++){
-					addPresonGoods(goodsInfo[i],".goods-list");//加载第二步---物品存放信息
+					addPresonGoods(goodsInfo[i],".goods-list","inGoods");//加载第二步---物品存放信息
 				}
 			}
 			if(content.injuryInfo){
 				var injuryInfo = content.injuryInfo;
 				$(".injury-list .itemsInfoMainBox li").remove();//清空现有表格
 				for(var i = 0; i<injuryInfo.length; i++){
-					addPresonGoods(injuryInfo[i],".injury-list");//加载第二步---伤情信息
+					addPresonGoods(injuryInfo[i],".injury-list","injury");//加载第二步---伤情信息
 				}
 			}
 
@@ -518,14 +545,14 @@ function submitStepTwo(){
 				var goodsInfo = content.goodsInfo;
 				$(".goods-list .itemsInfoMainBox li").remove();//清空现有表格
 				for(var i = 0; i<goodsInfo.length; i++){
-					addPresonGoods(goodsInfo[i],".goods-list");//加载第二步---物品存放信息
+					addPresonGoods(goodsInfo[i],".goods-list","inGoods");//加载第二步---物品存放信息
 				}
 			}
 			if(content.injuryInfo){
 				var injuryInfo = content.injuryInfo;
 				$(".injury-list .itemsInfoMainBox li").remove();//清空现有表格
 				for(var i = 0; i<injuryInfo.length; i++){
-					addPresonGoods(injuryInfo[i],".injury-list");//加载第二步---伤情信息
+					addPresonGoods(injuryInfo[i],".injury-list","injury");//加载第二步---伤情信息
 				}
 			}
 

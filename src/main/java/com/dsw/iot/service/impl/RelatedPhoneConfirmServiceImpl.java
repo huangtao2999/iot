@@ -61,7 +61,7 @@ public class RelatedPhoneConfirmServiceImpl implements RelatedPhoneConfirmServic
 		}
 		//申请原因
 		if (StringUtils.isNotBlank(relatedPhoneConfirmRequest.getApplyReason())) {
-			criteria.andApplyReasonEqualTo(relatedPhoneConfirmRequest.getApplyReason());
+			criteria.andApplyReasonLike("%" + relatedPhoneConfirmRequest.getApplyReason() + "%");
 		}
 		//人员注册id
 		if (null!=relatedPhoneConfirmRequest.getRegisterId()) {

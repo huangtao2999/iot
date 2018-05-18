@@ -109,7 +109,7 @@
     <result column="in_type" property="inType" jdbcType="VARCHAR" />
   </resultMap>
   <select id="selectPersonTypeDateBetweenCount" resultMap="PersonTypeCountResultMap2" parameterType="com.dsw.iot.dto.IndexChartRequest">
-	select count(*) as cnt, in_type
+	select count(*) as cnt, person_type as in_type
 	from person_register
 	where 1=1
 	and is_deleted = 'N'
@@ -120,7 +120,7 @@
 	]]>
   </select>
   <select id="selectPersonTypeWeekCount" resultMap="PersonTypeCountResultMap" parameterType="com.dsw.iot.dto.IndexChartRequest">
-	select count(*) as cnt, in_type, DATE_FORMAT(in_time,'%Y%u') as in_time
+	select count(*) as cnt, person_type as in_type, DATE_FORMAT(in_time,'%Y%u') as in_time
 	from person_register
 	where 1=1
 	and is_deleted = 'N'
@@ -130,7 +130,7 @@
 	]]>
   </select>
   <select id="selectPersonTypeMonthCount" resultMap="PersonTypeCountResultMap" parameterType="com.dsw.iot.dto.IndexChartRequest">
-	select count(*) as cnt, in_type, DATE_FORMAT(in_time,'%Y%m') as in_time
+	select count(*) as cnt, person_type as in_type, DATE_FORMAT(in_time,'%Y%m') as in_time
 	from person_register
 	where 1=1
 	and is_deleted = 'N'
@@ -140,7 +140,7 @@
 	]]>
   </select>
   <select id="selectPersonTypeYearCount" resultMap="PersonTypeCountResultMap" parameterType="com.dsw.iot.dto.IndexChartRequest">
-	select count(*) as cnt, in_type, DATE_FORMAT(in_time,'%Y') as in_time
+	select count(*) as cnt, person_type as in_type, DATE_FORMAT(in_time,'%Y') as in_time
 	from person_register
 	where 1=1
 	and is_deleted = 'N'
@@ -148,5 +148,143 @@
 	and DATE_FORMAT(in_time, '%Y') = #{inYear,jdbcType=VARCHAR}
 	group by person_type;
 	]]>
+  </select>
+  
+  	<!-- 新统计写法 -->
+    <select id="selectPersonTypeDateBetweenCountTwo" resultMap="PersonTypeCountResultMap2" parameterType="com.dsw.iot.dto.IndexChartRequest">
+		select count(1) as cnt,'401' as in_type from person_register where 1=1 and is_deleted = 'N' and person_type='401'
+		<![CDATA[
+		and DATE_FORMAT(in_time, '%Y%m%d') >= DATE_FORMAT(#{startDate,jdbcType=VARCHAR},'%Y%m%d')
+		and DATE_FORMAT(in_time, '%Y%m%d') <= DATE_FORMAT(#{endDate,jdbcType=VARCHAR},'%Y%m%d')
+		]]>
+		UNION all
+		select count(1) as cnt,'404' as in_type from person_register where 1=1 and is_deleted = 'N' and person_type in('404','521')
+		<![CDATA[
+		and DATE_FORMAT(in_time, '%Y%m%d') >= DATE_FORMAT(#{startDate,jdbcType=VARCHAR},'%Y%m%d')
+		and DATE_FORMAT(in_time, '%Y%m%d') <= DATE_FORMAT(#{endDate,jdbcType=VARCHAR},'%Y%m%d')
+		]]>
+		UNION all 
+		select count(1) as cnt,'402' as in_type from person_register where 1=1 and is_deleted = 'N' and person_type='402'
+		<![CDATA[
+		and DATE_FORMAT(in_time, '%Y%m%d') >= DATE_FORMAT(#{startDate,jdbcType=VARCHAR},'%Y%m%d')
+		and DATE_FORMAT(in_time, '%Y%m%d') <= DATE_FORMAT(#{endDate,jdbcType=VARCHAR},'%Y%m%d')
+		]]>
+		UNION all 
+		select count(1) as cnt,'412' as in_type from person_register where 1=1 and is_deleted = 'N' and person_type='412'
+		<![CDATA[
+		and DATE_FORMAT(in_time, '%Y%m%d') >= DATE_FORMAT(#{startDate,jdbcType=VARCHAR},'%Y%m%d')
+		and DATE_FORMAT(in_time, '%Y%m%d') <= DATE_FORMAT(#{endDate,jdbcType=VARCHAR},'%Y%m%d')
+		]]>
+		UNION all 
+		select count(1) as cnt,'418' as in_type from person_register where 1=1 and is_deleted = 'N' and person_type='418'
+		<![CDATA[
+		and DATE_FORMAT(in_time, '%Y%m%d') >= DATE_FORMAT(#{startDate,jdbcType=VARCHAR},'%Y%m%d')
+		and DATE_FORMAT(in_time, '%Y%m%d') <= DATE_FORMAT(#{endDate,jdbcType=VARCHAR},'%Y%m%d')
+		]]>
+		UNION all 
+		select count(1) as cnt,'650' as in_type from person_register where 1=1 and is_deleted = 'N' and person_type 
+		not in ('401','402','404','521','412','418')
+		<![CDATA[
+		and DATE_FORMAT(in_time, '%Y%m%d') >= DATE_FORMAT(#{startDate,jdbcType=VARCHAR},'%Y%m%d')
+		and DATE_FORMAT(in_time, '%Y%m%d') <= DATE_FORMAT(#{endDate,jdbcType=VARCHAR},'%Y%m%d')
+		]]>
+  </select>
+  <select id="selectPersonTypeWeekCountTwo" resultMap="PersonTypeCountResultMap" parameterType="com.dsw.iot.dto.IndexChartRequest">
+		select count(1) as cnt,'401' as in_type, DATE_FORMAT(in_time,'%Y%u') as in_time from person_register where 1=1 and is_deleted = 'N' and person_type='401'
+		<![CDATA[
+		and DATE_FORMAT(in_time, '%Y%u') = #{inWeek,jdbcType=VARCHAR}
+		]]>
+		UNION all
+		select count(1) as cnt,'404' as in_type, DATE_FORMAT(in_time,'%Y%u') as in_time from person_register where 1=1 and is_deleted = 'N' and person_type in('404','521')
+		<![CDATA[
+		and DATE_FORMAT(in_time, '%Y%u') = #{inWeek,jdbcType=VARCHAR}
+		]]>
+		UNION all 
+		select count(1) as cnt,'402' as in_type, DATE_FORMAT(in_time,'%Y%u') as in_time from person_register where 1=1 and is_deleted = 'N' and person_type='402'
+		<![CDATA[
+		and DATE_FORMAT(in_time, '%Y%u') = #{inWeek,jdbcType=VARCHAR}
+		]]>
+		UNION all 
+		select count(1) as cnt,'412' as in_type, DATE_FORMAT(in_time,'%Y%u') as in_time from person_register where 1=1 and is_deleted = 'N' and person_type='412'
+		<![CDATA[
+		and DATE_FORMAT(in_time, '%Y%u') = #{inWeek,jdbcType=VARCHAR}
+		]]>
+		UNION all 
+		select count(1) as cnt,'418' as in_type, DATE_FORMAT(in_time,'%Y%u') as in_time from person_register where 1=1 and is_deleted = 'N' and person_type='418'
+		<![CDATA[
+		and DATE_FORMAT(in_time, '%Y%u') = #{inWeek,jdbcType=VARCHAR}
+		]]>
+		UNION all 
+		select count(1) as cnt,'650' as in_type, DATE_FORMAT(in_time,'%Y%u') as in_time from person_register where 1=1 and is_deleted = 'N' and person_type 
+		not in ('401','402','404','521','412','418')
+		<![CDATA[
+		and DATE_FORMAT(in_time, '%Y%u') = #{inWeek,jdbcType=VARCHAR}
+		]]>
+  </select>
+  <select id="selectPersonTypeMonthCountTwo" resultMap="PersonTypeCountResultMap" parameterType="com.dsw.iot.dto.IndexChartRequest">
+		select count(1) as cnt,'401' as in_type, DATE_FORMAT(in_time,'%Y%m') as in_time from person_register where 1=1 and is_deleted = 'N' and person_type='401'
+		<![CDATA[
+			and DATE_FORMAT(in_time, '%Y%m') = #{inMonth,jdbcType=VARCHAR}
+		]]>
+		UNION all
+		select count(1) as cnt,'404' as in_type, DATE_FORMAT(in_time,'%Y%m') as in_time from person_register where 1=1 and is_deleted = 'N' and person_type in('404','521')
+		<![CDATA[
+			and DATE_FORMAT(in_time, '%Y%m') = #{inMonth,jdbcType=VARCHAR}
+		]]>
+		UNION all 
+		select count(1) as cnt,'402' as in_type, DATE_FORMAT(in_time,'%Y%m') as in_time from person_register where 1=1 and is_deleted = 'N' and person_type='402'
+		<![CDATA[
+			and DATE_FORMAT(in_time, '%Y%m') = #{inMonth,jdbcType=VARCHAR}
+		]]>
+		UNION all 
+		select count(1) as cnt,'412' as in_type, DATE_FORMAT(in_time,'%Y%m') as in_time from person_register where 1=1 and is_deleted = 'N' and person_type='412'
+		<![CDATA[
+			and DATE_FORMAT(in_time, '%Y%m') = #{inMonth,jdbcType=VARCHAR}
+		]]>
+		UNION all 
+		select count(1) as cnt,'418' as in_type, DATE_FORMAT(in_time,'%Y%m') as in_time from person_register where 1=1 and is_deleted = 'N' and person_type='418'
+		<![CDATA[
+			and DATE_FORMAT(in_time, '%Y%m') = #{inMonth,jdbcType=VARCHAR}
+		]]>
+		UNION all 
+		select count(1) as cnt,'650' as in_type, DATE_FORMAT(in_time,'%Y%m') as in_time from person_register where 1=1 and is_deleted = 'N' and person_type 
+		not in ('401','402','404','521','412','418')
+		<![CDATA[
+			and DATE_FORMAT(in_time, '%Y%m') = #{inMonth,jdbcType=VARCHAR}
+		]]>
+		
+  </select>
+  <select id="selectPersonTypeYearCountTwo" resultMap="PersonTypeCountResultMap" parameterType="com.dsw.iot.dto.IndexChartRequest">
+		select count(1) as cnt,'401' as in_type, DATE_FORMAT(in_time,'%Y') as in_time from person_register where 1=1 and is_deleted = 'N' and person_type='401'
+		<![CDATA[
+			and DATE_FORMAT(in_time, '%Y') = #{inYear,jdbcType=VARCHAR}
+		]]>
+		UNION all
+		select count(1) as cnt,'404' as in_type, DATE_FORMAT(in_time,'%Y') as in_time from person_register where 1=1 and is_deleted = 'N' and person_type in('404','521')
+		<![CDATA[
+			and DATE_FORMAT(in_time, '%Y') = #{inYear,jdbcType=VARCHAR}
+		]]>
+		UNION all 
+		select count(1) as cnt,'402' as in_type, DATE_FORMAT(in_time,'%Y') as in_time from person_register where 1=1 and is_deleted = 'N' and person_type='402'
+		<![CDATA[
+			and DATE_FORMAT(in_time, '%Y') = #{inYear,jdbcType=VARCHAR}
+		]]>
+		UNION all 
+		select count(1) as cnt,'412' as in_type, DATE_FORMAT(in_time,'%Y') as in_time from person_register where 1=1 and is_deleted = 'N' and person_type='412'
+		<![CDATA[
+			and DATE_FORMAT(in_time, '%Y') = #{inYear,jdbcType=VARCHAR}
+		]]>
+		UNION all 
+		select count(1) as cnt,'418' as in_type, DATE_FORMAT(in_time,'%Y') as in_time from person_register where 1=1 and is_deleted = 'N' and person_type='418'
+		<![CDATA[
+		and DATE_FORMAT(in_time, '%Y') = #{inYear,jdbcType=VARCHAR}
+		]]>
+		UNION all 
+		select count(1) as cnt,'650' as in_type, DATE_FORMAT(in_time,'%Y') as in_time from person_register where 1=1 and is_deleted = 'N' and person_type 
+		not in ('401','402','404','521','412','418')
+		<![CDATA[
+			and DATE_FORMAT(in_time, '%Y') = #{inYear,jdbcType=VARCHAR}
+		]]>
+
   </select>
 </mapper>

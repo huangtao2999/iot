@@ -1,5 +1,6 @@
 package com.dsw.iot;
 
+import com.dsw.iot.constant.CommConfig;
 import com.dsw.iot.manager.LedManager;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class TestLedManager extends BaseTest {
     public void showContent() {
         String ip = "192.168.1.29";
         String title = "询问室";
-        String content = "犯罪嫌疑人:测试LED连接";
+        String content = CommConfig.LED_SHOW_FREE;
         ledManager.showContent(ip, title, content);
     }
 }

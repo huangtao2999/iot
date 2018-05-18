@@ -101,8 +101,8 @@
         if (code.length > 0) code = code.substring(0, code.length - 1);
         var cityObj = $('#' + treeId).data('dsw-select-menu').$el;
         //填写选中的code
-        cityObj.attr("data-code",code);
-        cityObj.attr("value", v);
+        cityObj.data("code",code);
+        cityObj.val(v);
     }
 
     function filter(treeId, parentNode, childNodes) {

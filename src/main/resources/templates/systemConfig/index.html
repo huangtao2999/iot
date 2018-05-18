@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=Edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+    <meta name="render" content="webkit|ie-comp|ie-stand" />
+
+    <title>lists</title>
+
+    <!--公共样式区 start-->
+    <link rel="stylesheet" href="/dsw/css/normalize.css">
+    <link rel="stylesheet" href="/dsw/css/common.css">
+    <!--公共样式区 end-->
+
+    <!--插件样式区 start-->
+    <link rel="stylesheet" href="/dsw/vendors/datatables/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/dsw/vendors/datatables/extensions/buttons/css/buttons.dataTables.min.css">
+    <!--插件样式区 end-->
+
+    <!--自定义样式区 start-->
+    <link rel="stylesheet" href="/dsw/css/normalize-custom.css">
+    <link rel="stylesheet" href="/dsw/css/datatables-custom.css">
+    <link rel="stylesheet" href="/dsw/css/layer-custom.css">
+    <link rel="stylesheet" href="/dsw/css/iframe.css">
+    <link rel="stylesheet" href="/dsw/css/table.css">
+    <link rel="stylesheet" href="/dsw/css/form.css">
+    <!--自定义样式区 end-->
+
+    <!--内联样式区 start-->
+    <style></style>
+    <!--内联样式区 end-->
+
+    <!--[if lt IE 9]>
+    <script src="/dsw/vendors/respond/respond.min.js"></script>
+    <script src="/dsw/vendors/selectivizr.min.js"></script>
+    <script src="/dsw/vendors/html5shiv/html5shiv.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="container-fluid dsw-container dsw-iframe-lists-bg">
+
+    <div class="dsw-search-contaienr">
+        <form class="dsw-search-wrapper row form-horizontal text-center" id="dsw-search-wrapper">
+                <span class="clearfix">
+                    <div class="form-group col-md-6 col-md-offset-3">
+                        <label class="control-label col-md-4 text-right">Key</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control dsw-input-bg" name="keyInfo" />
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-3 ">
+                        <button class="dsw-search-btn" type="button" id="dsw-search-btn">查询</button>
+                    </div>
+                </span>
+        </form>
+    </div>
+
+    <div class="dsw-datatable-container" >
+        <table class="table table-bordered dsw-datatables" id="datatables" data-toggle="dsw-datatables" data-url="/SystemConfig/queryPage" data-data-src="data" data-type="get" data-column="column"></table>
+    </div>
+
+</div>
+
+<script type="text/html" id="dsw-toolbar-template">
+    <div class="dsw-toolbar-wrapper clearfix">
+        <div class="dsw-action-btn-wrapper pull-left">
+            <button class="dsw-toolbar-btn " id="dsw-add-btn">新增</button>
+            <button class="dsw-toolbar-btn" id="dsw-edit-btn">编辑</button>
+            <button class="dsw-toolbar-btn" id="dsw-delete-btn">删除</button>
+        </div>
+        <div class="dsw-advanced-query-wrapper pull-right">
+            <button class="dsw-toolbar-btn" id="dsw-advanced-search-btn">高级查询</button>
+            <button class="dsw-toolbar-btn" id="dsw-refresh-btn">刷新表格</button>
+        </div>
+    </div>
+
+</script>
+
+<script type="text/html" id="dsw-advanced-search-template">
+    <div class="dsw-advanced-search-wrapper">
+        <form class="form-horizontal clearfix">
+            <div class="form-group col-md-6">
+                <label class="control-label col-md-4">标题</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control dsw-input-bg" />
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label col-md-4">标题</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control dsw-input-bg" />
+                </div>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label class="control-label col-md-4">标题</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control dsw-input-bg" />
+                </div>
+            </div>
+
+            <div class="form-group col-md-12 text-center">
+                <button class="dsw-advanced-query-btn" type="button" id="dsw-advanced-query-btn">查询</button>
+            </div>
+        </form>
+    </div>
+
+</script>
+
+<!--公共脚本区 start-->
+<!--[if lt IE 9]><script src="/dsw/vendors/jquery-1.12.4.min.js"></script><![endif]-->
+<!--[if (gte IE 9)|(! IE)]><!--><script src="/dsw/vendors/jquery-3.3.1.min.js"></script><!--<![endif]-->
+<!--公共脚本区 end-->
+
+<!--插件脚本区 start-->
+<script src="/dsw/vendors/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/dsw/vendors/datatables/extensions/buttons/js/dataTables.buttons.min.js"></script>
+<script src="/dsw/vendors/layer/layer.js"></script>
+<script src="/dsw/vendors/slim-scroll/jquery.slimscroll.min.js"></script>
+<!--插件脚本区 end-->
+
+<!--自定义脚本区 start-->
+<script src="/dsw/js/utils.js"></script>
+<script src="/dsw/js/slimscroll.js"></script>
+<script>
+    dswUtils.dataTableColumn['column']={
+        columns:[
+            {title:'Key',data:'keyInfo'},
+            {title:'标题',data:'title'},
+            {title:'状态',data:'status',className:'dsw-status'},
+            {title:'更新时间',data:'updateTime'},
+            {title:'操作'}
+        ],
+        columnDefs:[
+            {
+                targets:-1,
+                render:function(data,type,row,meta){
+                    return '<button class="btn btn-primary dsw-edit-btn" type="button" data-id="'+row.id+'" >编辑</button><button type="button" class="btn btn-success dsw-refresh-btn" data-id="'+row.id+'">刷新</button>';
+                }
+            },
+            {
+                targets:2,
+                render:function(data,type,row,meta){
+                    if (data==1){
+                        return "<span class='label label-primary'>有效</span>"
+                    } else {
+                        return "<span class='label label-danger'>无效</span>"
+                    }
+                }
+            },
+            {
+                targets:-2,
+                render:function(data,type,row,meta){
+                    return dswUtils.dateFormatter(data);
+                }
+            }
+        ]
+    }
+</script>
+<script src="/dsw/js/datatables.js"></script>
+<!--自定义脚本区 end-->
+
+<!--内联脚本区 start-->
+<script>
+    $(function () {
+
+        $('#datatables').on('click','.dsw-edit-btn',function (e) {
+            var id=$(this).data('id');
+            var index=dswUtils.openIframe( '/SystemConfig/edit.html',{id:id});
+
+        }).on('click','.dsw-refresh-btn',function (e) {
+            var id=$(this).data(id);
+            var index = layer.load(2);
+            $.ajax({
+                type:'get',
+                url:'',
+                data:{id:id}
+            }).done(function (result) {
+
+            }).fail(function (reason) {
+
+            }).always(function () {
+                layer.close(index);
+            });
+        });
+
+        $('#dsw-add-btn').click(function (e) {
+            var index=dswUtils.openIframe( '/SystemConfig/add.html');
+        });
+
+        //刷新表格
+        $('#dsw-refresh-btn').click(function (e) {
+            $('#datatables').dataTable().api().ajax.reload(null,false);
+        });
+
+        //    回车键查询
+        $('#dsw-search-wrapper').keydown(function (e) {
+            if (e.keyCode===13){
+                $('#datatables').DataTable().ajax.reload();
+            }
+        });
+
+        //    普通查询
+        $('#dsw-search-btn').click(function (e) {
+            $('#datatables').DataTable().ajax.reload();
+        });
+
+        //    高级查询
+        $('#dsw-advanced-search-btn').click(function (e) {
+            dswUtils.openPage($('#dsw-advanced-search-template').html());
+        });
+
+    });
+</script>
+<!--内联脚本区 end-->
+</body>
+</html>

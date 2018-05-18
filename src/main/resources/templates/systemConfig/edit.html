@@ -1,10 +1,201 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=Edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+    <meta name="render" content="webkit|ie-comp|ie-stand" />
+
+    <title>add</title>
+
+    <!--公共样式区 start-->
+    <link rel="stylesheet" href="/dsw/css/normalize.css">
+    <link rel="stylesheet" href="/dsw/css/common.css">
+    <!--公共样式区 end-->
+
+    <!--插件样式区 start-->
+    <link rel="stylesheet" href="/dsw/vendors/highlight/styles/default.css">
+    <!--插件样式区 end-->
+
+    <!--自定义样式区 start-->
+    <!--自定义样式区 end-->
+
+    <!--内联样式区 start-->
+    <style></style>
+    <!--内联样式区 end-->
+
+    <!--[if lt IE 9]>
+    <script src="/dsw/vendors/respond/respond.min.js"></script>
+    <script src="/dsw/vendors/selectivizr.min.js"></script>
+    <script src="/dsw/vendors/html5shiv/html5shiv.min.js"></script>
+    <![endif]-->
 </head>
 <body>
+<div class="container-fluid">
 
+    <form action="" class="form form-horizontal">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label class="control-label col-md-4" for="title">标题：</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" name="title" id="title" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4" for="key">Key：</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" name="key" id="key" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4" for="status">状态：</label>
+                    <div class="col-md-8">
+                        <select name="status" class="form-control" id="status">
+                            <option value="">请选择</option>
+                            <option value="1">启用</option>
+                            <option value="0">禁用</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4" for="desc">说明：</label>
+                    <div class="col-md-8">
+                        <textarea name="desc" id="desc" class="form-control" cols="30" rows="10"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary col-md-offset-10" id="add-property-btn"> 添加属性</button>
+                </div>
+
+                <div class="row" id="custom-property-wrapper" data-index="0"></div>
+            </div>
+            <div class="col-md-4" id="json-box">
+                <pre>
+                    <code class="lang-json" id="lang-json"></code>
+                </pre>
+            </div>
+        </div>
+
+        <input type="hidden" name="property-json" id="property-json" />
+
+        <div class="center-block text-center">
+            <button class="btn btn-primary" type="button" id="submit">保存</button>
+            <button class="btn btn-warning" type="button" id="goback">返回</button>
+        </div>
+    </form>
+
+</div>
+
+<script type="text/html" id="property-template">
+    <div class="form-group" >
+        <label class="control-label col-md-4">属性--<span id="property-index"></span></label>
+        <div class="col-md-4">
+            <input type="text" class="form-control" name="propertyKey[]" />
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="form-control" name="propertyVal[]" />
+        </div>
+    </div>
+</script>
+
+<!--公共脚本区 start-->
+<!--[if lt IE 9]><script src="/dsw/vendors/jquery-1.12.4.min.js"></script><![endif]-->
+<!--[if (gte IE 9)|(! IE)]><!--><script src="/dsw/vendors/jquery-3.3.1.min.js"></script><!--<![endif]-->
+<!--公共脚本区 end-->
+
+<!--插件脚本区 start-->
+<script src="/dsw/vendors/highlight/highlight.pack.js"></script>
+<!--插件脚本区 end-->
+
+<!--自定义脚本区 start-->
+<!--自定义脚本区 end-->
+
+<!--内联脚本区 start-->
+<script>
+    $(function () {
+        $(document).ready(function (e) {
+            hljs.initHighlighting();
+        });
+
+        function detectAdd(){
+            var addFlag=true;
+
+            $('#custom-property-wrapper').children(':last-child').find('input').map(function (index,item) {
+                return item.value;
+            }).get().forEach(function (item,index) {
+                if(item===''){
+                    addFlag=false;
+                }
+            });
+
+            if (addFlag){
+                $('#add-property-btn').removeAttr('disabled');
+            } else {
+                $('#add-property-btn').attr('disabled',true);
+            }
+
+            return addFlag;
+        }
+
+        detectAdd();
+
+        //    属性新增事件
+        $('#add-property-btn').click(function (e) {
+            var $wrapper=$('#custom-property-wrapper');
+
+            var index=$wrapper.data('index')+1;
+
+            var $template=$($('#property-template').html());
+
+            $template.find('#property-index').text(index<10?'0'+index:index);
+
+            $wrapper.append($template).data('index',index);
+
+            detectAdd()
+        });
+
+        //    属性输入事件
+        $('#custom-property-wrapper').on('blur','input',function (e) {
+            var json={};
+            var propertyArray=$(this).closest('#custom-property-wrapper').find('input').map(function (index,item){
+                return item.value;
+            }).get();
+
+            var len = propertyArray.length;
+
+            for (var index=0; index<len; index+=2) {
+                json[propertyArray[index]]=propertyArray[index+1];
+            }
+
+            $('#property-json').val(json);
+
+            $('#lang-json').html(JSON.stringify(json));
+            hljs.initHighlighting();
+
+            detectAdd();
+        });
+
+        $('#submit').click(function (e) {
+            // console.log($('form').serialize());
+            console.log($('form').serializeArray());
+
+            $.ajax({
+                type:'post',
+                url:'',
+                data:$(this).closest('form').serializeArray()
+            }).done(function (result) {
+
+            }).fail(function (reason) {
+
+            }).always(function (res) {
+
+            });
+        });
+
+    });
+</script>
+<!--内联脚本区 end-->
 </body>
 </html>

@@ -350,7 +350,7 @@
             text : '证件类型',
             name : 'cardType',
             type : 'select',
-            dicCode : 'PER_CARD_TYPE'
+            dicCode : 'PER_INFO_CARD_TYPE'
         },{
             text : '证件号码',
             name : 'cardNo'
@@ -408,7 +408,7 @@
 	    flowUrlMap.set("dhsy",{"url":"/RelatedPhoneConfirmHtml/usePhone.html","area":["70%","90%"]});
 	    //二,按钮链接
 	    flowUrlMap.set("rygj",{"url":"/PersonTraceHtml/index.html","area":["70%","90%"]});
-	    flowUrlMap.set("gpbl",{"url":"/RelatedPhoneConfirmHtml/add.html","area":["70%","90%"]});
+	    flowUrlMap.set("gpbl",{"area":["70%","90%"]});
 	    flowUrlMap.set("dpxx",{"url":"/UrineTestInfoHtml/index.html","area":["70%","90%"]});
 	    flowUrlMap.set("njxx",{"url":"/UrineTestInfoHtml/index.html","area":["70%","90%"]});
 	    //流程节点链接
@@ -419,7 +419,7 @@
 	    flowUrlMap.set("sqjc",{"url":"/PersonRegisterHtml/stepTo.html?step=2","area":["98%","95%"]});
 	    flowUrlMap.set("aqjc",{"url":"/PersonRegisterHtml/stepTo.html?step=2","area":["98%","95%"]});
 	    flowUrlMap.set("zzbl",{"url":"/FdblRpc/syncFadu.json","area":["98%","95%"]});
-	    flowUrlMap.set("gpkl","");
+	    flowUrlMap.set("gpkl",{"url":"/BurningRpc/burnBl.json","area":["98%","95%"]});
         flowUrlMap.set("syjs",{"url":"/Room/releaseRoom.json","area":["98%","95%"]});
 
 	    /**右侧下方流程图点击  start*/
@@ -455,6 +455,8 @@
                 });
 	        }else if(dataId=="zzbl"){
                 zzblSelect(id);
+	        }else if(dataId=="gpkl"){
+	        	gpklSelect(id);
             }else if(dataId=="syjs"){
                 var roomId = $(this).closest(".diaBox").siblings(".flow-name").data("room-id");
                 layer.confirm("确认使用结束房间吗?",function(){
@@ -498,6 +500,10 @@
 	            layer.msg("请在列表选中需要查看的人员!");
 	            return;
 	        }
+	        if (dataId == 'gpbl') {
+	        	gpklSelect(id);
+	        	return;
+	        }
 	        if(dataId=="yqsq" || dataId=="cssq"||dataId=="dhsy" || dataId == "rydjb" || dataId == "rygj"){
 	            layer.open({
 	                type: 2,
@@ -540,7 +546,11 @@
 					html += '<li>';
 					html += '    <div class="posRel wh100">';
 					html += '        <span class="posAbs mid desc">'+data.userData[i].name+':</span>';
-					html += '        <span class="nameTxt posAbs mid">'+data.userData[i].value+'</span>';
+					if(data.userData[i].name == "户籍"){
+						html += '        <span class="nameTxt posAbs mid" title="'+ (data.userData[i].value || "") +'">'+(data.userData[i].value.substring(0,8) || "") +'</span>';
+					}else{
+						html += '        <span class="nameTxt posAbs mid" title="'+ (data.userData[i].value || "") +'">'+(data.userData[i].value || "") +'</span>';
+					}
 					html += '    </div>';
 					html += '</li>';
 				}
@@ -614,6 +624,9 @@
         if(pStatus == '5'){
             layer.msg("该人员已正式出办案区，流程内功能禁止使用");
             return;
+        }else if(pStatus != '4'){
+        	layer.msg("该人员不是临时出办案区状态，此功能禁止使用");
+        	return;
         }
 		var registerId = $("#registerId").val();
 		if(registerId){
@@ -709,12 +722,22 @@
                 if(res.success==true){
                     window.location.href = res.content;
                 }else{
-                    alert(res.errorMsg);
+                	layer.msg(res.errorMsg);
                     return;
                 }
             }
         });
 
+    }
+
+    function gpklSelect(id) {
+    	var res = PublicAjax('/BurningRpc/burnBl.json',{'registerId':id});
+        if(res.success==true){
+        	layer.msg("制作中...");
+        }else{
+        	layer.msg(res.errorMsg);
+            return;
+        }
     }
 </script>
 </html>

@@ -20,7 +20,7 @@
             </tr>
             <tr>
                 <td class="TDleft"><label>证件类别：</label></td>
-               	<td><span th:include="component/selectCombo(id='cardType',name='cardType',dictType='PER_CARD_TYPE',defaultValue=${personRegisterDo.cardType},verify='',disabled='1')"/></td>
+               	<td><span th:include="component/selectCombo(id='cardType',name='cardType',dictType='PER_INFO_CARD_TYPE',defaultValue=${personRegisterDo.cardType},verify='',disabled='1')"/></td>
                 <td class="TDleft">证件号码：</td>
 				<td th:text='${personRegisterDo.cardNo}'></td>
             </tr>
@@ -43,16 +43,16 @@
             </tr>
             <tr>
                 <td class="TDleft">手机号码：</td>
-                <td><input type="isMobile" name="tel" class="input-medium" required="true"></td>
-                <td class="TDleft">通话时间：</td>
-                <td><input type="number" name="talkTime" class="input-small" required="true"> 分钟</td>
+                <td><input type="text" onKeyUp="value=value.replace(/\D/g,'')" name="tel" class="input-large" required="true"></td>
+                <td class="TDleft">主办民警：</td>
+                <td><input type="text" name="policeName" class="input-large" readonly="readonly" th:value="${personRegisterDo.hostPoliceName}">
+                </td>
             </tr>
             <tr>
-                <td class="TDleft">主办民警：</td>
-                <td><input type="text" name="policeName" class="input-large" readonly="readonly" th:value="${userDo.account}">
-                </td>
-                <td class="TDleft">申请时间：</td>
-                <td></td>
+<!--                 <td class="TDleft">通话时间：</td> -->
+<!--                 <td><input type="number" name="talkTime" class="input-small" required="true"> 分钟</td> -->
+<!--                 <td class="TDleft">申请时间：</td> -->
+<!--                 <td></td> -->
             </tr>
         </table>
 

@@ -1,30 +1,21 @@
 package com.dsw.iot.service.impl;
 
-import java.util.List;
-
+import com.dsw.iot.constant.CommConfig;
+import com.dsw.iot.dto.GoodsRegisterRequest;
+import com.dsw.iot.dto.OutClickConfirmRequest;
+import com.dsw.iot.manager.RtlsManager;
+import com.dsw.iot.model.CardManageDo;
+import com.dsw.iot.model.LockerDo;
+import com.dsw.iot.model.PersonRegisterDo;
+import com.dsw.iot.service.*;
+import com.dsw.iot.util.ActionResult;
+import com.dsw.iot.util.BizException;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dsw.iot.constant.CommConfig;
-import com.dsw.iot.dto.GoodsRegisterRequest;
-import com.dsw.iot.dto.OutClickConfirmRequest;
-import com.dsw.iot.model.CardManageDo;
-import com.dsw.iot.model.LockerDo;
-import com.dsw.iot.model.PersonRegisterDo;
-import com.dsw.iot.service.CardLocateService;
-import com.dsw.iot.service.CardManageService;
-import com.dsw.iot.service.CurrentUserService;
-import com.dsw.iot.service.FileUploadService;
-import com.dsw.iot.service.GoodsRegisterService;
-import com.dsw.iot.service.LockerService;
-import com.dsw.iot.service.LogService;
-import com.dsw.iot.service.OutConfirmService;
-import com.dsw.iot.service.OutFetchService;
-import com.dsw.iot.service.PersonRegisterService;
-import com.dsw.iot.util.ActionResult;
-import com.dsw.iot.util.BizException;
+import java.util.List;
 
 /**
  * 出所取物
@@ -48,10 +39,14 @@ public class OutFetchServiceImpl implements OutFetchService {
     FileUploadService fileUploadService;
     @Autowired
     OutConfirmService outConfirmService;
-	@Autowired
-	private LogService logService;
-	@Autowired
-	private CurrentUserService currentUserService;
+    @Autowired
+    private LogService logService;
+    @Autowired
+    private CurrentUserService currentUserService;
+    @Autowired
+    private RoomPropertyService roomPropertyService;
+    @Autowired
+    private RtlsManager rtlsManager;
 
     /*
      * 储物柜控制
@@ -78,7 +73,6 @@ public class OutFetchServiceImpl implements OutFetchService {
 
     }
 
-
     /**
      * 临时出办案区 registerId 注册人员主键id cardId 卡芯片编码id
      *
@@ -104,14 +98,16 @@ public class OutFetchServiceImpl implements OutFetchService {
             personRegisterService.updatePersonStatus(registerId, "4");// 1-在办案区；2-申请出办案区；3-待出办案区；4-临时出办案区；5-正式出办案区；
             // 更新审批单为历史，更新out_time为当前时间
             outConfirmService.updateConfirmToHistory(outId);
+            // 释放人员所在房间
+            roomPropertyService.outReleaseRoomByRid(registerId);
             //更新定位表历史记录
             cardLocateService.updateToHistory(registerId, cardId);
             res.setSuccess(true);
             res.setContent("临时出办案区成功。" + content);
 
-			// 写日志
-			logService.insertLog(CommConfig.LOG_MODULE.OUT_FETCH.getModule(), CommConfig.LOG_TYPE.UPDATE.getType(),
-					currentUserService.getPvgInfo().getName() + "  临时出办案区了人员：" + personRegisterDo.getName());
+            // 写日志
+            logService.insertLog(CommConfig.LOG_MODULE.OUT_FETCH.getModule(), CommConfig.LOG_TYPE.UPDATE.getType(),
+                    currentUserService.getPvgInfo().getName() + "  临时出办案区了人员：" + personRegisterDo.getName());
         } else {
             res.setSuccess(false);
             res.setContent("用户不存在");
@@ -132,7 +128,7 @@ public class OutFetchServiceImpl implements OutFetchService {
         String content = "";
         PersonRegisterDo personRegisterDo = personRegisterService.getPersonRegister(registerId);
         if (personRegisterDo != null) {
-			Long lockerId = personRegisterDo.getLockerId();// 获得储物柜id
+            Long lockerId = personRegisterDo.getLockerId();// 获得储物柜id
             //解除手环状态
             CardManageDo cardManageDo = cardManageService.getCarManageByCarNo(cardId);
             if (null == cardManageDo) {
@@ -142,12 +138,14 @@ public class OutFetchServiceImpl implements OutFetchService {
             content += "手环停用完成。";
             // 更新主表人员状态为已出所
             personRegisterService.updatePersonStatus(registerId, "5");
-			// 更新储物柜为空闲
-			if (null != lockerId) {
-				lockerService.updateLockerStatus(lockerId, CommConfig.BUSY_FREE_STATUS.FREE.getName());
-			}
+            // 更新储物柜为空闲
+            if (null != lockerId) {
+                lockerService.updateLockerStatus(lockerId, CommConfig.BUSY_FREE_STATUS.FREE.getName());
+            }
             // 更新审批单为历史
             outConfirmService.updateConfirmToHistory(outId);
+            // 释放人员所在房间
+            roomPropertyService.outReleaseRoomByRid(registerId);
             //更新定位表历史记录
             cardLocateService.updateToHistory(registerId, cardId);
             // 更新人员信息,确认签名【没用】
@@ -155,9 +153,12 @@ public class OutFetchServiceImpl implements OutFetchService {
             res.setSuccess(true);
             res.setContent("确认出办案区成功。" + content);
 
-			// 写日志
-			logService.insertLog(CommConfig.LOG_MODULE.OUT_FETCH.getModule(), CommConfig.LOG_TYPE.UPDATE.getType(),
-					currentUserService.getPvgInfo().getName() + "  正式出办案区了人员：" + personRegisterDo.getName());
+            if (null != cardManageDo) {
+                rtlsManager.unBindTag(cardManageDo.getTagEuid());
+            }
+            // 写日志
+            logService.insertLog(CommConfig.LOG_MODULE.OUT_FETCH.getModule(), CommConfig.LOG_TYPE.UPDATE.getType(),
+                    currentUserService.getPvgInfo().getName() + "  正式出办案区了人员：" + personRegisterDo.getName());
         } else {
             res.setSuccess(false);
             res.setContent("用户不存在");
@@ -182,9 +183,9 @@ public class OutFetchServiceImpl implements OutFetchService {
             }
             content += "物品已归还；";
 
-			// 写日志
-			logService.insertLog(CommConfig.LOG_MODULE.PERSON_REGISTER.getModule(),
-					CommConfig.LOG_TYPE.UPDATE.getType(), currentUserService.getPvgInfo().getName() + "  返还了人员的物品：");
+            // 写日志
+            logService.insertLog(CommConfig.LOG_MODULE.PERSON_REGISTER.getModule(),
+                    CommConfig.LOG_TYPE.UPDATE.getType(), currentUserService.getPvgInfo().getName() + "  返还了人员的物品：");
         }
         // 更新上传的出办案区物品照片信息
         List<GoodsRegisterRequest> outList = clickConfirmRequest.getOutGoodsInfo();

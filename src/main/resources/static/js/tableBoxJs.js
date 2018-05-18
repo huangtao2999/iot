@@ -189,6 +189,7 @@ function iotTable(params){
                  			rowHtml += '</div>';
                  			for(var j = 0 ; j < me.heads.length ; j++){
                  				var dicCode = me.heads[j].dicCode;//字典编码
+                 				var orgCode = me.heads[j].orgCode;//组织机构编码
                  				var text = datas.data[i][me.heads[j].name];//文本信息
                  				var dateFormat = me.heads[j].dateFormat;//日期格式
                  				var html = me.heads[j].html;//html内容
@@ -203,6 +204,7 @@ function iotTable(params){
                  				}else{
                  					text = (text == null ? '' : text);
                  					val = dicCode ? getGridDict(text, dicCode) : text;//如果有dicCode,就按照字典翻译
+                 					val = orgCode ? getOrgName(text, orgCode) : val;//如果有orgCode,就按照字典翻译
                          			val = dateFormat ? new Date(val).format(dateFormat) : val;//如果有日期格式，则按照日期格式格式化
                          			title = ' title="'+val+'" ';
                  				}
@@ -509,6 +511,7 @@ function wait(msg){
 		move : false,
 		btn : [],
 		title: false,
+		time:5000,
 		content: '<center>'+msg+'<center>'
 	});
 }

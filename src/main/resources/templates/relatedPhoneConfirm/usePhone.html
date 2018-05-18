@@ -23,7 +23,7 @@
 		uID=uID+1;
 		AppendStatus("通道"+uID+":"+szStatus);
 	}
-	
+
 	function  T_GetEvent(uID,uEventType,uHandle,uResult,szdata)
 	{
 		var vValue=" type="+uEventType+" Handle="+uHandle+" Result="+uResult+" szdata="+szdata;
@@ -31,10 +31,10 @@
 		{
 		case BriEvent_PhoneHook:// 本地电话机摘机事件
 			AppendStatusEx(uID,"本地电话机摘机"+vValue);
-		break;	
+		break;
 		case BriEvent_PhoneDial:// 只有在本地话机摘机，没有调用软摘机时，检测到DTMF拨号
 			AppendStatusEx(uID,"本地话机拨号"+vValue);
-		break;	
+		break;
 		case BriEvent_PhoneHang:// 本地电话机挂机事件
 			AppendStatusEx(uID,"本地电话机挂机"+vValue);
 			//layer.msg('本地挂机，停止录音');
@@ -69,7 +69,7 @@
 		break;
 		case BriEvent_RingTimeOut://给本地设备发送震铃信号时超时
 			AppendStatusEx(uID,"给本地设备发送震铃信号时超时"+vValue);
-		break;	
+		break;
 		case BriEvent_Ringing://正在内线震铃
 			AppendStatusEx(uID,"正在内线震铃"+vValue);
 		break;
@@ -81,12 +81,13 @@
 		break;
 		case BriEvent_RemoteHook:// 拨号后,被叫方摘机事件
 			AppendStatusEx(uID,"拨号后,被叫方摘机事件"+vValue);
+			$("#call_status").text("通话中...")
 			dsw_qnviccub_anwser('对方已接听，现在开始录音');
 		break;
 		case BriEvent_RemoteHang://对方挂机事件
 			AppendStatusEx(uID,"对方挂机事件"+vValue);
 			//qnviccub.QNV_RecordFile(uID,QNV_RECORD_FILE_STOPALL,0,0,NULL);
-			//T_WriteCallLog(uID);	
+			//T_WriteCallLog(uID);
 			var vd=new Date();
 			vbusytime=vd.getFullYear() + "/"+(vd.getMonth()+1)+"/"+vd.getDate()+" " +vd.getHours()+":"+vd.getMinutes()		+":"+vd.getSeconds();
 			//layer.msg('对方挂机，停止录音');
@@ -95,7 +96,7 @@
 		case BriEvent_Busy:// 检测到忙音事件,表示PSTN线路已经被断开
 			AppendStatusEx(uID,"检测到忙音事件,表示PSTN线路已经被断开"+vValue);
 			//qnviccub.QNV_RecordFile(uID,QNV_RECORD_FILE_STOPALL,0,0,NULL);
-			//T_WriteCallLog(uID);	
+			//T_WriteCallLog(uID);
 			var vd=new Date();
 			vbusytime=vd.getFullYear() + "/"+(vd.getMonth()+1)+"/"+vd.getDate()+" " +vd.getHours()+":"+vd.getMinutes()+":"+vd.getSeconds();
 		break;
@@ -103,7 +104,7 @@
 				//AppendStatusEx(uID,"线路空闲");
 				AppendStatusEx(uID,"线路空闲");
 				qnviccub.QNV_RecordFile(uID,QNV_RECORD_FILE_STOPALL,0,0,NULL);
-				//T_WriteCallLog(uID);		
+				//T_WriteCallLog(uID);
 				break;
 		case BriEvent_DialTone:// 本地摘机后检测到拨号音
 			AppendStatusEx(uID,"本地摘机后检测到拨号音"+vValue);
@@ -123,7 +124,7 @@
 		case BriEvent_RefuseEnd:// 拒接完成
 			AppendStatusEx(uID,"拒接完成"+vValue);
 		break;
-		case BriEvent_SpeechResult:// 语音识别完成 
+		case BriEvent_SpeechResult:// 语音识别完成
 			AppendStatusEx(uID,"语音识别完成"+vValue);
 		break;
 		case BriEvent_FaxRecvFinished:// 接收传真完成
@@ -176,47 +177,11 @@
 		break;
 		default:
 			if(uEventType < BriEvent_EndID)
-				AppendStatusEx(uID,"忽略其它事件发生:ID=" + uEventType+ vValue);	
+				AppendStatusEx(uID,"忽略其它事件发生:ID=" + uEventType+ vValue);
 		break;
 		}
-		
+
 	}
-	function  T_WriteCallLog(uID)
-	{
-		var lBeginTime=qnviccub.QNV_CallLog(uID,QNV_CALLLOG_BEGINTIME,0,0);
-		var lEndTime=qnviccub.QNV_CallLog(uID,QNV_CALLLOG_ENDTIME,0,0);
-		if(lEndTime - lBeginTime <= 2)//时间少于N秒，丢弃
-		{
-			AppendStatusEx(uID,"时间太短,丢弃录音"+'bt='+lBeginTime+' et='+lEndTime);
-			return;
-		}else
-		{
-			var lSerial=qnviccub.QNV_DevInfo(uID,QNV_DEVINFO_GETSERIAL);
-			var lRingBackTime=qnviccub.QNV_CallLog(uID,QNV_CALLLOG_RINGBACKTIME,0,0);
-			var lConnectedTime=qnviccub.QNV_CallLog(uID,QNV_CALLLOG_CONNECTEDTIME,0,0);
-			var lCallType=qnviccub.QNV_CallLog(uID,QNV_CALLLOG_CALLTYPE,0,0);
-			var lCallResult=qnviccub.QNV_CallLog(uID,QNV_CALLLOG_CALLRESULT,0,0);
-			var vcallid=qnviccub.QNV_CallLog(uID,QNV_CALLLOG_CALLID,0,0);
-			var vfilepath=qnviccub.QNV_CallLog(uID,QNV_CALLLOG_CALLRECFILE,0,0);	//如果没有启动录音，录音文件路径就为空
-			AppendStatusEx(uID,'来电记录:'+vcallid);
-			var vd=new Date();
-			var vsubpath='subpath='+'remoterec/'+vd.getFullYear()+(vd.getMonth()+1)+'/'+vd.getDate();
-			var vlog=vsubpath;
-			vlog+='&uubegintime='+lBeginTime+'&uuendtime='+lEndTime+'&busytime='+vbusytime;
-			vlog+='&uucalltype='+lCallType+'&uucallresult='+lCallResult+'&uudevserial='+lSerial+'&uucallid='+vcallid+'&vfilepath='+encodeURI(vfilepath);
-			//vlog+='&uuaccount='+encodeURI(fnLoadValue('uuname'));
-			//vlog+='&jsessionid='+fnGetCookie();
-			//var url='http://'+geturlip(location.href)+':'+geturlport(location.href)+'/fileupload/upload.htm?'+vlog;
-			//服务器接收到数据后返回Result:1	
-			var url='http://127.0.0.1/fileupload/upload.htm?'+vlog;	
-			//alert(url);	
-			var vret=qnviccub.QNV_Remote(QNV_REMOTE_UPLOAD_START,OPTYPE_REMOVE|OPTYPE_SAVE,url,vfilepath,0,0);
-			qnviccub.QNV_CallLog(uID,QNV_CALLLOG_RESET,0,0);
-			
-			//if(vret <= 0) 	AppendStatusEx(uID,"上传录音失败...");		
-			//else AppendStatusEx(uID,"开始上传录音");		
-		}
-	}  
   </script>
 
 <SCRIPT LANGUAGE="JavaScript" FOR="qnviccub" EVENT="OnQnvEvent(chID,type,handle,result,param,szdata,szdataex)">
@@ -259,7 +224,7 @@
             </tr >
             <tr>
                 <td class="TDleft"><label>证件类别：</label></td>
-               	<td><span th:include="component/selectCombo(id='cardType',name='cardType',dictType='PER_CARD_TYPE',defaultValue=${personRegisterDo.cardType},verify='',disabled='1')"/></td>
+               	<td><span th:include="component/selectCombo(id='cardType',name='cardType',dictType='PER_INFO_CARD_TYPE',defaultValue=${personRegisterDo.cardType},verify='',disabled='1')"/></td>
                 <td class="TDleft">证件号码：</td>
 				<td th:text='${personRegisterDo.cardNo}'></td>
             </tr>
@@ -280,6 +245,7 @@
 </body>
 <script th:inline="javascript">
     var dsw_timestamp='demo';
+    var userPhoneUrl = [[${userPhoneUrl}]];
     $( function () {
         var table = new iotTable({
             // dataUrl : 'http://192.168.0.201:8090/OutConfirm/queryPage.json?callback=?&limit=5&page=1',
@@ -308,11 +274,11 @@
             	width:30,
             	name:'recordId',
             	renderHtml:function(val){
-            		if(val){
-            			return "已拨打";
-            		}else{
-            			return '<a href="javascript:void(0);" class="btn btn-success" lay-event="拨打" onclick="callPhone(this)">拨打</a>';
-            		}
+//             		if(val){
+//             			return "已拨打";
+//             		}else{
+//             		}
+           			return '<a href="javascript:void(0);" class="btn btn-success" lay-event="拨打" onclick="callPhone(this)">拨打</a>';
             	}
             }]
         });
@@ -341,7 +307,7 @@
 
                 var date=(new Date());
                 dsw_timestamp=String(date.getFullYear())+(date.getMonth()+1)+date.getDate()+date.getHours()+date.getMinutes()+date.getSeconds();
-    			
+
 				layer.open({
 				        type: 1,
 				        title: false, //不显示标题栏
@@ -351,10 +317,10 @@
 				        id: 'LAY_layuipro', //设定一个id，防止重复弹出
 				        btnAlign: 'c',
 				        moveType: 1, //拖拽模式，0或者1
-				        content: '<div class="callPhone"><h3>拨打中...</h3><br><br><div id="hangUpBtn">挂断</div></div>',
-				        
+				        content: '<div class="callPhone"><h3 id="call_status">拨打中...</h3><br><br><div id="hangUpBtn">挂断</div></div>',
+
 				});
-					
+
     		}else{
     			layer.msg("电话号码为空！");
     		}
@@ -362,30 +328,30 @@
     		layer.msg("拨打失败！")
     	}
     }
-    
+
 	$("body").on('click','#hangUpBtn',function(e){ //挂断点击事件
 		layer.closeAll();
 		TV_StopRecordFile(0);//停止录音
 		TV_HangUpCtrl(0);//挂断
 	});
-	
+
 	function dsw_qnviccub_hangup(msg,isStop){
 		layer.closeAll();
 		layer.msg(msg);
-		
+
 		if(isStop===true){
 			TV_StopRecordFile(0);//停止录音
 			TV_HangUpCtrl(0);//挂断
 		}
-		
-		var res = qnviccub.QNV_Remote(QNV_REMOTE_UPLOAD_START,OPTYPE_REMOVE|OPTYPE_SAVE,'http://192.168.100.2:8090/FileUpload/uploadAudio.json?taskId='+taskId,'C:/recordFilePath/'+dsw_timestamp+'.wav',0,0);
+
+		var res = qnviccub.QNV_Remote(QNV_REMOTE_UPLOAD_START,OPTYPE_REMOVE|OPTYPE_SAVE,userPhoneUrl+'/FileUpload/uploadAudio.json?taskId='+taskId,'C:/recordFilePath/'+dsw_timestamp+'.wav',0,0);
 //		TV_Disable();//关闭设备
 
         //继电器关闭
         new PublicAjax('/RelayRpc/close.json', {"type": "phone"});
         window.location.reload();
     }
-	
+
 	function dsw_qnviccub_anwser(msg){
 		layer.msg(msg);
     	TV_StartRecordFile(0,0);//开始录音

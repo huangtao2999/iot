@@ -38,10 +38,26 @@
     <select id="getOverDeadtimeB" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
-    from urine_test_info where
-    	is_deleted = 'N'
-    	and  is_dealed = 'N'
-        and SYSDATE() > bottle_deadtimeB
+    from (
+    	select
+    		t2.real_name as officer,
+			t1.id, t1.register_id, t1.report_type, t1.jianzi, t1.report_no, t1.check_date, t1.check_way, t1.check_place,
+		    t1.check_result, t1.name, t1.sex, t1.birth_date, t1.card_no, t1.living_place, t1.work_unit, t1.find_out,
+		    t1.proof, t1.check_person, t1.check_person2, t1.bottleB, t1.bottle_deadtimeB, t1.bottleA,
+		    t1.bottle_deadtimeA, t1.is_dealed, t1.is_deleted, t1.create_time, t1.create_user, t1.update_time, t1.update_user,
+		    t1.remark
+    	from urine_test_info t1
+    	left join user t2
+    	on
+    		t1.is_deleted = 'N'
+			and t1.is_dealed = 'N'
+			and SYSDATE() > t1.bottle_deadtimeB
+	    	and t1.create_user = t2.account
+    	where
+	    	t1.is_deleted = 'N'
+	    	and t1.is_dealed = 'N'
+	        and SYSDATE() > t1.bottle_deadtimeB
+     )tt
   </select>
 
 

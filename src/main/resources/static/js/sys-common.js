@@ -2,20 +2,20 @@
 /*
 检查是否安装 flash 及 版本号
 */
-function detectFlash() {  
-    //navigator.mimeTypes是MIME类型，包含插件信息  
-    if (navigator.mimeTypes.length > 0) {  
-        //application/x-shockwave-flash是flash插件的名字  
-        var flashAct = navigator.mimeTypes["application/x-shockwave-flash"];  
-        return flashAct != null ? flashAct.enabledPlugin != null : false;  
-    } else if (self.ActiveXObject) {  
-        try {  
-            new ActiveXObject('ShockwaveFlash.ShockwaveFlash');  
-            return true;  
-        } catch (oError) {  
-            return false;  
-        }  
-    }  
+function detectFlash() {
+    //navigator.mimeTypes是MIME类型，包含插件信息
+    if (navigator.mimeTypes.length > 0) {
+        //application/x-shockwave-flash是flash插件的名字
+        var flashAct = navigator.mimeTypes["application/x-shockwave-flash"];
+        return flashAct != null ? flashAct.enabledPlugin != null : false;
+    } else if (self.ActiveXObject) {
+        try {
+            new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
+            return true;
+        } catch (oError) {
+            return false;
+        }
+    }
 }
 
 function flashChecker() {
@@ -282,6 +282,33 @@ function findDicItems(dictType) {
  */
 function getGridDict(val, code){
 	var dicList = findDicItems(code);
+	for(var e = 0; e < dicList.length; e++){
+		if(val == dicList[e].code){
+			return dicList[e].name;
+		}
+	}
+	return "";
+}
+
+/**
+ * 组织机构缓存文件
+ */
+var orgDictonaryMap= new Map();
+
+/**
+ * 列表里获取某列的字典翻译成汉字（查找code下所有的）
+ */
+function getOrgName(val, type){
+	var dicList = "";
+	if(orgDictonaryMap.has(type)){
+		dicList = orgDictonaryMap.get(type);
+    }else{
+        var res = new PublicAjax('/Dictionary/queryTableListByType.json', {'type': type});
+        if (res.success) {
+        	orgDictonaryMap.set(type,res.content);
+        	dicList = res.content;
+        }
+    }
 	for(var e = 0; e < dicList.length; e++){
 		if(val == dicList[e].code){
 			return dicList[e].name;

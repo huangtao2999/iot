@@ -192,7 +192,7 @@ body{
 
 .toDoBox ul li {
     width: 100%;
-    height: 33%;
+    height: 50%;
     float: left;
     line-height: 1.4em;
     text-align: center;
@@ -860,6 +860,9 @@ body{
 	overflow:hidden;
     text-overflow:ellipsis;
     white-space: nowrap;
+}
+.urineOverTime span{
+	width : 50% !important;
 }
 .urineOverTime > li > a > span{
 	overflow:hidden;

@@ -10,7 +10,6 @@
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
-<!--             <level>DEBUG</level> -->
         </filter>
         <encoder>
             <!--<pattern>%d %p (%file:%line\)- %m%n</pattern>-->

@@ -1,8 +1,8 @@
 $(document).ready(function () {
     //顶部tab栏点击方法
-    $(".lawCtrTabBox ul li").on("click", function () {
-        $(this).addClass("active").siblings().removeClass("active");
-    })
+//    $(".lawCtrTabBox ul li").on("click", function () {
+//        $(this).addClass("active").siblings().removeClass("active");
+//    })
 
     //身份分类的点击样式
     $(".IdentyBox ul li").on("click", function () {
@@ -30,7 +30,7 @@ $(document).ready(function () {
 
     //添加按钮点击的方法
     $(".addBtnBox").on("click", function () {
-        var type=$(this).data('type');
+        var type=$(this).data('ht-type');
         addPresonGoods({},"."+$(this).attr("cls"),type);
     });
 

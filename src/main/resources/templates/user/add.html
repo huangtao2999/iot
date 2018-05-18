@@ -8,10 +8,10 @@
     <meta name="render" content="webkit|ie-comp|ie-stand">
     <meta charset="UTF-8">
     <div th:include="inc/common"></div>
-    
-    
+
+
     <!--select menu 所需资源 start-->
-    
+
 	<link rel="stylesheet" th:href="@{/vendor/ztree/css/demo.css}" type="text/css">
 	<link rel="stylesheet" th:href="@{/vendor/ztree/css/zTreeStyle/zTreeStyle.css}" type="text/css">
 	<script type="text/javascript" th:src="@{/vendor/ztree/js/jquery.ztree.core.js}"></script>
@@ -52,8 +52,17 @@
 							<label>组织机构：</label></td>
 						<td>
 							<!--<span th:include="component/selectTreeComp(id='org',name='org',dictType='ORG',verify='')" />-->
-							<input placeholder="请选择" readonly type="text" id="org" name="org" data-enable='true' data-url='/Dictionary/queryByPidIsParent.json?code=ORG'>
+							<input placeholder="请选择" type="text" id="org" name="org" data-enable='true' data-url='/Dictionary/queryByPidIsParent.json?code=ORG'>
 							<span class="muted">请选择组织机构</span></td>
+						<script>
+							$(function () {
+								$('#org').mouseenter(function (e) {
+									$(this).attr('readonly',true);
+                                }).mouseout(function (e) {
+									$(this).removeAttr('readonly');
+                                });
+                            });
+						</script>
 					</tr>
 					<tr>
 						<td class="TDleft">
@@ -80,7 +89,7 @@
 						<td class="TDleft">
 							<label>状态：</label><font color="red">*</font></td>
 						<td>
-							<span th:include="component/selectCombo(id='status',name='status',dictType='STATUS',verify='require')" /></td>
+							<span th:include="component/selectCombo(id='status',name='status',dictType='STATUS',verify='required')" /></td>
 					</tr>
 					<tr>
 						<td class="TDleft">
@@ -112,7 +121,7 @@
 	</div>
 </body>
 <script th:inline="javascript">
-	
+
 	$(function(){
 		$('#org').dsw_select_menu({
 			width:true,

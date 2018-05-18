@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=Edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+    <meta name="render" content="webkit|ie-comp|ie-stand" />
+
+    <title>系统错误</title>
+
+    <!--公共样式区 start-->
+    <link rel="stylesheet" href="/dsw/css/normalize.css">
+    <link rel="stylesheet" href="/dsw/css/common.css">
+    <!--公共样式区 end-->
+
+    <!--插件样式区 start-->
+    <!--插件样式区 end-->
+
+    <!--自定义样式区 start-->
+    <link rel="stylesheet" href="/dsw/css/normalize-custom.css">
+    <!--自定义样式区 end-->
+
+    <!--内联样式区 start-->
+    <style>
+        .dsw-inquiry-over{
+            font-size: 48px;
+            color: #17d9ff;
+            width: 100%;
+            text-align: center;
+        }
+        .dsw-title-wrapper{
+            margin-bottom: 20px;
+        }
+
+        .dsw-title{
+            width: 812px;
+            height: 82px;
+        }
+
+        .dsw-avatar-wrapper{
+            margin-bottom: 28px;
+        }
+
+        .dsw-avatar{
+            width: 214px;
+            height: 242px;
+        }
+
+        .dsw-lists{
+            margin: 0 0 50px 420px;
+        }
+
+        .dsw-lists .dsw-item{
+            margin-bottom: 18px;
+            color: #17d9ff;
+            font-size: 24px;
+        }
+
+        .dsw-lists .dsw-item .dsw-item-name{
+            margin-right: 26px;
+            min-width: 180px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .dsw-lists .dsw-item .dsw-item-content{
+            max-width: 490px;
+            display: inline-block;
+        }
+
+        .dsw-btn-wrapper{
+
+        }
+
+        .dsw-btn-wrapper .dsw-btn{
+            width: 212px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            margin-left: 32px;
+            color: #02bff0;
+            font-size: 24px;
+            background: url("/dsw/images/btn.png") no-repeat scroll 0 0/100% 100%;
+        }
+
+        .dsw-btn-wrapper .dsw-btn:hover{
+            width: 212px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            margin-left: 32px;
+            color: #02bff0;
+            font-size: 24px;
+            background: url("/dsw/images/btn-hover.png") no-repeat scroll 0 0/100% 100%;
+        }
+    </style>
+    <!--内联样式区 end-->
+	<div th:include="inc/common"></div>
+    <!--[if lt IE 9]>
+    <script src="/dsw/vendors/respond/respond.min.js"></script>
+    <script src="/dsw/vendors/selectivizr.min.js"></script>
+    <script src="/dsw/vendors/html5shiv/html5shiv.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="container-fluid dsw-container dsw-index-bg" data-toggle="dsw-slimscroll">
+
+    <div class="dsw-title-wrapper">
+        <img src="/dsw/images/title.png" class="img-rounded center-block dsw-title" alt="公安机关执法办案管理平台" />
+    </div>
+
+    <div class="dsw-content-wrapper dsw-inquiry-over dsw-hv-center" th:text="${message}"></div>
+
+</div>
+
+<!--公共脚本区 start-->
+<!--[if lt IE 9]><script src="/dsw/vendors/jquery-1.12.4.min.js"></script><![endif]-->
+<!--[if (gte IE 9)|(! IE)]><!--><script src="/dsw/vendors/jquery-3.3.1.min.js"></script><!--<![endif]-->
+<!--公共脚本区 end-->
+
+<!--插件脚本区 start-->
+<script src="/dsw/vendors/layer/layer.js"></script>
+<script src="/dsw/vendors/slim-scroll/jquery.slimscroll.min.js"></script>
+<!--插件脚本区 end-->
+
+<!--自定义脚本区 start-->
+<script src="/dsw/js/utils.js"></script>
+<script src="/dsw/js/slimscroll.js"></script>
+<!--自定义脚本区 end-->
+
+<!--内联脚本区 start-->
+<script>
+
+   $(function () {
+	   
+	   function centerPos(){
+           var offset=$('#dsw-avatar').offset();
+           var width = $('#dsw-avatar').width();
+
+           var _marginLeft=offset.left-width/2;
+
+           $('#dsw-lists').css('margin-left',_marginLeft);
+       }
+
+       centerPos();
+       $(window).resize(centerPos);
+       
+   });
+</script>
+<!--内联脚本区 end-->
+</body>
+</html>

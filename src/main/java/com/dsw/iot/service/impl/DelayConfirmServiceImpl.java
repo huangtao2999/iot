@@ -68,7 +68,7 @@ public class DelayConfirmServiceImpl implements DelayConfirmService {
 		}
 		//申请原因
 		if (StringUtils.isNotBlank(delayConfirmRequest.getApplyReason())) {
-			criteria.andApplyReasonEqualTo(delayConfirmRequest.getApplyReason());
+			criteria.andApplyReasonLike("%" +delayConfirmRequest.getApplyReason() + "%");
 		}
 		//审核人
 		if (StringUtils.isNotBlank(delayConfirmRequest.getAuditUser())) {

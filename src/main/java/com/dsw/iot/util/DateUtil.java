@@ -55,6 +55,14 @@ public class DateUtil {
         return sf.format(date);
     }
 
+    public static String formatFull(Date date, String pattern) {
+        if (null == date) {
+            date = new Date();
+        }
+        SimpleDateFormat sf = new SimpleDateFormat(pattern);
+        return sf.format(date);
+    }
+
     public static String getToday() {
 //        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(FORMAT_2);
 //        LocalDateTime localDateTime = LocalDateTime.now();
@@ -112,5 +120,18 @@ public class DateUtil {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         return (cal.get(cal.YEAR) + "");
+    }
+
+    /**
+     * 获取当天起始时间
+     */
+    public static Date getStartTimeOfToday() {
+        Calendar todayStart = Calendar.getInstance();
+        todayStart.set(Calendar.HOUR_OF_DAY, 0);
+        todayStart.set(Calendar.MINUTE, 0);
+        todayStart.set(Calendar.SECOND, 0);
+        todayStart.set(Calendar.MILLISECOND, 0);
+        return todayStart.getTime();
+
     }
 }

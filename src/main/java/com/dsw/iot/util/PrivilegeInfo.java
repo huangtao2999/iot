@@ -14,7 +14,10 @@ public class PrivilegeInfo {
     private String account;
 
     private String name;//登录人姓名
+    private String realName;//登录人姓名(拿coockie的时候放实体里用)
 
     private String ip;//登录人ip
     private String roleIds;//登录人的角色ids
+    //身份证号码
+    private String idCard;
 }

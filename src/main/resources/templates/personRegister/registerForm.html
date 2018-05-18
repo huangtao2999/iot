@@ -539,8 +539,8 @@
 					last.outTime = formatTime(outInfo[n].outTime);
 				}
 				last.auditUser = outInfo[n].auditUser;
-				outInfo[n].apply_reason = getGridDict(outInfo[n].apply_reason, 'OUT_APPLY_TYPE');//出所申请类型
-				last.auditContent = outInfo[n].apply_reason + "    " + outInfo[n].auditContent;
+				outInfo[n].applyType = getGridDict(outInfo[n].applyType, 'OUT_APPLY_TYPE');//出所申请类型翻译
+				last.auditContent = outInfo[n].applyType + "    " + outInfo[n].applyReason;//拼接离开原因
 			}else{
 				var tempp = {};
 				if(outInfo[n].outTime){
@@ -551,8 +551,8 @@
 				}
 				tempp.auditUser = outInfo[n].auditUser;
 				tempp.escortPolice = outInfo[n].escortPolice;
-				outInfo[n].apply_reason = getGridDict(outInfo[n].apply_reason, 'OUT_APPLY_TYPE');//出所申请类型
-				tempp.auditContent = outInfo[n].apply_reason + "    " + outInfo[n].auditContent;
+				outInfo[n].applyType = getGridDict(outInfo[n].applyType, 'OUT_APPLY_TYPE');//出所申请类型翻译
+				tempp.auditContent = outInfo[n].applyType + "    " + outInfo[n].applyReason;//拼接离开原因
 				if(n == 1){
 					temp.a = tempp;
 				}else if(n == 2){

@@ -144,7 +144,7 @@
                                                style="width:90px" required="true">
                                         <p></p>现场检测地点 ：
                                         <input type="text" name="checkPlace" id="checkPlace" class="layui-input"
-                                               style="width:350px" required="true">
+                                               style="width:350px" required="true" th:value="${org}">
                                         <p><button class="btn" style="background-color:#F2F2F2;" type="button" onclick="getNum()">生成编号</button></p>
                                         <font color="red">*</font>a 瓶 编 号 ：
                                         <input type="text" name="bottlea" id="bottlea" class="layui-input"
@@ -373,7 +373,7 @@
                 var _imgs = $('input[type="hidden"][data-dsw-take-photo-temp]').data('dsw-take-photo-temp');
                 var frameWindow = window[layero.find('iframe').prop('name')];
 
-                frameWindow.take_photo({initImages: _imgs, maxCount: 2});
+                frameWindow.take_photo({initImages: _imgs, maxCount: 1});
             },
             end: function () {
 
@@ -671,6 +671,14 @@
     	$("#bottlea").val("A"+date);
     	$("#bottleb").val("B"+date);
     }
+
+    /* 手环输入框回车事件  start */
+    $("#braceletNo").keydown(function(e) {
+    	if (e.keyCode == 13) {
+	    	cxyh(); //查询用户
+    	}
+    })
+    /* 手环输入框回车事件  end */
 
 </script>
 

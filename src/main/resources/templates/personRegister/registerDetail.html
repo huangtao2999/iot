@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=Edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+    <meta name="render" content="webkit|ie-comp|ie-stand" />
+
+    <title>index</title>
+
+    <!--公共样式区 start-->
+    <link rel="stylesheet" href="/dsw/css/normalize.css">
+    <link rel="stylesheet" href="/dsw/css/common.css">
+    <!--公共样式区 end-->
+
+    <!--插件样式区 start-->
+    <!--插件样式区 end-->
+
+    <!--自定义样式区 start-->
+    <link rel="stylesheet" href="/dsw/css/normalize-custom.css">
+    <!--自定义样式区 end-->
+	<div th:include="inc/common"></div>
+    <!--内联样式区 start-->
+    <style>
+        .dsw-inquiry-over{
+            font-size: 48px;
+            color: #17d9ff;
+            width: 100%;
+            text-align: center;
+        }
+        .dsw-title-wrapper{
+            margin-bottom: 20px;
+        }
+
+        .dsw-title{
+            width: 812px;
+            height: 82px;
+        }
+
+        .dsw-avatar-wrapper{
+            margin-bottom: 28px;
+        }
+
+        .dsw-avatar{
+            width: 214px;
+            height: 242px;
+        }
+
+        .dsw-lists{
+            margin: 0 0 50px 420px;
+        }
+
+        .dsw-lists .dsw-item{
+            margin-bottom: 18px;
+            color: #17d9ff;
+            font-size: 24px;
+        }
+
+        .dsw-lists .dsw-item .dsw-item-name{
+            margin-right: 26px;
+            min-width: 180px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .dsw-lists .dsw-item .dsw-item-content{
+            max-width: 490px;
+            display: inline-block;
+        }
+
+        .dsw-btn-wrapper{
+
+        }
+
+        .dsw-btn-wrapper .dsw-btn{
+            width: 212px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            margin-left: 32px;
+            color: #02bff0;
+            font-size: 24px;
+            background: url("/dsw/images/btn.png") no-repeat scroll 0 0/100% 100%;
+        }
+
+        .dsw-btn-wrapper .dsw-btn:hover{
+            width: 212px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            margin-left: 32px;
+            color: #02bff0;
+            font-size: 24px;
+            background: url("/dsw/images/btn-hover.png") no-repeat scroll 0 0/100% 100%;
+        }
+    </style>
+    <!--内联样式区 end-->
+    <!--[if lt IE 9]>
+    <script src="/dsw/vendors/respond/respond.min.js"></script>
+    <script src="/dsw/vendors/selectivizr.min.js"></script>
+    <script src="/dsw/vendors/html5shiv/html5shiv.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="container-fluid dsw-container dsw-index-bg" data-toggle="dsw-slimscroll">
+
+    <!--<div class="dsw-title-wrapper">-->
+        <!--<img src="/dsw/images/title.png" class="img-rounded center-block dsw-title" alt="公安机关执法办案管理平台" />-->
+    <!--</div>-->
+
+    <div id="register-content" class="dsw-content-wrapper">
+
+        <div class="dsw-avatar-wrapper">
+        	<img id="dsw-avatar" class="img-rounded center-block dsw-avatar" th:if="${item.personRegisterImg == ''}" src="/dsw/images/avatar.png"/>
+            <img id="dsw-avatar" class="img-rounded center-block dsw-avatar" th:if="${item.personRegisterImg != ''}" th:src="|/FileUpload/getAttach.json?id=${item.personRegisterImg}|"/>
+        </div>
+
+        <ul class="list-unstyled dsw-lists" id='dsw-lists'>
+            <li class="dsw-item">
+                <span class="text-right dsw-item-name">姓名：</span>
+                <span class="text-left dsw-item-content" th:text='${item.personRegisterDo.name}'></span>
+            </li> 
+            <li class="dsw-item">
+                <span class="text-right dsw-item-name">性别：</span>
+                <span class="text-left dsw-item-content" th:text='${item.registerSexName}'></span>
+            </li>
+            <li class="dsw-item">
+                <span class="text-right dsw-item-name">证件号：</span>
+                <span class="text-left dsw-item-content" th:text='${item.cardNo}'></span>
+            </li>
+            <li class="dsw-item">
+                <span class="text-right dsw-item-name">证件类型：</span>
+                <span class="text-left dsw-item-content" th:text='${item.cardType}'></span>
+            </li>
+            <li class="dsw-item">
+                <span class="text-right dsw-item-name">国籍：</span>
+                <span class="text-left dsw-item-content" th:text='${item.nationality}'></span>
+            </li>
+            <li class="dsw-item">
+                <span class="text-right dsw-item-name">人员类型：</span>
+                <span class="text-left dsw-item-content">嫌疑人</span>
+            </li>
+            <li class="dsw-item">
+                <span class="text-right dsw-item-name">入办案区原因：</span>
+                <span class="text-left dsw-item-content" th:text='${item.registerInReason}'></span>
+            </li>
+        </ul>
+
+        <!--按钮-->
+        <div class="dsw-btn-wrapper text-center">
+            <button class="dsw-btn" id="dsw-start-btn">开始笔录</button>
+            <button class="dsw-btn hidden" id="dsw-restart-btn">重新笔录</button>
+            <button class="dsw-btn hidden" id="dsw-record-btn">光盘刻录</button>
+            <button class="dsw-btn hidden" id="dsw-over-btn">结束使用</button>
+        </div>
+
+    </div>
+
+    <div id="register-over" class="dsw-content-wrapper dsw-inquiry-over dsw-hv-center hidden" >当前按键询问已结束，该询问时暂未分配新案件！</div>
+
+	<input type="hidden" th:value="${item.personRegisterDo.id}" id="registerId"/>
+	<input type="hidden" th:value="${item.roomRecordDo.roomId}" id="roomId"/>
+</div>
+
+<!--公共脚本区 start-->
+<!--[if lt IE 9]><script src="/dsw/vendors/jquery-1.12.4.min.js"></script><![endif]-->
+<!--[if (gte IE 9)|(! IE)]><!--><script src="/dsw/vendors/jquery-3.3.1.min.js"></script><!--<![endif]-->
+<!--公共脚本区 end-->
+
+<!--插件脚本区 start-->
+<script src="/dsw/vendors/layer/layer.js"></script>
+<script src="/dsw/vendors/slim-scroll/jquery.slimscroll.min.js"></script>
+<!--插件脚本区 end-->
+
+<!--自定义脚本区 start-->
+<script src="/dsw/js/utils.js"></script>
+<script src="/dsw/js/slimscroll.js"></script>
+<!--自定义脚本区 end-->
+
+<!--内联脚本区 start-->
+<script>
+function startFdbl() {
+	var id = $("#registerId").val();
+    layer.open({
+        type:1,
+        title:'请选择笔录类型',
+        skin:'layui-layer-rim',
+        btn:['提交','取消'],
+        content:"<div id='addwin'><table align='center'style='margin-top: 5px;'>"
+        +"<tr>"
+        +"<td>"
+        +"<select id='bllx' name='bllx'>"
+        +"<option value ='010101'>行政询问笔录</option>"
+        +"<option value ='010102'>行政辨认笔录</option>"
+        +"<option value ='010103'>行政检查笔录</option>"
+        +"<option value ='010104'>行政勘验笔录</option>"
+        +"<option value ='010105'>行政现场笔录</option>"
+        +"<option value ='010106'>行政听证笔录</option>"
+        +"<option value ='010107'>治安调解笔录</option>"
+        +"<option value ='010201'>刑事询问笔录</option>"
+        +"<option value ='010202'>刑事讯问笔录</option>"
+        +"<option value ='010203'>刑事辨认笔录</option>"
+        +"<option value ='010204'>现场辨认笔录</option>"
+        +"<option value ='010205'>刑事检查笔录</option>"
+        +"<option value ='010206'>刑事查封笔录</option>"
+        +"<option value ='010207'>刑事扣押笔录</option>"
+        +"<option value ='010208'>刑事搜查笔录</option>"
+        +"<option value ='010209'>刑事提取笔录</option>"
+        +"<option value ='010210'>刑事复验复查笔录</option>"
+        +"<option value ='010211'>刑事侦查实验笔录</option>"
+        +"<option value ='010301'>交通事故询问笔录</option>"
+        +"<option value ='010302'>交通事故讯问笔录</option>"
+        +"<option value ='010303'>交通事故调解笔录</option>"
+        +"<option value ='010401'>督察笔录</option>"
+        +"<option value ='010501'>当场盘问笔录</option>"
+        +"<option value ='010502'>继续盘问笔录</option>"
+        +"<option value ='020101'>林业询问笔录</option>"
+        +"<option value ='020102'>林业勘验检查笔录</option>"
+        +"<option value ='020103'>林业听证笔录</option>"
+        +"<option value ='020104'>林业调解笔录</option>"
+        +"<option value ='020201'>林业当场盘问笔录</option>"
+        +"<option value ='020202'>林业继续盘问笔录</option>"
+        +"<option value ='030101'>纪检谈话笔录</option>"
+        +"<option value ='030102'>纪检调查笔录</option>"
+        +"<option value ='010601'>海关查问笔录</option>"
+        +"<option value ='010602'>海关询问笔录</option>"
+        +"<option value ='010603'>海关扣留笔录</option>"
+        +"<option value ='010604'>海关听证笔录</option>"
+        +"</select>"
+        +"</td>"
+        +"</tr>"
+        +"</table></div>",
+        yes:function (index,layero) {
+            var bllx = $('#bllx').val();
+            if(bllx== '000000'){
+                alert('请选择笔录类型！');
+                return;
+            }
+            layer.close(index);
+            var res =  PublicAjax('/FdblRpc/syncFadu.json',{'registerId':id,'bllx':bllx});
+            if(res.success==true){
+            	$("#dsw-start-btn").addClass('hidden');
+            	$("#dsw-restart-btn").removeClass('hidden');
+            	$("#dsw-record-btn").removeClass('hidden');
+                $("#dsw-over-btn").removeClass('hidden');
+                
+                window.location.href = res.content;
+            }else{
+                alert(res.errorMsg);
+                return;
+            }
+        }
+    });
+}
+
+   $(function () {
+	   
+	   function centerPos(){
+           var offset=$('#dsw-avatar').offset();
+           var width = $('#dsw-avatar').width();
+
+           var _marginLeft=offset.left-width/2;
+
+           $('#dsw-lists').css('margin-left',_marginLeft);
+       }
+
+       centerPos();
+       $(window).resize(centerPos);
+       
+        $('#dsw-start-btn').click(function (e) {
+        	startFdbl();
+        });
+        
+        $('#dsw-restart-btn').click(function (e) {
+        	startFdbl();
+        });
+        
+        $('#dsw-over-btn').click(function(e){
+        	var roomId = $("#roomId").val();
+        	var res = PublicAjax('/Room/releaseRoom.json', {'roomId': roomId});//获取数据
+            if(res.success){
+                layer.msg("房间使用结束!");
+                $("#register-content").addClass('hidden');
+                $("#register-over").removeClass('hidden');
+            }else{
+                layer.msg("房间释放失败,请重试！");
+            }
+        });
+        
+        $("#dsw-record-btn").click(function(e){
+        	var id = $("#registerId").val();
+        	var res = PublicAjax('/BurningRpc/burnBl.json',{'registerId':id});
+            if(res.success==true){
+            	layer.msg("制作中...");
+            }else{
+            	layer.msg(res.errorMsg);
+                return;
+            }
+        });
+   });
+</script>
+<!--内联脚本区 end-->
+</body>
+</html>

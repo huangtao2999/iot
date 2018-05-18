@@ -147,6 +147,47 @@ public class FdblManagerImpl implements FdblManager {
         return resultList;
     }
 
+    @Override
+	public BlContentVo getBlContentToPdfPath(long registerId) throws BizException {
+    	TpBlrecordDoExample example = new TpBlrecordDoExample();
+        TpBlrecordDoExample.Criteria criteria = example.createCriteria();
+        criteria.andRyIdEqualTo(registerId);
+        example.setOrderByClause(" update_time desc");
+        List<TpBlrecordDo> tpBlrecordDos = tpBlrecordDoMapperExt.selectByExample(example);
+        TpBlrecordDo tpBlrecordDo = null;
+        if (CollectionUtils.isNotEmpty(tpBlrecordDos)) {
+            tpBlrecordDo = tpBlrecordDos.get(0);
+        }
+        if (null == tpBlrecordDo) {
+            throw new BizException("没有笔录记录!");
+        }
+        List<BlContentVo> blContentVos;
+		try {
+			blContentVos = getBlPdf(tpBlrecordDo.getId());
+		} catch (Exception e) {
+			throw new BizException("法度笔录获取对应pdf内容失败!");
+		}
+		if (CollectionUtils.isEmpty(blContentVos)) {
+			throw new BizException("未获取到对应的法度笔录内容!");
+		}
+		Collections.sort(blContentVos, new Comparator<BlContentVo>() {
+            @Override
+            public int compare(BlContentVo o1, BlContentVo o2) {
+                if (DateUtil.formatTime(o1.getKssj(), DateUtil.FORMAT_FULL) < DateUtil.formatTime(o2.getKssj(), DateUtil.FORMAT_FULL)) {
+                    return 1;
+                } else if (DateUtil.formatTime(o1.getKssj(), DateUtil.FORMAT_FULL) > DateUtil.formatTime(o2.getKssj(), DateUtil.FORMAT_FULL)) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+		BlContentVo contentVo = blContentVos.get(0);
+		contentVo.setRyId(registerId);
+		contentVo.setRoomNo(tpBlrecordDo.getWhdd());
+		return contentVo;
+	}
+    
     /**
      * 通过人员笔录记录ID 获取笔内容
      */
@@ -301,4 +342,5 @@ public class FdblManagerImpl implements FdblManager {
         }
         return remotePath;
     }
+	
 }

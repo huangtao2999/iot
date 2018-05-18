@@ -15,11 +15,7 @@
 
 package com.dsw.iot.manager;
 
-import com.sun.jna.Native;
-import com.sun.jna.NativeLong;
-import com.sun.jna.Pointer;
-import com.sun.jna.Structure;
-import com.sun.jna.Union;
+import com.sun.jna.*;
 import com.sun.jna.examples.win32.GDI32.RECT;
 import com.sun.jna.examples.win32.W32API;
 import com.sun.jna.examples.win32.W32API.HWND;
@@ -31,7 +27,7 @@ import com.sun.jna.win32.StdCallLibrary;
 
 //SDK接口说明,HCNetSDK.dll
 public interface HCNetSDK extends StdCallLibrary {
-
+    //    HCNetSDK INSTANCE = null;
     HCNetSDK INSTANCE = (HCNetSDK) Native.loadLibrary("C:\\ClientDemo-NetBeansPro\\HCNetSDK", HCNetSDK.class);
     /***宏定义***/
     //常量

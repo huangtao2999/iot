@@ -194,6 +194,20 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 根据账户名查用户
+     * @param accountNo
+     * @return
+     */
+    @Override
+    public List<UserDo> queryByAccount(String accountNo) {
+    	UserDoExample exp = new UserDoExample();
+        UserDoExample.Criteria con = exp.createCriteria();
+        con.andIsDeletedEqualTo(CommConfig.DELETED.NO.getName());
+        con.andAccountEqualTo(accountNo);
+        return userDoMapperExt.selectByExample(exp);
+    }
+    
+    /**
      * 更新用户密码
      *
      * @throws BizException

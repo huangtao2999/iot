@@ -31,6 +31,11 @@ public interface FdblManager {
     public List<BlContentVo> getBlContentToPdfPath(String roomNo) throws Exception;
 
     /**
+     *  根据personRegisterId 获取pdf 文件地址
+     */
+    public BlContentVo getBlContentToPdfPath(long registerId) throws BizException;
+    
+    /**
      * 获取笔录pdf 返回pdf路径
      *
      * @param blid

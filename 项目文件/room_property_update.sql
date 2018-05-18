@@ -1,0 +1,1 @@
+alter table room_property add column room_ip varchar(64) comment "房间笔录机器ip" after room_no ;

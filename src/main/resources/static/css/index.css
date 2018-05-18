@@ -200,7 +200,7 @@
     position: absolute;
     left: 6%;
 
-   
+
     height: auto;
 }
 
@@ -407,6 +407,7 @@
     font-size: 1em;
 
     color: #01bae2;
+    padding-right: 15px;
 }
 
 .tabHtmlBox .tabBox ul li .closeImg {

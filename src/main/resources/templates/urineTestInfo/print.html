@@ -138,7 +138,7 @@
 							<p></p>现场检测结果：
 							<input type="text" class="layui-input" th:value='${urineTestInfoVo.name}' style="width:90px" required="true"readonly="readonly" >的检测样本进行检测。 结果呈
 							<span th:include="component/selectCombo(id='checkResult',name='checkResult',defaultValue=${urineTestInfoVo.checkResult},dictType='URINE_RESULT_INFO',verify='require',disabled=1)"></span>
-							<p>&nbsp;&nbsp;依照《吸毒检测程序规定》第十条、第十八条第二检测人对现场款规定，被 检测人对现场检测结果有异议的，可以在被告知检测结果之日三日内，向现场检测的公安机关 提出实验室检测申请，被检测人申请实验室检测，费用由申请人承担，但具有《公安机关办理 行政案件程序规定》第八十二条第一款第一项至第七项情形之一或者其他违反检测情形的除外。</p>
+							<p>&nbsp;&nbsp;依照《吸毒检测程序规定》第十条规定，被检测人对现场检测结果有异议的，可以在被告知检测结果之日起的三日内，向现场检测的公安机关提出实验室检测申请。</p>
 							<p>
 								被检测人：
 								<span th:include="component/signatureComp(id='checkPerson1',name='checkPerson1',defaultValue=${urineTestInfoVo.identified},disabled=1)"></span>

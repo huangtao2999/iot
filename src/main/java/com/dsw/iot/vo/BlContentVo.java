@@ -23,5 +23,9 @@ public class BlContentVo extends BaseModel {
     private String blnr;
     //笔录对象姓名
     private String bldxxm;
+    
+    private long ryId;
+    
+    private String roomNo;
 
 }

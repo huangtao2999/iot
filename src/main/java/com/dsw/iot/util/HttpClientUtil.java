@@ -1,6 +1,7 @@
 package com.dsw.iot.util;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -35,6 +36,21 @@ public class HttpClientUtil {
     private static final String APPLICATION_JSON = "application/json";
     private static final String CONTENT_TYPE_TEXT_JSON = "text/json";
 
+    public static String postBody(String url, Object data) throws Exception {
+    	HttpClient httpClient = null;
+        String body = null;
+        
+        httpClient = new SSLClient();
+        String json = JSON.toJSONString(data);
+        HttpPost httpPost = new HttpPost(url);
+        StringEntity se = new StringEntity(json, Charsets.UTF_8.name());
+        se.setContentType("application/json; charset=utf-8");
+        httpPost.setEntity(se);
+        body = invoke(httpClient, httpPost);
+            
+        return body;
+    }
+    
     public static String post(String url, Map<String, String> params) {
         HttpClient httpClient = null;
         String body = null;
@@ -48,19 +64,6 @@ public class HttpClientUtil {
         }
         return body;
     }
-
-    public static String get(String url) {
-        DefaultHttpClient httpclient = new DefaultHttpClient();
-        String body = null;
-
-        HttpGet get = new HttpGet(url);
-        body = invoke(httpclient, get);
-
-        httpclient.getConnectionManager().shutdown();
-
-        return body;
-    }
-
 
     private static String invoke(HttpClient httpclient, HttpUriRequest httpost) {
         HttpResponse response = sendRequest(httpclient, httpost);
@@ -140,8 +143,15 @@ public class HttpClientUtil {
         return httpost;
     }
 
-
-    public String doPost(String url, Map<String, String> map, String charset) {
+    /**
+     * http post方法
+     *
+     * @param url
+     * @param map
+     * @param charset
+     * @return
+     */
+    public static String doPost(String url, Map<String, Object> map, String charset) {
         HttpClient httpClient = null;
         HttpPost httpPost = null;
         String result = null;
@@ -152,8 +162,8 @@ public class HttpClientUtil {
             List<NameValuePair> list = new ArrayList<NameValuePair>();
             Iterator iterator = map.entrySet().iterator();
             while (iterator.hasNext()) {
-                Entry<String, String> elem = (Entry<String, String>) iterator.next();
-                list.add(new BasicNameValuePair(elem.getKey(), elem.getValue()));
+                Entry<String, Object> elem = (Entry<String, Object>) iterator.next();
+                list.add(new BasicNameValuePair(elem.getKey(), String.valueOf(elem.getValue())));
             }
             if (list.size() > 0) {
                 UrlEncodedFormEntity entity = new UrlEncodedFormEntity(list, charset);
@@ -167,14 +177,85 @@ public class HttpClientUtil {
                 }
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("post方法失败", ex);
         }
         return result;
     }
 
     /**
+     * http get方法
+     *
+     * @param url
+     * @param params
+     * @return
+     */
+    public static String doGet(String url, Map<String, Object> params, String charset) {
+        String result = null;
+        try {
+            //设置参数
+            StringBuilder sb = new StringBuilder(url);
+            sb.append("?1=1");
+            for (Map.Entry<String, Object> entry : params.entrySet()) {
+                sb.append("&");
+                sb.append(entry.getKey());
+                sb.append("=");
+                sb.append(entry.getValue());
+            }
+            HttpClient httpClient = new SSLClient();
+            HttpGet httpGet = new HttpGet(sb.toString());
+            HttpResponse response = httpClient.execute(httpGet);
+            if (response != null) {
+                HttpEntity resEntity = response.getEntity();
+                if (resEntity != null) {
+                    result = EntityUtils.toString(resEntity, charset);
+                }
+            }
+        } catch (Exception ex) {
+            logger.error("get方法失败", ex);
+        }
+        return result;
+    }
+    
+    /**
+     * http get方法
+     * @param url
+     * @return
+     */
+    public static String doGet(String url) throws Exception {
+        String result = null;
+       // try {
+            HttpClient httpClient = new SSLClient();
+            HttpGet httpGet = new HttpGet(url);
+            HttpResponse response = httpClient.execute(httpGet);
+            if (response != null) {
+                HttpEntity resEntity = response.getEntity();
+                if (resEntity != null) {
+                    result = EntityUtils.toString(resEntity, HTTP.UTF_8);
+                }
+            }
+/*        } catch (Exception ex) {
+            logger.warn("get方法失败", ex);
+        }*/
+        return result;
+    }
+    
+    public static String get(String url) {
+        DefaultHttpClient httpclient = new DefaultHttpClient();
+        String body = null;
+
+        HttpGet get = new HttpGet(url);
+        body = invoke(httpclient, get);
+
+        httpclient.getConnectionManager().shutdown();
+
+        return body;
+    }
+
+
+    /**
      * 根据url下载文件
      */
+
     public static boolean downloadByUrl(String ourputFile, String url) throws Exception {
         try {
             URL resourceUrl = new URL(url);
@@ -243,10 +324,4 @@ public class HttpClientUtil {
         return response;
     }
 
-//    public static void main(String[] args) {
-//        JSONObject jsonObject = new JSONObject();
-//        jsonObject.put("userId", "c11aa5249fb64ba5bfc10f93e123320a");
-//        String res = postBody("http://192.168.0.188:8280/cw-afaps/extService/warningRecord/select", jsonObject.toJSONString());
-//        System.out.println(res);
-//    }
-}  
+}

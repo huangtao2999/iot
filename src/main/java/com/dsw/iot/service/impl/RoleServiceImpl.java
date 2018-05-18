@@ -52,6 +52,9 @@ public class RoleServiceImpl implements RoleService {
         if (StringUtils.isNotEmpty(request.getRoleName())) {
             criteria.andRoleNameLike("%" + request.getRoleName() + "%");
         }
+        if(null!=request.getIsSuper()){
+        	criteria.andIsSuperEqualTo(request.getIsSuper());
+        }
         //排序字段
         if (StringUtils.isBlank(request.getOrderByClause())) {
             example.setOrderByClause("sort asc, create_time desc");

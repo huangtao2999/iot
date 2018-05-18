@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=Edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"/>
+    <meta name="render" content="webkit|ie-comp|ie-stand"/>
+
+    <title>3D人员定位</title>
+
+    <!--公共样式区 start-->
+    <link rel="stylesheet" href="/dsw/css/normalize.css" />
+    <link rel="stylesheet" href="/dsw/css/common.css" />
+    <!--公共样式区 end-->
+
+    <!--插件样式区 start-->
+    <!--插件样式区 end-->
+
+    <!--自定义样式区 start-->
+    <link rel="stylesheet" href="/dsw/css/normalize-custom.css" />
+    <!--自定义样式区 end-->
+
+    <!--内联样式区 start-->
+    <style>
+        .dsw-fengmap-wrapper{
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            max-height: 100%;
+            overflow: hidden;
+            position: relative;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .dsw-fengmap-wrapper > div > input:first-child{
+            top: 0 !important;
+            right: 0 !important;
+        }
+
+    </style>
+    <!--内联样式区 end-->
+
+    <!--[if lt IE 9]>
+    <script src="/dsw/vendors/respond/respond.min.js"></script>
+    <script src="/dsw/vendors/selectivizr.min.js"></script>
+    <script src="/dsw/vendors/html5shiv/html5shiv.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="container-fluid dsw-container" id="dsw-container">
+
+    <div class="dsw-fengmap-wrapper" id="dsw-fengmap-wrapper" data-toggle="dsw-fengmap" data-scene-id="zoodac-huangshigang" th:attr="data-position-url=${personPositionUrl}" ></div>
+
+</div>
+
+
+<!--公共脚本区 start-->
+<!--[if lt IE 9]><script src="/dsw/vendors/jquery-1.12.4.min.js"></script><![endif]-->
+<!--[if (gte IE 9)|(! IE)]><!--><script src="/dsw/vendors/jquery-3.3.1.min.js"></script><!--<![endif]-->
+<!--公共脚本区 end-->
+
+<!--插件脚本区 start-->
+<script src="/dsw/vendors/babel/browser.js"></script>
+<script src="/dsw/vendors/sockjs/sockjs.min.js"></script>
+<script src="/dsw/vendors/socket/socket.io.js"></script>
+<script src="/dsw/vendors/stomp/stomp.min.js"></script>
+<script src="/dsw/vendors/fengmap/fengmap.min.js"></script>
+<script src="/js/webVideoCtrl.js"></script>
+<!--插件脚本区 end-->
+
+<!--自定义脚本区 start-->
+<script src="/dsw/js/utils.js"></script>
+<!--<script src="/dsw/js/web-video-ctrl.js"></script>-->
+<script src="/dsw/js/fengmap.js"></script>
+<!--自定义脚本区 end-->
+
+<!--内联脚本区 start-->
+<script th:inline="javascript">
+
+    $(function () {
+        var ip = [[${ip}]];
+        var port = [[${port}]];
+        var userName = [[${userName}]];
+        var password = [[${password}]];
+        var szDeviceIdentify =  ip+'_'+port;
+
+        dswUtils.channelsMap= [[${zoneVideo}]];
+
+        dswUtils.initWebVideo=function(sContainerID,iChannelID){
+            // 检查插件是否已经安装过
+            var iRet = WebVideoCtrl.I_CheckPluginInstall();
+            if (-1 == iRet) {
+                alert("您还未安装过插件，双击开发包目录里的WebComponentsKit.exe安装！");
+                return;
+            }
+
+            // 初始化插件参数及插入插件
+            WebVideoCtrl.I_InitPlugin( 258,  208, {
+                bWndFull: true,     //是否支持单窗口双击全屏，默认支持 true:支持 false:不支持
+                iPackageType: 2,    //2:PS 11:MP4
+                iWndowType: 1,
+                cbInitPluginComplete: function () {
+                    WebVideoCtrl.I_InsertOBJECTPlugin(sContainerID);
+
+                    // 检查插件是否最新
+                    if (-1 == WebVideoCtrl.I_CheckPluginVersion()) {
+                        alert("检测到新的插件版本，双击开发包目录里的WebComponentsKit.exe升级！");
+                        return;
+                    }
+
+                    WebVideoCtrl.I_Login(ip, 1, port, userName, password,{
+                        success:function () {
+                            if  (iChannelID!=null){
+                                dswUtils.startRealPlay(iChannelID);
+                            }
+                        }
+                    });
+                }
+            });
+        };
+
+        dswUtils.startRealPlay = function (iChannelID) {
+            var oWndInfo = WebVideoCtrl.I_GetWindowStatus(0),
+                iRtspPort = 554,
+                bZeroChannel =  false,
+                iStreamType = 2;
+
+            var startRealPlay = function () {
+                WebVideoCtrl.I_StartRealPlay(szDeviceIdentify, {
+                    iRtspPort: iRtspPort,
+                    iStreamType: iStreamType,
+                    iChannelID: iChannelID,
+                    bZeroChannel: bZeroChannel,
+                    success: function () {
+
+                    },
+                    error: function (status, xmlDoc) {
+                        if (403 === status) {
+                            //alert("设备不支持Websocket取流！");
+                        } else {
+                            //alert("开始预览失败！");
+                        }
+                    }
+                });
+            };
+
+            if (oWndInfo != null) {// 已经在播放了，先停止
+                WebVideoCtrl.I_Stop({
+                    success: function () {
+                        startRealPlay();
+                    }
+                });
+            } else {
+                startRealPlay();
+            }
+        };
+
+        dswUtils.stopRealPlay=function (needStop) {
+            var oWndInfo = WebVideoCtrl.I_GetWindowStatus(0);
+
+            if (oWndInfo != null) {
+                WebVideoCtrl.I_Stop({
+                    success: function () {
+                        if (needStop===true){
+                            var iRet = WebVideoCtrl.I_Logout(szDeviceIdentify);
+                            if (0 == iRet) {
+
+                            } else {
+
+                            }
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+        };
+
+    });
+</script>
+<!--内联脚本区 end-->
+</body>
+</html>

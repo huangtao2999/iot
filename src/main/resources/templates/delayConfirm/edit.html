@@ -28,7 +28,7 @@
                 <td colspan="4"><textarea rows="5" style="width:90%" name="auditContent" lay-verify="required"></textarea>
                 </td>
             </tr>
-            <input type="hidden" name="auditUser" th:value="${userDo.account}"/>
+            <input type="hidden" name="auditUser" th:value="${userDo.realName}"/>
             <input type="hidden" name="status" id="status"/>
             <tr>
                 <td class="TDleft" width="6%"></td>
@@ -62,7 +62,7 @@
             <tr>
                 <td class="TDleft">证件类型：</td>
                 <!-- <td th:text='${personRegisterDo.cardType}'></td> -->
-                <td><span th:include="component/selectCombo(id='cardType',name='cardType',dictType='PER_CARD_TYPE',defaultValue=${personRegisterDo.cardType},verify='',disabled='1')"/></td>
+                <td><span th:include="component/selectCombo(id='cardType',name='cardType',dictType='PER_INFO_CARD_TYPE',defaultValue=${personRegisterDo.cardType},verify='',disabled='1')"/></td>
             </tr>
             <tr>
                 <td class="TDleft">证件号码：</td>

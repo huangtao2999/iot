@@ -1,5 +1,7 @@
 package com.dsw.iot.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.dsw.iot.dto.UserRequest;
@@ -45,6 +47,11 @@ public interface UserService {
      */
 	ActionResult<String> checkAccount(UserRequest param);
 
+	/**
+	 * 根据账号查询用户
+	 */
+	List<UserDo> queryByAccount(String accout);
+	
 	/**
 	 * 更新用户密码
 	 *

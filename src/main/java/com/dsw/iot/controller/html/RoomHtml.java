@@ -8,10 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.dsw.iot.model.LockerDo;
-import com.dsw.iot.model.PersonRegisterDo;
+import com.dsw.iot.dto.PersonRegisterRequest;
 import com.dsw.iot.model.RoomPropertyDo;
-import com.dsw.iot.service.LockerService;
 import com.dsw.iot.service.PersonRegisterService;
 import com.dsw.iot.service.RoomPropertyService;
 import com.dsw.iot.service.RoomRecordService;
@@ -20,7 +18,7 @@ import com.dsw.iot.service.RoomRecordService;
  * 询讯问室管理页面控制器
  *
  * @author zc
- * 
+ *
  **/
 @Controller
 @RequestMapping("/RoomHtml")
@@ -62,25 +60,23 @@ public class RoomHtml {
         model.addAttribute("roomPropertyDo", roomPropertyDo);
         return "room/edit";
     }
-    
+
     /*
-     *房间关押人员 
-     *roomId 房间id
-     */
+	 * 房间关押人员 roomId 房间id
+	 */
     @RequestMapping("/record")
     public String record(Model model, Long roomId) {
     	  model.addAttribute("roomId", roomId);
         return "room/record";
     }
-    
+
     /*
-     *等候室分配 
-     *registerId 人员id
-     */
+	 * 等候室分配 registerId 人员id
+	 */
     @RequestMapping("/roomwaitassign")
     public String roomwaitassign(Model model, Long registerId) {
-    	PersonRegisterDo personRegisterDo=personRegisterService.getPersonRegister(registerId);
-    	model.addAttribute("personRegisterDo", personRegisterDo);
+		PersonRegisterRequest personRegisterRequest = personRegisterService.getPersonRegisterInfo(registerId);
+		model.addAttribute("personRegisterDo", personRegisterRequest);
         //所在的等候室
     	List<RoomPropertyDo> list=roomRecordService.getRoomPropertyByprid(registerId, "0");
     	if (CollectionUtils.isNotEmpty(list)) {
@@ -94,15 +90,14 @@ public class RoomHtml {
     	}
         return "room/roomwaitassign";
     }
-    
+
     /*
-     *询问室分配 
-     *registerId 人员id
-     */
+	 * 询问室分配 registerId 人员id
+	 */
     @RequestMapping("/roominquiryassign")
     public String roominquiryassign(Model model, Long registerId) {
-    	PersonRegisterDo personRegisterDo=personRegisterService.getPersonRegister(registerId);
-        model.addAttribute("personRegisterDo", personRegisterDo);
+		PersonRegisterRequest personRegisterRequest = personRegisterService.getPersonRegisterInfo(registerId);
+		model.addAttribute("personRegisterDo", personRegisterRequest);
         //所在的等候室
     	List<RoomPropertyDo> list=roomRecordService.getRoomPropertyByprid(registerId, "0");
     	if (CollectionUtils.isNotEmpty(list)) {
@@ -116,5 +111,5 @@ public class RoomHtml {
     	}
         return "room/roominquiryassign";
     }
-    
+
 }

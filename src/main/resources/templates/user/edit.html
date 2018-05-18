@@ -51,6 +51,15 @@
 							<!--<span th:include="component/selectCombo(id='org',name='org',dictType='420222000000',defaultValue=${item.org},verify='')" />-->
 						<input placeholder="请选择" readonly type="text" id="org" name="org" data-enable='true' data-url='/Dictionary/queryByPidIsParent.json?code=ORG'>
 						<span class="muted">请选择组织机构</span></td>
+						<script>
+                            $(function () {
+                                $('#org').mouseenter(function (e) {
+                                    $(this).attr('readonly',true);
+                                }).mouseout(function (e) {
+                                    $(this).removeAttr('readonly');
+                                });
+                            });
+						</script>
 					</tr>
 					<tr>
 						<td class="TDleft">
@@ -77,7 +86,7 @@
 						<td class="TDleft">
 							<label>状态：</label><font color="red">*</font></td>
 						<td>
-							<span th:include="component/selectCombo(id='status',name='status',dictType='STATUS',defaultValue=${item.status},verify='require')" /></td>
+							<span th:include="component/selectCombo(id='status',name='status',dictType='STATUS',defaultValue=${item.status},verify='required')" /></td>
 					</tr>
 					<tr>
 						<td class="TDleft">
@@ -99,6 +108,7 @@
 	</div>
 </body>
 <script th:inline="javascript">
+$("#org").attr("value",getOrgName([[${item.org}]],"ORG"));
     $(function(){
         $('#org').dsw_select_menu({
             width:true,

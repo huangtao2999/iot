@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html>
+<head><meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="render" content="webkit|ie-comp|ie-stand">
+    <meta charset="UTF-8">
+    <title>刻录历史</title>
+	<div th:include="inc/common-new"></div>
+	<div th:include="inc/common-table"></div>
+</head>
+<body>
+    <div id="leftBox" style="width:100%;height:100%">
+        <div class="posRel wh100">
+            <div class="searchBox posAbs cen">
+                <div class="posRel wh100">
+<!--                     通用高级查询html -->
+					<div class="radioBox posAbs" style="width:80%">
+		                <ul class="wh100" name="burnState">
+		                    <li value="0" onclick="changeType(0)" class="active" style="width:20%; margin:0;">
+		                        <div class="posRel wh100">
+		                            <img src="../images/perRegis/renyuandengji_tubiao_sel.png" alt="" class="selImg posAbs mid">
+		                            <img src="../images/perRegis/renyuandengji_tubiao_def.png" alt="" class="defImg posAbs mid">
+		                            <span class="allSel posAbs mid">全部</span>
+		                        </div>
+		                    </li>
+		                    <li value="1" onclick="changeType(1)" style="width:20%; margin:0;">
+		                        <div class="posRel wh100">
+		                            <img src="../images/perRegis/renyuandengji_tubiao_sel.png" alt="" class="selImg posAbs mid">
+		                            <img src="../images/perRegis/renyuandengji_tubiao_def.png" alt="" class="defImg posAbs mid">
+		                            <span class="inIng posAbs mid">待处理</span>
+		                        </div>
+		                    </li>
+		                    <li value="2" onclick="changeType(2)" style="width:20%; margin:0;">
+		                        <div class="posRel wh100">
+		                            <img src="../images/perRegis/renyuandengji_tubiao_sel.png" alt="" class="selImg posAbs mid">
+		                            <img src="../images/perRegis/renyuandengji_tubiao_def.png" alt="" class="defImg posAbs mid">
+		                            <span class="outIng posAbs mid">下载中</span>
+		                        </div>
+		                    </li>
+		                    <li value="3" onclick="changeType(3)" style="width:20%; margin:0;">
+		                        <div class="posRel wh100">
+		                            <img src="../images/perRegis/renyuandengji_tubiao_sel.png" alt="" class="selImg posAbs mid">
+		                            <img src="../images/perRegis/renyuandengji_tubiao_def.png" alt="" class="defImg posAbs mid">
+		                            <span class="outIng posAbs mid">刻录中</span>
+		                        </div>
+		                    </li>
+		                    <li value="6" onclick="changeType(6)" style="width:20%; margin:0;">
+		                        <div class="posRel wh100">
+		                            <img src="../images/perRegis/renyuandengji_tubiao_sel.png" alt="" class="selImg posAbs mid">
+		                            <img src="../images/perRegis/renyuandengji_tubiao_def.png" alt="" class="defImg posAbs mid">
+		                            <span class="outed posAbs mid">已完成</span>
+		                        </div>
+		                    </li>
+		                </ul>
+		            </div>
+					<div th:include="inc/table-query"></div>
+                </div>
+            </div>
+<!--        table公用数据html -->
+			<div id="personRegis-table" th:include="inc/table-dataField"></div>
+            <img src="../images/perRegis/renyuandengji_biankaungzuo.jpg" alt="" class="bgImg posAbs wh100">
+        </div>
+    </div>
+</body>
+<script th:inline="javascript">
+    var table = new iotTable({
+        dataUrl : '/BurnRecordRpc/queryPage.json',
+        renderTo : '#personRegis-table',
+        select : false,
+        heads : [{
+            text : '登记人',
+            width : 15,
+            name : 'registerName'
+        },{
+            text : '警员姓名',
+            width : 15,
+            name : 'policeName'
+        },{
+            text : '状态',
+            width : 10,
+            name : 'stateName',
+        },{
+            text : '源文件',
+            width : 30,
+            name : 'burnPath',
+        },{
+            text : '创建时间',
+            width : 17,
+            name : 'createTime',
+            dateFormat : 'yyyy-MM-dd hh:mm:ss'
+        }],
+        queryFields : [{
+            text : '登记人',
+            name : 'registerName'
+        },{
+            text : '警员姓名',
+            name : 'policeName'
+        }]
+    });
+    table.init();
+    
+    function changeType(index){
+		if(index != 0){
+	   		table.queryParams["burnState"]=index;
+		}else{
+			table.queryParams = {};
+		}
+    	table.page = 1;
+        table.loadBody();
+    }
+//     layui.use(['layer'], function () {
+//         var layer = layui.layer;
+//      	);
+//     });
+</script>
+</html>

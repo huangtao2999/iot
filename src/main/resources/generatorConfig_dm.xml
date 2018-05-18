@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 数据库驱动包路径 -->
+    <classPathEntry
+            location="D://repo//com//dm//Dm7JdbcDriver17//1.0.0//Dm7JdbcDriver17-1.0.0.jar"/>
+
+    <!-- 生成配置，Id修改为应用名 -->
+    <context id="lassen" targetRuntime="MyBatis3">
+        <property name="suppressAllComments" value="true"/>
+        <property name="useActualColumnNames" value="false"/>
+        <jdbcConnection driverClass="dm.jdbc.driver.DmDriver"
+                        connectionURL="jdbc:dm://192.168.0.18:5236/swyt?characterEncoding=UTF-8"
+                        userId="SWYT" password="123456789"/>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成文件位置 -->
+        <!-- Do位置 -->
+        <javaModelGenerator targetPackage="com.dsw.iot.model"
+                            targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- Mapper.xml位置  -->
+        <sqlMapGenerator targetPackage="com.dsw.iot.dal"
+                         targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- Mapper.java位置 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.dsw.iot.dmdal"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table tableName="SWYT_JJ" domainObjectName="SwytJjDo" enableDeleteByExample="false"
+               enableSelectByPrimaryKey="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false"
+               enableInsert="false" enableUpdateByExample="false">
+        </table>
+        <table tableName="SWYT_CJ" domainObjectName="SwytCjDo" enableDeleteByExample="false"
+               enableSelectByPrimaryKey="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false"
+               enableInsert="false" enableUpdateByExample="false">
+        </table>
+    </context>
+</generatorConfiguration>

@@ -35,6 +35,7 @@
     var table = new iotTable({
         dataUrl : '/RelatedPhoneConfirm/queryPage.json',
         renderTo : '#personRegis-table',
+        select : false,
         heads : [{
             text : '申请人姓名',
             width : 10,
@@ -46,17 +47,19 @@
             dateFormat : 'yyyy-MM-dd hh:mm:ss'
         },{
             text : '联系人姓名',
-            width : 10,
+            width : 20,
             name : 'callName'
         },{
             text : '联系人电话',
             width : 20,
             name : 'tel'
-        },{
-            text : '申请通话时间',
-            width : 10,
-            name : 'talkTime'
-        },{
+        }
+//         ,{
+//             text : '申请通话时间',
+//             width : 10,
+//             name : 'talkTime'
+//         }
+        ,{
             text : '历史记录',
             width : 10,
             name : '历史记录',
@@ -76,11 +79,11 @@
         }],
         queryFields : [{
             text : '申请时间',
-            name : 'alarmStartTime',
+            name : 'startDate',
             type : 'date'
         },{
             text : '至',
-            name : 'alarmEndTime',
+            name : 'endDate',
             type : 'date'
         },{
             text : '申请人',

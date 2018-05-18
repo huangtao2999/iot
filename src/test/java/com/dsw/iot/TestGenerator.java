@@ -24,7 +24,7 @@ public class TestGenerator {
     @Before
     public void before() {
         //读取mybatis参数
-        configFile = new File("D:\\dsw_java_workspaces\\iot\\src\\main\\resources\\generatorConfig.xml");
+        configFile = new File("D:\\Users\\dearseewe\\eclipse-workspace\\iot\\src\\main\\resources\\generatorConfig.xml");
     }
 
     @Test

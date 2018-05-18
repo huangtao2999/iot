@@ -330,14 +330,17 @@ public class IndexServiceImpl implements IndexService {
         if (null == request.getStartDate() || null == request.getEndDate()) {
             return getPersonTypeWeekCount(request);
         }
-        List<IndexChartVo> list = personRegisterDoMapperExt.selectPersonTypeDateBetweenCount(request);
-        getChartTypeVo(indexChartVo, list, "PERSON_TYPE");
+       /* List<IndexChartVo> list = personRegisterDoMapperExt.selectPersonTypeDateBetweenCount(request);
+        getChartTypeVo(indexChartVo, list, "PER_INFO_POLITICAL");*/
+        
+        List<IndexChartVo> list = personRegisterDoMapperExt.selectPersonTypeDateBetweenCountTwo(request);
+        getChartTypeVoTwo(indexChartVo, list);
         indexChartVo.setInTime(request.getInWeek());
         return indexChartVo;
     }
 
     /**
-     * 周人员类型person_type统计，传入格式201701，17年第一周
+     * 周人员类型PER_INFO_POLITICAL统计，传入格式201701，17年第一周
      *
      * @throws BizException
      */
@@ -347,14 +350,17 @@ public class IndexServiceImpl implements IndexService {
         if (StringUtils.isBlank(request.getInWeek())) {
             request.setInWeek(DateUtil.getWeekOfYear());
         }
-        List<IndexChartVo> list = personRegisterDoMapperExt.selectPersonTypeWeekCount(request);
-        getChartTypeVo(indexChartVo, list, "PERSON_TYPE");
+/*        List<IndexChartVo> list = personRegisterDoMapperExt.selectPersonTypeWeekCount(request);
+        getChartTypeVo(indexChartVo, list, "PER_INFO_POLITICAL");*/
+        
+        List<IndexChartVo> list = personRegisterDoMapperExt.selectPersonTypeWeekCountTwo(request);
+        getChartTypeVoTwo(indexChartVo, list);
         indexChartVo.setInTime(request.getInWeek());
         return indexChartVo;
     }
 
     /**
-     * 月人员类型person_type统计
+     * 月人员类型PER_INFO_POLITICAL统计
      *
      * @throws BizException
      */
@@ -364,14 +370,17 @@ public class IndexServiceImpl implements IndexService {
         if (StringUtils.isBlank(request.getInMonth())) {
             request.setInMonth(DateUtil.getYearMonth());
         }
-        List<IndexChartVo> list = personRegisterDoMapperExt.selectPersonTypeMonthCount(request);
-        getChartTypeVo(indexChartVo, list, "PERSON_TYPE");
+/*        List<IndexChartVo> list = personRegisterDoMapperExt.selectPersonTypeMonthCount(request);
+        getChartTypeVo(indexChartVo, list, "PER_INFO_POLITICAL");*/
+        
+        List<IndexChartVo> list = personRegisterDoMapperExt.selectPersonTypeMonthCountTwo(request);
+        getChartTypeVoTwo(indexChartVo, list);
         indexChartVo.setInTime(request.getInMonth());
         return indexChartVo;
     }
 
     /**
-     * 年人员类型person_type统计
+     * 年人员类型PER_INFO_POLITICAL统计
      *
      * @throws BizException
      */
@@ -381,9 +390,100 @@ public class IndexServiceImpl implements IndexService {
         if (StringUtils.isBlank(request.getInYear())) {
             request.setInYear(DateUtil.getYear());
         }
-        List<IndexChartVo> list = personRegisterDoMapperExt.selectPersonTypeYearCount(request);
-        getChartTypeVo(indexChartVo, list, "PERSON_TYPE");
+      /*  List<IndexChartVo> list = personRegisterDoMapperExt.selectPersonTypeYearCount(request);
+        getChartTypeVo(indexChartVo, list, "PER_INFO_POLITICAL");*/
+        
+        List<IndexChartVo> list = personRegisterDoMapperExt.selectPersonTypeYearCountTwo(request);
+        getChartTypeVoTwo(indexChartVo, list);
         indexChartVo.setInTime(request.getInYear());
+        return indexChartVo;
+    }
+    
+    
+    /**
+     * 手动拼接返回数据
+     *
+     * @param request
+     * @return
+     * @throws BizException
+     */
+    private IndexChartVo getChartTypeVoTwo(IndexChartVo indexChartVo, List<IndexChartVo> list) throws BizException {
+     
+        List<DictionaryDo> dictionaryDos = new ArrayList<DictionaryDo>();
+    	DictionaryDo doo = new DictionaryDo();
+    	doo.setCode("401");doo.setName("人大代表");
+    	dictionaryDos.add(doo);
+    	DictionaryDo doo1 = new DictionaryDo();
+    	doo1.setCode("404"); doo1.setName("公务员");
+    	dictionaryDos.add(doo1);
+    	DictionaryDo doo2 = new DictionaryDo();
+    	doo2.setCode("402"); doo2.setName("政协委员");
+    	dictionaryDos.add(doo2);
+    	DictionaryDo doo3 = new DictionaryDo();
+    	doo3.setCode("412"); doo3.setName("司法人员");
+    	dictionaryDos.add(doo3);
+    	DictionaryDo doo4 = new DictionaryDo();
+    	doo4.setCode("418"); doo4.setName("外国人");
+    	dictionaryDos.add(doo4);
+    	DictionaryDo doo5 = new DictionaryDo();
+    	doo5.setCode("650"); doo5.setName("其他");
+    	dictionaryDos.add(doo5);
+        
+        String types = "";
+        String datas = "";
+        String names = "";
+        String temp = "0";
+        if (CollectionUtils.isNotEmpty(dictionaryDos)) {
+            for (DictionaryDo dictionaryDo : dictionaryDos) {
+                if (CollectionUtils.isNotEmpty(list)) {
+                    for (IndexChartVo chartVo : list) {
+                        temp = "1";
+                        if (null != chartVo.getInType()) {
+                            if (chartVo.getInType().equals(dictionaryDo.getCode())) {
+                                if (StringUtils.isBlank(types)) {
+                                    names = dictionaryDo.getName();
+                                    types = chartVo.getInType();
+                                    datas = chartVo.getCnt() + "";
+                                } else {
+                                    names += "," + dictionaryDo.getName();
+                                    types += "," + chartVo.getInType();
+                                    datas += "," + chartVo.getCnt();
+                                }
+                                temp = "0";
+                                break;
+                            }
+                        }
+                    }
+                    if ("1".equals(temp)) {
+                        // 拼接名称和数量
+                        if (StringUtils.isBlank(names)) {
+                            names = dictionaryDo.getName();
+                            types = dictionaryDo.getCode();
+                            datas = 0 + "";
+                        } else {
+                            names += "," + dictionaryDo.getName();
+                            types += "," + dictionaryDo.getCode();
+                            datas += "," + 0;
+                        }
+                    }
+                } else {
+                    // 拼接名称和数量
+                    if (StringUtils.isBlank(names)) {
+                        names = dictionaryDo.getName();
+                        types = dictionaryDo.getCode();
+                        datas = 0 + "";
+                    } else {
+                        names += "," + dictionaryDo.getName();
+                        types += "," + dictionaryDo.getCode();
+                        datas += "," + 0;
+                    }
+                }
+
+            }
+        }
+        indexChartVo.setDatas(datas);
+        indexChartVo.setNames(names);
+        indexChartVo.setTypes(types);
         return indexChartVo;
     }
 }

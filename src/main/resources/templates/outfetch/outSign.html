@@ -70,7 +70,7 @@
 				    <td width='140'>姓 名</td>
 				    <td name="name" load-html="personInfo.name" width='120'></td>
 				    <td>性 别</td>
-				    <td load-html="personInfo.sex"></td>
+				    <td load-html="personInfo.sex" name="sex"></td>
 				    <td>出生<br/>日期</td>
 				    <td width='110' load-html="personInfo.birthDate" name="birthDate"></td>
 				    <td>联系<br/>方式</td>
@@ -350,7 +350,7 @@
 				<!--大图区 end-->
 
 				<p style="text-align:center;" class='print'>
-					<input class="btn btn-primary" id="btn" type="button" onclick="toprint()" value="保存并打印" style="width:80px;height: 30px;background: #0071BC;border: 0px;color: white;">&nbsp;&nbsp;&nbsp;&nbsp;
+					<input class="btn btn-primary" id="btn" type="button" onclick="toprint()" value="保存" style="width:80px;height: 30px;background: #0071BC;border: 0px;color: white;">&nbsp;&nbsp;&nbsp;&nbsp;
 					<a class="btn" id="gb" onclick="back()" style="width:80px;height:28px; line-height:28px; border: 1px solid #ccc;display:inline-block;color:#333; text-decoration:none;">返回</a>
 				</p>
 				<input type="hidden" name="registerId" th:value="${item.personInfo.id}" >
@@ -453,7 +453,7 @@
 
 	/**字典翻译  start*/
 	personInfo.sex = getGridDict(personInfo.sex, 'SEX');
-	personInfo.cardType = getGridDict(personInfo.cardType, 'PER_CARD_TYPE');//证件类型
+	personInfo.cardType = getGridDict(personInfo.cardType, 'PER_INFO_CARD_TYPE');//证件类型
 	personInfo.inType = getGridDict(personInfo.inType, 'IN_TYPE');//到案方式
 	personInfo.inReason = getGridDict(personInfo.inReason, 'PER_IN_REASON');//入区原因
 	/**字典翻译  end*/
@@ -573,8 +573,8 @@
 					last.outTime = formatTime(outInfo[n].outTime);
 				}
 				last.auditUser = outInfo[n].auditUser;
-				outInfo[n].apply_reason = getGridDict(outInfo[n].apply_reason, 'OUT_APPLY_TYPE');//出所申请类型
-				last.auditContent = outInfo[n].apply_reason + "    " + outInfo[n].auditContent;
+				outInfo[n].applyType = getGridDict(outInfo[n].applyType, 'OUT_APPLY_TYPE');//出所申请类型翻译
+				last.auditContent = outInfo[n].applyType + "    " + outInfo[n].applyReason;//拼接离开原因
 			}else{
 				var tempp = {};
 				if(outInfo[n].outTime){
@@ -585,8 +585,8 @@
 				}
 				tempp.auditUser = outInfo[n].auditUser;
 				tempp.escortPolice = outInfo[n].escortPolice;
-				outInfo[n].apply_reason = getGridDict(outInfo[n].apply_reason, 'OUT_APPLY_TYPE');//出所申请类型
-				tempp.auditContent = outInfo[n].apply_reason + "    " + outInfo[n].auditContent;
+				outInfo[n].applyType = getGridDict(outInfo[n].applyType, 'OUT_APPLY_TYPE');//出所申请类型
+				tempp.auditContent = outInfo[n].applyType + "    " + outInfo[n].applyReason;//拼接离开原因
 				if(n == 1){
 					temp.a = tempp;
 				}else if(n == 2){
@@ -629,8 +629,6 @@
 
 	//保存并打印
 	function toprint(){
-	    $("#btn").hide();
-	    $("#gb").hide();
         //获取页面元素
         var field = getData();
         //获取签名信息
@@ -641,23 +639,31 @@
         //field.formSuspectSign = $("#formSuspectSign").data("id");
         //field.formGoodsHostPoliceSign = $("#formGoodsHostPoliceSign").data("id");
         //field.formGoodsAdminSign = $("#formGoodsAdminSign").data("id");
-        field.formGoodsSuspectSign = $("#formGoodsSuspectSign").data("id");
-        field.formReceiveSign = $("#formReceiveSign").data("id");
-        field.formGoodsHoldAdminSign = $("#formGoodsHoldAdminSign").data("id");
+
+        if($("#formGoodsSuspectSign").data("id") && $("#formReceiveSign").data("id") && $("#formGoodsHoldAdminSign").data("id")){
+	        field.formGoodsSuspectSign = $("#formGoodsSuspectSign").data("id");
+	        field.formReceiveSign = $("#formReceiveSign").data("id");
+	        field.formGoodsHoldAdminSign = $("#formGoodsHoldAdminSign").data("id");
+        }else{
+        	layer.msg("请完善签名信息！");
+        	return false;
+        }
         field.registerId = personInfo.id;
 
+	    $("#btn").hide();
+//	    $("#gb").hide();
         var res = new PublicAjax("/PersonForm/savePersonForm.json", field );
         if(res.success){
             //打印
-            window.print();
-            $("#gb").show();
+//            window.print();
+//            $("#gb").show();
             parent.$(".nextBox").show();
             parent.$(".keepBox").hide();//隐藏签名确认按钮
             parent.$(".selectBox").hide();//隐藏复选
         }else{
             layer.msg(res.errorMsg);
             $("#btn").show();
-            $("#gb").show();
+//            $("#gb").show();
         }
 	}
 	//返回

@@ -5,7 +5,7 @@
 <generatorConfiguration>
     <!-- 数据库驱动包路径 -->
     <classPathEntry
-            location="C://Java-tool//mysql-connector-java-5.1.15-bin.jar"/>
+            location="C://Java-tool//mysql-connector-java-5.1.6.jar"/>
 
     <!-- 生成配置，Id修改为应用名 -->
     <context id="lassen" targetRuntime="MyBatis3">
@@ -14,8 +14,8 @@
         <!-- 配置数据库连接 -->
         <plugin type="com.dsw.iot.util.DswGeneratePlugin"/>
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/guankong?characterEncoding=UTF-8"
-                        userId="root" password="cskj"/>
+                        connectionURL="jdbc:mysql://112.74.203.20:3306/guankong?characterEncoding=UTF-8"
+                        userId="grid" password="123abcABC"/>
 
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
@@ -569,6 +569,19 @@
 <!-- 	        				javaType="java.util.Date" jdbcType="TIMESTAMP"> -->
 <!-- 	        </columnOverride> -->
 <!--         </table> -->
+
+            <table tableName="SYSTEM_CONFIG" domainObjectName="SystemConfDo" enableDeleteByExample="false">
+	            <columnOverride column="id" property="id"
+	                            javaType="Long" jdbcType="INTEGER">
+	            </columnOverride>
+		        <columnOverride column="create_time" property="createTime"
+		        				javaType="java.util.Date" jdbcType="TIMESTAMP">
+		        </columnOverride>
+		        <columnOverride column="update_time" property="updateTime"
+		        				javaType="java.util.Date" jdbcType="TIMESTAMP">
+		        </columnOverride>
+            </table>
+
 
     </context>
 </generatorConfiguration>

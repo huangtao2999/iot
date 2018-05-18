@@ -1,14 +1,18 @@
 package com.dsw.iot.controller.html;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.dsw.iot.dto.DmDataPopulationDto;
+import com.dsw.iot.manager.SwytManager;
 import com.dsw.iot.model.AttachDo;
 import com.dsw.iot.model.PersonRegisterDo;
 import com.dsw.iot.service.PersonFormService;
 import com.dsw.iot.service.PersonRegisterService;
+import com.dsw.iot.util.BizException;
 import com.dsw.iot.vo.PersonFormVo;
 import com.dsw.iot.vo.PersonRegisterVo;
 
@@ -20,6 +24,13 @@ public class PersonRegisterHtml {
     PersonRegisterService personRegisterService;
 	@Autowired
 	PersonFormService personFormService;
+	@Autowired
+    SwytManager swytManager;
+
+	@Value("${form.org}")
+	private String org;
+	@Value("${form.org.code}")
+	private String orgCode;
 
     /**
      * 人员登记首页
@@ -40,6 +51,8 @@ public class PersonRegisterHtml {
      */
     @RequestMapping("/add")
     public String add(Model model) {
+		model.addAttribute("org", org);
+		model.addAttribute("orgCode", orgCode);
         return "personRegister/add";
     }
 
@@ -77,6 +90,23 @@ public class PersonRegisterHtml {
     }
 
     /**
+     * 查看详情
+     *
+     * @param model
+     * @param id
+     * @return
+     */
+    @RequestMapping("/registerDetail")
+    public String fbblDetail(Model model, Long id) {
+        PersonRegisterDo personRegisterDo = new PersonRegisterDo();
+        if (null != id) {
+            personRegisterDo = personRegisterService.getPersonRegister(id);
+        }
+        model.addAttribute("item", personRegisterDo);
+        return "personRegister/registerDetail";
+    }
+
+    /**
      * 点击流程图里的，跳转到第几步
      *
      * @param model
@@ -89,6 +119,8 @@ public class PersonRegisterHtml {
         model.addAttribute("registerId", registerId);
         model.addAttribute("cardNo", cardNo);
         model.addAttribute("name", name);
+		model.addAttribute("org", org);
+		model.addAttribute("orgCode", orgCode);
         return "personRegister/add";
     }
 
@@ -119,11 +151,19 @@ public class PersonRegisterHtml {
      * @return
      */
     @RequestMapping("/faceTo")
-    public String faceTo(Model model, Long registerId, String cardNo, String name, String faceUrl) {
+    public String faceTo(Model model, Long registerId, String cardNo, String name, String faceUrl) throws BizException{
         model.addAttribute("cardNo", cardNo);
         model.addAttribute("name", name);
+		model.addAttribute("org", org);
+		model.addAttribute("orgCode", orgCode);
         // 下载照片
         AttachDo attachDo = personRegisterService.downloadFaceImgToAttachFolder(faceUrl);
+        try {
+            DmDataPopulationDto idCardDo = (DmDataPopulationDto) swytManager.getPeopleByCardNo(cardNo, "111111");//"policeNo"为测试数据
+            model.addAttribute("idCardDo", idCardDo);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
         model.addAttribute("attachDo", attachDo);
         return "personRegister/add";
     }

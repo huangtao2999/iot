@@ -136,8 +136,12 @@
             //dicCode : ''需要数据字典转换的，这里填数据字典的code
             //dateFormat : 'yyyy-MM-dd'需要进行时间类型转换的，这里填时间的format
         },{
+            text : '房间编号',
+            width : 8,
+            name : 'roomNo',
+        },{
             text : '房间类型',
-            width : 15,
+            width : 11,
             name : 'roomType',
             dicCode : 'ROOM_TYPE'
         },{
@@ -316,8 +320,8 @@
     	layer.confirm("你确定要释放房间？", function (index) {
     		layer.close(index);
     		var id = $(me).parents(".body-data-list").data("id");
-        	var res=PublicAjax('/Room/releaseRoom.json', {"roomId": id});
-        	if(res.success){
+            var res=PublicAjax('/Room/releaseRoom.json', {"roomId": id});
+            if(res.success){
         		layer.msg("释放成功");
         		table.loadBody();
         	}else{

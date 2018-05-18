@@ -48,6 +48,13 @@ public interface RoomPropertyService {
 	public RoomPropertyDo getRoomProperty(Long id);
 
 	/**
+	 * 根据房间号获取
+	 * @param roomNo
+	 * @return
+	 */
+	public RoomPropertyDo getRoomPropertyByRoomNo(String roomNo) throws BizException;
+
+	/**
 	 * 根据主键id删除数据
 	 */
 	public void deleteRoomProperty(String ids);
@@ -102,7 +109,7 @@ public interface RoomPropertyService {
 
 	/**
 	 * 走廊led
-	 * 
+	 *
 	 * @param registerId
 	 * @param roomId
 	 * @return
@@ -111,8 +118,24 @@ public interface RoomPropertyService {
 
 	/**
 	 * 清空房间（清除嫌疑人，作历史状态）
-	 * 
+	 *
 	 * @param id
 	 */
 	public void releaseRoom(Long roomId);
+
+	/**
+	 * 正式临时出办案区，释放房间
+	 *
+	 * @param registerId
+	 */
+	void outReleaseRoomByRid(Long registerId);
+
+	/**
+	 * 分配等候室，检查是否符合分配等候室的规则，返回结果
+	 *
+	 * @param registerId
+	 * @param roomId
+	 * @return
+	 */
+	public ActionResult<String> checkRoomWaitDistribution(Long registerId, Long roomId);
 }

@@ -112,30 +112,6 @@ public class led {
     public native static int AddMultiLineTextToImageTextArea(int hProgram, int ProgramNo, int AreaNo, int AddType, String AddStr, String FontName, int FontSize, int FontColor, int FontBold, int FontItalic, int FontUnderline, int InStyle, int nSpeed, int DelayTime, int nAlignment, int IsVCenter);
 
     /*********************************************************************************************
-     * AddStaticTextToImageTextArea			添加一个静止文本到图文区
-     *
-     *	参数说明
-     *				hProgram				节目对象句柄
-     *				ProgramNo				节目号
-     *				AreaNo					区域号
-     *				AddType					添加的类型  0.为字符串  1.文件（只支持txt和rtf文件）
-     *				AddStr					AddType为0则为字符串数据,AddType为1则为文件路径
-     *				FontName				字体名
-     *				FontSize				字体大小
-     *				FontColor				字体颜色   0xff 红色  0xff00 绿色  0xffff黄色
-     *				FontBold				是否加粗 0不加粗 1加粗
-     *				FontItalic				是否是斜体  0 不斜 1斜
-     *				FontUnderline			是否下划线 0不加下划线 1加下划线
-     *				DelayTime				停留时间
-     *				nAlignment				左右居中对齐方式
-     *				IsVCenter				是否垂直居中
-     *	返回值
-     *				0						成功
-     *				非0						失败
-     ********************************************************************************************/
-    public native static int AddStaticTextToImageTextArea(int hProgram, int ProgramNo, int AreaNo, int AddType, String AddStr, String FontName, int FontSize, int FontColor, int FontBold, int FontItalic, int FontUnderline, int DelayTime, int nAlignment, int IsVCenter);
-
-    /*********************************************************************************************
      * AddSinglelineTextToImageTextArea		添加一个多行文本到图文区
      *
      *	参数说明
@@ -158,6 +134,30 @@ public class led {
      *				非0						失败
      ********************************************************************************************/
     public native static int AddSinglelineTextToImageTextArea(int hProgram, int ProgramNo, int AreaNo, int AddType, String AddStr, String FontName, int FontSize, int FontColor, int FontBold, int FontItalic, int FontUnderline, int InStyle, int nSpeed, int DelayTime);
+
+    /*********************************************************************************************
+     * AddStaticTextToImageTextArea			添加一个静止文本到图文区
+     *
+     *	参数说明
+     *				hProgram				节目对象句柄
+     *				ProgramNo				节目号
+     *				AreaNo					区域号
+     *				AddType					添加的类型  0.为字符串  1.文件（只支持txt和rtf文件）
+     *				AddStr					AddType为0则为字符串数据,AddType为1则为文件路径
+     *				FontName				字体名
+     *				FontSize				字体大小
+     *				FontColor				字体颜色   0xff 红色  0xff00 绿色  0xffff黄色
+     *				FontBold				是否加粗 0不加粗 1加粗
+     *				FontItalic				是否是斜体  0 不斜 1斜
+     *				FontUnderline			是否下划线 0不加下划线 1加下划线
+     *				DelayTime				停留时间
+     *				nAlignment				左右居中对齐方式
+     *				IsVCenter				是否垂直居中
+     *	返回值
+     *				0						成功
+     *				非0						失败
+     ********************************************************************************************/
+    public native static int AddStaticTextToImageTextArea(int hProgram, int ProgramNo, int AreaNo, int AddType, String AddStr, String FontName, int FontSize, int FontColor, int FontBold, int FontItalic, int FontUnderline, int DelayTime, int nAlignment, int IsVCenter);
 
     /*********************************************************************************************
      * AddSinglelineTextToImageTextArea		添加一个多行文本到图文区

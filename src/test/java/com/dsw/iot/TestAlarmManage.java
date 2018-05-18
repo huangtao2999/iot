@@ -1,16 +1,15 @@
 package com.dsw.iot;
 
-import java.util.Date;
-
+import com.dsw.iot.model.AlarmManageDo;
+import com.dsw.iot.service.AlarmManageService;
+import com.dsw.iot.util.BizException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.dsw.iot.model.AlarmManageDo;
-import com.dsw.iot.service.AlarmManageService;
-import com.dsw.iot.util.BizException;
+import java.util.Date;
 
 public class TestAlarmManage extends BaseTest{
 

@@ -319,6 +319,18 @@ public class DictionaryServiceImpl implements DictionaryService {
 		return dictionaryTreeVos;
 	}
 
+	@Override
+	public DictionaryDo queryByTypeAndCode(String type, String code) {
+		DictionaryDoExample dictionaryDoExample = new DictionaryDoExample();
+		DictionaryDoExample.Criteria criteria = dictionaryDoExample.createCriteria();
+		criteria.andIsDeletedEqualTo(CommConfig.DELETED.NO.getName());
+		criteria.andTypeEqualTo(type);
+		criteria.andCodeEqualTo(code);
+		List<DictionaryDo> dictionaryDos = dictionaryDoMapperExt.selectByExample(dictionaryDoExample);
+		return CollectionUtils.isEmpty(dictionaryDos) ? new DictionaryDo() : dictionaryDos.get(0);
+		
+	}
+
 	// /**
 	// * 通过type查询出comboTree下拉框
 	// */

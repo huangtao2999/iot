@@ -213,7 +213,7 @@ $(document).ready(function () {
 							}
 	      	  	    		html += '<span titles="'+datas[i].name+'" data-id="'+datas[i].id+'">'+datas[i].name+'</span>';
 	      	  			}
-	      	  	    	
+
 	      	  	    	var imageUrl = datas.length > 0 ? "../images/index/warn/yujing.png" : "../images/index/warn/yujing02.png";
 		      	  	    $(".warningBox>.wh100 .data-"+type).append(html);
 		      	  	    $(".warningBox>.wh100 .image-"+type).attr("src",imageUrl);
@@ -240,7 +240,7 @@ $(document).ready(function () {
 			},0)
 		},0)
 	},0)*/
-    
+
     /**入区超时预警【end】*/
 
     /**尿样超期预警【start】*/
@@ -260,7 +260,7 @@ $(document).ready(function () {
  		    		html += '<li>';
  		    		html += '    <a href="javascript:;" class="wh100">';
  		    		html += '        <span title="'+datas[i].bottleb+'">'+datas[i].bottleb+'</span>';
- 		    		html += '        <span title="'+datas[i].officer+'">'+datas[i].officer+'</span>';
+// 		    		html += '        <span title="'+datas[i].officer+'">'+datas[i].officer+'</span>';
  		    		html += '        <span>'+new Date(datas[i].bottleDeadtimeB).format("yyyy-MM-dd")+'</span>';
  		    		html += '    </a>';
  		    		html += '</li>';

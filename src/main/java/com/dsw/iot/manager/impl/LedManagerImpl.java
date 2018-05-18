@@ -114,10 +114,11 @@ public class LedManagerImpl implements LedManager {
             hProgram = led.CreateProgram(128, 32, 2);
             led.AddProgram(hProgram, 1, 0, 1);
             led.AddImageTextArea(hProgram, 1, 1, 0, 0, 80, 16, 0);
-            led.AddStaticTextToImageTextArea(hProgram, 1, 1, 0, title, "宋体", 9, 0xff, 0, 0, 0, 0, 2, 0);
-            led.AddDigitalClockArea(hProgram, 1, 2, 80, 0, 48, 16, "宋体", 9, 0xff, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0xff, 0, 0xff, 2, 0xff);
+            led.AddStaticTextToImageTextArea(hProgram, 1, 1, 0, title, "宋体", 9, 0xff, 0, 0, 0, 0, 1, 0);
+//            led.AddDigitalClockArea(hProgram, 1, 2, 80, 0, 48, 16, "宋体", 9, 0xff, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0xff, 0, 0xff, 2, 0xff);
             led.AddImageTextArea(hProgram, 1, 3, 0, 16, 128, 16, 0);
-            led.AddMultiLineTextToImageTextArea(hProgram, 1, 3, 0, content, "宋体", 9, 0xff, 0, 0, 0, 6, 4, 2, 3, 0);//倒数第五个数字为2是左移（有停留）
+//            led.AddMultiLineTextToImageTextArea(hProgram, 1, 3, 0, content, "宋体", 9, 0xff, 0, 0, 0, 6, 4, 2, 3, 0);//倒数第五个数字为2是左移（有停留）
+            led.AddSinglelineTextToImageTextArea(hProgram, 1, 3, 0, content, "宋体", 9, 0xff, 0, 0, 0, 6, 4, 2);
             led.NetWorkSend(ip, hProgram);
         } catch (Exception e) {
             logger.info("LED显示异常!", e);

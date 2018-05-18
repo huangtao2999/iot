@@ -88,51 +88,19 @@
 			</li>
         </ul>
     </div>
-    
-    
-    <!--div class="dsw-tooltip fade in bottom" role="tooltip">
-	    <div class="dsw-tooltip-arrow"></div>
-	    <div class="dsw-tooltip-inner">
-	    	<div class='dsw-tooltip-content'>
-		    	<ul class='dsw-tooltip-content-lists'>
-		    		<li class='dsw-tooltip-content-item'>
-		    			<span class='dsw-tooltip-content-item-key'>姓名 :</span>
-		    			<span class='dsw-tooltip-content-item-val'>姓名张三</span>
-		    		</li>
-		    		
-		    		<li class='dsw-tooltip-content-item'>
-		    			<span class='dsw-tooltip-content-item-key'>性别 :</span>
-		    			<span class='dsw-tooltip-content-item-val'>性别张三</span>
-		    		</li>
-		    		
-		    		<li class='dsw-tooltip-content-item'>
-		    			<span class='dsw-tooltip-content-item-key'>入所原因 :</span>
-		    			<span class='dsw-tooltip-content-item-val'>入所原因张三风</span>
-		    		</li>
-		    		
-		    		<li class='dsw-tooltip-content-item'>
-		    			<span class='dsw-tooltip-content-item-key'>入所时间 :</span>
-		    			<span class='dsw-tooltip-content-item-val'>2018-03-27 14:52:52</span>
-		    		</li>
-		    	</ul>
-		    	<img class='dsw-tooltip-content-img' alt='' src='/images/custom/demo.png' />
-		    </div>
-	    </div>
-    </div-->
-    
-    
-    
+
     <style>
     	.dsw-tooltip{
     		position:absolute;
     		top:20px;
     		left:30%;
     		width:300px;
-    		background-color:#1f70c1;
+    		/*background-color:#1f70c1;*/
+            background: url("/images/perRegis/renyuandengji_tanchuang.png") no-repeat scroll 0 0/100% 100% border-box border-box;
     		box-sizing:border-box;
     		padding:10px;
     	}
-    	
+
     	.dsw-tooltip .dsw-tooltip-arrows{
     		width:0;
     		height:0;
@@ -142,17 +110,17 @@
     		-ms-transform:translate(-50%,-150%);
     		transform:translate(-50%,-150%);
     	}
-    	
+
     	.dsw-tooltip-content{
     		clear: both;
 		    overflow: hidden;
 		    position: relative;
     	}
-    	
+
     	.dsw-tooltip-content-lists{
-    		
+
     	}
-    	
+
     	.dsw-tooltip-content .dsw-tooltip-content-lists .dsw-tooltip-content-item{
     		clear:both;
     		overflow:hidden;
@@ -160,27 +128,27 @@
     		width:auto;
     		height:auto;
     	}
-    	
+
     	.dsw-tooltip .dsw-tooltip-content .dsw-tooltip-content-lists .dsw-tooltip-content-item span{
     		font-size: 14px;
-		    color: #eee;
+		    color: #b5983c;
 		    float: left;
 		    width: auto;
 		    height: auto;
 		    line-height: normal;
 		    margin: 0;
     	}
-    	
+
     	.dsw-tooltip .dsw-tooltip-content .dsw-tooltip-content-lists .dsw-tooltip-content-item span.dsw-tooltip-content-item-key{
     		margin-right:5px;
     		text-align:right;
     		width:64px;
     	}
-    	
+
     	.dsw-tooltip .dsw-tooltip-content .dsw-tooltip-content-lists .dsw-tooltip-content-item span.dsw-tooltip-content-item-val{
-    		
+
     	}
-    	
+
     	.dsw-tooltip-content-img{
     		width: 100px;
 		    height: 120px;
@@ -189,11 +157,11 @@
 		    right: 0;
     	}
     </style>
-    
+
     <script>
     	$(function(){
     		$('.namesBox').tooltip({
-    			//trigger:'click',
+//    			trigger:'click',
     			//animation:false,
     			container:'.warningBox > ul',
     			selector:'span',
@@ -201,9 +169,9 @@
     				var $el=$(this);
     				var id=$el.data('id') || 0;
     				var html='';
-    				
+
     				var res=PublicAjax('/PersonRegister/getPersonListClickVo.json', {'id': id});
-    				
+
     				if(res.success){
     					var content=res.content;
     					html+="<div class='dsw-tooltip-content'>"+
@@ -228,7 +196,7 @@
 					    	"<img class='dsw-tooltip-content-img' alt='' src='/FileUpload/getAttach.json?id="+content.photoUrl+"' />"+
 					    "</div>";
     				}
-    				
+
     				return html;
     			},
     			template:'<div class="dsw-tooltip" role="tooltip">'+
@@ -240,8 +208,8 @@
     		});
     	});
     </script>
-    
-    
+
+
     <div class="warnBeyongBox posAbs">
         <div class="posRel wh100">
             <div class="titBox posAbs clear">
@@ -249,9 +217,9 @@
                 <span class="desc">尿样超期预警</span>
             </div>
             <a href="javascript:;" class="posAbs seeMore" onclick="parent.addMenuTab('尿检信息','/UrineTestInfoHtml/index')">更多</a>
-            <div class="titTop posAbs">
+            <div class="gtask-title titTop posAbs">
                 <span>尿样编号</span>
-                <span>主办民警</span>
+<!--                 <span>主办民警</span> -->
                 <span>到期时间</span>
             </div>
             <ul class="posAbs urineOverTime">

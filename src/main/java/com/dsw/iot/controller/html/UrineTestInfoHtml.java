@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,9 @@ public class UrineTestInfoHtml {
 
     @Autowired
     UrineTestInfoService urineTestInfoService;
+
+	@Value("${form.org}")
+	private String org;
 
     /**
      * 人员登记首页
@@ -42,6 +46,8 @@ public class UrineTestInfoHtml {
      */
     @RequestMapping("/add")
     public String add(Model model) {
+		// 获得配置文件机构名称
+		model.addAttribute("org", org);
         return "urineTestInfo/add";
     }
 

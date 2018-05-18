@@ -29,18 +29,34 @@
 			<tr>
 				<td class="TDleft" width="100">人员姓名</td>
 				<td th:text='${personRegisterDo.name}'></td>
+                <td class="TDleft no-star" rowspan="6" width="136" colspan="2" style="align:center">
+                    <img style='width:200px;height:200px;' th:if="${personRegisterDo.personImgIds == ''}" src="../images/lawContro/face_msrpot.png"/>
+                    <img style='width:200px;height:200px;' th:if="${personRegisterDo.personImgIds != ''}" th:src="|/FileUpload/getAttach.json?id=${personRegisterDo.personImgIds}|"/>
+                </td>
+			</tr>
+			<tr>
 				<td class="TDleft" width="100">性别</td>
-				<td th:text='${personRegisterDo.sex}'></td>
+				<td>
+				<span th:include="component/selectCombo(id='sex',name='sex',dictType='SEX',defaultValue=${personRegisterDo.sex},verify='require',disabled=1)"></span>
+				</td>
 			</tr>
 			<tr>
 				<td class="TDleft">人员状态</td>
-				<td th:text='${personRegisterDo.personStatus}'></td>
+				<td>
+					<span th:include="component/selectCombo(id='personStatus',name='personStatus',dictType='PERSON_STATUS',defaultValue=${personRegisterDo.personStatus},verify='require',disabled=1)"></span>
+				</td>
+			</tr>
+			<tr>
 				<td class="TDleft">民族</td>
-				<td th:text='${personRegisterDo.minority}'></td>
+				<td>
+					<span th:include="component/selectCombo(id='minority',name='minority',dictType='PER_INFO_ETHNICITY',defaultValue=${personRegisterDo.minority},verify='require',disabled=1)"></span>
+				</td>
 			</tr>
 			<tr>
 				<td class="TDleft">户籍地详址</td>
 				<td th:text='${personRegisterDo.domicilePlace}'></td>
+			</tr>
+			<tr>
 				<td class="TDleft">当前关押位置</td>
 				<td><font color="red"><span th:text='${roomName}'></span></font></td>
 			</tr>
@@ -54,7 +70,7 @@
 
 </div >
 </body>
-<script type="text/javascript" >
+<script th:inline="javascript" >
 var table = new iotTable({
     dataUrl: '/Room/queryPageWait.json',
     renderTo: '#personRegis-table',
@@ -100,28 +116,49 @@ var table = new iotTable({
 });
 table.init();
 $(".table-body").on("click",".fp-wait-room",function(){
-	var loading =wait("分配中……");
-   var roomId = $(this).parents("li").data('id');
-   var registerId=$("#registerId").val();
+	/* 先判断是否可以进行分配，不行的话就阻止 【start】 */
+	var roomId = $(this).parents("li").data('id');
+	var registerId=$("#registerId").val();
 	$.ajax({
 		type:'get',
 		dataType:'json',
-		url:"/Room/getRoomWaitDistribution?roomId="+roomId+"&registerId="+registerId,
+		url:"/Room/checkRoomWaitDistribution?roomId="+roomId+"&registerId="+registerId,
 		cache:false
 	}).done(function (res) {//成功
-			if(res.success){
-				layer.msg("分配成功");
-				window.location.reload();
-			}else{
-				layer.msg(res.errorMsg);
-			}
+		if(res.success){
+			/* 分配开始 */
+			var loading =wait("分配中……");
+			$.ajax({
+				type:'get',
+				dataType:'json',
+				url:"/Room/getRoomWaitDistribution?roomId="+roomId+"&registerId="+registerId,
+				cache:false
+			}).done(function (res) {//成功
+					if(res.success){
+						layer.msg("分配成功");
+						window.location.reload();
+					}else{
+						layer.msg(res.errorMsg);
+					}
+			}).fail(function (reason) {//失败
+				layer.msg(reason.errorMsg);
+			}).always(function (res) {//无论成功失败
+		        waitOver(loading);
+			});
+		}else{
+			layer.msg(res.content);
+		}
 	}).fail(function (reason) {//失败
 		layer.msg(reason.errorMsg);
-	}).always(function (res) {//无论成功失败
-        waitOver(loading);
 	});
-
+	/* 先判断是否可以进行分配，不行的话就阻止 【end】*/
 });
+
+$(function(){
+	if([[${personRegisterDo.minority}]] == ""){
+		$("#minority").text("");
+	}
+})
 </script >
 
 

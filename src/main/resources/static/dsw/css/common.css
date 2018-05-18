@@ -1,0 +1,134 @@
+@charset "utf-8";
+
+textarea{
+    resize: none;
+}
+
+html,body{
+    height: 100%;
+    max-height: 100%;
+}
+
+body{
+    color: #17f3ea;
+}
+
+.dsw-container{
+    height: 100%;
+    /*-ms-overflow-x: hidden;*/
+    /*overflow-x: hidden;*/
+    position: relative;
+}
+
+/*背景图设置*/
+.dsw-index-bg{
+    background: url("../images/index-bg.jpg") no-repeat scroll 0 0/100% 100%;
+}
+
+.dsw-lists-bg{
+    background: url("../images/lists-bg.jpg") no-repeat scroll 0 0/100% 100%;
+}
+
+.dsw-detail-bg{
+    background: url("../images/detail-bg.jpg") no-repeat scroll 0 0/100% 100%;
+}
+
+.dsw-add-bg{
+    background: url("../images/add-bg.jpg") no-repeat scroll 0 0/100% 100%;
+}
+
+.dsw-edit-bg{
+    background: url("../images/edit-bg.jpg") no-repeat scroll 0 0/100% 100%;
+}
+
+.dsw-iframe-index-bg{
+    background: url("../images/iframe-index-bg.jpg") no-repeat scroll 0 0/100% 100%;
+}
+
+.dsw-iframe-lists-bg{
+    background: url("../images/iframe-lists-bg.jpg") no-repeat scroll 0 0/100% 100%;
+}
+
+.dsw-iframe-detail-bg{
+    background: url("../images/iframe-detail-bg.jpg") no-repeat scroll 0 0/100% 100%;
+}
+
+.dsw-iframe-add-bg{
+    background: url("../images/iframe-add-bg.jpg") no-repeat scroll 0 0/100% 100%;
+}
+
+.dsw-iframe-edit-bg{
+    background: url("../images/iframe-edit-bg.jpg") no-repeat scroll 0 0/100% 100%;
+}
+
+.dsw-dialog-index-bg{
+    background: url("../images/dialog-index-bg.jpg") no-repeat scroll 0 0/100% 100%;
+}
+
+.dsw-dialog-lists-bg{
+    background: url("../images/dialog-lists-bg.jpg") no-repeat scroll 0 0/100% 100%;
+}
+
+.dsw-dialog-detail-bg{
+    background: url("../images/dialog-detail-bg.jpg") no-repeat scroll 0 0/100% 100%;
+}
+
+.dsw-dialog-add-bg{
+    background: url("../images/dialog-add-bg.jpg") no-repeat scroll 0 0/100% 100%;
+}
+
+.dsw-dialog-edit-bg{
+    background: url("../images/dialog-edit-bg.jpg") no-repeat scroll 0 0/100% 100%;
+}
+
+.dsw-input-bg{
+    background: url("../images/input-bg.png") no-repeat scroll 0 0/100% 100%,#163c64;
+}
+
+.dsw-textarea-bg{
+    background: url("../images/input-textarea.png") no-repeat scroll 0 0/100% 100%,#163c64;
+}
+
+.dsw-select-bg{
+    background: url("../images/input-select.png") no-repeat scroll 0 0/100% 100%,#163c64;
+}
+
+
+/*间距*/
+.margin-bottom-18{
+    margin-bottom: 18px;
+}
+.padding-5{
+
+}
+
+/*居中方案*/
+.dsw-hv-center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+.dsw-h-center{
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translate(-50%,0);
+    -moz-transform: translate(-50%,0);
+    -ms-transform: translate(-50%,0);
+    -o-transform: translate(-50%,0);
+    transform: translate(-50%,0);
+}
+.dsw-v-center{
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translate(0,-50%);
+    -moz-transform: translate(0,-50%);
+    -ms-transform: translate(0,-50%);
+    -o-transform: translate(0,-50%);
+    transform: translate(0,-50%);
+}
+

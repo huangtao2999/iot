@@ -24,7 +24,7 @@ public class BizExceptionHandler {
     @ExceptionHandler(value = BizException.class)
     @ResponseBody
     public Object baseErrorHandler(HttpServletRequest req, Exception e) throws Exception {
-        logger.error(MessageFormat.format("---BaseException Handler---Host {0} invokes url {1} ERROR: {2}", req.getRemoteHost(), req.getRequestURL(), e.getMessage()));
+        logger.error(MessageFormat.format("---BaseException Handler---Host {0} invokes url {1} ERROR: {2}", req.getRemoteHost(), req.getRequestURL(), e.getMessage()), e);
         ActionResult actionResult = new ActionResult();
         actionResult.setSuccess(false);
         actionResult.setErrorMsg(e.getMessage());
@@ -34,7 +34,7 @@ public class BizExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public Object errorHandler(HttpServletRequest req, Exception e) throws Exception {
-        logger.error(MessageFormat.format("---Exception Handler---Host {0} invokes url {1} ERROR: {2}", req.getRemoteHost(), req.getRequestURL(), e.getMessage()));
+        logger.error(MessageFormat.format("---Exception Handler---Host {0} invokes url {1}", req.getRemoteHost(), req.getRequestURL()), e);
         ActionResult actionResult = new ActionResult();
         actionResult.setSuccess(false);
         actionResult.setErrorMsg(e.getMessage());

@@ -22,24 +22,40 @@
 " width="33" height="33"></object>
     <div class="btn-toolbar">
         <table class="youAdd" style="width:100%">
-           	<tr>
+			<tr>
 				<td colspan="4">人员信息</td>
 			</tr>
 			<tr>
 				<td class="TDleft" width="100">人员姓名</td>
 				<td th:text='${personRegisterDo.name}'></td>
+                <td class="TDleft no-star" rowspan="6" width="136" colspan="2" style="align:center">
+                    <img style='width:200px;height:200px;' th:if="${personRegisterDo.personImgIds == ''}" src="../images/lawContro/face_msrpot.png"/>
+                    <img style='width:200px;height:200px;' th:if="${personRegisterDo.personImgIds != ''}" th:src="|/FileUpload/getAttach.json?id=${personRegisterDo.personImgIds}|"/>
+                </td>
+			</tr>
+			<tr>
 				<td class="TDleft" width="100">性别</td>
-				<td th:text='${personRegisterDo.sex}'></td>
+				<td>
+				<span th:include="component/selectCombo(id='sex',name='sex',dictType='SEX',defaultValue=${personRegisterDo.sex},verify='require',disabled=1)"></span>
+				</td>
 			</tr>
 			<tr>
 				<td class="TDleft">人员状态</td>
-				<td th:text='${personRegisterDo.personStatus}'></td>
+				<td>
+					<span th:include="component/selectCombo(id='personStatus',name='personStatus',dictType='PERSON_STATUS',defaultValue=${personRegisterDo.personStatus},verify='require',disabled=1)"></span>
+				</td>
+			</tr>
+			<tr>
 				<td class="TDleft">民族</td>
-				<td th:text='${personRegisterDo.minority}'></td>
+				<td>
+					<span th:include="component/selectCombo(id='minority',name='minority',dictType='PER_INFO_ETHNICITY',defaultValue=${personRegisterDo.minority},verify='require',disabled=1)"></span>
+				</td>
 			</tr>
 			<tr>
 				<td class="TDleft">户籍地详址</td>
 				<td th:text='${personRegisterDo.domicilePlace}'></td>
+			</tr>
+			<tr>
 				<td class="TDleft">当前关押位置</td>
 				<td><font color="red"><span th:text='${roomName}'></span></font></td>
 			</tr>
@@ -52,7 +68,7 @@
 
 </div>
 </body>
-<script type="text/javascript">
+<script th:inline="javascript">
     var table = new iotTable({
         dataUrl: '/Room/queryPageInquiry.json',
         renderTo: '#personRegis-table',
@@ -124,6 +140,12 @@
             });
     	});
     });
+
+    $(function(){
+    	if([[${personRegisterDo.minority}]] == ""){
+    		$("#minority").text("");
+    	}
+    })
 </script>
 
 

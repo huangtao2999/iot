@@ -1,260 +1,431 @@
 <!DOCTYPE html>
 <html lang="zh-cn" xmlns:th="http://www.thymeleaf.org"
-	xmlns="http://www.w3.org/1999/xhtml">
+      xmlns="http://www.w3.org/1999/xhtml">
 <html>
 <head><meta charset="UTF-8">
     <meta http-equiv="content-type" content="text/html">
     <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
     <meta name="render" content="webkit|ie-comp|ie-stand">
-<meta charset="UTF-8">
-<title>3D人员定位</title>
-<div th:include="inc/common-new"></div>
-<div th:include="inc/common-table"></div>
+    <meta charset="UTF-8">
+    <title>3D人员定位</title>
+    <div th:include="inc/common-new"></div>
+    <div th:include="inc/common-table"></div>
 
-<script th:src="@{../../personPosition/jquery-2.1.4.min.js}"></script>
-<script th:src="@{../../personPosition/jquery.ui.js}"></script>
-<script th:src="@{../../personPosition/jquery.string.js}"></script>
-<script th:src="@{../../personPosition/jquery.layout.js}"></script>
-<script th:src="@{../../personPosition/jquery-ui-timepicker-addon.js}"></script>
-<script th:src="@{../../personPosition/sockjs.js}"></script>
-<script th:src="@{../../personPosition/stomp.js}"></script>
-<script th:src="@{../../personPosition/raphael.js}"></script>
-<script th:src="@{../../personPosition/ido.prototype.js}"></script>
-<script th:src="@{../../personPosition/ido.hashmap.js}"></script>
-<script th:src="@{../../personPosition/ido.log.js}"></script>
-<script th:src="@{../../personPosition/ido.map.2d.js}"></script>
-<script th:src="@{../../personPosition/ido.map.3d.js}"></script>
-<script th:src="@{../../personPosition/webVideoCtrl.js}"></script>
-<script th:src="@{../../personPosition/police.js}"></script>
-<script th:src="@{../../personPosition/fengmap.min.js}"></script>
-<script th:src="@{../../personPosition/bootstrap.min.js}"></script>
-<script th:src="@{../../personPosition/createBubble.js}"></script>
+    <script th:src="@{../../personPosition/jquery-2.1.4.min.js}"></script>
+    <script th:src="@{../../personPosition/jquery.ui.js}"></script>
+    <script th:src="@{../../personPosition/jquery.string.js}"></script>
+    <script th:src="@{../../personPosition/jquery.layout.js}"></script>
+    <script th:src="@{../../personPosition/jquery-ui-timepicker-addon.js}"></script>
+    <script th:src="@{../../personPosition/sockjs.js}"></script>
+    <script th:src="@{../../personPosition/stomp.js}"></script>
+    <script th:src="@{../../personPosition/raphael.js}"></script>
+    <script th:src="@{../../personPosition/ido.prototype.js}"></script>
+    <script th:src="@{../../personPosition/ido.hashmap.js}"></script>
+    <script th:src="@{../../personPosition/ido.log.js}"></script>
+    <script th:src="@{../../personPosition/ido.map.2d.js}"></script>
+    <script th:src="@{../../personPosition/ido.map.3d.js}"></script>
+    <script th:src="@{../../personPosition/webVideoCtrl.js}"></script>
+    <script th:src="@{../../personPosition/fengmap.min.js}"></script>
+    <script th:src="@{../../personPosition/bootstrap.min.js}"></script>
+    <script th:src="@{../../personPosition/createBubble.js}"></script>
 
 </head>
 <body>
 <table style="width: 100%;height: 100%;">
-	<tr>
-		<td width="20%"  style="vertical-align: top;">
-			<div style="clear:both;color:#fff;text-align:left;padding:5px;" class="header" th:text="${orgName}"></div>
-			<ol id="plans" style="color: white;"></ol>
-			<div style="color:white;text-align:left;padding:5px;" class="header">在所人员</div>
-			<ol id="tags">
-				<li><input type="text" name="tag-name" class="tag-name" /><button class="tag-follow">跟踪</button></li>
-			</ol>
-		</td>
-		<td width="70%" style="vertical-align: top;">
-			<div id="fengMap" style="height: 100%;"></div>
-		</td>
-		<td width="10%" style="vertical-align: top;">
-			<div id="screen">
-				<div id="divPlugin" class="plugin" style="width: 200px; height: 200px;"></div>
-			</div>
-		</td>
-	</tr>
+    <tr>
+        <td width="80%" style="vertical-align: top;">
+            <div id="fengMap" style="height: 100%;"></div>
+        </td>
+        <td width="20%"  style="vertical-align: top;">
+            <div id="screen">
+                <div id="divPlugin" class="plugin" style="width: 200px; height: 200px;"></div>
+            </div>
+            <div>
+                <div style="clear:both;color:#ff5500;text-align:left;padding:5px;" class="header">在办案区人员:<span style="display: inline-block;" id="people_count">0</span>人</div>
+                <ol id="tags" style="overflow-y:auto;height: 600px;"></ol>
+            </div>
+        </td>
+        <!--<td width="15%" style="vertical-align: top;">-->
+
+        <!--</td>-->
+    </tr>
 </table>
 </body>
+<style>
+    li{
+        list-style-type: none;
+        color:white;
+        cursor: pointer;
+        background: url("../../personPosition/image/zhuizong.png") no-repeat scroll 10px 5px/20px 20px;
+        padding-left: 35px;
+        line-height: 29px;
+    }
+    li.active{
+        background: url("../../personPosition/image/zhuizong2.png") no-repeat scroll 10px 5px/20px 20px;
+    }
+
+    li:hover:not(.active){
+        background: url("../../personPosition/image/zhuizong2.png") no-repeat scroll 10px 5px/20px 20px;
+    }
+
+</style>
 <script th:inline="javascript">
-    var url = [[${url}]];
+    var ip = [[${ip}]];
+    var port = [[${port}]];
+    var userName = [[${userName}]];
+    var password = [[${password}]];
+    var personPositionUrl = [[${personPositionUrl}]];
     $(function(){
-    var plans =[];
-//	$.ajax({
-//		async : false,
-//		type: 'GET',
-//		url: url+"/service/plan.json?action=get.plans",
-//		contentType: "application/json; charset=utf-8",
-//        dataType: 'jsonp',
-//        data : {
-//		},
-//		error: function(XMLHttpRequest, textStatus, errorThrown) {
-//        	alert("responseText: " + XMLHttpRequest.responseText+ ", textStatus: " + textStatus+ ", errorThrown: " + errorThrown);
-//        },
-//        success : function (data) {
-//        	plans = data.plans;
-//        	var html = "";
-//        	for(var i=0; i < plans.length; i++){
-//        		html += '<li id="plan_'+plans[i].planId+'" style="list-style-type: none;">'+plans[i].name+"</li>";
-//        	}
-//        	$('#plans').html(html);
-//		}
-//	});
+        var tags =[];
+        refreshTag();
+        setInterval(refreshTag,5000);
+        $("#tags").on("dblclick","li",function(){
 
-	var tags =[];
-	$.ajax({
-		type: 'GET',
-		url: url+"/service/tag.json?action=get.issued.tags",
-		//contentType: "application/json; charset=utf-8",
-        dataType: 'jsonp',
-        success : function (data) {
-        	 tags = data.tags;
-        	var html = "";
-        	for(var i=0, tag; tag = tags[i]; i++){
-//        		html += '<li id="tag_'+tag.euid+'" style="list-style-type: none;color:white">'+tag.name+tag.euid+'</li>';
-                html += '<li id="tag_'+tag.euid+'" style="list-style-type: none;color:white">'+tag.name+'</li>';
+            var tagName = $(this).text();
+            $(this).addClass('active').siblings().removeClass('active');
+            var isFollow = true;
+            for(var i=0; i<tags.length; i++){
+                if(tags[i].name == tagName || tags[i].euid == tagName){
+                    isFollow = false;
+                    break;
+                }
             }
-        	$('#tags').append(html);
-		}
-	});
+        });
+        //刷新标签
+        function refreshTag() {
+            //获取已签发的列表
+            $.ajax({
+                type: 'GET',
+                url: personPositionUrl+"/rest/user.json",
+                //contentType: "application/json; charset=utf-8",
+                data:{"action":"get.users","startNum":0,"scaleNum":100,"status":2,"searchType":"1","keyword":""},
+                dataType: 'jsonp',
+                success : function (data) {
+                    var users = data.users;
+                    var html = "";
+                    for(var i=0, user; user = users[i]; i++){
+                        if("#6395530"==user.color){
+                            var name =user.name;
+                            if(!$('#tags').find("#tag_"+user.euid).get(0)){
+                                html += '<li id="tag_'+user.euid+'">'+name+'</li>';
+                            }
+                        }else{
+                            delMarker(user.euid);
+                        }
+                    }
+                    $('#tags').append(html);
+                }
+            });
+            //获取没有签发的列表
+            $.ajax({
+                type: 'GET',
+                url: personPositionUrl+"/service/tag.json?action=get.unissued.tags",
+                //contentType: "application/json; charset=utf-8",
+                dataType: 'jsonp',
+                success : function (data) {
+                    tags = data.tags;
+                    var removeClass="";
+                    for(var i=0, tag; tag = tags[i]; i++){
+                        var euid =tag.euid;
+                        removeClass += "#tag_"+tag.euid+",";
+                        delMarker(euid);
+                    }
+                    $('#tags').find(removeClass.slice(0,-1)).remove();
+                }
+            });
+            //刷新在办案区人数
+            $('#people_count').text($('#tags').children().length);
+        }
+    });
+    document.title = '视频AND定位' + fengmap.VERSION;
+    var map;
+    var fmapID = 'zoodac-huangshigang';
+    var navi;
+    var position_data;
+    var curveDatas = new HashMap();
+    var localX, localY;
+    //图片图层
+    var imgLayer,textLayer;
+    window.onload = function() {
+        //视频预览 start
+        var previousTagEuid='';
+        var previousZoneName='';
+        //区域通道配置
+        var channelsMap=[[${zoneVideo}]];
+        function startRealPlay(iChannelID) {
+            var oWndInfo = WebVideoCtrl.I_GetWindowStatus(0),
+                szDeviceIdentify =  ip,
+                iRtspPort = 554,
+                bZeroChannel =  false,
+                iStreamType = 1;
 
+            var startRealPlay = function () {
+                WebVideoCtrl.I_StartRealPlay(szDeviceIdentify, {
+                    iRtspPort: iRtspPort,
+                    iStreamType: iStreamType,
+                    iChannelID: iChannelID,
+                    bZeroChannel: bZeroChannel,
+                    success: function () {
 
-	Panel.start(1);
+                    },
+                    error: function (status, xmlDoc) {
+                        if (403 === status) {
+                            //alert("设备不支持Websocket取流！");
+                        } else {
+                            //alert("开始预览失败！");
+                        }
+                    }
+                });
+            };
 
-	$("#tags .tag-follow").click(function(){
+            if (oWndInfo != null) {// 已经在播放了，先停止
+                WebVideoCtrl.I_Stop({
+                    success: function () {
+                        startRealPlay();
+                    }
+                });
+            } else {
+                startRealPlay();
+            }
+        }
+        $(function () {
+            // 检查插件是否已经安装过
+            var iRet = WebVideoCtrl.I_CheckPluginInstall();
+            if (-1 == iRet) {
+                alert("您还未安装过插件，双击开发包目录里的WebComponentsKit.exe安装！");
+                return;
+            }
 
-		if($("#tags .tag-name").val() == "" || $("#tags .tag-name").val() == null){
-			alert("请输入标签ID或者姓名");
-			return;
-		}
-		var tagName = $.trim($("#tags .tag-name").val());
-		var isFollow = true;
-		for(var i=0; i<tags.length; i++){
-			if(tags[i].name == tagName || tags[i].euid == tagName){
-				Panel.follow(tags[i].euid);
-				isFollow = false;
-				break;
-			}
-		}
-		if(isFollow){
-			alert("请输入正确的标签ID或者姓名");
-		}
+            // 初始化插件参数及插入插件
+            WebVideoCtrl.I_InitPlugin( $("#screen").width(),  $("#screen").height(), {
+                bWndFull: true,     //是否支持单窗口双击全屏，默认支持 true:支持 false:不支持
+                iPackageType: 2,    //2:PS 11:MP4
+                iWndowType: 1,
+                cbInitPluginComplete: function () {
+                    WebVideoCtrl.I_InsertOBJECTPlugin("divPlugin");
 
-	});
+                    // 检查插件是否最新
+                    if (-1 == WebVideoCtrl.I_CheckPluginVersion()) {
+                        alert("检测到新的插件版本，双击开发包目录里的WebComponentsKit.exe升级！");
+                        return;
+                    }
 
-	$("#fengMap").dblclick(function(){
-		if($("#fengMap").hasClass("fengMap")){
-			$("#fengMap").removeClass("fengMap");
-			$("#screen").show();
-		}else{
-			$("#fengMap").addClass("fengMap");
-			$("#screen").hide();
-		}
+                    WebVideoCtrl.I_Login(
+                        ip,
+                        1,
+                        port,
+                        userName,
+                        password, {
+                            success: function (xmlDoc) {
+                            }
+                        });
+                }
+            });
 
-	});
-})
-</script>
-<script type="text/javascript">
-	document.title = '视频AND定位' + fengmap.VERSION;
-	var map;
-	var fmapID = 'zoodac-huangshigang';
-	var navi;
-	var groupControl;
-	var locationMarker;
-	var groupLayer;
-	var navigation = true;
-	var position_data;
-	var curveDatas = new HashMap();
-	var localX, localY;
-	var imageMarker = null;
-	var naviLines = [];
-	var startNavi = true;
-	window.onload = function() {
-		if (navi) {
-			navi.stop();
-			navi = null;
-		}
-		var ctlOpt = new fengmap.controlOptions({
-			position : fengmap.controlPositon.RIGHT_TOP,
-			showBtnCount : 7,
-			allLayer : true,
-		});
-		map = new fengmap.FMMap({
-			container : document.getElementById('fengMap'),
-			mapServerURL : '../../personPosition/data/' + fmapID,
-			mapThemeURL : '../../personPosition/data/theme',
-			defaultThemeName : '2002',
-			defaultMapScaleLevel : 22,
-			focusAlphaMode : true,
-			focusAnimateMode : false,
-			focusAlpha : 0,
-			viewModeAnimateMode : true,
-			defaultTiltAngle : 30,
-			key : 'c8e965cef46ca96287c7e4acb88ee327',
+        });
+        //视频预览 end
+
+        if (navi) {
+            navi.stop();
+            navi = null;
+        }
+        var ctlOpt = new fengmap.controlOptions({
+            position : fengmap.controlPositon.RIGHT_TOP,
+            showBtnCount : 7,
+            allLayer : true,
+        });
+        var compassVisible = true;
+        map = new fengmap.FMMap({
+            container : document.getElementById('fengMap'),
+            mapServerURL : '../../personPosition/data/' + fmapID,
+            mapThemeURL : '../../personPosition/data/theme',
+            defaultThemeName : '2002',
+            defaultMapScaleLevel : 22,
+            focusAlphaMode : true,
+            focusAnimateMode : false,
+            focusAlpha : 0,
+            viewModeAnimateMode : false,
+            defaultTiltAngle : 30,
+            key : 'c8e965cef46ca96287c7e4acb88ee327',
             appName : 'zoodac_haungshigang',
-		});
-		map.openMapById(fmapID);
+            defaultViewMode:fengmap.FMViewMode.MODE_3D,
+            compassOffset:[5,20], //初始指南针的偏移量
+            compassSize: 48, //指南针大小默认配置
+        });
+        map.openMapById(fmapID);
+        map.showCompass = compassVisible;
+        //地图加载完之后动作
+        map.on('loadComplete', function(event) {
+            init();
+            var sock = new SockJS(personPositionUrl+'/rtls/sockjs');
+            var client = Stomp.over(sock);
+            client.debug = null;
+            //标签代表是否进去0维基站范围 true为进入
+            var isInRange = false;
+            var twrCount = 0;
+            client.connect({}, function(frame) {
+                client.subscribe("/queue/position", function(message) {
+                    position_data = JSON.parse(message.body);
+                    var euid = position_data.tagEuid;
+                    var tagGroup = position_data.tagGroup;
+                    // 标签分组不是639
+//                    if(639!=tagGroup){
+//                        return;
+//                    }
+                    var message =position_data.rawData[0];
+                    //表示当前标签距离基站的位置
+                    var twrDistance = message.twr;
+                    //人员设置多少距离显示0维 单位 米
+                    var range = message.range;
+                    if(parseFloat(twrDistance) < parseFloat(range)){
+                        twrCount = 0;
+                        isInRange = true;
+                    }else if(parseFloat(twrDistance) > parseFloat(range)){
+                        twrCount++;
+                        if(twrCount>20){
+                            isInRange = false;
+                            twrCount = 0;
+                        }
+                    }
 
-		//添加文字标签层
-		function addTextMarker(euid) {
-			var group = map.getFMGroup(map.groupIDs[0]);
-			var layer = new fengmap.FMTextMarkerLayer();
-			group.addLayer(layer);
-			var tm = new fengmap.FMTextMarker({
-				x : 12808160.47 + curveDatas.get(euid).localX,
-				y : 3533397.83 - curveDatas.get(euid).localY,
-				z : 1,
-				name: curveDatas.get(euid).name,
-				size : 26,
-				//填充色
-				fillcolor: "255,0,0",
-				callback: function() {
-					// 在载入完成后，设置 "一直可见"
-					tm.alwaysShow();
-				}
-			});
-			layer.addMarker(tm);
-			curveDatas.get(euid).text = tm;
-		};
-		//添加图片标签层
-		function addMarker(euid) {
-			var group = map.getFMGroup(map.groupIDs[0]);
-			var layer = new fengmap.FMImageMarkerLayer();
-			group.addLayer(layer);
-			var imageMarker = new fengmap.FMImageMarker({
-				name : curveDatas.get(euid).name,
-				x : 12808160.47 + curveDatas.get(euid).localX,
-				y : 3533397.83 - curveDatas.get(euid).localY,
-				z : 1,
-				url : '../../personPosition/image/peopleMarker.png',
-				size : 26,
-				callback : function() {
-					imageMarker.alwaysShow();
-				}
-			});
-			layer.addMarker(imageMarker);
-			curveDatas.get(euid).img = imageMarker;
-		};
-		//移动位置
-		function peopleMove(euid) {
-			if (typeof (curveDatas.get(euid).img) === "undefined") {
-				return;
-			}
-			(curveDatas.get(euid).img).moveTo({
-				x : curveDatas.get(euid).localX + 12808160.47,
-				y : 3533397.83 - curveDatas.get(euid).localY,
-				z : 1,
-				time : 1
-			});
-		};
-		var sock = new SockJS(url+'/rtls/sockjs');
-		var client = Stomp.over(sock);
-		client.debug = null;
-		client.connect({}, function(frame) {
-			client.subscribe("/queue/position", function(message) {
-				position_data = JSON.parse(message.body);
-				if (position_data.errorCase == 0) {
-					var euid = position_data.tagEuid;
-                    localX = position_data.localX * 0.01662+4;
-                    localY = position_data.localY * 0.01662+6;
-                    console.log(localX+","+localY);
-                    if (curveDatas.get(euid)) {
-						curveDatas.get(euid).localX = localX;
-						curveDatas.get(euid).localY = localY;
-					} else {
-						var curveData = new Object();
-						curveData.localX = localX;
-						curveData.localY = localY;
-						curveData.name = position_data.tagAlias;
-						curveDatas.put(euid, curveData);
-						addMarker(euid);
-					}
-					peopleMove(euid);
-				}
-			});
-		});
-		sock.onclose = function(event) {
-		};
-		$("#fengMap canvas").width($("#fengMap").width());
-		$("#fengMap canvas").height($("#fengMap").height());
-	};
+                    //algorithm=2 为twr测距计算结果
+                    if (position_data.errorCase == 0 &&(position_data.algorithm ==2||!isInRange)) {
+                        var planMeter = position_data.planMeter;
+                        localX = position_data.localX * planMeter+1.2;
+                        localY = position_data.localY * planMeter;
+                        if (curveDatas.get(euid)) {
+                            curveDatas.get(euid).localX = localX;
+                            curveDatas.get(euid).localY = localY;
+                        } else {
+                            var curveData = new Object();
+                            curveData.localX = localX;
+                            curveData.localY = localY;
+                            curveData.name = position_data.tagAlias;
+                            curveData.sex = position_data.tagGender;
+                            curveData.type=position_data.tagType;
+                            curveDatas.put(euid, curveData);
+                            addMarker(euid);
+//                            addTextMarker(euid);
+                        }
+                        peopleMove(euid);
+
+                        var selectedID=$('#tags').children('.active').eq(0).prop('id');
+                        var selectedTagEuid=selectedID && selectedID.split('_')[1];
+                        /**
+                         * 预览条件：
+                         * 1、有选定人
+                         * 2、当前推送回来的人就是当前选定的人
+                         * 3、选定人所在区域改变 或者 当前选中的和上一次选中的不是同一人
+                         */
+//                        console.log("上一区域:"+previousZoneName+",本次区域:"+position_data.zoneId+",通道:"+channelsMap[position_data.zoneId]);
+                        if (channelsMap[position_data.zoneId] && selectedTagEuid && selectedTagEuid==position_data.tagEuid && (selectedTagEuid!=previousTagEuid || previousZoneName!=position_data.zoneId) ){
+                            if( previousTagEuid && previousTagEuid!=position_data.tagEuid){
+                                curveDatas.get(previousTagEuid).img.url='../../personPosition/image/peopleMarker_blue.png';
+                            }
+                            curveDatas.get(position_data.tagEuid).img.url='../../personPosition/image/peopleMarker.png';
+                            previousTagEuid=position_data.tagEuid;
+                            previousZoneName=position_data.zoneId;
+                            startRealPlay(channelsMap[previousZoneName]);
+
+                        }
+                    }
+                });
+            });
+            sock.onclose = function(event) {
+            };
+        })
+        //初始化图层
+        function init(){
+            var group = map.getFMGroup(1);
+            imgLayer = new fengmap.FMImageMarkerLayer();
+            textLayer = new fengmap.FMTextMarkerLayer()
+            group.addLayer(imgLayer);
+            group.addLayer(textLayer);
+        }
+        //指北针重置
+        map.on('mapClickCompass', function() {
+            map.rotateTo({
+                //设置角度
+                to: 0,
+                //动画持续时间，默认为。3秒
+                duration: .3
+            })
+        })
+        $("#fengMap canvas").width($("#fengMap").width());
+        $("#fengMap canvas").height($("#fengMap").height());
+    };
+    //添加文字标签层
+    function addTextMarker(euid) {
+        var group = map.getFMGroup(1);
+        var layer = new fengmap.FMTextMarkerLayer();
+        group.addLayer(layer);
+        var tm = new fengmap.FMTextMarker({
+            x : 12808160.47 + curveDatas.get(euid).localX,
+            y : 3533397.83 - curveDatas.get(euid).localY,
+            z : 1,
+            name: curveDatas.get(euid).name,
+            size : 26,
+            //填充色
+            fillcolor: "255,0,0",
+            callback: function() {
+                // 在载入完成后，设置 "一直可见"
+                tm.alwaysShow();
+            }
+        });
+        layer.addMarker(tm);
+        curveDatas.get(euid).text = tm;
+    }
+    //添加图片标签层
+    function addMarker(euid) {
+        var group = map.getFMGroup(1);
+        var layer = new fengmap.FMImageMarkerLayer();
+        group.addLayer(layer);
+        //判断人员表示显示类型
+        var iconUrl;
+        if(curveDatas.get(euid).type=2){
+            if(curveDatas.get(euid).sex=1){
+                iconUrl ='../../personPosition/image/peopleMarkerMan.png';
+            }else{
+                iconUrl ='../../personPosition/image/peopleMarkerWomen.png';
+            }
+        }else{
+            iconUrl ='../../personPosition/image/peopleMarkerPolice.png';
+        }
+        iconUrl ='../../personPosition/image/peopleMarker_blue.png';
+        var imageMarker = new fengmap.FMImageMarker({
+            name : curveDatas.get(euid).name,
+            x : 12808160.47 + curveDatas.get(euid).localX,
+            y : 3533397.83 - curveDatas.get(euid).localY,
+            z : 1,
+            url : iconUrl,
+            size : 26,
+            callback : function() {
+                imageMarker.alwaysShow();
+            }
+        });
+        layer.addMarker(imageMarker);
+        curveDatas.get(euid).img = imageMarker;
+    }
+    //删除人员标签
+    function delMarker(euid) {
+        if(curveDatas.containsKey(euid)){
+            var imageMarker = curveDatas.get(euid).img;
+            imgLayer.removeMarker(imageMarker);
+            curveDatas.remove(euid);
+        }
+    }
+    //移动位置
+    function peopleMove(euid) {
+        if (typeof (curveDatas.get(euid).img) === "undefined") {
+            return;
+        }
+        (curveDatas.get(euid).img).moveTo({
+            x : curveDatas.get(euid).localX + 12808160.47,
+            y : 3533397.83 - curveDatas.get(euid).localY,
+            z : 1,
+            time : 1
+        });
+    }
 </script>
 </html>

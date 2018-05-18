@@ -53,35 +53,35 @@
         <div class="posRel wh100">
             <img style="z-index:-100;" class="posAbs wh100" src="../images/lawContro/beijing.png" alt="">
 <!--             上方按钮，人员分类 -->
-            <div class="lawCtrTabBox" style="margin-bottom:1em;">
-                <div class="posRel wh100">
-                    <ul class="clear posAbs person-type">
-                        <li class="active">
-                            <div class="posRel wh100">
-                                <img src="../images/lawContro/daohang-changtai.png" alt="" class="defImg posAbs wh100">
-                                <img src="../images/lawContro/daohang-xuanzhong.png" alt="" class="selImg posAbs wh100">
-                                <span class="posAbs cenMid" value="1">犯罪嫌疑人</span>
-                            </div>
-                        </li>
-                        <li class="">
-                            <div class="posRel wh100">
-                                <img src="../images/lawContro/daohang-changtai.png" alt="" class="defImg posAbs wh100">
-                                <img src="../images/lawContro/daohang-xuanzhong.png" alt="" class="selImg posAbs wh100">
-                                <span class="posAbs cenMid" value="2">证人</span>
-                            </div>
-                        </li>
-                        <li class="">
-                            <div class="posRel wh100">
-                                <img src="../images/lawContro/daohang-changtai.png" alt="" class="defImg posAbs wh100">
-                                <img src="../images/lawContro/daohang-xuanzhong.png" alt="" class="selImg posAbs wh100">
-                                <span class="posAbs cenMid" value="3">受害人</span>
-                            </div>
-                        </li>
-                    </ul>
-                    <img src="../images/lawContro/zhuangshi.png" alt="" class="lineImg posAbs">
-<!--                     <img src="../images/lawContro/tuichu.png" alt="" class="closeImg posAbs mid"> -->
-                </div>
-            </div>
+            <!--<div class="lawCtrTabBox" style="margin-bottom:1em;">-->
+                <!--<div class="posRel wh100">-->
+                    <!--<ul class="clear posAbs person-type">-->
+                        <!--<li class="active">-->
+                            <!--<div class="posRel wh100">-->
+                                <!--<img src="../images/lawContro/daohang-changtai.png" alt="" class="defImg posAbs wh100">-->
+                                <!--<img src="../images/lawContro/daohang-xuanzhong.png" alt="" class="selImg posAbs wh100">-->
+                                <!--<span class="posAbs cenMid" value="1">嫌疑人</span>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                        <!--<li class="">-->
+                            <!--<div class="posRel wh100">-->
+                                <!--<img src="../images/lawContro/daohang-changtai.png" alt="" class="defImg posAbs wh100">-->
+                                <!--<img src="../images/lawContro/daohang-xuanzhong.png" alt="" class="selImg posAbs wh100">-->
+                                <!--<span class="posAbs cenMid" value="3">证人</span>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                        <!--<li class="">-->
+                            <!--<div class="posRel wh100">-->
+                                <!--<img src="../images/lawContro/daohang-changtai.png" alt="" class="defImg posAbs wh100">-->
+                                <!--<img src="../images/lawContro/daohang-xuanzhong.png" alt="" class="selImg posAbs wh100">-->
+                                <!--<span class="posAbs cenMid" value="2">受害人</span>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                    <!--<img src="../images/lawContro/zhuangshi.png" alt="" class="lineImg posAbs">-->
+<!--&lt;!&ndash;                     <img src="../images/lawContro/tuichu.png" alt="" class="closeImg posAbs mid"> &ndash;&gt;-->
+                <!--</div>-->
+            <!--</div>-->
 <!--             下方所有的控件内容 -->
             <div class="lawConBox">
 <!--             图片流程信息 -->
@@ -204,7 +204,7 @@
                                                 <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
                                                 <div class="iptBg"></div>
                                                 <div class="selBox posAbs mid">
-													<span th:include="component/selectCombo(id='cardType',name='cardType',dictType='PER_CARD_TYPE')" />
+													<span th:include="component/selectCombo(id='cardType',name='cardType',dictType='PER_INFO_CARD_TYPE')" />
                                                 </div>
                                                 <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
                                             </div>
@@ -342,7 +342,7 @@
                                                 <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
                                                 <div class="iptBg"></div>
                                                 <div class="selBox posAbs mid">
-													<span th:include="component/selectCombo(id='educationLevel',name='educationLevel',dictType='EDUCATION_LEVEL')" />
+													<span th:include="component/selectCombo(id='educationLevel',name='educationLevel',dictType='PER_INFO_EDUCATION_LEVEL')" />
                                                 </div>
                                                 <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
                                             </div>
@@ -360,7 +360,7 @@
                                                 <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
                                                 <div class="iptBg"></div>
                                                 <div class="selBox posAbs mid">
-													<span th:include="component/selectCombo(id='political',name='political',dictType='PER_POLITICAL')" />
+													<span th:include="component/selectCombo(id='political',name='political',dictType='PER_INFO_POLITICAL')" />
                                                 </div>
                                                 <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
                                             </div>
@@ -380,7 +380,7 @@
                                                 <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
                                                 <div class="iptBg"></div>
                                                 <div class="selBox posAbs mid">
-													<span th:include="component/selectCombo(id='nationality',name='nationality',dictType='PER_NATIONALITY')" />
+													<span th:include="component/selectCombo(id='nationality',name='nationality',dictType='PER_INFO_NATIONALITY')" />
                                                 </div>
                                                 <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
                                             </div>
@@ -398,7 +398,7 @@
                                                 <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
                                                 <div class="iptBg"></div>
                                                 <div class="selBox posAbs mid">
-													<span th:include="component/selectCombo(id='minority',name='minority',dictType='ETHNICITY')" />
+													<span th:include="component/selectCombo(id='minority',name='minority',dictType='PER_INFO_ETHNICITY')" />
                                                 </div>
                                                 <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
                                             </div>
@@ -416,7 +416,7 @@
                                                 <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
                                                 <div class="iptBg"></div>
                                                 <div class="selBox posAbs mid">
-													<span th:include="component/selectCombo(id='personType',name='personType',dictType='PERSON_TYPE')" />
+													<span th:include="component/selectCombo(id='personType',name='personType',dictType='PER_INFO_IDENTITY_TYPE')" />
                                                 </div>
                                                 <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
                                             </div>
@@ -451,7 +451,10 @@
                                             <div class="posRel wh100">
                                                 <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
                                                 <div class="iptBg"></div>
-                                                <input id="domicileArea" name="domicileArea" type="text" class="idCard posAbs wh100">
+                                                <div class="selBox posAbs mid">
+                                             <!--    <input id="domicileArea" name="domicileArea" type="text" class="idCard posAbs wh100">-->
+                                                 <span th:include="component/selectCombo(id='domicileArea',name='domicileArea',dictType='PER_INFO_DOMICILE')" />
+                                                   </div>
                                                 <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
                                             </div>
                                         </div>
@@ -485,7 +488,10 @@
                                             <div class="posRel wh100">
                                                 <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
                                                 <div class="iptBg"></div>
-                                                <input id="livingArea" name="livingArea" type="text" class="idCard posAbs wh100">
+                                                <!-- <input id="livingArea" name="livingArea" type="text" class="idCard posAbs wh100"> -->
+                                                <div class="selBox posAbs mid">
+                                                 <span th:include="component/selectCombo(id='livingArea',name='livingArea',dictType='PER_INFO_DOMICILE')" />
+                                                   </div>
                                                 <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
                                             </div>
                                         </div>
@@ -522,7 +528,7 @@
 	                                            <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
 	                                            <div class="iptBg"></div>
 	                                            <div class="selBox posAbs mid">
-													<span th:include="component/selectCombo(id='marriageType',name='marriageType',dictType='PER_MARRIAGE_TYPE')" />
+													<span th:include="component/selectCombo(id='marriageType',name='marriageType',dictType='PER_INFO_MARRIAGE_TYPE')" />
 	                                            </div>
 	                                            <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
 	                                        </div>
@@ -539,7 +545,10 @@
                                             <div class="posRel wh100">
                                                 <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
                                                 <div class="iptBg"></div>
-                                                <input id="relief" name="relief" type="text" class="idCard posAbs wh100">
+                                                <!-- <input id="relief" name="relief" type="text" class="idCard posAbs wh100"> -->
+                                                 <div class="selBox posAbs mid">
+													<span th:include="component/selectCombo(id='relief',name='relief',dictType='PER_INFO_RELIGION')" />
+	                                            </div>
                                                 <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
                                             </div>
 	                                    </div>
@@ -556,7 +565,7 @@
 	                                            <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
 	                                            <div class="iptBg"></div>
 	                                            <div class="selBox posAbs mid">
-													<span th:include="component/selectCombo(id='minitary',name='minitary',dictType='PER_MILITARY')" />
+													<span th:include="component/selectCombo(id='minitary',name='minitary',dictType='PER_INFO_MILITARY')" />
 	                                            </div>
 	                                            <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
 	                                        </div>
@@ -591,7 +600,10 @@
                                             <div class="posRel wh100">
                                                 <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
                                                 <div class="iptBg"></div>
-                                                <input id="personLable" name="personLable" type="text" class="idCard posAbs wh100">
+                                                <!-- <input id="personLable" name="personLable" type="text" class="idCard posAbs wh100"> -->
+                                                <div class="selBox posAbs mid">
+													<span th:include="component/selectCombo(id='personLable',name='personLable',dictType='PER_INFO_PERSON_LABEL')" />
+	                                            </div>
                                                 <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
                                             </div>
 	                                    </div>
@@ -607,7 +619,10 @@
                                             <div class="posRel wh100">
                                                 <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
                                                 <div class="iptBg"></div>
-                                                <input id="professionType" name="professionType" type="text" class="idCard posAbs wh100">
+                                                <!-- <input id="professionType" name="professionType" type="text" class="idCard posAbs wh100"> -->
+                                                <div class="selBox posAbs mid">
+													<span th:include="component/selectCombo(id='professionType',name='professionType',dictType='PER_INFO_JOB_TYPE')" />
+	                                            </div>
                                                 <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
                                             </div>
 	                                    </div>
@@ -703,8 +718,8 @@
                                 <div class="posRel wh100">
                                     <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
                                     <div class="iptBg"></div>
-                                    <input id="handlingArea" name="handlingArea" type="hidden" class="handlingArea posAbs wh100" th:value="420202000000">
-                                    <input type="text" class="handlingArea posAbs wh100" th:value="黄石港分局" disabled="">
+                                    <input id="handlingArea" name="handlingArea" type="hidden" class="handlingArea posAbs wh100" th:value="${orgCode}">
+                                    <input type="text" class="handlingArea posAbs wh100" th:value="${org}" disabled="">
                                     <!--<span th:include="component/selectCombo(id='handlingArea',name='handlingArea',dictType='ORG')" />-->
                                     <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
                                 </div>
@@ -749,7 +764,7 @@
                             </div>
                         </div>
 						<div class="infoOne" style="width:24%;">
-                            <div class="mandatoryImgBox hideManda">
+                            <div class="mandatoryImgBox">
                                 <div class="posRel wh100">
                                     <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
                                 </div>
@@ -793,7 +808,7 @@
                                     <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
                                 </div>
                             </div>
-                            <span class="">主办民警：</span>
+                            <span class="">主办警号：</span>
                             <div class="formBox">
 	                            <div class="posRel wh100">
 	                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
@@ -825,7 +840,7 @@
                                     <img src="../images/lawContro/mandatory.png" alt="" class="mandatoryImg posAbs cenMid">
                                 </div>
                             </div>
-                            <span class="">协办民警：</span>
+                            <span class="">协办警号：</span>
                             <div class="formBox">
 	                            <div class="posRel wh100">
 	                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
@@ -880,7 +895,8 @@
 	                            <div class="posRel wh100">
 	                                <img src="../images/lawContro/shurukaung.png" alt="" class="defImg posAbs mid wh100">
 	                                <div class="iptBg"></div>
-	                                <input id="alarmNumber" name="alarmNumber" type="text" class="idCard posAbs wh100">
+	                               <input id="alarmNumber" name="alarmNumber" type="text"
+	                               		class="idCard posAbs wh100">
 	                                <img src="../images/lawContro/shurukuangkuang-yilou.png" alt="" class="yilouImg posAbs mid wh100">
 	                            </div>
                             </div>
@@ -992,7 +1008,7 @@
                     <div class="selectBox">
                         <div class="selImgBox">
                             <div class="posRel wh100">
-                                <img src="../images/lawContro/gouxuan01.png" alt="" class="defImg posAbs wh100">
+                                <img src="../images/lawContro/gouxuan01.png" alt="" class="defImg posAbs wh100" style="display:none">
                                 <img src="../images/lawContro/gouxuan02.png" alt="" class="selImg posAbs wh100" style="display:block">
                             </div>
                         </div>
@@ -1010,7 +1026,7 @@
                                     <span style="width:40%;">物品描述</span>
                                     <span style="width:40%;">照片</span>
                                 </div>
-                                <div class="addBtnBox posAbs" cls="goods-list" data-type="inGoods">
+                                <div class="addBtnBox posAbs" cls="goods-list" data-ht-type="inGoods">
                                     <div class="posRel wh100">
                                         <img src="../images/lawContro/tianjia-changtai.png" alt="" class="defImg posAbs wh100">
                                         <img src="../images/lawContro/tianjia-dianji.png" alt="" class="selImg posAbs wh100">
@@ -1037,7 +1053,7 @@
                         </div>
                         <div class="tarRight">
                             <div class="posRel wh100">
-                                <textarea name="checkBodyResult" id="checkBodyResult" class="textareaRight posAbs cenMid" placeholder="检查发现体表特俗特征、伤情及处理情况"></textarea>
+                                <textarea name="checkBodyResult" id="checkBodyResult" class="textareaRight posAbs cenMid" placeholder="检查发现体表特征、伤情及处理情况"></textarea>
                                 <img src="../images/lawContro/shurukuang-wenben.png" alt="" class="posAbs wh100">
                             </div>
                         </div>
@@ -1054,7 +1070,7 @@
                                     <span style="width:40%;">伤情描述</span>
                                     <span style="width:40%;">照片</span>
                                 </div>
-                                <div class="addBtnBox posAbs injuryAdd" cls="injury-list"  data-type="injury">
+                                <div class="addBtnBox posAbs injuryAdd" cls="injury-list"  data-ht-type="injury">
                                     <div class="posRel wh100">
                                         <img src="../images/lawContro/tianjia-changtai.png" alt="" class="defImg posAbs wh100">
                                         <img src="../images/lawContro/tianjia-dianji.png" alt="" class="selImg posAbs wh100">
@@ -1675,12 +1691,12 @@ $(function(){
 	$(".lawConBox .workAreaBox .itemsInfoBox .itemsInfoMainBox .columIscBox ul").on("click",'li .pics .cameraImg',function(e){
 		var self=this;
 		var $pics=$(this).closest('.pics');
-        var type=$(this).data('type');
+        var httype=$(this).data('type');
 		layer.open({
 			type:2,
 			title:false,
 			resize:false,
-            content: '/Video/index.html?type='+type,
+            content: '/Video/index.html?type='+httype,
 			area:['900px', '500px'],
 			success:function(layero,index){
 				var _imgs=[];
@@ -1784,19 +1800,27 @@ $(function(){
 
 	//人脸识别跳过来，先下载，再上传
 	var faceAttach = [[${attachDo}]];
+	var getCardInfo = [[${idCardDo}]];
 	if(faceAttach){
 		$("#faceImg").prop("src","/FileUpload/getAttach.json?id=" + faceAttach.id);//显示头像
 		$("#personImgIds").val(faceAttach.id);
+	}
+	if(getCardInfo){
+		getIDCardInfouUP(getCardInfo);
 	}
 
 
 	//读身份证操作
     $("#readCard").on("click",function () {
+    	//读取身份证信息
         var loading = wait();
+        setTimeout(function () {
+        	 waitOver(loading);
+        	}, 5000);
         var CVR_IDCard = document.getElementById("CVR_IDCard");
         var strReadResult = CVR_IDCard.ReadCard();
-        waitOver(loading);
-        if(strReadResult == "0"){
+
+       if(strReadResult == "0"){
             clearForm();
             var gender = CVR_IDCard.Sex;
             var sex = null;//性别
@@ -1815,7 +1839,8 @@ $(function(){
             $("#domicilePlace").val(domicilePlace);
             $("#birthDate").val(birthDate.substr(0,4) + "-" + birthDate.substr(4,2) + "-" + birthDate.substr(6,2));
             $("#cardNo").val(cardNo);
-            $("#cardType").find("[value='1']").prop("selected",true);
+            //$("#cardType").find("[value='1']").prop("selected",true);
+            $("#cardType").find("[value='111']").prop("selected",true);//采用新加字典
             //上传身份证照片
             var filename=cardNo+".jpg"
             var res = PublicAjax('/FileUpload/uploadBase64.json',{'base64':picture64, 'fileName':filename});
@@ -1829,7 +1854,82 @@ $(function(){
         }else{
             layer.msg("读取失败，请重试！");
         }
+
+        var a = $(':input[name=cardNo]').val();
+        var str = a.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
+
+        if (str == '' || str == undefined || str == null) {
+
+        } else {
+    		//请求后台查询身份信息
+        	var iDcardInfo = PublicAjax('/PersonRegister/getIDCardInfo.json',{'cardNo':$(':input[name=cardNo]').val(), 'policeNo':'11111'});//'policeNo':'11111'为测试数据
+        	if(iDcardInfo.success){
+        		getIDCardInfoDOWN(iDcardInfo.content);
+        	} else {
+        		//layer.msg(iDcardInfo.errorMsg);
+        	}
+        }
+
+
     });
+
+	function getIDCardInfoDOWN(idCardInfo){//idCardInfo字段小写
+		$("#name").val(idCardInfo.xm);//姓名
+		$("#sex").find("[value='"+idCardInfo.xb+"']").prop("selected",true);//性别
+		$("#cardType").find("[value='"+idCardInfo.zjlx+"']").prop("selected",true);//证件类型
+		var birthDate = idCardInfo.csrq;
+		$("#birthDate").val(birthDate.substr(0,4) + "-" + birthDate.substr(4,2) + "-" + birthDate.substr(6,2));//出生日期
+		$("#oldName").val(idCardInfo.cym);//曾用名
+		$("#extraName").val(idCardInfo.bmch);//别名
+		$("#nickName").val(idCardInfo.bmch);//绰号
+		$("#phone").val(idCardInfo.lxdh);//联系电话
+		$("#educationLevel").find("[value='"+idCardInfo.whcd+"']").prop("selected",true);//文化程度
+		$("#political").find("[value='"+idCardInfo.zzmm+"']").prop("selected",true);//政治面貌
+		$("#nationality").find("[value='"+idCardInfo.gj+"']").prop("selected",true);//国家
+		$("#minority").find("[value='"+idCardInfo.mz+"']").prop("selected",true);//名族
+		$("#personType").find("[value='"+idCardInfo.sf+"']").prop("selected",true);//身份类别
+		$("#domicileArea").find("[value='"+idCardInfo.hjqh+"']").prop("selected",true);//户籍区划
+		$("#livingPlace").val(idCardInfo.xzxz);//现住详址
+		$("#domicilePlace").val(idCardInfo.hjxz);//户籍地、户籍详址
+		$("#livingArea").find("[value='"+idCardInfo.xzqh+"']").prop("selected",true);//现住地区划
+		$("#marriageType").find("[value='"+idCardInfo.hyzk+"']").prop("selected",true);//婚姻状况
+		$("#relief").find("[value='"+idCardInfo.zjxy+"']").prop("selected",true);//宗教信仰
+		$("#minitary").find("[value='"+idCardInfo.byzk+"']").prop("selected",true);//兵役状况
+		$("#height").val(idCardInfo.sg);//身高
+		$("#personLable").find("[value='"+idCardInfo.rybq+"']").prop("selected",true);//人员标签
+		$("#professionType").find("[value='"+idCardInfo.zylb+"']").prop("selected",true);//职业类别
+		$("#dnaNo").val(idCardInfo.dnabh);//DNA编号
+		$("#fingerNo").val(idCardInfo.zwbh);//指纹编号
+	}
+
+	function getIDCardInfouUP(idCardInfo){//idCardInfo字段大写
+		$("#name").val(idCardInfo.XM);//姓名
+		$("#sex").find("[value='"+idCardInfo.XB+"']").prop("selected",true);//性别
+		$("#cardType").find("[value='"+idCardInfo.ZJLX+"']").prop("selected",true);//证件类型
+		var birthDate = idCardInfo.CSRQ;
+		$("#birthDate").val(birthDate.substr(0,4) + "-" + birthDate.substr(4,2) + "-" + birthDate.substr(6,2));//出生日期
+		$("#oldName").val(idCardInfo.CYM);//曾用名
+		$("#extraName").val(idCardInfo.BMCH);//别名
+		$("#nickName").val(idCardInfo.BMCH);//绰号
+		$("#phone").val(idCardInfo.LXDH);//联系电话
+		$("#educationLevel").find("[value='"+idCardInfo.WHCD+"']").prop("selected",true);//文化程度
+		$("#political").find("[value='"+idCardInfo.ZZMM+"']").prop("selected",true);//政治面貌
+		$("#nationality").find("[value='"+idCardInfo.GJ+"']").prop("selected",true);//国家
+		$("#minority").find("[value='"+idCardInfo.MZ+"']").prop("selected",true);//名族
+		$("#personType").find("[value='"+idCardInfo.SF+"']").prop("selected",true);//身份类别
+		$("#domicileArea").find("[value='"+idCardInfo.HJQH+"']").prop("selected",true);//户籍区划
+		$("#livingPlace").val(idCardInfo.XZXZ);//现住详址
+		$("#domicilePlace").val(idCardInfo.HJXZ);//户籍地、户籍详址
+		$("#livingArea").find("[value='"+idCardInfo.XZQH+"']").prop("selected",true);//现住地区划
+		$("#marriageType").find("[value='"+idCardInfo.HYZK+"']").prop("selected",true);//婚姻状况
+		$("#relief").find("[value='"+idCardInfo.ZJXY+"']").prop("selected",true);//宗教信仰
+		$("#minitary").find("[value='"+idCardInfo.BYZK+"']").prop("selected",true);//兵役状况
+		$("#height").val(idCardInfo.SG);//身高
+		$("#personLable").find("[value='"+idCardInfo.RYBQ+"']").prop("selected",true);//人员标签
+		$("#professionType").find("[value='"+idCardInfo.ZYLB+"']").prop("selected",true);//职业类别
+		$("#dnaNo").val(idCardInfo.DNABH);//DNA编号
+		$("#fingerNo").val(idCardInfo.ZWBH);//指纹编号
+	}
 
     function clearForm() {
         $("#name").val("");
@@ -1839,6 +1939,19 @@ $(function(){
         $("#cardNo").val("");
         return true;
     }
+
+
+   	$("#alarmNumber").click(function(){
+   	    layer.open({
+            type: 2,
+            title:false,
+            anim:-1,
+            area: ['80%', '95%'],
+            content: "/swytJj/index.html"
+        });
+    	});
+
+
 
 });
 </script>

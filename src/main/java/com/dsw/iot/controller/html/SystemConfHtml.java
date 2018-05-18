@@ -33,10 +33,10 @@ public String add() {
 	 *
 	 
 	 */
-@RequestMapping("/detail")
-public String detail(Model model, Long id) {
+@RequestMapping("/index")
+public String index(Model model, Long id) {
     
-    return "systemConfig/detail";
+    return "systemConfig/index";
 }
 
 
